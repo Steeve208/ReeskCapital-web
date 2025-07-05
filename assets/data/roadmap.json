@@ -1,0 +1,29 @@
+[
+  {
+    "quarter": "Q2",
+    "year": "2024",
+    "title": "Lanzamiento de Mainnet",
+    "desc": "Inicio de la cadena principal y minería abierta.",
+    "active": true,
+    "future": false,
+    "details": "Se habilita la minería real y el wallet nativo para todos los usuarios."
+  },
+  {
+    "quarter": "Q3",
+    "year": "2024",
+    "title": "P2P Marketplace",
+    "desc": "Apertura del mercado P2P sin KYC.",
+    "active": false,
+    "future": false,
+    "details": "Podrás comprar y vender RSC sin intermediarios."
+  },
+  {
+    "quarter": "Q4",
+    "year": "2024",
+    "title": "Staking",
+    "desc": "Lanzamiento de la plataforma de staking.",
+    "active": false,
+    "future": true,
+    "details": "Recompensas por bloquear RSC y asegurar la red."
+  }
+]

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC Wallet - Tu Billetera Digital Segura</title>
+  <meta name="description" content="Gestiona tus RSC de forma segura. Envía, recibe y almacena tus criptomonedas con la máxima seguridad.">
+  <link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/wallet.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Fondo 4D animado -->
+  <div class="background-4d"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <img src="assets/img/logo.png" alt="RSC Chain Logo">
+      <span>RSC Chain</span>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="index.html#features">Características</a></li>
+      <li><a href="mine.html">Minar</a></li>
+      <li><a href="p2p.html">P2P</a></li>
+      <li><a href="wallet.html" class="active">Wallet</a></li>
+      <li><a href="staking.html">Staking</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <div class="navbar-cta">
+      <a href="wallet.html" class="btn-login btn-animated">Entrar al Ecosistema</a>
+    </div>
+    <button class="navbar-toggle" id="navbarToggle">&#9776;</button>
+  </nav>
+
+  <!-- Header del Wallet -->
+  <header class="wallet-header">
+    <div class="wallet-header-content">
+      <h1>RSC Wallet</h1>
+      <p>Tu billetera digital segura para el futuro financiero</p>
+    </div>
+  </header>
+
+  <!-- Dashboard Principal -->
+  <main class="wallet-dashboard">
+    <!-- Balance y Estadísticas -->
+    <section class="wallet-overview">
+      <div class="balance-card">
+        <div class="balance-header">
+          <h2>Balance Total</h2>
+          <div class="balance-actions">
+            <button class="btn-eye" id="toggleBalance">👁️</button>
+            <button class="btn-refresh" id="refreshBalance">🔄</button>
+          </div>
+        </div>
+        <div class="balance-amount" id="balanceAmount">
+          <span class="amount">125,847.32</span>
+          <span class="currency">RSC</span>
+        </div>
+        <div class="balance-usd">
+          <span class="usd-amount">$106,970.22</span>
+          <span class="change positive">+$12,847.32 (+13.6%)</span>
+        </div>
+        <div class="balance-chart">
+          <canvas id="balanceChart"></canvas>
+        </div>
+      </div>
+
+      <div class="quick-stats">
+        <div class="stat-card">
+          <div class="stat-icon">📈</div>
+          <div class="stat-info">
+            <span class="stat-value">+15.2%</span>
+            <span class="stat-label">7 días</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💸</div>
+          <div class="stat-info">
+            <span class="stat-value">24</span>
+            <span class="stat-label">Transacciones</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔒</div>
+          <div class="stat-info">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Seguro</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Acciones Principales -->
+    <section class="wallet-actions">
+      <div class="action-card send">
+        <div class="action-icon">📤</div>
+        <h3>Enviar</h3>
+        <p>Transfiere RSC a cualquier dirección</p>
+        <button class="btn-action" onclick="openSendModal()">Enviar RSC</button>
+      </div>
+      
+      <div class="action-card receive">
+        <div class="action-icon">📥</div>
+        <h3>Recibir</h3>
+        <p>Obtén tu dirección para recibir</p>
+        <button class="btn-action" onclick="openReceiveModal()">Mostrar QR</button>
+      </div>
+      
+      <div class="action-card swap">
+        <div class="action-icon">🔄</div>
+        <h3>Intercambiar</h3>
+        <p>Cambia RSC por otras criptos</p>
+        <button class="btn-action" onclick="openSwapModal()">Intercambiar</button>
+      </div>
+      
+      <div class="action-card stake">
+        <div class="action-icon">💎</div>
+        <h3>Staking</h3>
+        <p>Gana recompensas por staking</p>
+        <button class="btn-action" onclick="openStakeModal()">Hacer Staking</button>
+      </div>
+    </section>
+
+    <!-- Historial de Transacciones -->
+    <section class="transactions-section">
+      <div class="section-header">
+        <h2>Transacciones Recientes</h2>
+        <div class="section-actions">
+          <button class="btn-filter" onclick="toggleFilters()">Filtros</button>
+          <button class="btn-export" onclick="exportTransactions()">Exportar</button>
+        </div>
+      </div>
+      
+      <div class="transactions-list" id="transactionsList">
+        <!-- Las transacciones se cargarán dinámicamente -->
+      </div>
+    </section>
+
+    <!-- Configuración y Seguridad -->
+    <section class="wallet-settings">
+      <div class="settings-grid">
+        <div class="setting-card">
+          <h3>🔐 Seguridad</h3>
+          <ul class="setting-list">
+            <li><button onclick="changePassword()">Cambiar Contraseña</button></li>
+            <li><button onclick="enable2FA()">Activar 2FA</button></li>
+            <li><button onclick="backupWallet()">Respaldar Wallet</button></li>
+            <li><button onclick="viewPrivateKey()">Ver Clave Privada</button></li>
+          </ul>
+        </div>
+        
+        <div class="setting-card">
+          <h3>⚙️ Configuración</h3>
+          <ul class="setting-list">
+            <li><button onclick="changeCurrency()">Cambiar Moneda</button></li>
+            <li><button onclick="setGasLimit()">Límite de Gas</button></li>
+            <li><button onclick="customizeFees()">Personalizar Comisiones</button></li>
+            <li><button onclick="networkSettings()">Configuración de Red</button></li>
+          </ul>
+        </div>
+        
+        <div class="setting-card">
+          <h3>📊 Análisis</h3>
+          <ul class="setting-list">
+            <li><button onclick="viewAnalytics()">Ver Análisis</button></li>
+            <li><button onclick="taxReport()">Reporte de Impuestos</button></li>
+            <li><button onclick="portfolioHistory()">Historial de Portfolio</button></li>
+            <li><button onclick="performanceMetrics()">Métricas de Rendimiento</button></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modales -->
+  
+  <!-- Modal de Envío -->
+  <div id="sendModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Enviar RSC</h2>
+        <button class="modal-close" onclick="closeSendModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="sendForm">
+          <div class="form-group">
+            <label for="recipientAddress">Dirección Destinatario</label>
+            <input type="text" id="recipientAddress" placeholder="0x..." required>
+            <button type="button" class="btn-scan" onclick="scanQR()">📷</button>
+          </div>
+          
+          <div class="form-group">
+            <label for="sendAmount">Cantidad RSC</label>
+            <input type="number" id="sendAmount" placeholder="0.00" step="0.01" required>
+            <button type="button" class="btn-max" onclick="setMaxAmount()">MAX</button>
+          </div>
+          
+          <div class="form-group">
+            <label for="gasPrice">Precio Gas (Gwei)</label>
+            <input type="number" id="gasPrice" value="20" min="1">
+          </div>
+          
+          <div class="form-group">
+            <label for="sendNote">Nota (Opcional)</label>
+            <textarea id="sendNote" placeholder="Mensaje para el destinatario"></textarea>
+          </div>
+          
+          <div class="transaction-summary">
+            <div class="summary-item">
+              <span>Comisión de Red:</span>
+              <span id="networkFee">0.001 RSC</span>
+            </div>
+            <div class="summary-item">
+              <span>Total a Enviar:</span>
+              <span id="totalAmount">0.00 RSC</span>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="closeSendModal()">Cancelar</button>
+            <button type="submit" class="btn-primary">Confirmar Envío</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Recibo -->
+  <div id="receiveModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Recibir RSC</h2>
+        <button class="modal-close" onclick="closeReceiveModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="qr-container">
+          <div id="qrCode" class="qr-code"></div>
+          <p class="qr-address" id="walletAddress">0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6</p>
+          <button class="btn-copy" onclick="copyAddress()">Copiar Dirección</button>
+        </div>
+        
+        <div class="receive-info">
+          <h3>Información Importante</h3>
+          <ul>
+            <li>✅ Solo envía RSC a esta dirección</li>
+            <li>✅ Las transacciones son irreversibles</li>
+            <li>✅ Verifica la dirección antes de enviar</li>
+            <li>⚠️ Nunca compartas tu clave privada</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Onboarding/Creación de Wallet -->
+  <div id="walletOnboarding" class="modal" style="display:none">
+    <div class="modal-content onboarding-modal">
+      <div class="modal-header">
+        <h2>Bienvenido a RSC Wallet</h2>
+      </div>
+      <div class="modal-body">
+        <p>Para comenzar a usar el ecosistema, necesitas crear una wallet segura.<br>
+        <b>Guarda tu clave privada en un lugar seguro. Si la pierdes, no podrás recuperar tus fondos.</b></p>
+        <div class="onboarding-key-group">
+          <label for="onboardingPrivateKey">Tu clave privada:</label>
+          <input type="text" id="onboardingPrivateKey" readonly>
+          <button id="copyPrivateKey" class="btn-action">Copiar</button>
+        </div>
+        <div class="onboarding-actions">
+          <button id="confirmOnboarding" class="btn-action">He guardado mi clave</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="assets/img/logo.png" alt="RSC Chain Footer Logo">
+        <span>RSC Chain © 2024</span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#">Términos</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Telegram</a></li>
+        <li><a href="#">Twitter/X</a></li>
+      </ul>
+    </div>
+    <div class="footer-note">
+      <span>Sin bancos, sin fronteras.</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/wallet.js"></script>
+</body>
+</html>

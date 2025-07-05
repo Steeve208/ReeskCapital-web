@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC Chain - Sin Bancos, Sin Fronteras</title>
+  <meta name="description" content="Controla tu libertad financiera. Mina, transfiere y comercia con RSC sin límites.">
+  <link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/hero.css">
+  <link rel="stylesheet" href="assets/css/notifications.css">
+  <link rel="stylesheet" href="assets/css/tubo.css">
+  <link rel="stylesheet" href="assets/css/roadmap.css">
+  <link rel="stylesheet" href="assets/css/sections/highlights.css">
+  <link rel="stylesheet" href="assets/css/sections/stats.css">
+  <link rel="stylesheet" href="assets/css/sections/p2p.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <!-- Fondo 4D animado -->
+  <div class="background-4d"></div>
+  
+  <!-- Contenedor de notificaciones -->
+  <div class="notifications-container" id="notificationsContainer"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <img src="assets/img/logo.png" alt="RSC Chain Logo">
+      <span>RSC Chain</span>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="#features">Características</a></li>
+      <li><a href="mine.html">Minar</a></li>
+      <li><a href="p2p.html">P2P</a></li>
+      <li><a href="wallet.html">Wallet</a></li>
+      <li><a href="staking.html">Staking</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <div class="navbar-cta">
+      <a href="wallet.html" class="btn-login btn-animated">Entrar al Ecosistema</a>
+    </div>
+    <button class="navbar-toggle" id="navbarToggle">&#9776;</button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-rsc">
+    <div class="hero-rsc-content">
+      <h1 class="hero-title-gradient">
+        <span>CONSTRUYE TU</span><br>
+        <span>FUTURO CON RSC,</span><br>
+        <span>UNA CRIPTOMONEDA</span><br>
+        <span>SIN LÍMITES NI</span><br>
+        <span>BARRERAS.</span>
+      </h1>
+      <p class="hero-rsc-lema">
+        Trabajamos solos, caímos solos,<br>
+        nos levantamos solos y ganamos solos.
+      </p>
+      <div class="hero-rsc-cta">
+        <a href="mine.html" class="btn-hero-glow btn-animated">INICIAR MINERÍA</a>
+        <a href="p2p.html" class="btn-hero-outline btn-animated">IR A P2P</a>
+      </div>
+    </div>
+    <div class="hero-rsc-img">
+      <div id="hero-3d-container" class="hero-3d-container"></div>
+      <div class="hero-stats-overlay modern">
+        <div class="stat-item">
+          <span class="stat-number">$0.85</span>
+          <span class="stat-label">Precio RSC</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">+12.5%</span>
+          <span class="stat-label">24h</span>
+        </div>
+      </div>
+      <div class="scroll-down-anim" aria-label="Desplazar hacia abajo">
+        <span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anuncio deslizante -->
+  <section class="capsule-announcement">
+    <div class="capsule">
+      <div class="slider">
+        <div class="slide">⚡ Mina desde tu navegador</div>
+        <div class="slide">🔒 Vende tus RSC en P2P sin KYC</div>
+        <div class="slide">👛 Crea tu wallet sin complicaciones</div>
+        <div class="slide">🚀 La revolución ya empezó</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de características destacadas -->
+  <section class="highlights" id="features">
+    <div class="highlights-container">
+      <div class="highlight-card">
+        <div class="highlight-icon">⚡</div>
+        <h3>Minería Web</h3>
+        <p>Mina RSC directamente desde tu navegador sin necesidad de hardware especializado.</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🔒</div>
+        <h3>Sin KYC</h3>
+        <p>Comercia de forma privada sin verificación de identidad. Tu privacidad es prioridad.</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">💎</div>
+        <h3>Staking</h3>
+        <p>Gana recompensas por mantener tus RSC bloqueados en el ecosistema.</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🌐</div>
+        <h3>P2P Trading</h3>
+        <p>Intercambia RSC directamente con otros usuarios sin intermediarios.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de estadísticas -->
+  <section class="stats-section">
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-value">10,000+</div>
+        <div class="stat-label">Mineros Activos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">$2.5M</div>
+        <div class="stat-label">Volumen P2P</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">50,000+</div>
+        <div class="stat-label">Wallets Creadas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">99.9%</div>
+        <div class="stat-label">Uptime</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de P2P Preview -->
+  <section class="p2p-preview">
+    <div class="p2p-preview-content">
+      <h2>Comercia Sin Límites</h2>
+      <p>El marketplace P2P más seguro y privado del mundo</p>
+      <div class="p2p-features">
+        <div class="p2p-feature">
+          <span class="feature-icon">🛡️</span>
+          <span>Protección Escrow</span>
+        </div>
+        <div class="p2p-feature">
+          <span class="feature-icon">⚡</span>
+          <span>Transacciones Instantáneas</span>
+        </div>
+        <div class="p2p-feature">
+          <span class="feature-icon">🔐</span>
+          <span>Sin KYC Requerido</span>
+        </div>
+      </div>
+      <a href="p2p.html" class="btn-p2p-preview">Explorar P2P</a>
+    </div>
+    <div class="p2p-preview-visual">
+      <div class="trading-card">
+        <div class="trading-header">
+          <span class="trading-pair">RSC/USDT</span>
+          <span class="trading-price">$0.85</span>
+        </div>
+        <div class="trading-orders">
+          <div class="order buy">Compra: $0.84</div>
+          <div class="order sell">Venta: $0.86</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap Section -->
+  <section class="roadmap-section">
+    <h2 class="roadmap-title">More than just Trust.</h2>
+    <p class="roadmap-subtitle">Roadmap</p>
+
+    <div class="roadmap-container">
+      <div class="roadmap-column">
+        <div class="roadmap-card">
+          <h3>Q2 2024</h3>
+          <strong>Token Launch</strong>
+          <p>RSC released for mining, staking, and P2P.</p>
+        </div>
+        <div class="roadmap-card">
+          <h3>Q3 2024</h3>
+          <strong>Web Mining Live</strong>
+          <p>Start mining RSC directly from the browser.</p>
+        </div>
+        <div class="roadmap-card">
+          <h3>Q4 2024</h3>
+          <strong>P2P Marketplace</strong>
+          <p>Buy and sell RSC with escrow protection.</p>
+        </div>
+      </div>
+
+      <div class="holo-core">
+        <div class="glow-circle"></div>
+        <div class="holo-beam"></div>
+      </div>
+
+      <div class="roadmap-column">
+        <div class="roadmap-card">
+          <h3>Q1 2025</h3>
+          <strong>Mobile Wallet</strong>
+          <p>Launch of wallet app for Android and iOS.</p>
+        </div>
+        <div class="roadmap-card">
+          <h3>Q2 2025</h3>
+          <strong>Banking App</strong>
+          <p>KYC-free banking and debit card unveiled.</p>
+        </div>
+        <div class="roadmap-card">
+          <h3>Q3 2025</h3>
+          <strong>Mainnet & Staking</strong>
+          <p>RSCChain network goes live with staking.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección CTA Final -->
+  <section class="final-cta">
+    <div class="cta-content">
+      <h2>¿Listo para la Revolución?</h2>
+      <p>Únete a miles de usuarios que ya están construyendo su futuro financiero con RSC</p>
+      <div class="cta-buttons">
+        <a href="mine.html" class="btn-cta-primary">Comenzar Ahora</a>
+        <a href="faq.html" class="btn-cta-secondary">Saber Más</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="assets/img/logo.png" alt="RSC Chain Footer Logo">
+        <span>RSC Chain © 2024</span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#">Términos</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Telegram</a></li>
+        <li><a href="#">Twitter/X</a></li>
+      </ul>
+    </div>
+    <div class="footer-note">
+      <span>Sin bancos, sin fronteras.</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/hero-3d.js"></script>
+</body>
+</html>
