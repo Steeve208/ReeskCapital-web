@@ -1,0 +1,1531 @@
+/* ================================
+   STAKING ÉPICO - CSS AVANZADO
+================================ */
+
+/* =====================
+   STAKING PRINCIPAL ÉPICO
+===================== */
+
+.staking-epic {
+  position: relative;
+  min-height: 100vh;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(118, 87, 252, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(63, 216, 194, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 60%, rgba(224, 198, 74, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 50%, #0f141f 100%);
+  animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+  0%, 100% { 
+    background-position: 0% 50%, 100% 50%, 50% 50%, 0% 0%;
+  }
+  50% { 
+    background-position: 100% 50%, 0% 50%, 50% 100%, 100% 100%;
+  }
+}
+
+/* =====================
+   HEADER ÉPICO
+===================== */
+
+.staking-header-epic {
+  position: relative;
+  padding: 3rem 7vw;
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(118, 87, 252, 0.3);
+  z-index: 2;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header-title {
+  flex: 1;
+}
+
+.epic-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title-word {
+  background: linear-gradient(135deg, #7657fc 0%, #3fd8c2 50%, #e0c64a 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: titleGlow 3s ease-in-out infinite;
+  text-shadow: 0 0 30px rgba(118, 87, 252, 0.5);
+}
+
+.title-word:nth-child(1) { animation-delay: 0s; }
+.title-word:nth-child(2) { animation-delay: 0.5s; }
+.title-word:nth-child(3) { animation-delay: 1s; }
+
+@keyframes titleGlow {
+  0%, 100% { 
+    background-position: 0% 50%;
+  }
+  50% { 
+    background-position: 100% 50%;
+  }
+}
+
+.epic-subtitle {
+  font-size: 1.2rem;
+  color: #bfc3df;
+  font-weight: 400;
+  text-shadow: 0 2px 10px rgba(118, 87, 252, 0.3);
+}
+
+.header-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(29, 34, 53, 0.6);
+  backdrop-filter: blur(15px);
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(118, 87, 252, 0.3);
+  border-color: rgba(118, 87, 252, 0.6);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  animation: iconFloat 2s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7657fc, #3fd8c2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.2rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #bfc3df;
+  font-weight: 500;
+}
+
+.stat-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(118, 87, 252, 0.2) 0%, transparent 70%);
+  border-radius: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.stat-item:hover .stat-glow {
+  opacity: 1;
+}
+
+/* =====================
+   NIVEL DE USUARIO ÉPICO
+===================== */
+
+.user-level-epic {
+  margin-top: 2rem;
+}
+
+.level-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+}
+
+.level-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #7657fc, #3fd8c2);
+  padding: 1rem 1.5rem;
+  border-radius: 15px;
+  color: white;
+  font-weight: 700;
+}
+
+.level-icon {
+  font-size: 2rem;
+  animation: crownGlow 2s ease-in-out infinite;
+}
+
+@keyframes crownGlow {
+  0%, 100% { 
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% { 
+    transform: scale(1.1);
+    filter: brightness(1.3);
+  }
+}
+
+.level-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.level-title {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.level-number {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.level-progress {
+  flex: 1;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(118, 87, 252, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7657fc, #3fd8c2);
+  border-radius: 4px;
+  animation: progressFill 2s ease-out;
+}
+
+@keyframes progressFill {
+  from { width: 0%; }
+  to { width: var(--width, 75%); }
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: #bfc3df;
+  font-weight: 500;
+}
+
+/* =====================
+   DASHBOARD PRINCIPAL
+===================== */
+
+.staking-dashboard {
+  display: flex;
+  min-height: calc(100vh - 200px);
+}
+
+/* =====================
+   SIDEBAR ÉPICO
+===================== */
+
+.staking-sidebar-epic {
+  width: 280px;
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(118, 87, 252, 0.3);
+  padding: 2rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.sidebar-header {
+  padding: 0 2rem 2rem;
+  border-bottom: 1px solid rgba(118, 87, 252, 0.2);
+  margin-bottom: 1rem;
+}
+
+.sidebar-header h3 {
+  color: #e4e9ff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.sidebar-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #3fd8c2;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.status-dot.online {
+  background: #3fd8c2;
+  box-shadow: 0 0 10px #3fd8c2;
+}
+
+@keyframes statusPulse {
+  0%, 100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+.sidebar-nav {
+  padding: 0 1rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: #bfc3df;
+  text-decoration: none;
+  border-radius: 15px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: rgba(118, 87, 252, 0.1);
+  color: #7657fc;
+  transform: translateX(5px);
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.nav-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(118, 87, 252, 0.2) 0%, transparent 70%);
+  border-radius: 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.nav-item:hover .nav-glow,
+.nav-item.active .nav-glow {
+  opacity: 1;
+}
+
+/* =====================
+   LOGROS DEL USUARIO
+===================== */
+
+.achievements-section {
+  padding: 2rem;
+  border-top: 1px solid rgba(118, 87, 252, 0.2);
+  margin-top: 2rem;
+}
+
+.achievements-section h4 {
+  color: #e4e9ff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(29, 34, 53, 0.6);
+  border-radius: 15px;
+  border: 1px solid rgba(118, 87, 252, 0.2);
+  transition: all 0.3s ease;
+}
+
+.achievement-item.unlocked {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.achievement-item.locked {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
+.achievement-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(118, 87, 252, 0.2);
+}
+
+.achievement-icon {
+  font-size: 1.5rem;
+  animation: achievementGlow 2s ease-in-out infinite;
+}
+
+@keyframes achievementGlow {
+  0%, 100% { 
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% { 
+    transform: scale(1.1);
+    filter: brightness(1.2);
+  }
+}
+
+.achievement-info {
+  flex: 1;
+}
+
+.achievement-title {
+  color: #e4e9ff;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.achievement-desc {
+  color: #bfc3df;
+  font-size: 0.8rem;
+}
+
+/* =====================
+   CONTENIDO PRINCIPAL ÉPICO
+===================== */
+
+.staking-main-epic {
+  flex: 1;
+  padding: 2rem 3rem;
+  overflow-y: auto;
+}
+
+.staking-section {
+  display: none;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.staking-section.active {
+  display: block;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(118, 87, 252, 0.2);
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #7657fc, #3fd8c2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.refresh-btn,
+.claim-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(118, 87, 252, 0.1);
+  border: 1px solid rgba(118, 87, 252, 0.3);
+  border-radius: 10px;
+  padding: 0.8rem 1.5rem;
+  color: #7657fc;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.refresh-btn:hover,
+.claim-all-btn:hover {
+  background: rgba(118, 87, 252, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(118, 87, 252, 0.3);
+}
+
+.btn-icon {
+  font-size: 1rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* =====================
+   ESTADÍSTICAS EN TIEMPO REAL
+===================== */
+
+.realtime-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card-epic {
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.stat-card-epic:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(118, 87, 252, 0.3);
+  border-color: rgba(118, 87, 252, 0.6);
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.stat-icon {
+  font-size: 2rem;
+  animation: iconFloat 2s ease-in-out infinite;
+}
+
+.stat-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.stat-status.online {
+  background: #3fd8c2;
+  box-shadow: 0 0 15px #3fd8c2;
+}
+
+.stat-content {
+  margin-bottom: 1rem;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7657fc, #3fd8c2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #bfc3df;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.stat-change {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  display: inline-block;
+}
+
+.stat-change.positive {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.stat-change.negative {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.stat-progress {
+  margin-top: 1rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(118, 87, 252, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7657fc, #3fd8c2);
+  border-radius: 3px;
+  animation: progressFill 2s ease-out;
+}
+
+.stat-chart,
+.stat-graph {
+  margin-top: 1rem;
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(118, 87, 252, 0.1);
+}
+
+.rank-progress {
+  margin-top: 1rem;
+}
+
+.rank-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(118, 87, 252, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.rank-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e0c64a, #f59e0b);
+  border-radius: 3px;
+  animation: progressFill 2s ease-out;
+}
+
+/* =====================
+   VISUALIZACIÓN 3D DE STAKING
+===================== */
+
+.staking-3d {
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+}
+
+.visualization-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.visualization-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e4e9ff;
+}
+
+.visualization-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(118, 87, 252, 0.1);
+  border: 1px solid rgba(118, 87, 252, 0.3);
+  border-radius: 10px;
+  color: #bfc3df;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.control-btn:hover,
+.control-btn.active {
+  background: rgba(118, 87, 252, 0.2);
+  color: #7657fc;
+  border-color: #7657fc;
+}
+
+.visualization-container {
+  position: relative;
+  height: 400px;
+  border-radius: 15px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.staking-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.visualization-overlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(29, 34, 53, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+}
+
+.overlay-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.overlay-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.overlay-stat .stat-label {
+  font-size: 0.8rem;
+  color: #bfc3df;
+}
+
+.overlay-stat .stat-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #7657fc;
+}
+
+/* =====================
+   GRÁFICOS INTERACTIVOS
+===================== */
+
+.charts-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.chart-container {
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.chart-header h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #e4e9ff;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.time-btn {
+  padding: 0.4rem 0.8rem;
+  background: rgba(118, 87, 252, 0.1);
+  border: 1px solid rgba(118, 87, 252, 0.3);
+  border-radius: 8px;
+  color: #bfc3df;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.time-btn:hover,
+.time-btn.active {
+  background: rgba(118, 87, 252, 0.2);
+  color: #7657fc;
+  border-color: #7657fc;
+}
+
+.chart-wrapper {
+  height: 300px;
+  position: relative;
+}
+
+/* =====================
+   POOLS ÉPICOS
+===================== */
+
+.pools-grid-epic {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.pool-card-epic {
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.pool-card-epic:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(118, 87, 252, 0.3);
+  border-color: rgba(118, 87, 252, 0.6);
+}
+
+.pool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.pool-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #e4e9ff;
+}
+
+.pool-status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.pool-status.active {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.pool-status.inactive {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.pool-apy {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.pool-apy-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7657fc, #3fd8c2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.pool-apy-label {
+  color: #bfc3df;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.pool-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pool-detail {
+  text-align: center;
+}
+
+.pool-detail-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #e4e9ff;
+  margin-bottom: 0.2rem;
+}
+
+.pool-detail-label {
+  color: #bfc3df;
+  font-size: 0.8rem;
+}
+
+.pool-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.pool-btn {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.pool-btn.primary {
+  background: linear-gradient(135deg, #7657fc, #3fd8c2);
+  color: white;
+  box-shadow: 0 5px 15px rgba(118, 87, 252, 0.3);
+}
+
+.pool-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(118, 87, 252, 0.4);
+}
+
+.pool-btn.secondary {
+  background: rgba(118, 87, 252, 0.1);
+  color: #7657fc;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+}
+
+.pool-btn.secondary:hover {
+  background: rgba(118, 87, 252, 0.2);
+  transform: translateY(-2px);
+}
+
+/* =====================
+   TABLA DE STAKES ÉPICA
+===================== */
+
+.stakes-table-container {
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+}
+
+.stakes-table-epic {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.stakes-table-epic th {
+  background: rgba(118, 87, 252, 0.1);
+  color: #e4e9ff;
+  font-weight: 700;
+  text-align: left;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgba(118, 87, 252, 0.2);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stakes-table-epic td {
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgba(118, 87, 252, 0.1);
+  color: #bfc3df;
+  transition: all 0.3s ease;
+}
+
+.stakes-table-epic tr:hover {
+  background: rgba(118, 87, 252, 0.05);
+  transform: scale(1.01);
+}
+
+/* =====================
+   VALIDADORES ÉPICOS
+===================== */
+
+.validators-grid-epic {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.validator-card-epic {
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.validator-card-epic:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(118, 87, 252, 0.3);
+  border-color: rgba(118, 87, 252, 0.6);
+}
+
+.validator-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.validator-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7657fc, #3fd8c2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.validator-info h3 {
+  color: #e4e9ff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.validator-info p {
+  color: #bfc3df;
+  font-size: 0.9rem;
+}
+
+.validator-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.validator-stat {
+  text-align: center;
+}
+
+.validator-stat-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #7657fc;
+  margin-bottom: 0.2rem;
+}
+
+.validator-stat-label {
+  color: #bfc3df;
+  font-size: 0.8rem;
+}
+
+.validator-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-indicator.online {
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.status-indicator.offline {
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+
+.status-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.status-text.online {
+  color: #10b981;
+}
+
+.status-text.offline {
+  color: #ef4444;
+}
+
+.validator-commission {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.commission-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e0c64a;
+  margin-bottom: 0.2rem;
+}
+
+.commission-label {
+  color: #bfc3df;
+  font-size: 0.8rem;
+}
+
+/* =====================
+   RECOMPENSAS ÉPICAS
+===================== */
+
+.rewards-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.rewards-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.summary-card {
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(118, 87, 252, 0.2);
+}
+
+.summary-icon {
+  font-size: 2rem;
+  animation: iconFloat 2s ease-in-out infinite;
+}
+
+.summary-content {
+  flex: 1;
+}
+
+.summary-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e4e9ff;
+  margin-bottom: 0.2rem;
+}
+
+.summary-label {
+  color: #bfc3df;
+  font-size: 0.9rem;
+}
+
+.rewards-history {
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+}
+
+.rewards-history h3 {
+  color: #e4e9ff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.rewards-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* =====================
+   ANALYTICS ÉPICOS
+===================== */
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.analytics-chart-container {
+  background: rgba(29, 34, 53, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+}
+
+.analytics-chart-container h3 {
+  color: #e4e9ff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.analytics-chart-container canvas {
+  width: 100% !important;
+  height: 250px !important;
+}
+
+/* =====================
+   MODALES ÉPICOS
+===================== */
+
+.stake-modal,
+.rewards-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content {
+  background: rgba(29, 34, 53, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid rgba(118, 87, 252, 0.3);
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(118, 87, 252, 0.2);
+}
+
+.modal-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e4e9ff;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #bfc3df;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+.modal-body {
+  color: #bfc3df;
+  line-height: 1.6;
+}
+
+/* =====================
+   ANIMACIÓN DE RECOMPENSAS
+===================== */
+
+.rewards-animation {
+  text-align: center;
+  position: relative;
+  padding: 3rem;
+}
+
+.rewards-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(118, 87, 252, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 80% 70%, rgba(63, 216, 194, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 40% 60%, rgba(224, 198, 74, 0.4) 2px, transparent 2px);
+  background-size: 50px 50px, 30px 30px, 40px 40px;
+  animation: particleMove 10s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes particleMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50px, -50px); }
+}
+
+.rewards-amount {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7657fc, #3fd8c2, #e0c64a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: rewardsGlow 2s ease-in-out infinite;
+}
+
+@keyframes rewardsGlow {
+  0%, 100% { 
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  50% { 
+    filter: brightness(1.3);
+    transform: scale(1.05);
+  }
+}
+
+.rewards-message {
+  font-size: 1.2rem;
+  color: #e4e9ff;
+  font-weight: 600;
+}
+
+/* =====================
+   ANIMACIONES AVANZADAS
+===================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =====================
+   RESPONSIVE DESIGN ÉPICO
+===================== */
+
+@media (max-width: 1200px) {
+  .staking-dashboard {
+    flex-direction: column;
+  }
+  
+  .staking-sidebar-epic {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(118, 87, 252, 0.3);
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    overflow-x: auto;
+    padding: 0 1rem;
+  }
+  
+  .nav-item {
+    margin: 0 0.5rem 0 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  
+  .realtime-stats {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .charts-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .rewards-overview {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .staking-header-epic {
+    padding: 2rem 3vw;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .epic-title {
+    font-size: 2.5rem;
+  }
+  
+  .header-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .staking-main-epic {
+    padding: 1rem 2rem;
+  }
+  
+  .realtime-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .pools-grid-epic {
+    grid-template-columns: 1fr;
+  }
+  
+  .validators-grid-epic {
+    grid-template-columns: 1fr;
+  }
+  
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .epic-title {
+    font-size: 2rem;
+  }
+  
+  .staking-main-epic {
+    padding: 1rem;
+  }
+  
+  .stat-card-epic {
+    padding: 1.5rem;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+  }
+}
+
+/* =====================
+   ACCESIBILIDAD
+===================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .staking-epic,
+  .staking-section,
+  .stat-card-epic,
+  .nav-item,
+  .pool-card-epic,
+  .validator-card-epic {
+    animation: none;
+  }
+  
+  .stat-icon,
+  .nav-icon,
+  .btn-icon {
+    animation: none;
+  }
+  
+  .title-word {
+    animation: none;
+  }
+}

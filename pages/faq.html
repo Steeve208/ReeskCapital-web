@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preguntas Frecuentes | RSC Chain</title>
+  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/faq.css">
+  <link rel="stylesheet" href="../styles/notifications.css">
+  <link rel="stylesheet" href="../styles/animations.css">
+  <link rel="stylesheet" href="../styles/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+  <!-- Fondo 4D animado -->
+  <div class="background-4d"></div>
+  
+  <!-- Contenedor de notificaciones -->
+  <div class="notifications-container" id="notificationsContainer"></div>
+
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+      <span>ReeskCapital.co</span>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="about.html">Acerca</a></li>
+      <li><a href="wallet.html">Wallet</a></li>
+      <li><a href="mine.html">Minar</a></li>
+      <li><a href="p2p.html">P2P</a></li>
+      <li><a href="staking.html">Staking</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
+      <li><a href="bank.html">Bank</a></li>
+      <li><a href="docs.html">Docs</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="language-selector" id="languageSelector">
+        <span>ES</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+    <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+  </nav>
+
+  <main class="faq-main">
+    <h1 class="faq-title">Preguntas Frecuentes</h1>
+    <p class="faq-subtitle">
+      Encuentra aquí todo lo que necesitas saber para usar<br>RSC Chain con confianza.
+    </p>
+    <input type="search" class="faq-search" id="faqSearch" placeholder="Buscar pregunta..." aria-label="Buscar pregunta">
+    <section class="faq-list" id="faqList" aria-live="polite">
+      <!-- FAQ ITEM 1 -->
+      <div class="faq-card" tabindex="0" aria-expanded="false">
+        <button class="faq-question" aria-controls="faq1" aria-expanded="false">
+          <span>¿Qué es RSC Chain?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq1">
+          RSC Chain es una blockchain revolucionaria que permite minar y transferir; y conectarse sin fronteras, garantizan privacidad, y libertad financiera completa financiera total.
+        </div>
+      </div>
+      <!-- FAQ ITEM 2 -->
+      <div class="faq-card" tabindex="0" aria-expanded="false">
+        <button class="faq-question" aria-controls="faq2" aria-expanded="false">
+          <span>¿Cómo puedo minar RSC?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq2">
+          Puedes minar RSC directamente desde el navegador pulsando "Start Mining".
+        </div>
+      </div>
+      <!-- FAQ ITEM 3 -->
+      <div class="faq-card" tabindex="0" aria-expanded="false">
+        <button class="faq-question" aria-controls="faq3" aria-expanded="false">
+          <span>¿Necesito KYC para usar el P2P?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq3">
+          La wallet y el P2P para funcionar en RSC operan sin KYC, sin bancos. Protección en escrow contra fraude automático.
+        </div>
+      </div>
+      <!-- FAQ ITEM 4 -->
+      <div class="faq-card" tabindex="0" aria-expanded="false">
+        <button class="faq-question" aria-controls="faq4" aria-expanded="false">
+          <span>¿Cómo respaldo mi wallet?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq4">
+          Guarda tu frase semilla en un lugar seguro, nunca la compartas con nadie.
+        </div>
+      </div>
+      <!-- FAQ ITEM 5 -->
+      <div class="faq-card" tabindex="0" aria-expanded="false">
+        <button class="faq-question" aria-controls="faq5" aria-expanded="false">
+          <span>¿Qué es la protección Escrow?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq5">
+          Escrow es una protección adicional para vendedores: los fondos están seguros hasta que ambas partes confirman la transacción.
+        </div>
+      </div>
+    </section>
+    <div class="faq-contact">
+      <span>¿No encontraste tu respuesta?</span>
+      <a href="mailto:soporte@rscchain.com" class="faq-contact-link">Contáctanos</a>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../scripts/feature-flags.js"></script>
+  <script src="../scripts/admin-panel.js"></script>
+  <script src="../scripts/ai-assistant.js"></script>
+  <script src="../scripts/chat-component.js"></script>
+  <script src="../scripts/config.js"></script>
+  <script src="../scripts/cleanup.js"></script>
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/faq.js"></script>
+  <script src="../scripts/notifications.js"></script>
+  <script src="../scripts/animations.js"></script>
+  <script src="../scripts/init.js"></script>
+  <script src="../scripts/debug.js"></script>
+  <script src="../scripts/chat.js"></script>
+  <script src="../scripts/error-fix.js"></script>
+</body>
+</html>

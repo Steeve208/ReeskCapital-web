@@ -1,14 +1,140 @@
-# RSC Chain — Plataforma Web Completa
+# RSC Chain Web
 
-Bienvenido a la plataforma oficial de RSC Chain: una solución avanzada, segura y sin fronteras para minería, wallet, staking y marketplace P2P de RSC.
+Una interfaz web moderna para la blockchain RSC Chain conectada a la API de producción.
 
-## 🚀 ¿Qué incluye este proyecto?
-- **Frontend profesional y responsive**: HTML, CSS y JS puro, con animaciones, dark mode, accesibilidad y UX moderna.
-- **Wallet no-custodial**: Clave privada solo en el navegador, backup seguro, balance y transacciones reales.
-- **Staking avanzado**: Pools, validadores, delegación real y recompensas.
-- **Marketplace P2P**: Compra/venta de RSC sin KYC, órdenes reales, filtros y chat.
-- **Mining web**: Minado real desde el navegador, solo con wallet activa.
-- **Backend Node.js/Express**: Proxy seguro a la blockchain oficial, validación y manejo de errores.
+## 🚀 Características
+
+- **Wallet No-Custodial**: Crear y gestionar wallets directamente en el navegador
+- **Minería Real**: Conectar con la blockchain para minar RSC tokens
+- **Staking Avanzado**: Delegar tokens a validadores y pools de staking
+- **Trading P2P**: Intercambiar RSC tokens de forma descentralizada
+- **Datos en Tiempo Real**: Estadísticas actualizadas de la blockchain
+- **Interfaz Moderna**: Diseño responsive y animaciones fluidas
+
+## 🔗 Conexión con Blockchain
+
+La web está conectada a la API de producción de RSC Chain:
+```
+https://rsc-chain-production.up.railway.app/
+```
+
+### Endpoints Principales
+
+- **Wallet**: `/api/wallet/*` - Crear wallets, consultar balance, enviar transacciones
+- **Mining**: `/api/mining/*` - Iniciar/detener minería, consultar recompensas
+- **Staking**: `/api/staking/*` - Delegar, retirar delegaciones, consultar pools
+- **P2P**: `/api/p2p/*` - Crear órdenes, ejecutar trades, consultar transacciones
+- **Blockchain**: `/api/blockchain/*` - Estadísticas generales, información de red
+
+## 🛠️ Instalación
+
+### Backend
+```bash
+cd backend
+npm install
+npm start
+```
+
+### Frontend
+Simplemente abre `index.html` en tu navegador o usa un servidor local:
+```bash
+# Con Python
+python -m http.server 8000
+
+# Con Node.js
+npx serve .
+```
+
+## 📱 Funcionalidades
+
+### Wallet
+- ✅ Crear wallet no-custodial
+- ✅ Consultar balance real
+- ✅ Enviar transacciones
+- ✅ Historial de transacciones
+- ✅ Generar QR code
+- ✅ Ocultar/mostrar balance
+
+### Mining
+- ✅ Iniciar sesión de minería (24h)
+- ✅ Consultar estado de minería
+- ✅ Obtener recompensas reales
+- ✅ Historial de sesiones
+- ✅ Timer de cooldown
+
+### Staking
+- ✅ Ver pools de staking
+- ✅ Delegar tokens
+- ✅ Retirar delegaciones
+- ✅ Consultar validadores
+- ✅ Historial de delegaciones
+- ✅ Gráficos de rendimiento
+
+### P2P Trading
+- ✅ Crear órdenes de compra/venta
+- ✅ Ejecutar trades
+- ✅ Chat entre traders
+- ✅ Historial de transacciones
+- ✅ Filtros y búsqueda
+- ✅ Gráficos de precios
+
+## 🔧 Configuración
+
+### Variables de Entorno
+```bash
+# Backend
+PORT=4000
+BLOCKCHAIN_API=https://rsc-chain-production.up.railway.app/
+```
+
+### Personalización
+- Modificar `assets/css/` para cambiar estilos
+- Editar `assets/js/` para funcionalidad personalizada
+- Actualizar `backend/routes.js` para nuevos endpoints
+
+## 📊 Datos Reales
+
+Todos los datos mostrados en la web provienen de la blockchain real:
+- Balances de wallets
+- Transacciones confirmadas
+- Estadísticas de staking
+- Órdenes P2P activas
+- Información de validadores
+- Precios y volúmenes
+
+## 🔒 Seguridad
+
+- **No-Custodial**: Las claves privadas nunca salen del navegador
+- **Validación**: Todas las transacciones se validan en el backend
+- **HTTPS**: Conexión segura con la API de blockchain
+- **Sanitización**: Validación de inputs en frontend y backend
+
+## 🚀 Despliegue
+
+### Producción
+```bash
+# Backend en Railway/Heroku
+git push heroku main
+
+# Frontend en Netlify/Vercel
+npm run build
+```
+
+### Desarrollo
+```bash
+# Backend con hot reload
+npm run dev
+
+# Frontend con live server
+npx live-server
+```
+
+## 📈 Monitoreo
+
+- Logs de transacciones en consola
+- Métricas de rendimiento
+- Errores de API capturados
+- Estadísticas de uso
 
 ---
 
@@ -96,9 +222,24 @@ rsc-web/
 
 ---
 
-## 📞 Soporte
-¿Dudas o problemas? Escribe a [soporte@rscchain.com](mailto:soporte@rscchain.com)
+## 🤝 Contribuir
+
+1. Fork el repositorio
+2. Crear rama feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit cambios (`git commit -am 'Agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Crear Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
+
+## 🆘 Soporte
+
+- **Documentación**: Revisa los comentarios en el código
+- **Issues**: Reporta bugs en GitHub Issues
+- **Discord**: Únete a nuestro servidor para soporte en vivo
 
 ---
 
-¡Gracias por usar RSC Chain! Sin bancos, sin fronteras, sin límites. 
+**RSC Chain Web** - Conectando el futuro de las finanzas descentralizadas 🌐⚡ 

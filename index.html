@@ -3,24 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSC Chain - Sin Bancos, Sin Fronteras</title>
-  <meta name="description" content="Controla tu libertad financiera. Mina, transfiere y comercia con RSC sin límites.">
-  <link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/global.css">
-  <link rel="stylesheet" href="assets/css/animations.css">
-  <link rel="stylesheet" href="assets/css/hero.css">
-  <link rel="stylesheet" href="assets/css/notifications.css">
-  <link rel="stylesheet" href="assets/css/tubo.css">
-  <link rel="stylesheet" href="assets/css/roadmap.css">
-  <link rel="stylesheet" href="assets/css/sections/highlights.css">
-  <link rel="stylesheet" href="assets/css/sections/stats.css">
-  <link rel="stylesheet" href="assets/css/sections/p2p.css">
+  <title>ReeskCapital.co - RSC Chain</title>
+  <meta name="description" content="La blockchain más avanzada y rebelde del mundo. Sin bancos, sin fronteras, sin permiso.">
+  <meta name="keywords" content="blockchain, RSC, cryptocurrency, wallet, mining, staking, P2P">
+  <meta property="og:title" content="ReeskCapital.co - RSC Chain">
+  <meta property="og:description" content="La blockchain más avanzada y rebelde del mundo">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://reeskcapital.co">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ReeskCapital.co - RSC Chain">
+  <meta name="twitter:description" content="La blockchain más avanzada y rebelde del mundo">
+  
+  <link rel="icon" href="assets/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/app.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/hero.css">
+  <link rel="stylesheet" href="styles/notifications.css">
+  <link rel="stylesheet" href="styles/wallet.css">
+  <link rel="stylesheet" href="styles/mine.css">
+  <link rel="stylesheet" href="styles/p2p.css">
+  <link rel="stylesheet" href="styles/staking.css">
+  <link rel="stylesheet" href="styles/explorer.css">
+  <link rel="stylesheet" href="styles/bank.css">
+  <link rel="stylesheet" href="styles/about.css">
+  <link rel="stylesheet" href="styles/docs.css">
+  <link rel="stylesheet" href="styles/faq.css">
+  <link rel="stylesheet" href="styles/roadmap.css">
+  <link rel="stylesheet" href="styles/tubo.css">
+  <link rel="stylesheet" href="styles/sections/stats.css">
+  <link rel="stylesheet" href="styles/sections/roadmap.css">
+  <link rel="stylesheet" href="styles/sections/hero.css">
+  <link rel="stylesheet" href="styles/sections/highlights.css">
+  <link rel="stylesheet" href="styles/sections/p2p.css">
+  <link rel="stylesheet" href="styles/footer.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js para gráficos en vivo -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Three.js para animaciones 3D -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body>
+<body class="dark-mode">
   <!-- Fondo 4D animado -->
   <div class="background-4d"></div>
   
@@ -31,240 +59,1662 @@
   <nav class="navbar">
     <div class="navbar-logo">
       <img src="assets/img/logo.png" alt="RSC Chain Logo">
-      <span>RSC Chain</span>
+      <span>ReeskCapital.co</span>
     </div>
     <ul class="navbar-links">
+      <!-- Enlaces de navegación para desktop -->
       <li><a href="index.html" class="active">Inicio</a></li>
-      <li><a href="#features">Características</a></li>
-      <li><a href="mine.html">Minar</a></li>
-      <li><a href="p2p.html">P2P</a></li>
-      <li><a href="wallet.html">Wallet</a></li>
-      <li><a href="staking.html">Staking</a></li>
-      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="pages/about.html">Acerca</a></li>
+      <li><a href="pages/wallet.html">Wallet</a></li>
+      <li><a href="pages/mine.html">Minar</a></li>
+      <li><a href="pages/p2p.html">P2P</a></li>
+      <li><a href="pages/staking.html">Staking</a></li>
+      <li><a href="pages/explorer.html">Explorer</a></li>
+      <li><a href="pages/bank.html">Bank</a></li>
+      <li><a href="pages/docs.html">Docs</a></li>
+      
+      <!-- Sección de Navegación para móvil -->
+      <div class="mobile-nav-section">
+        <div class="mobile-nav-title">Navegación</div>
+        <li><a href="index.html" class="active">🏠 Inicio</a></li>
+        <li><a href="pages/about.html">ℹ️ Acerca</a></li>
+        <li><a href="pages/wallet.html">👛 Wallet</a></li>
+        <li><a href="pages/mine.html">⛏️ Minar</a></li>
+        <li><a href="pages/p2p.html">🤝 P2P</a></li>
+        <li><a href="pages/staking.html">💰 Staking</a></li>
+        <li><a href="pages/explorer.html">🔍 Explorer</a></li>
+        <li><a href="pages/bank.html">🏦 Bank</a></li>
+        <li><a href="pages/docs.html">📚 Docs</a></li>
+      </div>
+      
+      <!-- Sección de Controles para móvil -->
+      <div class="mobile-controls-section">
+        <div class="mobile-nav-title">Controles</div>
+        <div class="mobile-controls">
+          <!-- Selector de idioma móvil -->
+          <div class="mobile-control-item">
+            <div class="mobile-control-label">
+              <span class="mobile-control-icon">🌐</span>
+              <span>Idioma</span>
+            </div>
+            <button class="mobile-language-selector">
+              <span>ES</span>
+              <span>▼</span>
+            </button>
+            <div class="mobile-language-dropdown">
+              <div class="mobile-language-option" data-lang="es">🇪🇸 Español</div>
+              <div class="mobile-language-option" data-lang="en">🇺🇸 English</div>
+              <div class="mobile-language-option" data-lang="fr">🇫🇷 Français</div>
+              <div class="mobile-language-option" data-lang="pt">🇧🇷 Português</div>
+              <div class="mobile-language-option" data-lang="ht">🇭🇹 Kreyòl</div>
+            </div>
+          </div>
+          
+          <!-- Toggle de tema móvil -->
+          <div class="mobile-control-item">
+            <div class="mobile-control-label">
+              <span class="mobile-control-icon">🎨</span>
+              <span>Tema</span>
+            </div>
+            <button class="mobile-theme-toggle">
+              <span>🌙</span>
+              <span>Oscuro</span>
+            </button>
+          </div>
+          
+          <!-- Botón de wallet móvil -->
+          <div class="mobile-control-item">
+            <div class="mobile-control-label">
+              <span class="mobile-control-icon">👛</span>
+              <span>Wallet</span>
+            </div>
+            <button class="mobile-wallet-btn">
+              <span>Conectar</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </ul>
-    <div class="navbar-cta">
-      <a href="wallet.html" class="btn-login btn-animated">Entrar al Ecosistema</a>
+    <div class="navbar-actions">
+      <button class="language-selector" id="languageSelector">
+        <span>ES</span>
+        <div class="language-dropdown">
+          <div class="language-option" data-lang="es">Español</div>
+          <div class="language-option" data-lang="en">English</div>
+          <div class="language-option" data-lang="fr">Français</div>
+          <div class="language-option" data-lang="pt">Português</div>
+          <div class="language-option" data-lang="ht">Kreyòl</div>
+        </div>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <a href="pages/wallet.html" class="btn-wallet-connect" id="walletConnectBtn">
+        <span class="wallet-icon">👛</span>
+        <span class="wallet-text">Conectar Wallet</span>
+      </a>
     </div>
-    <button class="navbar-toggle" id="navbarToggle">&#9776;</button>
+    <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero-rsc">
-    <div class="hero-rsc-content">
-      <h1 class="hero-title-gradient">
-        <span>CONSTRUYE TU</span><br>
-        <span>FUTURO CON RSC,</span><br>
-        <span>UNA CRIPTOMONEDA</span><br>
-        <span>SIN LÍMITES NI</span><br>
-        <span>BARRERAS.</span>
+  <!-- Hero Section Épico - RSC Chain -->
+  <section class="hero-epic" id="hero">
+    <!-- Fondo 4D Dinámico -->
+    <div class="hero-background-4d">
+      <div class="nebula-layer"></div>
+      <div class="particle-field"></div>
+      <div class="energy-grid"></div>
+      <div class="data-streams"></div>
+    </div>
+
+    <!-- Canvas 3D Avanzado -->
+    <div class="hero-3d-world" id="hero3dWorld">
+      <!-- Three.js se renderizará aquí -->
+    </div>
+
+    <!-- Overlay de Efectos -->
+    <div class="hero-overlay">
+      <div class="scan-lines"></div>
+      <div class="glitch-effect"></div>
+      <div class="energy-particles"></div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="hero-content-epic">
+      <!-- Badge de Estado -->
+      <div class="hero-status-badge">
+        <div class="status-indicator">
+          <div class="pulse-dot"></div>
+          <span class="status-text">RED ACTIVA</span>
+        </div>
+        <div class="network-stats">
+          <span class="stat">🟢 1,247 Nodos</span>
+          <span class="stat">⚡ 50,000 TPS</span>
+          <span class="stat">🔒 100% Seguro</span>
+        </div>
+      </div>
+
+      <!-- Título Principal con Efectos -->
+      <div class="hero-title-epic">
+        <div class="title-container">
+          <h1 class="main-title">
+            <span class="title-word title-word-1">RSC</span>
+            <span class="title-word title-word-2">CHAIN</span>
       </h1>
-      <p class="hero-rsc-lema">
-        Trabajamos solos, caímos solos,<br>
-        nos levantamos solos y ganamos solos.
-      </p>
-      <div class="hero-rsc-cta">
-        <a href="mine.html" class="btn-hero-glow btn-animated">INICIAR MINERÍA</a>
-        <a href="p2p.html" class="btn-hero-outline btn-animated">IR A P2P</a>
-      </div>
-    </div>
-    <div class="hero-rsc-img">
-      <div id="hero-3d-container" class="hero-3d-container"></div>
-      <div class="hero-stats-overlay modern">
-        <div class="stat-item">
-          <span class="stat-number">$0.85</span>
-          <span class="stat-label">Precio RSC</span>
+          <div class="title-subtitle">
+            <span class="subtitle-line">LA BLOCKCHAIN MÁS</span>
+            <span class="subtitle-line">AVANZADA Y REBELDE</span>
+            <span class="subtitle-line">DEL MUNDO</span>
+          </div>
         </div>
-        <div class="stat-item">
-          <span class="stat-number">+12.5%</span>
-          <span class="stat-label">24h</span>
+        
+        <!-- Efectos de Título -->
+        <div class="title-effects">
+          <div class="glitch-layers">
+            <div class="glitch-layer" data-text="RSC CHAIN">RSC CHAIN</div>
+            <div class="glitch-layer" data-text="RSC CHAIN">RSC CHAIN</div>
+            <div class="glitch-layer" data-text="RSC CHAIN">RSC CHAIN</div>
+          </div>
+          <div class="energy-aura"></div>
         </div>
       </div>
-      <div class="scroll-down-anim" aria-label="Desplazar hacia abajo">
-        <span></span>
+
+      <!-- Descripción Épica -->
+      <div class="hero-description-epic">
+        <p class="epic-text">
+          <span class="highlight-word">Sin bancos.</span>
+          <span class="highlight-word">Sin fronteras.</span>
+          <span class="highlight-word">Sin permiso.</span>
+        </p>
+        <p class="epic-subtitle">
+          La revolución financiera que cambiará el mundo para siempre.
+          <span class="typing-cursor">|</span>
+        </p>
+      </div>
+
+      <!-- CTA Épico -->
+      <div class="hero-cta-epic">
+        <div class="cta-primary">
+          <a href="pages/wallet.html" class="btn-epic-primary">
+            <div class="btn-content">
+              <div class="btn-icon">👛</div>
+              <div class="btn-text">
+                <span class="btn-main">CREAR WALLET</span>
+                <span class="btn-sub">Acceso Total</span>
+    </div>
+            </div>
+            <div class="btn-glow"></div>
+            <div class="btn-particles"></div>
+          </a>
+        </div>
+        
+        <div class="cta-secondary">
+          <a href="pages/mine.html" class="btn-epic-secondary">
+            <div class="btn-content">
+              <div class="btn-icon">⛏️</div>
+              <div class="btn-text">
+                <span class="btn-main">INICIAR MINERÍA</span>
+                <span class="btn-sub">Gana RSC</span>
+              </div>
+            </div>
+            <div class="btn-glow"></div>
+          </a>
+          
+          <a href="pages/p2p.html" class="btn-epic-tertiary">
+            <div class="btn-content">
+              <div class="btn-icon">💱</div>
+              <div class="btn-text">
+                <span class="btn-main">COMERCIAR P2P</span>
+                <span class="btn-sub">Sin Intermediarios</span>
+              </div>
+            </div>
+            <div class="btn-glow"></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Indicadores de Características -->
+      <div class="hero-features-epic">
+        <div class="feature-item">
+          <div class="feature-icon">🔓</div>
+          <div class="feature-content">
+            <span class="feature-title">100% Descentralizado</span>
+            <span class="feature-desc">Sin control central</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🕵️</div>
+          <div class="feature-content">
+            <span class="feature-title">Sin KYC</span>
+            <span class="feature-desc">Privacidad total</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-content">
+            <span class="feature-title">Ultra Rápido</span>
+            <span class="feature-desc">50,000 TPS</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-content">
+            <span class="feature-title">Inmutable</span>
+            <span class="feature-desc">Seguridad máxima</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard de Estadísticas Épico -->
+    <div class="hero-stats-epic">
+      <div class="stats-container">
+        <div class="stat-card-epic" id="priceCard">
+          <div class="stat-header">
+            <div class="stat-icon">💰</div>
+            <div class="stat-status online"></div>
+          </div>
+          <div class="stat-content">
+        <div class="stat-value" id="rscPrice">$0.00</div>
+        <div class="stat-label">Precio RSC</div>
+        <div class="stat-change" id="priceChange">+0.00%</div>
+      </div>
+          <div class="stat-glow"></div>
+          <div class="stat-particles"></div>
+        </div>
+
+        <div class="stat-card-epic" id="supplyCard">
+          <div class="stat-header">
+            <div class="stat-icon">🪙</div>
+            <div class="stat-status online"></div>
+          </div>
+          <div class="stat-content">
+        <div class="stat-value" id="rscSupply">0</div>
+        <div class="stat-label">RSC en Circulación</div>
+            <div class="stat-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 65%"></div>
+      </div>
+            </div>
+          </div>
+          <div class="stat-glow"></div>
+        </div>
+
+        <div class="stat-card-epic" id="tpsCard">
+          <div class="stat-header">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-status online"></div>
+          </div>
+          <div class="stat-content">
+        <div class="stat-value" id="tpsValue">0</div>
+        <div class="stat-label">TPS</div>
+            <div class="stat-graph">
+              <canvas id="tpsGraph" width="60" height="20"></canvas>
+      </div>
+          </div>
+          <div class="stat-glow"></div>
+        </div>
+
+        <div class="stat-card-epic" id="nodesCard">
+          <div class="stat-header">
+            <div class="stat-icon">🌐</div>
+            <div class="stat-status online"></div>
+          </div>
+          <div class="stat-content">
+        <div class="stat-value" id="nodesValue">0</div>
+        <div class="stat-label">Nodos Activos</div>
+            <div class="stat-map">
+              <div class="node-dots">
+                <span class="node-dot"></span>
+                <span class="node-dot"></span>
+                <span class="node-dot"></span>
+                <span class="node-dot"></span>
+                <span class="node-dot"></span>
+      </div>
+    </div>
+          </div>
+          <div class="stat-glow"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección Técnica Avanzada -->
+    <div class="hero-technical-epic">
+      <div class="technical-header">
+        <h3 class="technical-title">Estado de la Red en Tiempo Real</h3>
+        <div class="technical-status">
+          <div class="status-indicator online"></div>
+          <span>Conectado a RSC Chain</span>
+        </div>
+      </div>
+      
+      <div class="technical-grid">
+        <div class="technical-item">
+          <div class="item-header">
+            <span class="item-label">Último Bloque</span>
+            <span class="item-value" id="lastBlock">#0</span>
+        </div>
+          <div class="item-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 85%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="technical-item">
+          <div class="item-header">
+            <span class="item-label">Última TX</span>
+            <span class="item-value" id="lastTx">0x...</span>
+        </div>
+          <div class="item-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 92%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="technical-item">
+          <div class="item-header">
+            <span class="item-label">Hashrate Global</span>
+            <span class="item-value" id="globalHashrate">0 TH/s</span>
+        </div>
+          <div class="item-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 78%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="technical-item">
+          <div class="item-header">
+            <span class="item-label">Uso de Red</span>
+            <span class="item-value" id="networkUsage">0%</span>
+        </div>
+          <div class="item-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 45%"></div>
+      </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indicador de Scroll Épico -->
+    <div class="scroll-indicator-epic">
+      <div class="scroll-arrow">
+        <div class="arrow-line"></div>
+        <div class="arrow-line"></div>
+        <div class="arrow-line"></div>
+      </div>
+      <span class="scroll-text">Descubre el poder de RSC Chain</span>
+      <div class="scroll-particles"></div>
+    </div>
+
+    <!-- Efectos de Partículas -->
+    <div class="particle-system">
+      <div class="particle-layer" data-speed="0.5"></div>
+      <div class="particle-layer" data-speed="1"></div>
+      <div class="particle-layer" data-speed="1.5"></div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <h2 class="section-title">Características Principales</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">👛</div>
+          <h3>Wallet No Custodial</h3>
+          <p>Control total de tus fondos. Sin intermediarios, sin restricciones.</p>
+          <a href="wallet.html" class="feature-link">Crear Wallet →</a>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⛏️</div>
+          <h3>Minería Distribuida</h3>
+          <p>Mina RSC desde cualquier dispositivo. Recompensas justas y transparentes.</p>
+          <a href="mine.html" class="feature-link">Iniciar Minería →</a>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💱</div>
+          <h3>Trading P2P</h3>
+          <p>Comercio directo entre usuarios. Sin exchanges centralizados.</p>
+          <a href="p2p.html" class="feature-link">Comerciar P2P →</a>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Staking Seguro</h3>
+          <p>Delega tus RSC y gana recompensas. Validadores verificados.</p>
+          <a href="staking.html" class="feature-link">Ver Staking →</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Anuncio deslizante -->
-  <section class="capsule-announcement">
-    <div class="capsule">
-      <div class="slider">
-        <div class="slide">⚡ Mina desde tu navegador</div>
-        <div class="slide">🔒 Vende tus RSC en P2P sin KYC</div>
-        <div class="slide">👛 Crea tu wallet sin complicaciones</div>
-        <div class="slide">🚀 La revolución ya empezó</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sección de características destacadas -->
-  <section class="highlights" id="features">
-    <div class="highlights-container">
-      <div class="highlight-card">
-        <div class="highlight-icon">⚡</div>
-        <h3>Minería Web</h3>
-        <p>Mina RSC directamente desde tu navegador sin necesidad de hardware especializado.</p>
-      </div>
-      <div class="highlight-card">
-        <div class="highlight-icon">🔒</div>
-        <h3>Sin KYC</h3>
-        <p>Comercia de forma privada sin verificación de identidad. Tu privacidad es prioridad.</p>
-      </div>
-      <div class="highlight-card">
-        <div class="highlight-icon">💎</div>
-        <h3>Staking</h3>
-        <p>Gana recompensas por mantener tus RSC bloqueados en el ecosistema.</p>
-      </div>
-      <div class="highlight-card">
-        <div class="highlight-icon">🌐</div>
-        <h3>P2P Trading</h3>
-        <p>Intercambia RSC directamente con otros usuarios sin intermediarios.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sección de estadísticas -->
+  <!-- Stats Section -->
   <section class="stats-section">
-    <div class="stats-container">
-      <div class="stat-card">
-        <div class="stat-value">10,000+</div>
-        <div class="stat-label">Mineros Activos</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">$2.5M</div>
-        <div class="stat-label">Volumen P2P</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">50,000+</div>
-        <div class="stat-label">Wallets Creadas</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">99.9%</div>
-        <div class="stat-label">Uptime</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sección de P2P Preview -->
-  <section class="p2p-preview">
-    <div class="p2p-preview-content">
-      <h2>Comercia Sin Límites</h2>
-      <p>El marketplace P2P más seguro y privado del mundo</p>
-      <div class="p2p-features">
-        <div class="p2p-feature">
-          <span class="feature-icon">🛡️</span>
-          <span>Protección Escrow</span>
+    <div class="container">
+      <h2 class="section-title">Estadísticas en Tiempo Real</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-value" id="marketCap">$0.00</div>
+          <div class="stat-label">Market Cap</div>
         </div>
-        <div class="p2p-feature">
-          <span class="feature-icon">⚡</span>
-          <span>Transacciones Instantáneas</span>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-value" id="volume24h">$0.00</div>
+          <div class="stat-label">Volumen 24h</div>
         </div>
-        <div class="p2p-feature">
-          <span class="feature-icon">🔐</span>
-          <span>Sin KYC Requerido</span>
+        <div class="stat-card">
+          <div class="stat-icon">🔗</div>
+          <div class="stat-value" id="totalBlocks">0</div>
+          <div class="stat-label">Bloques Totales</div>
         </div>
-      </div>
-      <a href="p2p.html" class="btn-p2p-preview">Explorar P2P</a>
-    </div>
-    <div class="p2p-preview-visual">
-      <div class="trading-card">
-        <div class="trading-header">
-          <span class="trading-pair">RSC/USDT</span>
-          <span class="trading-price">$0.85</span>
-        </div>
-        <div class="trading-orders">
-          <div class="order buy">Compra: $0.84</div>
-          <div class="order sell">Venta: $0.86</div>
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-value" id="activeUsers">0</div>
+          <div class="stat-label">Usuarios Activos</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Roadmap Section -->
+  <!-- Roadmap Section - Advanced Isometric 3D -->
   <section class="roadmap-section">
-    <h2 class="roadmap-title">More than just Trust.</h2>
-    <p class="roadmap-subtitle">Roadmap</p>
-
+    <!-- Particle Background -->
+    <div class="particle-container" id="particleContainer"></div>
+    
+    <!-- Navigation Controls -->
+    <div class="roadmap-controls">
+      <button class="control-btn prev-btn" id="prevStage">
+        <span class="btn-icon">←</span>
+        <span class="btn-text">Anterior</span>
+      </button>
+      
+      <div class="stage-indicator">
+        <span class="current-stage" id="currentStage">1</span>
+        <span class="total-stages">/ 6</span>
+      </div>
+      
+      <button class="control-btn next-btn" id="nextStage">
+        <span class="btn-text">Siguiente</span>
+        <span class="btn-icon">→</span>
+      </button>
+      
+      <button class="control-btn zoom-btn" id="zoomToggle">
+        <span class="btn-icon">🔍</span>
+      </button>
+    </div>
+    
     <div class="roadmap-container">
-      <div class="roadmap-column">
-        <div class="roadmap-card">
-          <h3>Q2 2024</h3>
-          <strong>Token Launch</strong>
-          <p>RSC released for mining, staking, and P2P.</p>
+      <h2 class="roadmap-title">BLOCKCHAIN ROADMAP</h2>
+      
+      <!-- Progress Overview -->
+      <div class="progress-overview">
+        <div class="overall-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="overallProgress"></div>
+          </div>
+          <span class="progress-text">Progreso General: <span id="progressPercent">25%</span></span>
         </div>
-        <div class="roadmap-card">
-          <h3>Q3 2024</h3>
-          <strong>Web Mining Live</strong>
-          <p>Start mining RSC directly from the browser.</p>
-        </div>
-        <div class="roadmap-card">
-          <h3>Q4 2024</h3>
-          <strong>P2P Marketplace</strong>
-          <p>Buy and sell RSC with escrow protection.</p>
+        
+        <div class="achievement-badges" id="achievementBadges">
+          <div class="badge completed" data-badge="launch">
+            <span class="badge-icon">🚀</span>
+            <span class="badge-text">Lanzado</span>
+          </div>
+          <div class="badge active" data-badge="protocol">
+            <span class="badge-icon">⚡</span>
+            <span class="badge-text">Protocolo</span>
+          </div>
+          <div class="badge locked" data-badge="upgrade">
+            <span class="badge-icon">🔒</span>
+            <span class="badge-text">Upgrade</span>
+          </div>
         </div>
       </div>
+      
+      <div class="roadmap-isometric" id="roadmapIsometric">
+        <!-- 3D Cubes with Advanced Animation -->
+        <div class="cube cube-1" data-cube="1">
+          <div class="cube-face front"></div>
+          <div class="cube-face back"></div>
+          <div class="cube-face right"></div>
+          <div class="cube-face left"></div>
+          <div class="cube-face top"></div>
+          <div class="cube-face bottom"></div>
+        </div>
+        <div class="cube cube-2" data-cube="2">
+          <div class="cube-face front"></div>
+          <div class="cube-face back"></div>
+          <div class="cube-face right"></div>
+          <div class="cube-face left"></div>
+          <div class="cube-face top"></div>
+          <div class="cube-face bottom"></div>
+        </div>
+        <div class="cube cube-3" data-cube="3">
+          <div class="cube-face front"></div>
+          <div class="cube-face back"></div>
+          <div class="cube-face right"></div>
+          <div class="cube-face left"></div>
+          <div class="cube-face top"></div>
+          <div class="cube-face bottom"></div>
+        </div>
+        
+        <!-- Advanced Roadmap Nodes -->
+        <div class="roadmap-node node-1 completed" data-stage="token-issue" data-progress="100">
+          <div class="node-platform"></div>
+          <div class="node-content">
+            <div class="node-header">
+              <h3 class="node-title">Token Issue</h3>
+              <div class="node-status completed">
+                <span class="status-icon">✅</span>
+                <span class="status-text">Completado</span>
+              </div>
+            </div>
+            <p class="node-description">Lanzamiento inicial del token RSC con distribución inicial a validadores y early adopters.</p>
+            <div class="node-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+              </div>
+              <span class="progress-text">100% Completado</span>
+            </div>
+            <div class="node-metrics">
+              <div class="metric">
+                <span class="metric-value">1M</span>
+                <span class="metric-label">RSC Tokens</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">15</span>
+                <span class="metric-label">Validadores</span>
+              </div>
+            </div>
+            <div class="node-date">
+              <span class="date-text">October 2022</span>
+              <span class="date-dot"></span>
+            </div>
+            <div class="node-links">
+              <a href="https://github.com/rscchain" class="node-link" target="_blank">
+                <span class="link-icon">🐙</span>
+                <span class="link-text">GitHub</span>
+              </a>
+              <a href="docs.html" class="node-link">
+                <span class="link-icon">📖</span>
+                <span class="link-text">Docs</span>
+              </a>
+            </div>
+          </div>
+        </div>
 
-      <div class="holo-core">
-        <div class="glow-circle"></div>
-        <div class="holo-beam"></div>
+        <div class="roadmap-node node-2 completed" data-stage="new-protocol" data-progress="100">
+          <div class="node-platform"></div>
+          <div class="node-content">
+            <div class="node-header">
+              <h3 class="node-title">New Protocol</h3>
+              <div class="node-status completed">
+                <span class="status-icon">✅</span>
+                <span class="status-text">Completado</span>
+              </div>
+            </div>
+            <p class="node-description">Protocolo PoS avanzado implementado con validación distribuida y consenso mejorado.</p>
+            <div class="node-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+              </div>
+              <span class="progress-text">100% Completado</span>
+            </div>
+            <div class="node-metrics">
+              <div class="metric">
+                <span class="metric-value">25</span>
+                <span class="metric-label">Validadores</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">10K+</span>
+                <span class="metric-label">TPS</span>
+              </div>
+            </div>
+            <div class="node-date">
+              <span class="date-text">October 2023</span>
+              <span class="date-dot"></span>
+            </div>
+            <div class="node-links">
+              <a href="explorer.html" class="node-link">
+                <span class="link-icon">🔍</span>
+                <span class="link-text">Explorer</span>
+              </a>
+              <a href="docs.html" class="node-link">
+                <span class="link-icon">📖</span>
+                <span class="link-text">Docs</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-node node-3 active" data-stage="token-upgrade" data-progress="75">
+          <div class="node-platform"></div>
+          <div class="node-content">
+            <div class="node-header">
+              <h3 class="node-title">Token Upgrade</h3>
+              <div class="node-status active">
+                <span class="status-icon">🔄</span>
+                <span class="status-text">En Progreso</span>
+              </div>
+            </div>
+            <p class="node-description">Actualización del token con nuevas funcionalidades DeFi y staking avanzado.</p>
+            <div class="node-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%"></div>
+              </div>
+              <span class="progress-text">75% Completado</span>
+            </div>
+            <div class="node-metrics">
+              <div class="metric">
+                <span class="metric-value">40%</span>
+                <span class="metric-label">Staked</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">8</span>
+                <span class="metric-label">Pools</span>
+              </div>
+            </div>
+            <div class="node-date">
+              <span class="date-text">October 2024</span>
+              <span class="date-dot"></span>
+            </div>
+            <div class="node-links">
+              <a href="staking.html" class="node-link">
+                <span class="link-icon">🔒</span>
+                <span class="link-text">Staking</span>
+              </a>
+              <a href="mine.html" class="node-link">
+                <span class="link-icon">⛏️</span>
+                <span class="link-text">Minería</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-node node-4 pending" data-stage="app-start" data-progress="0">
+          <div class="node-platform"></div>
+          <div class="node-content">
+            <div class="node-header">
+              <h3 class="node-title">APP Start</h3>
+              <div class="node-status pending">
+                <span class="status-icon">⏳</span>
+                <span class="status-text">Pendiente</span>
+              </div>
+            </div>
+            <p class="node-description">Lanzamiento de la aplicación móvil con wallet integrado y trading P2P.</p>
+            <div class="node-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+              </div>
+              <span class="progress-text">0% Completado</span>
+            </div>
+            <div class="node-metrics">
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">Usuarios</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">Transacciones</span>
+              </div>
+            </div>
+            <div class="node-date">
+              <span class="date-text">October 2025</span>
+              <span class="date-dot"></span>
+            </div>
+            <div class="node-links">
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">📱</span>
+                <span class="link-text">App</span>
+              </a>
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">💱</span>
+                <span class="link-text">P2P</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-node node-5 pending" data-stage="distribution" data-progress="0">
+          <div class="node-platform"></div>
+          <div class="node-content">
+            <div class="node-header">
+              <h3 class="node-title">Distribution</h3>
+              <div class="node-status pending">
+                <span class="status-icon">⏳</span>
+                <span class="status-text">Pendiente</span>
+              </div>
+            </div>
+            <p class="node-description">Expansión global con partnerships estratégicos y adopción masiva.</p>
+            <div class="node-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+              </div>
+              <span class="progress-text">0% Completado</span>
+            </div>
+            <div class="node-metrics">
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">Países</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">Partnerships</span>
+              </div>
+            </div>
+            <div class="node-date">
+              <span class="date-text">October 2026</span>
+              <span class="date-dot"></span>
+            </div>
+            <div class="node-links">
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">🌍</span>
+                <span class="link-text">Global</span>
+              </a>
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">🤝</span>
+                <span class="link-text">Partners</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-node node-6 pending" data-stage="moon" data-progress="0">
+          <div class="node-platform"></div>
+          <div class="node-content">
+            <div class="node-header">
+              <h3 class="node-title">To the MOON!</h3>
+              <div class="node-status pending">
+                <span class="status-icon">⏳</span>
+                <span class="status-text">Pendiente</span>
+              </div>
+            </div>
+            <p class="node-description">Dominio total del mercado DeFi y liderazgo en finanzas descentralizadas.</p>
+            <div class="node-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+              </div>
+              <span class="progress-text">0% Completado</span>
+            </div>
+            <div class="node-metrics">
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">Market Cap</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">Usuarios</span>
+              </div>
+            </div>
+            <div class="node-date">
+              <span class="date-text">Future here</span>
+              <span class="date-dot"></span>
+            </div>
+            <div class="node-links">
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">🚀</span>
+                <span class="link-text">Moon</span>
+              </a>
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">💎</span>
+                <span class="link-text">Diamond</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advanced Connection Lines with Animation -->
+        <svg class="connection-lines" viewBox="0 0 1000 600" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#4ECDC4;stop-opacity:1" />
+              <stop offset="50%" style="stop-color:#00FF88;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#4ECDC4;stop-opacity:1" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge> 
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path class="connection-line" d="M 200 500 L 300 400" />
+          <path class="connection-line" d="M 200 500 L 400 300" />
+          <path class="connection-line" d="M 300 400 L 500 200" />
+          <path class="connection-line" d="M 400 300 L 500 200" />
+          <path class="connection-line" d="M 500 200 L 700 100" />
+          <path class="connection-line" d="M 700 100 L 800 50" />
+        </svg>
       </div>
-
-      <div class="roadmap-column">
-        <div class="roadmap-card">
-          <h3>Q1 2025</h3>
-          <strong>Mobile Wallet</strong>
-          <p>Launch of wallet app for Android and iOS.</p>
+      
+      <!-- Gamification Panel -->
+      <div class="gamification-panel">
+        <div class="achievement-unlocked" id="achievementUnlocked">
+          <div class="achievement-content">
+            <span class="achievement-icon">🏆</span>
+            <span class="achievement-text">¡Logro Desbloqueado!</span>
+          </div>
         </div>
-        <div class="roadmap-card">
-          <h3>Q2 2025</h3>
-          <strong>Banking App</strong>
-          <p>KYC-free banking and debit card unveiled.</p>
-        </div>
-        <div class="roadmap-card">
-          <h3>Q3 2025</h3>
-          <strong>Mainnet & Staking</strong>
-          <p>RSCChain network goes live with staking.</p>
+        
+        <div class="community-vote">
+          <h4>¿Qué feature te gustaría ver primero?</h4>
+          <div class="vote-options">
+            <button class="vote-btn" data-feature="p2p">
+              <span class="vote-icon">💱</span>
+              <span class="vote-text">P2P Trading</span>
+              <span class="vote-count">45%</span>
+            </button>
+            <button class="vote-btn" data-feature="bank">
+              <span class="vote-icon">🏦</span>
+              <span class="vote-text">RSC Bank</span>
+              <span class="vote-count">35%</span>
+            </button>
+            <button class="vote-btn" data-feature="mobile">
+              <span class="vote-icon">📱</span>
+              <span class="vote-text">Mobile App</span>
+              <span class="vote-count">20%</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Sección CTA Final -->
-  <section class="final-cta">
-    <div class="cta-content">
-      <h2>¿Listo para la Revolución?</h2>
-      <p>Únete a miles de usuarios que ya están construyendo su futuro financiero con RSC</p>
-      <div class="cta-buttons">
-        <a href="mine.html" class="btn-cta-primary">Comenzar Ahora</a>
-        <a href="faq.html" class="btn-cta-secondary">Saber Más</a>
+  <!-- Contenido Principal - Secciones -->
+  <div class="main-content-sections">
+      
+      <!-- Sección 1: Ecosistema RSC -->
+      <div class="content-section ecosystem-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <span class="title-icon">🌐</span>
+            Ecosistema RSC
+          </h3>
+          <div class="section-status">
+            <span class="status-dot online"></span>
+            <span class="status-text">Red Activa</span>
+          </div>
+        </div>
+        
+        <div class="ecosystem-grid">
+          <div class="ecosystem-item">
+            <div class="item-icon">💎</div>
+            <div class="item-content">
+              <h4>RSC Token</h4>
+              <p>Token nativo de la blockchain</p>
+              <div class="item-metric">
+                <span class="metric-value" id="tokenPrice">$0.00</span>
+                <span class="metric-change positive">+0.00%</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="ecosystem-item">
+            <div class="item-icon">🔒</div>
+            <div class="item-content">
+              <h4>Staking Pool</h4>
+              <p>Delegación de validadores</p>
+              <div class="item-metric">
+                <span class="metric-value" id="stakingAPY">0.00%</span>
+                <span class="metric-label">APY</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="ecosystem-item">
+            <div class="item-icon">⛏️</div>
+            <div class="item-content">
+              <h4>Minería</h4>
+              <p>Consenso distribuido</p>
+              <div class="item-metric">
+                <span class="metric-value" id="hashrate">0 TH/s</span>
+                <span class="metric-label">Hashrate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sección 2: Métricas en Tiempo Real -->
+      <div class="content-section metrics-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <span class="title-icon">📊</span>
+            Métricas en Vivo
+          </h3>
+          <div class="refresh-controls">
+            <button class="refresh-btn" id="refreshMetrics">
+              <span class="btn-icon">🔄</span>
+            </button>
+            <span class="last-update" id="lastUpdate">Actualizando...</span>
+          </div>
+        </div>
+        
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-icon">💰</span>
+              <span class="metric-name">Precio RSC</span>
+            </div>
+            <div class="metric-value" id="livePrice">$0.00</div>
+            <div class="metric-change positive" id="priceChange">+0.00%</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-icon">📈</span>
+              <span class="metric-name">Market Cap</span>
+            </div>
+            <div class="metric-value" id="marketCap">$0.00</div>
+            <div class="metric-change positive" id="capChange">+0.00%</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-icon">🔗</span>
+              <span class="metric-name">Nodos Activos</span>
+            </div>
+            <div class="metric-value" id="activeNodes">0</div>
+            <div class="metric-status online">En Línea</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-icon">⚡</span>
+              <span class="metric-name">TPS</span>
+            </div>
+            <div class="metric-value" id="tps">0</div>
+            <div class="metric-status">Transacciones/s</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-icon">📦</span>
+              <span class="metric-name">Supply Staked</span>
+            </div>
+            <div class="metric-value" id="stakedSupply">0%</div>
+            <div class="metric-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" id="stakedProgress"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-icon">🌍</span>
+              <span class="metric-name">Uptime</span>
+            </div>
+            <div class="metric-value" id="uptime">99.9%</div>
+            <div class="metric-status online">Estable</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sección 3: Productos y Servicios -->
+      <div class="content-section products-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <span class="title-icon">🚀</span>
+            Productos
+          </h3>
+        </div>
+        
+        <div class="products-grid">
+          <a href="wallet.html" class="product-item">
+            <div class="product-icon">💼</div>
+            <div class="product-content">
+              <h4>Wallet</h4>
+              <p>Cartera no custodial</p>
+              <div class="product-status available">Disponible</div>
+            </div>
+          </a>
+          
+          <a href="mine.html" class="product-item">
+            <div class="product-icon">⛏️</div>
+            <div class="product-content">
+              <h4>Minería</h4>
+              <p>Minería distribuida</p>
+              <div class="product-status available">Disponible</div>
+            </div>
+          </a>
+          
+          <a href="p2p.html" class="product-item">
+            <div class="product-icon">💱</div>
+            <div class="product-content">
+              <h4>P2P Trading</h4>
+              <p>Sin KYC, sin límites</p>
+              <div class="product-status beta">Beta</div>
+            </div>
+          </a>
+          
+          <a href="staking.html" class="product-item">
+            <div class="product-icon">🔒</div>
+            <div class="product-content">
+              <h4>Staking</h4>
+              <p>Delegación avanzada</p>
+              <div class="product-status available">Disponible</div>
+            </div>
+          </a>
+          
+          <a href="explorer.html" class="product-item">
+            <div class="product-icon">🔍</div>
+            <div class="product-content">
+              <h4>Explorer</h4>
+              <p>Blockchain explorer</p>
+              <div class="product-status available">Disponible</div>
+            </div>
+          </a>
+          
+          <a href="bank.html" class="product-item">
+            <div class="product-icon">🏦</div>
+            <div class="product-content">
+              <h4>RSC Bank</h4>
+              <p>DeFi nativo</p>
+              <div class="product-status coming">Próximamente</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Sección 4: Comunidad y Soporte -->
+      <div class="content-section community-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <span class="title-icon">👥</span>
+            Comunidad
+          </h3>
+        </div>
+        
+        <div class="community-grid">
+          <a href="#" class="community-item">
+            <div class="community-icon">💬</div>
+            <div class="community-content">
+              <h4>Chat en Vivo</h4>
+              <p>Soporte 24/7</p>
+              <div class="community-status online">En Línea</div>
+            </div>
+          </a>
+          
+          <a href="mailto:support@reeskcapital.co" class="community-item">
+            <div class="community-icon">📧</div>
+            <div class="community-content">
+              <h4>Email</h4>
+              <p>support@reeskcapital.co</p>
+              <div class="community-status">Respuesta 24h</div>
+            </div>
+          </a>
+          
+          <a href="#" class="community-item">
+            <div class="community-icon">📱</div>
+            <div class="community-content">
+              <h4>Telegram</h4>
+              <p>Comunidad oficial</p>
+              <div class="community-status online">+1.2K</div>
+            </div>
+          </a>
+          
+          <a href="#" class="community-item">
+            <div class="community-icon">🐦</div>
+            <div class="community-content">
+              <h4>Twitter</h4>
+              <p>Últimas noticias</p>
+              <div class="community-status">+5.4K</div>
+            </div>
+          </a>
+          
+          <a href="#" class="community-item">
+            <div class="community-icon">🎮</div>
+            <div class="community-content">
+              <h4>Discord</h4>
+              <p>Comunidad activa</p>
+              <div class="community-status online">+2.8K</div>
+            </div>
+          </a>
+          
+          <a href="#" class="community-item">
+            <div class="community-icon">📖</div>
+            <div class="community-content">
+              <h4>Documentación</h4>
+              <p>Guías técnicas</p>
+              <div class="community-status">Actualizada</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Sección 5: Newsletter Avanzado -->
+      <div class="content-section newsletter-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <span class="title-icon">📬</span>
+            Mantente Conectado
+          </h3>
+          <p class="section-subtitle">Recibe las últimas actualizaciones de RSC Chain</p>
+        </div>
+        
+        <div class="newsletter-form">
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input type="email" id="newsletterEmail" placeholder="tu@email.com" class="newsletter-input">
+              <div class="input-icon">📧</div>
+            </div>
+            <div class="validation-message" id="emailValidation"></div>
+          </div>
+          
+          <button class="newsletter-btn" id="newsletterBtn">
+            <span class="btn-text">Suscribirse</span>
+            <span class="btn-icon">→</span>
+            <div class="btn-loading" id="btnLoading"></div>
+          </button>
+        </div>
+        
+        <div class="newsletter-features">
+          <div class="feature-item">
+            <span class="feature-icon">⚡</span>
+            <span class="feature-text">Actualizaciones en tiempo real</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🔒</span>
+            <span class="feature-text">Privacidad garantizada</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">📱</span>
+            <span class="feature-text">Notificaciones móviles</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sección 6: Legal y Estado -->
+      <div class="content-section legal-section">
+        <div class="legal-content">
+          <div class="legal-links">
+            <a href="#" class="legal-link" data-modal="terms">Términos de Uso</a>
+            <a href="#" class="legal-link" data-modal="privacy">Política de Privacidad</a>
+            <a href="#" class="legal-link" data-modal="cookies">Cookies</a>
+            <a href="#" class="legal-link" data-modal="security">Seguridad</a>
+          </div>
+          
+          <div class="system-status">
+            <div class="status-item">
+              <span class="status-label">Uptime</span>
+              <span class="status-value online" id="systemUptime">99.9%</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Versión</span>
+              <span class="status-value" id="systemVersion">V2.1.0</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Red</span>
+              <span class="status-value online" id="networkStatus">Estable</span>
+            </div>
+          </div>
+          
+          <div class="copyright">
+            <p>© 2024 ReeskCapital.co. Todos los derechos reservados.</p>
+            <p>Construido con ❤️ para la libertad financiera.</p>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+    
+    <!-- Modales legales -->
+    <div class="legal-modal" id="termsModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Términos de Uso</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h4>1. Aceptación de Términos</h4>
+          <p>Al acceder y utilizar ReeskCapital.co, aceptas estar sujeto a estos términos de uso.</p>
+          
+          <h4>2. Uso del Servicio</h4>
+          <p>Nuestros servicios están diseñados para facilitar la interacción con la blockchain RSC Chain.</p>
+          
+          <h4>3. Responsabilidades</h4>
+          <p>Los usuarios son responsables de mantener la seguridad de sus wallets y claves privadas.</p>
+          
+          <h4>4. Limitaciones</h4>
+          <p>ReeskCapital.co no se hace responsable de pérdidas financieras derivadas del uso de nuestros servicios.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="legal-modal" id="privacyModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Política de Privacidad</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h4>1. Recopilación de Datos</h4>
+          <p>Recopilamos información mínima necesaria para proporcionar nuestros servicios.</p>
+          
+          <h4>2. Uso de Información</h4>
+          <p>Tu información se utiliza únicamente para mejorar nuestros servicios y experiencia de usuario.</p>
+          
+          <h4>3. Seguridad</h4>
+          <p>Implementamos medidas de seguridad avanzadas para proteger tu información.</p>
+          
+          <h4>4. Derechos del Usuario</h4>
+          <p>Tienes derecho a acceder, modificar y eliminar tu información personal.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="legal-modal" id="cookiesModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Política de Cookies</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h4>1. ¿Qué son las Cookies?</h4>
+          <p>Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo.</p>
+          
+          <h4>2. Tipos de Cookies</h4>
+          <p>Utilizamos cookies técnicas, analíticas y de preferencias para mejorar tu experiencia.</p>
+          
+          <h4>3. Control de Cookies</h4>
+          <p>Puedes gestionar las cookies desde la configuración de tu navegador.</p>
+          
+          <h4>4. Cookies de Terceros</h4>
+          <p>Algunos servicios pueden utilizar cookies de terceros para análisis.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="legal-modal" id="securityModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Seguridad</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h4>1. Encriptación</h4>
+          <p>Toda la comunicación se realiza a través de conexiones encriptadas HTTPS.</p>
+          
+          <h4>2. Wallet Seguro</h4>
+          <p>Las claves privadas nunca salen de tu dispositivo. Tú mantienes el control total.</p>
+          
+          <h4>3. Auditoría</h4>
+          <p>Nuestros sistemas son auditados regularmente por expertos en seguridad.</p>
+          
+          <h4>4. Monitoreo</h4>
+          <p>Monitoreamos constantemente la red para detectar y prevenir amenazas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- Footer -->
-  <footer class="footer">
+  <!-- Chat de Soporte Avanzado - RSC Chain -->
+  <div class="advanced-support-chat" id="supportChat">
+    <!-- Overlay de fondo -->
+    <div class="chat-overlay"></div>
+    
+    <!-- Contenedor principal del chat -->
+    <div class="chat-container">
+      
+      <!-- Header del chat -->
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <div class="chat-avatar">
+            <div class="avatar-icon">🤖</div>
+            <div class="status-indicator online"></div>
+          </div>
+          <div class="chat-info">
+            <h3 class="chat-title">Asistente RSC Chain</h3>
+            <div class="chat-status">
+              <span class="status-dot online"></span>
+              <span class="status-text">En línea</span>
+              <span class="response-time">Respuesta en < 30s</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="chat-header-right">
+          <button class="chat-control-btn" id="minimizeChat" title="Minimizar">
+            <span class="btn-icon">−</span>
+          </button>
+          <button class="chat-control-btn" id="closeChat" title="Cerrar">
+            <span class="btn-icon">×</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Área de conversación -->
+      <div class="chat-messages" id="chatMessages">
+        <!-- Mensaje de bienvenida -->
+        <div class="message assistant-message">
+          <div class="message-avatar">
+            <div class="avatar-icon">🤖</div>
+          </div>
+          <div class="message-content">
+            <div class="message-bubble">
+              <div class="message-text">
+                <p>¡Hola! Soy el asistente inteligente de <strong>RSC Chain</strong>. 🤖</p>
+                <p>Estoy aquí para ayudarte con cualquier consulta sobre nuestra blockchain revolucionaria.</p>
+              </div>
+              <div class="message-time">Ahora</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Categorías de soporte -->
+        <div class="message assistant-message">
+          <div class="message-avatar">
+            <div class="avatar-icon">🤖</div>
+          </div>
+          <div class="message-content">
+            <div class="message-bubble">
+              <div class="message-text">
+                <p><strong>¿En qué puedo ayudarte?</strong></p>
+                <p>Selecciona una categoría o escribe tu consulta:</p>
+              </div>
+              
+              <div class="support-categories">
+                <div class="category-card" data-category="technical">
+                  <div class="category-icon">🔧</div>
+                  <div class="category-content">
+                    <h4>Problemas Técnicos</h4>
+                    <p>Errores, bugs, problemas de conexión</p>
+                  </div>
+                  <div class="category-arrow">→</div>
+                </div>
+                
+                <div class="category-card" data-category="transactions">
+                  <div class="category-icon">💰</div>
+                  <div class="category-content">
+                    <h4>Transacciones</h4>
+                    <p>Consultas sobre pagos y transferencias</p>
+                  </div>
+                  <div class="category-arrow">→</div>
+                </div>
+                
+                <div class="category-card" data-category="mining">
+                  <div class="category-icon">⛏️</div>
+                  <div class="category-content">
+                    <h4>Minería</h4>
+                    <p>Configuración y optimización</p>
+                  </div>
+                  <div class="category-arrow">→</div>
+                </div>
+                
+                <div class="category-card" data-category="staking">
+                  <div class="category-icon">🔒</div>
+                  <div class="category-content">
+                    <h4>Staking</h4>
+                    <p>Delegación y recompensas</p>
+                  </div>
+                  <div class="category-arrow">→</div>
+                </div>
+                
+                <div class="category-card" data-category="p2p">
+                  <div class="category-icon">💱</div>
+                  <div class="category-content">
+                    <h4>P2P Trading</h4>
+                    <p>Intercambios descentralizados</p>
+                  </div>
+                  <div class="category-arrow">→</div>
+                </div>
+                
+                <div class="category-card" data-category="wallet">
+                  <div class="category-icon">💼</div>
+                  <div class="category-content">
+                    <h4>Wallet</h4>
+                    <p>Configuración y seguridad</p>
+                  </div>
+                  <div class="category-arrow">→</div>
+                </div>
+              </div>
+              
+              <div class="message-time">Ahora</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Área de entrada -->
+      <div class="chat-input-area">
+        <div class="input-container">
+          <div class="input-wrapper">
+            <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." class="chat-input">
+            <div class="input-actions">
+              <button class="action-btn" id="attachFile" title="Adjuntar archivo">
+                <span class="btn-icon">📎</span>
+              </button>
+              <button class="action-btn" id="emojiBtn" title="Emojis">
+                <span class="btn-icon">😊</span>
+              </button>
+            </div>
+          </div>
+          <button class="send-btn" id="sendMessage" disabled>
+            <span class="send-icon">→</span>
+          </button>
+        </div>
+        
+        <!-- Indicadores de escritura -->
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <span class="typing-text">Asistente escribiendo...</span>
+        </div>
+      </div>
+      
+      <!-- Panel de emojis -->
+      <div class="emoji-panel" id="emojiPanel">
+        <div class="emoji-grid">
+          <span class="emoji" data-emoji="😊">😊</span>
+          <span class="emoji" data-emoji="👍">👍</span>
+          <span class="emoji" data-emoji="❤️">❤️</span>
+          <span class="emoji" data-emoji="🚀">🚀</span>
+          <span class="emoji" data-emoji="💎">💎</span>
+          <span class="emoji" data-emoji="⚡">⚡</span>
+          <span class="emoji" data-emoji="🔧">🔧</span>
+          <span class="emoji" data-emoji="💰">💰</span>
+          <span class="emoji" data-emoji="⛏️">⛏️</span>
+          <span class="emoji" data-emoji="🔒">🔒</span>
+          <span class="emoji" data-emoji="💱">💱</span>
+          <span class="emoji" data-emoji="💼">💼</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Botón flotante para abrir chat -->
+    <div class="chat-toggle" id="chatToggle">
+      <div class="toggle-icon">💬</div>
+      <div class="toggle-badge" id="messageBadge">0</div>
+    </div>
+    
+    <!-- Notificaciones del chat -->
+    <div class="chat-notification" id="chatNotification">
+      <div class="notification-content">
+        <span class="notification-icon">🔔</span>
+        <span class="notification-text">Nuevo mensaje del asistente</span>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  
+  <!-- Separador visual antes del footer -->
+  <div class="footer-separator-main"></div>
+  
+  <!-- Footer Épico - RSC Chain -->
+  <footer class="footer-epic">
+    <!-- Fondo del Footer -->
+    <div class="footer-background">
+      <div class="footer-particles"></div>
+      <div class="footer-grid"></div>
+    </div>
+
+    <!-- Contenido del Footer -->
     <div class="footer-content">
-      <div class="footer-logo">
-        <img src="assets/img/logo.png" alt="RSC Chain Footer Logo">
-        <span>RSC Chain © 2024</span>
+      <!-- Sección Principal -->
+      <div class="footer-main">
+        <!-- Logo y Descripción -->
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="assets/img/logo.png" alt="RSC Chain Logo">
+            <span>ReeskCapital.co</span>
+          </div>
+          <p class="footer-description">
+            La blockchain más avanzada y rebelde del mundo. 
+            Sin bancos, sin fronteras, sin permiso.
+          </p>
+        </div>
+
+        <!-- Enlaces Rápidos -->
+        <div class="footer-links">
+          <h3>Enlaces Rápidos</h3>
+          <ul>
+            <li><a href="index.html">🏠 Inicio</a></li>
+            <li><a href="pages/about.html">ℹ️ Acerca</a></li>
+            <li><a href="pages/wallet.html">👛 Wallet</a></li>
+            <li><a href="pages/mine.html">⛏️ Minar</a></li>
+            <li><a href="pages/p2p.html">🤝 P2P</a></li>
+            <li><a href="pages/staking.html">💰 Staking</a></li>
+            <li><a href="pages/explorer.html">🔍 Explorer</a></li>
+            <li><a href="pages/bank.html">🏦 Bank</a></li>
+            <li><a href="pages/docs.html">📚 Docs</a></li>
+          </ul>
+        </div>
+
+        <!-- Redes Sociales -->
+        <div class="footer-social">
+          <h3>Síguenos</h3>
+          <div class="social-links">
+            <a href="#" class="social-link" title="Twitter">
+              <span class="social-icon">🐦</span>
+              <span class="social-name">Twitter</span>
+            </a>
+            <a href="#" class="social-link" title="Telegram">
+              <span class="social-icon">📱</span>
+              <span class="social-name">Telegram</span>
+            </a>
+            <a href="#" class="social-link" title="Discord">
+              <span class="social-icon">🎮</span>
+              <span class="social-name">Discord</span>
+            </a>
+            <a href="#" class="social-link" title="GitHub">
+              <span class="social-icon">💻</span>
+              <span class="social-name">GitHub</span>
+            </a>
+            <a href="#" class="social-link" title="YouTube">
+              <span class="social-icon">📺</span>
+              <span class="social-name">YouTube</span>
+            </a>
+            <a href="#" class="social-link" title="Medium">
+              <span class="social-icon">📝</span>
+              <span class="social-name">Medium</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Información de Contacto -->
+        <div class="footer-contact">
+          <h3>Contacto</h3>
+          <div class="contact-info">
+            <div class="contact-item">
+              <span class="contact-icon">📧</span>
+              <span class="contact-text">info@reeskcapital.co</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">🌐</span>
+              <span class="contact-text">reeskcapital.co</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">📍</span>
+              <span class="contact-text">Descentralizado Global</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <ul class="footer-links">
-        <li><a href="#">Términos</a></li>
-        <li><a href="#">Privacidad</a></li>
-        <li><a href="#">Contacto</a></li>
-        <li><a href="#">Telegram</a></li>
-        <li><a href="#">Twitter/X</a></li>
-      </ul>
-    </div>
-    <div class="footer-note">
-      <span>Sin bancos, sin fronteras.</span>
+
+      <!-- Separador -->
+      <div class="footer-separator"></div>
+
+      <!-- Sección Inferior -->
+      <div class="footer-bottom">
+        <!-- Derechos de Autor -->
+        <div class="footer-copyright">
+          <p>&copy; 2024 ReeskCapital.co - RSC Chain. Todos los derechos reservados.</p>
+          <p>La revolución financiera que cambiará el mundo para siempre.</p>
+        </div>
+
+        <!-- Enlaces Legales -->
+        <div class="footer-legal">
+          <a href="#" class="legal-link">📋 Términos de Servicio</a>
+          <a href="#" class="legal-link">🔒 Política de Privacidad</a>
+          <a href="#" class="legal-link">🍪 Política de Cookies</a>
+          <a href="#" class="legal-link">⚖️ Aviso Legal</a>
+        </div>
+      </div>
     </div>
   </footer>
 
   <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/animations.js"></script>
-  <script src="assets/js/hero-3d.js"></script>
+  <script src="scripts/config.js"></script>
+  <script src="scripts/blockchain-connection.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/init.js"></script>
+  <script src="scripts/animations.js"></script>
+  <script src="scripts/hero-3d.js"></script>
+  <script src="scripts/hero-effects.js"></script>
+  <script src="scripts/hero-epic.js"></script>
+  <script src="scripts/blockchain-data.js"></script>
+  <script src="scripts/charts.js"></script>
+  <script src="scripts/websocket.js"></script>
+  <script src="scripts/testing.js"></script>
+  <script src="scripts/debug.js"></script>
+  <script src="scripts/error-fix.js"></script>
+  <script src="scripts/wallet.js"></script>
+  <script src="scripts/mining.js"></script>
+  <script src="scripts/p2p.js"></script>
+  <script src="scripts/staking.js"></script>
+  <script src="scripts/explorer.js"></script>
+  <script src="scripts/bank.js"></script>
+  <script src="scripts/about.js"></script>
+  <script src="scripts/docs.js"></script>
+  <script src="scripts/chat.js"></script>
+  <script src="scripts/faq.js"></script>
+  <script src="scripts/roadmap.js"></script>
+  <script src="scripts/p2p-enhanced.js"></script>
+  <script src="scripts/wallet-enhanced.js"></script>
+  <script src="scripts/staking-enhanced.js"></script>
+  <script src="scripts/footer.js"></script>
+  <script src="scripts/chat-debug.js"></script>
+  <script src="scripts/chat-emergency.js"></script>
+  <script src="scripts/chat-production.js"></script>
+  <script src="scripts/responsive.js"></script>
+  <script src="scripts/navbar-mobile.js"></script>
+  <script src="scripts/notifications.js"></script>
+  <script src="scripts/cleanup.js"></script>
+  <script src="scripts/fix-debug.js"></script>
+  <script src="scripts/remove-debug.js"></script>
+  <script src="scripts/feature-flags.js"></script>
+  <script src="scripts/test-feature-flags.js"></script>
+  <script src="scripts/test-blockchain.js"></script>
+  <script src="scripts/admin-panel.js"></script>
+  <script src="scripts/ai-assistant.js"></script>
+  <script src="scripts/chat-component.js"></script>
+  <script src="scripts/stats-enhanced.js"></script>
 </body>
 </html>

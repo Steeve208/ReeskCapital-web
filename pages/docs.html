@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentación RSC Chain - ReeskCapital.co</title>
+  <meta name="description" content="Documentación oficial de RSC Chain. Whitepaper, API, guías de desarrollo y más.">
+  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/docs.css">
+  <link rel="stylesheet" href="../styles/notifications.css">
+  <link rel="stylesheet" href="../styles/animations.css">
+  <link rel="stylesheet" href="../styles/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Prism.js para syntax highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body class="dark-mode">
+  <!-- Fondo 4D animado -->
+  <div class="background-4d"></div>
+  
+  <!-- Contenedor de notificaciones -->
+  <div class="notifications-container" id="notificationsContainer"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+      <span>ReeskCapital.co</span>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="about.html">Acerca</a></li>
+      <li><a href="wallet.html">Wallet</a></li>
+      <li><a href="mine.html">Minar</a></li>
+      <li><a href="p2p.html">P2P</a></li>
+      <li><a href="staking.html">Staking</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
+      <li><a href="bank.html">Bank</a></li>
+      <li><a href="docs.html" class="active">Docs</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="language-selector" id="languageSelector">
+        <span>ES</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+    <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+  </nav>
+
+  <!-- Docs Container Mejorado -->
+  <div class="docs-container-enhanced">
+    <!-- Sidebar Avanzado -->
+    <aside class="docs-sidebar-enhanced">
+      <!-- Header del Sidebar -->
+      <div class="sidebar-header">
+        <div class="docs-logo">
+          <div class="logo-icon">📚</div>
+          <div class="logo-text">
+            <h3>RSC Docs</h3>
+            <span class="version">v2.1.0</span>
+          </div>
+        </div>
+        
+        <!-- Búsqueda Inteligente -->
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <input type="text" id="docsSearch" placeholder="Buscar en documentación..." class="search-input-enhanced">
+            <div class="search-icon">🔍</div>
+            <div class="search-shortcuts">
+              <span class="shortcut">⌘K</span>
+            </div>
+          </div>
+          <div class="search-results-dropdown" id="searchResults">
+            <!-- Resultados dinámicos -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Navegación Mejorada -->
+      <nav class="docs-navigation-enhanced">
+        <div class="nav-section">
+          <h4 class="nav-section-title">📖 Documentación</h4>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#whitepaper" class="nav-link active" data-section="whitepaper">
+          <span class="nav-icon">📄</span>
+          <span class="nav-text">Whitepaper</span>
+                <span class="nav-badge">Oficial</span>
+        </a>
+            </li>
+            <li class="nav-item">
+              <a href="#api" class="nav-link" data-section="api">
+          <span class="nav-icon">🔌</span>
+                <span class="nav-text">API Reference</span>
+                <span class="nav-badge">v1.0</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#sdk" class="nav-link" data-section="sdk">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">SDK & Libraries</span>
+                <span class="nav-badge">Nuevo</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <h4 class="nav-section-title">🚀 Guías Prácticas</h4>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#quickstart" class="nav-link" data-section="quickstart">
+                <span class="nav-icon">⚡</span>
+                <span class="nav-text">Quick Start</span>
+                <span class="nav-badge">5 min</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#wallet-guide" class="nav-link" data-section="wallet-guide">
+                <span class="nav-icon">💼</span>
+                <span class="nav-text">Wallet Integration</span>
+                <span class="nav-badge">15 min</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#mining-guide" class="nav-link" data-section="mining-guide">
+                <span class="nav-icon">⛏️</span>
+                <span class="nav-text">Mining Setup</span>
+                <span class="nav-badge">20 min</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#staking-guide" class="nav-link" data-section="staking-guide">
+                <span class="nav-icon">🔒</span>
+                <span class="nav-text">Staking Guide</span>
+                <span class="nav-badge">10 min</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <h4 class="nav-section-title">🔧 Desarrollo</h4>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#nodes" class="nav-link" data-section="nodes">
+          <span class="nav-icon">🖥️</span>
+                <span class="nav-text">Node Setup</span>
+                <span class="nav-badge">30 min</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#smart-contracts" class="nav-link" data-section="smart-contracts">
+                <span class="nav-icon">📜</span>
+                <span class="nav-text">Smart Contracts</span>
+                <span class="nav-badge">Beta</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#dapps" class="nav-link" data-section="dapps">
+                <span class="nav-icon">🌐</span>
+                <span class="nav-text">dApp Development</span>
+                <span class="nav-badge">45 min</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <h4 class="nav-section-title">📊 Análisis</h4>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#tokenomics" class="nav-link" data-section="tokenomics">
+          <span class="nav-icon">💰</span>
+          <span class="nav-text">Tokenomics</span>
+                <span class="nav-badge">Detallado</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#analytics" class="nav-link" data-section="analytics">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Analytics API</span>
+                <span class="nav-badge">Nuevo</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Footer del Sidebar -->
+      <div class="sidebar-footer">
+        <div class="docs-status">
+          <div class="status-indicator online"></div>
+          <span>Documentación actualizada</span>
+        </div>
+        <div class="docs-actions">
+          <button class="action-btn" id="printDocs" title="Imprimir">
+            <span>🖨️</span>
+          </button>
+          <button class="action-btn" id="exportDocs" title="Exportar PDF">
+            <span>📄</span>
+          </button>
+          <button class="action-btn" id="shareDocs" title="Compartir">
+            <span>📤</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Contenido Principal Mejorado -->
+    <main class="docs-main-enhanced">
+      <!-- Breadcrumb -->
+      <nav class="docs-breadcrumb">
+        <ol class="breadcrumb-list">
+          <li class="breadcrumb-item">
+            <a href="../index.html">Inicio</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="docs.html">Documentación</a>
+          </li>
+          <li class="breadcrumb-item active" id="currentPage">
+            <span>Whitepaper</span>
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Contenido Dinámico -->
+      <div class="docs-content-wrapper">
+        <!-- Página: Whitepaper Mejorado -->
+      <div class="docs-page active" id="whitepaper-page">
+          <div class="page-header-enhanced">
+            <div class="header-content">
+              <h1 class="page-title">Whitepaper RSC Chain</h1>
+              <p class="page-subtitle">Documento técnico completo de la blockchain RSC Chain</p>
+              <div class="page-meta">
+                <span class="meta-item">
+                  <span class="meta-icon">📅</span>
+                  <span>Última actualización: 15 Mar 2024</span>
+                </span>
+                <span class="meta-item">
+                  <span class="meta-icon">👁️</span>
+                  <span>2.3k lecturas</span>
+                </span>
+                <span class="meta-item">
+                  <span class="meta-icon">⭐</span>
+                  <span>4.8/5 rating</span>
+                </span>
+              </div>
+            </div>
+            <div class="header-actions">
+              <button class="btn-primary" id="downloadWhitepaper">
+                <span class="btn-icon">📄</span>
+                <span class="btn-text">Descargar PDF</span>
+              </button>
+              <button class="btn-secondary" id="viewOnline">
+                <span class="btn-icon">👁️</span>
+                <span class="btn-text">Ver Online</span>
+              </button>
+            </div>
+        </div>
+
+          <div class="whitepaper-content-enhanced">
+            <!-- Tabla de Contenidos Interactiva -->
+            <div class="toc-container">
+              <div class="toc-header">
+                <h3>📋 Tabla de Contenidos</h3>
+                <button class="toc-toggle" id="tocToggle">
+                  <span class="toggle-icon">▼</span>
+                </button>
+              </div>
+              <div class="toc-content" id="tocContent">
+                <ul class="toc-list">
+                  <li class="toc-item">
+                    <a href="#introduction" class="toc-link">
+                      <span class="toc-number">1</span>
+                      <span class="toc-text">Introducción</span>
+                      <span class="toc-pages">1-5</span>
+                    </a>
+                  </li>
+                  <li class="toc-item">
+                    <a href="#architecture" class="toc-link">
+                      <span class="toc-number">2</span>
+                      <span class="toc-text">Arquitectura Técnica</span>
+                      <span class="toc-pages">6-15</span>
+                    </a>
+                  </li>
+                  <li class="toc-item">
+                    <a href="#consensus" class="toc-link">
+                      <span class="toc-number">3</span>
+                      <span class="toc-text">Consenso y Validación</span>
+                      <span class="toc-pages">16-25</span>
+                    </a>
+                  </li>
+                  <li class="toc-item">
+                    <a href="#tokenomics" class="toc-link">
+                      <span class="toc-number">4</span>
+                      <span class="toc-text">Tokenomics</span>
+                      <span class="toc-pages">26-35</span>
+                    </a>
+                  </li>
+                  <li class="toc-item">
+                    <a href="#security" class="toc-link">
+                      <span class="toc-number">5</span>
+                      <span class="toc-text">Seguridad y Privacidad</span>
+                      <span class="toc-pages">36-45</span>
+                    </a>
+                  </li>
+                  <li class="toc-item">
+                    <a href="#roadmap" class="toc-link">
+                      <span class="toc-number">6</span>
+                      <span class="toc-text">Roadmap y Desarrollo</span>
+                      <span class="toc-pages">46-55</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Resumen Ejecutivo Interactivo -->
+            <div class="executive-summary">
+              <div class="summary-header">
+                <h3>📊 Resumen Ejecutivo</h3>
+                <div class="summary-stats">
+                  <div class="stat-item">
+                    <span class="stat-value">50,000</span>
+                    <span class="stat-label">TPS</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value">1B</span>
+                    <span class="stat-label">Supply Total</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-label">Descentralizado</span>
+          </div>
+                </div>
+              </div>
+              <div class="summary-content">
+                <p>RSC Chain es una blockchain de nueva generación diseñada para democratizar el acceso a servicios financieros. Utilizando tecnología de consenso avanzada y arquitectura modular, RSC Chain ofrece:</p>
+                <div class="features-grid">
+                  <div class="feature-item">
+                    <div class="feature-icon">⛏️</div>
+                    <div class="feature-content">
+                      <h4>Minería Web</h4>
+                      <p>Accesible desde cualquier navegador</p>
+                    </div>
+                  </div>
+                  <div class="feature-item">
+                    <div class="feature-icon">💱</div>
+                    <div class="feature-content">
+                      <h4>Trading P2P</h4>
+                      <p>Sin KYC, sin intermediarios</p>
+                    </div>
+                  </div>
+                  <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-content">
+                      <h4>Staking Avanzado</h4>
+                      <p>Recompensas optimizadas</p>
+                    </div>
+                  </div>
+                  <div class="feature-item">
+                    <div class="feature-icon">🏦</div>
+                    <div class="feature-content">
+                      <h4>DeFi Nativo</h4>
+                      <p>Banca descentralizada</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contenido del Whitepaper -->
+            <div class="whitepaper-sections">
+              <section id="introduction" class="whitepaper-section">
+                <div class="section-header">
+                  <h2>1. Introducción</h2>
+                  <div class="section-meta">
+                    <span class="meta-item">📄 Páginas 1-5</span>
+                    <span class="meta-item">⏱️ 10 min lectura</span>
+                  </div>
+                </div>
+                <div class="section-content">
+                  <p>RSC Chain representa la evolución de las finanzas descentralizadas, combinando la seguridad de la blockchain tradicional con la velocidad y eficiencia de las tecnologías más avanzadas.</p>
+                  
+                  <div class="highlight-box">
+                    <div class="highlight-icon">💡</div>
+                    <div class="highlight-content">
+                      <h4>¿Por qué RSC Chain?</h4>
+                      <ul>
+                        <li>Minería accesible para todos</li>
+                        <li>Transacciones instantáneas</li>
+                        <li>Privacidad garantizada</li>
+                        <li>Ecosistema completo DeFi</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section id="architecture" class="whitepaper-section">
+                <div class="section-header">
+                  <h2>2. Arquitectura Técnica</h2>
+                  <div class="section-meta">
+                    <span class="meta-item">📄 Páginas 6-15</span>
+                    <span class="meta-item">⏱️ 15 min lectura</span>
+              </div>
+                </div>
+                <div class="section-content">
+                  <p>La arquitectura de RSC Chain está diseñada para maximizar la eficiencia y seguridad mientras mantiene la descentralización.</p>
+                  
+                  <div class="architecture-diagram">
+                    <div class="diagram-container">
+                      <div class="diagram-layer">
+                        <h4>Layer 1: Blockchain Core</h4>
+                        <div class="layer-components">
+                          <div class="component">Consensus Engine</div>
+                          <div class="component">Block Validator</div>
+                          <div class="component">Network Protocol</div>
+                        </div>
+                      </div>
+                      <div class="diagram-layer">
+                        <h4>Layer 2: Application Layer</h4>
+                        <div class="layer-components">
+                          <div class="component">Smart Contracts</div>
+                          <div class="component">dApps</div>
+                          <div class="component">APIs</div>
+                        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+              </section>
+          </div>
+        </div>
+      </div>
+
+        <!-- Página: API Reference Mejorado -->
+      <div class="docs-page" id="api-page">
+          <div class="page-header-enhanced">
+            <div class="header-content">
+              <h1 class="page-title">API Reference</h1>
+              <p class="page-subtitle">Documentación completa de la API REST de RSC Chain</p>
+              <div class="page-meta">
+                <span class="meta-item">
+                  <span class="meta-icon">🔗</span>
+                  <span>Base URL: https://rsc-chain-production.up.railway.app/api</span>
+                </span>
+                <span class="meta-item">
+                  <span class="meta-icon">📊</span>
+                  <span>15 endpoints disponibles</span>
+                </span>
+                <span class="meta-item">
+                  <span class="meta-icon">⚡</span>
+                  <span>99.9% uptime</span>
+                </span>
+              </div>
+            </div>
+            <div class="header-actions">
+              <button class="btn-primary" id="testAPI">
+                <span class="btn-icon">🧪</span>
+                <span class="btn-text">Probar API</span>
+              </button>
+              <button class="btn-secondary" id="downloadSDK">
+                <span class="btn-icon">📦</span>
+                <span class="btn-text">Descargar SDK</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="api-content-enhanced">
+            <!-- API Tester Interactivo -->
+            <div class="api-tester">
+              <div class="tester-header">
+                <h3>🧪 API Tester</h3>
+                <p>Prueba los endpoints en tiempo real</p>
+              </div>
+              <div class="tester-content">
+                <div class="endpoint-selector">
+                  <select id="endpointSelect" class="endpoint-dropdown">
+                    <option value="wallet/create">POST /wallet/create</option>
+                    <option value="wallet/balance">GET /wallet/:address</option>
+                    <option value="tx/send">POST /tx/send</option>
+                    <option value="mining/start">POST /mining/start</option>
+                    <option value="blockchain/stats">GET /blockchain/stats</option>
+                  </select>
+                </div>
+                <div class="request-builder">
+                  <div class="request-tabs">
+                    <button class="tab-btn active" data-tab="params">Parámetros</button>
+                    <button class="tab-btn" data-tab="headers">Headers</button>
+                    <button class="tab-btn" data-tab="body">Body</button>
+                  </div>
+                  <div class="request-content">
+                    <div class="tab-content active" id="paramsTab">
+                      <div class="param-input">
+                        <label>Address:</label>
+                        <input type="text" placeholder="0x..." class="form-input">
+                      </div>
+                    </div>
+                    <div class="tab-content" id="headersTab">
+                      <div class="header-input">
+                        <label>Content-Type:</label>
+                        <input type="text" value="application/json" class="form-input">
+                      </div>
+                </div>
+                    <div class="tab-content" id="bodyTab">
+                      <textarea placeholder="JSON body..." class="form-textarea"></textarea>
+                </div>
+              </div>
+                </div>
+                <div class="request-actions">
+                  <button class="btn-primary" id="sendRequest">
+                    <span class="btn-icon">🚀</span>
+                    <span class="btn-text">Enviar Request</span>
+                  </button>
+                  <button class="btn-secondary" id="copyCurl">
+                    <span class="btn-icon">📋</span>
+                    <span class="btn-text">Copiar cURL</span>
+                  </button>
+                </div>
+              </div>
+              <div class="response-viewer">
+                <div class="response-header">
+                  <h4>Response</h4>
+                  <div class="response-status">
+                    <span class="status-code success">200 OK</span>
+                    <span class="response-time">45ms</span>
+                </div>
+                </div>
+                <div class="response-content">
+                  <pre><code class="language-json" id="responseCode">
+{
+  "success": true,
+  "data": {
+    "address": "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6",
+    "balance": 1000.5
+  }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Endpoints Organizados -->
+            <div class="endpoints-section">
+              <h3>📚 Endpoints por Categoría</h3>
+              
+              <div class="endpoint-category">
+                <h4>💼 Wallet</h4>
+                <div class="endpoints-grid">
+                  <div class="endpoint-card">
+                    <div class="endpoint-header">
+                      <span class="method get">GET</span>
+                      <span class="path">/wallet/:address</span>
+            </div>
+                    <p class="endpoint-desc">Obtener balance de una dirección</p>
+                    <div class="endpoint-meta">
+                      <span class="meta-tag">Autenticación: No</span>
+                      <span class="meta-tag">Rate Limit: 100/min</span>
+              </div>
+                    <button class="try-endpoint" data-endpoint="wallet/balance">Probar</button>
+              </div>
+                  
+                  <div class="endpoint-card">
+                    <div class="endpoint-header">
+                      <span class="method post">POST</span>
+                      <span class="path">/wallet/create</span>
+              </div>
+                    <p class="endpoint-desc">Crear nueva wallet</p>
+                    <div class="endpoint-meta">
+                      <span class="meta-tag">Autenticación: No</span>
+                      <span class="meta-tag">Rate Limit: 10/min</span>
+            </div>
+                    <button class="try-endpoint" data-endpoint="wallet/create">Probar</button>
+          </div>
+        </div>
+      </div>
+
+              <div class="endpoint-category">
+                <h4>⛏️ Mining</h4>
+                <div class="endpoints-grid">
+                  <div class="endpoint-card">
+                    <div class="endpoint-header">
+                      <span class="method post">POST</span>
+                      <span class="path">/mining/start</span>
+                    </div>
+                    <p class="endpoint-desc">Iniciar sesión de minería</p>
+                    <div class="endpoint-meta">
+                      <span class="meta-tag">Autenticación: Sí</span>
+                      <span class="meta-tag">Rate Limit: 1/min</span>
+        </div>
+                    <button class="try-endpoint" data-endpoint="mining/start">Probar</button>
+                  </div>
+                  
+                  <div class="endpoint-card">
+                    <div class="endpoint-header">
+                      <span class="method get">GET</span>
+                      <span class="path">/mining/status</span>
+                </div>
+                    <p class="endpoint-desc">Estado de minería</p>
+                    <div class="endpoint-meta">
+                      <span class="meta-tag">Autenticación: Sí</span>
+                      <span class="meta-tag">Rate Limit: 60/min</span>
+                  </div>
+                    <button class="try-endpoint" data-endpoint="mining/status">Probar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+              </div>
+
+        <!-- Página: Quick Start -->
+        <div class="docs-page" id="quickstart-page">
+          <div class="page-header-enhanced">
+            <div class="header-content">
+              <h1 class="page-title">Quick Start Guide</h1>
+              <p class="page-subtitle">Comienza con RSC Chain en 5 minutos</p>
+              <div class="page-meta">
+                <span class="meta-item">
+                  <span class="meta-icon">⏱️</span>
+                  <span>5 minutos</span>
+                </span>
+                <span class="meta-item">
+                  <span class="meta-icon">📊</span>
+                  <span>Nivel: Principiante</span>
+                </span>
+                <span class="meta-item">
+                  <span class="meta-icon">✅</span>
+                  <span>100% funcional</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="quickstart-content">
+            <div class="progress-tracker">
+              <div class="progress-step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                  <h4>Crear Wallet</h4>
+                  <p>Genera tu primera wallet</p>
+                </div>
+              </div>
+              <div class="progress-step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                  <h4>Obtener RSC</h4>
+                  <p>Recibe tokens iniciales</p>
+                </div>
+              </div>
+              <div class="progress-step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                  <h4>Iniciar Minería</h4>
+                  <p>Comienza a minar</p>
+                </div>
+              </div>
+              <div class="progress-step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                  <h4>Primera Transacción</h4>
+                  <p>Envía RSC tokens</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-content">
+              <div class="step-panel active" id="step1">
+                <h3>Paso 1: Crear tu Wallet</h3>
+                <p>Una wallet es tu identidad en la blockchain. Te permite recibir, enviar y almacenar RSC tokens.</p>
+                
+                <div class="code-example">
+                  <div class="code-header">
+                    <span>JavaScript</span>
+                    <button class="copy-btn" data-code="wallet-code">📋</button>
+                  </div>
+                  <pre><code class="language-javascript" id="wallet-code">
+// Crear wallet usando la API
+const response = await fetch('/api/wallet/create', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+const wallet = await response.json();
+console.log('Wallet creada:', wallet.address);</code></pre>
+                  </div>
+
+                <div class="interactive-demo">
+                  <h4>🧪 Demo Interactivo</h4>
+                  <button class="btn-primary" id="createWalletDemo">
+                    <span class="btn-icon">💼</span>
+                    <span class="btn-text">Crear Wallet Demo</span>
+                  </button>
+                  <div class="demo-result" id="walletResult">
+                    <!-- Resultado del demo -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de Navegación Flotante -->
+      <div class="floating-nav">
+        <button class="nav-btn" id="prevPage" title="Página anterior">
+          <span>←</span>
+        </button>
+        <button class="nav-btn" id="nextPage" title="Página siguiente">
+          <span>→</span>
+        </button>
+        <button class="nav-btn" id="backToTop" title="Volver arriba">
+          <span>↑</span>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../scripts/feature-flags.js"></script>
+  <script src="../scripts/admin-panel.js"></script>
+  <script src="../scripts/ai-assistant.js"></script>
+  <script src="../scripts/chat-component.js"></script>
+  <script src="../scripts/config.js"></script>
+  <script src="../scripts/cleanup.js"></script>
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/docs.js"></script>
+  <script src="../scripts/notifications.js"></script>
+  <script src="../scripts/animations.js"></script>
+  <script src="../scripts/init.js"></script>
+  <script src="../scripts/debug.js"></script>
+  <script src="../scripts/chat.js"></script>
+  <script src="../scripts/error-fix.js"></script>
+</body>
+</html> 

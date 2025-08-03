@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC P2P Trading Épico - ReeskCapital.co</title>
+  <meta name="description" content="Comercia RSC sin KYC. El marketplace P2P más seguro, privado y épico del mundo.">
+  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/p2p.css">
+  <link rel="stylesheet" href="../styles/notifications.css">
+  <link rel="stylesheet" href="../styles/animations.css">
+  <link rel="stylesheet" href="../styles/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="dark-mode">
+  <!-- Fondo 4D animado -->
+  <div class="background-4d"></div>
+  
+  <!-- Contenedor de notificaciones -->
+  <div class="notifications-container" id="notificationsContainer"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+      <span>ReeskCapital.co</span>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="about.html">Acerca</a></li>
+      <li><a href="wallet.html">Wallet</a></li>
+      <li><a href="mine.html">Minar</a></li>
+      <li><a href="p2p.html" class="active">P2P</a></li>
+      <li><a href="staking.html">Staking</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
+      <li><a href="bank.html">Bank</a></li>
+      <li><a href="docs.html">Docs</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="language-selector" id="languageSelector">
+        <span>ES</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+    <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+  </nav>
+
+  <!-- P2P Épico -->
+  <main class="p2p-epic">
+    <!-- Header Épico -->
+    <header class="p2p-header-epic">
+      <div class="header-content">
+        <div class="header-title">
+          <h1 class="epic-title">
+            <span class="title-word">RSC</span>
+            <span class="title-word">P2P</span>
+            <span class="title-word">TRADING</span>
+          </h1>
+          <p class="epic-subtitle">Comercia RSC sin KYC, sin límites, sin intermediarios</p>
+        </div>
+        
+        <div class="header-stats">
+          <div class="stat-item">
+            <div class="stat-icon">📈</div>
+            <div class="stat-content">
+              <div class="stat-value" id="totalVolume">$0.00</div>
+              <div class="stat-label">Volumen 24h</div>
+            </div>
+            <div class="stat-glow"></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">💱</div>
+            <div class="stat-content">
+              <div class="stat-value" id="activeTrades">0</div>
+              <div class="stat-label">Trades Activos</div>
+            </div>
+            <div class="stat-glow"></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">👥</div>
+            <div class="stat-content">
+              <div class="stat-value" id="activeUsers">0</div>
+              <div class="stat-label">Usuarios Activos</div>
+            </div>
+            <div class="stat-glow"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Nivel de Trader -->
+      <div class="trader-level-epic">
+        <div class="level-container">
+          <div class="level-badge">
+            <div class="level-icon">🏆</div>
+            <div class="level-info">
+              <div class="level-title">Trader Épico</div>
+              <div class="level-number">7</div>
+            </div>
+          </div>
+          <div class="level-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 85%"></div>
+            </div>
+            <div class="progress-text">85% al siguiente nivel</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Principal -->
+    <div class="p2p-dashboard">
+      <!-- Sidebar Épico -->
+      <aside class="p2p-sidebar-epic">
+        <div class="sidebar-header">
+          <h3>Navegación</h3>
+          <div class="sidebar-status">
+            <div class="status-dot online"></div>
+            <span>Conectado</span>
+          </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+          <a href="#marketplace" class="nav-item active" data-section="marketplace">
+            <div class="nav-icon">🏪</div>
+            <span>Marketplace</span>
+            <div class="nav-glow"></div>
+          </a>
+          <a href="#create" class="nav-item" data-section="create">
+            <div class="nav-icon">➕</div>
+            <span>Crear Anuncio</span>
+            <div class="nav-glow"></div>
+          </a>
+          <a href="#my-ads" class="nav-item" data-section="my-ads">
+            <div class="nav-icon">📋</div>
+            <span>Mis Anuncios</span>
+            <div class="nav-glow"></div>
+          </a>
+          <a href="#history" class="nav-item" data-section="history">
+            <div class="nav-icon">📊</div>
+            <span>Historial</span>
+            <div class="nav-glow"></div>
+          </a>
+          <a href="#reputation" class="nav-item" data-section="reputation">
+            <div class="nav-icon">⭐</div>
+            <span>Reputación</span>
+            <div class="nav-glow"></div>
+          </a>
+          <a href="#analytics" class="nav-item" data-section="analytics">
+            <div class="nav-icon">📈</div>
+            <span>Analytics</span>
+            <div class="nav-glow"></div>
+          </a>
+        </nav>
+
+        <!-- Logros del Trader -->
+        <div class="achievements-section">
+          <h4>Logros</h4>
+          <div class="achievements-list">
+            <div class="achievement-item unlocked">
+              <div class="achievement-icon">🥇</div>
+              <div class="achievement-info">
+                <div class="achievement-title">Primer Trade</div>
+                <div class="achievement-desc">Completa tu primer trade</div>
+              </div>
+            </div>
+            <div class="achievement-item unlocked">
+              <div class="achievement-icon">💰</div>
+              <div class="achievement-info">
+                <div class="achievement-title">Trader Activo</div>
+                <div class="achievement-desc">Completa 10 trades</div>
+              </div>
+            </div>
+            <div class="achievement-item locked">
+              <div class="achievement-icon">👑</div>
+              <div class="achievement-info">
+                <div class="achievement-title">Trader Épico</div>
+                <div class="achievement-desc">Completa 100 trades</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Contenido Principal -->
+      <main class="p2p-main-epic">
+        <!-- Marketplace Section -->
+        <section id="marketplace" class="p2p-section active">
+          <div class="section-header">
+            <h2>P2P Marketplace</h2>
+            <div class="section-actions">
+              <button class="refresh-btn" id="refreshBtn">
+                <span class="btn-icon">🔄</span>
+                <span>Actualizar</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Estadísticas en Tiempo Real -->
+          <div class="realtime-stats">
+            <div class="stat-card-epic">
+              <div class="stat-header">
+                <div class="stat-icon">💱</div>
+                <div class="stat-status online"></div>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="myTrades">0</div>
+                <div class="stat-label">Mis Trades</div>
+                <div class="stat-change positive" id="tradesChange">+12.5%</div>
+              </div>
+              <div class="stat-chart">
+                <canvas id="tradesChart" width="200" height="60"></canvas>
+              </div>
+            </div>
+
+            <div class="stat-card-epic">
+              <div class="stat-header">
+                <div class="stat-icon">💰</div>
+                <div class="stat-status online"></div>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="myVolume">$0.00</div>
+                <div class="stat-label">Mi Volumen</div>
+                <div class="stat-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card-epic">
+              <div class="stat-header">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-status online"></div>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="myRating">0.0</div>
+                <div class="stat-label">Mi Rating</div>
+                <div class="rating-stars">
+                  <span class="star">⭐</span>
+                  <span class="star">⭐</span>
+                  <span class="star">⭐</span>
+                  <span class="star">⭐</span>
+                  <span class="star">⭐</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card-epic">
+              <div class="stat-header">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-status online"></div>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="myRank">#1,247</div>
+                <div class="stat-label">Mi Ranking</div>
+                <div class="rank-progress">
+                  <div class="rank-bar">
+                    <div class="rank-fill" style="width: 75%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visualización 3D del Marketplace -->
+          <div class="marketplace-3d">
+            <div class="visualization-header">
+              <h3>Visualización del Marketplace</h3>
+              <div class="visualization-controls">
+                <button class="control-btn" data-view="trades">Trades</button>
+                <button class="control-btn active" data-view="volume">Volumen</button>
+                <button class="control-btn" data-view="users">Usuarios</button>
+              </div>
+            </div>
+            <div class="visualization-container">
+              <div id="marketplace3d" class="marketplace-canvas"></div>
+              <div class="visualization-overlay">
+                <div class="overlay-stats">
+                  <div class="overlay-stat">
+                    <span class="stat-label">Trades Activos</span>
+                    <span class="stat-value" id="overlayTrades">1,247</span>
+                  </div>
+                  <div class="overlay-stat">
+                    <span class="stat-label">Volumen 24h</span>
+                    <span class="stat-value" id="overlayVolume">$45.6K</span>
+                  </div>
+                  <div class="overlay-stat">
+                    <span class="stat-label">Usuarios Online</span>
+                    <span class="stat-value" id="overlayUsers">892</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gráficos Interactivos -->
+          <div class="charts-section">
+            <div class="chart-container">
+              <div class="chart-header">
+                <h3>Precios P2P</h3>
+                <div class="chart-controls">
+                  <button class="time-btn active" data-period="24h">24H</button>
+                  <button class="time-btn" data-period="7d">7D</button>
+                  <button class="time-btn" data-period="30d">30D</button>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="p2pPricesChart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-container">
+              <div class="chart-header">
+                <h3>Distribución de Trades</h3>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="tradesDistributionChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filtros Avanzados -->
+          <div class="filters-section">
+            <div class="filters-header">
+              <h3>Filtros Avanzados</h3>
+              <div class="filters-actions">
+                <button class="filter-btn" id="clearFilters">Limpiar</button>
+                <button class="filter-btn primary" id="applyFilters">Aplicar</button>
+              </div>
+            </div>
+            <div class="filters-grid">
+              <div class="filter-group">
+                <label>Tipo de Trade</label>
+                <div class="filter-options">
+                  <label class="filter-option">
+                    <input type="checkbox" value="buy" checked>
+                    <span class="checkmark"></span>
+                    Comprar
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" value="sell" checked>
+                    <span class="checkmark"></span>
+                    Vender
+                  </label>
+                </div>
+              </div>
+              <div class="filter-group">
+                <label>Método de Pago</label>
+                <div class="filter-options">
+                  <label class="filter-option">
+                    <input type="checkbox" value="bank" checked>
+                    <span class="checkmark"></span>
+                    Transferencia Bancaria
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" value="cash" checked>
+                    <span class="checkmark"></span>
+                    Efectivo
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" value="crypto" checked>
+                    <span class="checkmark"></span>
+                    Crypto
+                  </label>
+                </div>
+              </div>
+              <div class="filter-group">
+                <label>Rango de Precio</label>
+                <div class="price-range">
+                  <input type="range" id="priceRange" min="0" max="100" value="50">
+                  <div class="range-labels">
+                    <span>$0</span>
+                    <span id="rangeValue">$50</span>
+                    <span>$100</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lista de Anuncios -->
+          <div class="ads-section">
+            <div class="ads-header">
+              <h3>Anuncios Disponibles</h3>
+              <div class="ads-sort">
+                <select id="sortSelect">
+                  <option value="price">Precio</option>
+                  <option value="rating">Rating</option>
+                  <option value="volume">Volumen</option>
+                  <option value="time">Tiempo</option>
+                </select>
+              </div>
+            </div>
+            <div class="ads-grid-epic" id="adsGrid">
+              <!-- Los anuncios se cargarán dinámicamente -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Crear Anuncio Section -->
+        <section id="create" class="p2p-section">
+          <div class="section-header">
+            <h2>Crear Anuncio</h2>
+          </div>
+
+          <div class="create-ad-form-epic">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Tipo de Anuncio</label>
+                <div class="ad-type-selector">
+                  <button class="type-btn active" data-type="buy">
+                    <span class="btn-icon">📈</span>
+                    <span>Comprar RSC</span>
+                  </button>
+                  <button class="type-btn" data-type="sell">
+                    <span class="btn-icon">📉</span>
+                    <span>Vender RSC</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Precio por RSC</label>
+                <div class="price-input">
+                  <input type="number" id="adPrice" placeholder="0.00" step="0.01" min="0">
+                  <select id="adCurrency">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="ARS">ARS</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Límites de Trade</label>
+                <div class="limits-input">
+                  <input type="number" id="minAmount" placeholder="Mínimo" step="0.01" min="0">
+                  <input type="number" id="maxAmount" placeholder="Máximo" step="0.01" min="0">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Métodos de Pago</label>
+                <div class="payment-methods-grid">
+                  <label class="payment-method-option">
+                    <input type="checkbox" value="bank">
+                    <div class="method-icon">🏦</div>
+                    <div class="method-info">
+                      <div class="method-name">Transferencia Bancaria</div>
+                      <div class="method-desc">Pago directo a cuenta</div>
+                    </div>
+                  </label>
+                  <label class="payment-method-option">
+                    <input type="checkbox" value="cash">
+                    <div class="method-icon">💵</div>
+                    <div class="method-info">
+                      <div class="method-name">Efectivo</div>
+                      <div class="method-desc">Pago en persona</div>
+                    </div>
+                  </label>
+                  <label class="payment-method-option">
+                    <input type="checkbox" value="crypto">
+                    <div class="method-icon">₿</div>
+                    <div class="method-info">
+                      <div class="method-name">Crypto</div>
+                      <div class="method-desc">Bitcoin, Ethereum, etc.</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Descripción</label>
+                <textarea id="adDescription" placeholder="Describe los términos de tu anuncio..." rows="4"></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn-secondary" id="previewBtn">Vista Previa</button>
+                <button class="btn-primary" id="createBtn">Crear Anuncio</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Mis Anuncios Section -->
+        <section id="my-ads" class="p2p-section">
+          <div class="section-header">
+            <h2>Mis Anuncios</h2>
+            <div class="section-actions">
+              <button class="create-ad-btn" id="createAdBtn">
+                <span class="btn-icon">➕</span>
+                <span>Nuevo Anuncio</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="my-ads-grid" id="myAdsGrid">
+            <!-- Mis anuncios se cargarán dinámicamente -->
+          </div>
+        </section>
+
+        <!-- Historial Section -->
+        <section id="history" class="p2p-section">
+          <div class="section-header">
+            <h2>Historial de Trades</h2>
+          </div>
+
+          <div class="history-table-container">
+            <table class="history-table-epic">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tipo</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                  <th>Contraparte</th>
+                  <th>Estado</th>
+                  <th>Fecha</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody">
+                <!-- El historial se cargará dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Reputación Section -->
+        <section id="reputation" class="p2p-section">
+          <div class="section-header">
+            <h2>Mi Reputación</h2>
+          </div>
+
+          <div class="reputation-overview">
+            <div class="reputation-summary">
+              <div class="summary-card">
+                <div class="summary-icon">⭐</div>
+                <div class="summary-content">
+                  <div class="summary-value" id="overallRating">4.8</div>
+                  <div class="summary-label">Rating General</div>
+                </div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-icon">📈</div>
+                <div class="summary-content">
+                  <div class="summary-value" id="completedTrades">47</div>
+                  <div class="summary-label">Trades Completados</div>
+                </div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-icon">⏱️</div>
+                <div class="summary-content">
+                  <div class="summary-value" id="avgResponse">2.3 min</div>
+                  <div class="summary-label">Respuesta Promedio</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="reputation-reviews">
+              <h3>Últimas Reseñas</h3>
+              <div class="reviews-list" id="reviewsList">
+                <!-- Las reseñas se cargarán dinámicamente -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="p2p-section">
+          <div class="section-header">
+            <h2>Analytics de Trading</h2>
+          </div>
+
+          <div class="analytics-grid">
+            <div class="analytics-chart-container">
+              <h3>Rendimiento de Trading</h3>
+              <canvas id="tradingPerformanceChart"></canvas>
+            </div>
+            <div class="analytics-chart-container">
+              <h3>Distribución de Métodos de Pago</h3>
+              <canvas id="paymentMethodsChart"></canvas>
+            </div>
+            <div class="analytics-chart-container">
+              <h3>Análisis de Precios</h3>
+              <canvas id="priceAnalysisChart"></canvas>
+            </div>
+            <div class="analytics-chart-container">
+              <h3>Predicciones de Mercado</h3>
+              <canvas id="marketPredictionsChart"></canvas>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Modal de Chat -->
+    <div class="chat-modal" id="chatModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="chatTitle">Chat de Trade</h3>
+          <button class="modal-close" id="chatModalClose">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+              <!-- Los mensajes se cargarán dinámicamente -->
+            </div>
+            <div class="chat-input">
+              <input type="text" id="messageInput" placeholder="Escribe tu mensaje...">
+              <button id="sendMessageBtn">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Trade -->
+    <div class="trade-modal" id="tradeModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="tradeTitle">Confirmar Trade</h3>
+          <button class="modal-close" id="tradeModalClose">×</button>
+        </div>
+        <div class="modal-body" id="tradeModalBody">
+          <!-- El contenido se cargará dinámicamente -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../scripts/feature-flags.js"></script>
+  <script src="../scripts/admin-panel.js"></script>
+  <script src="../scripts/ai-assistant.js"></script>
+  <script src="../scripts/chat-component.js"></script>
+  <script src="../scripts/config.js"></script>
+  <script src="../scripts/blockchain-connection.js"></script>
+  <script src="../scripts/cleanup.js"></script>
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/p2p.js"></script>
+  <script src="../scripts/p2p-epic.js"></script>
+  <script src="../scripts/notifications.js"></script>
+  <script src="../scripts/animations.js"></script>
+  <script src="../scripts/blockchain-data.js"></script>
+  <script src="../scripts/charts.js"></script>
+  <script src="../scripts/init.js"></script>
+  <script src="../scripts/debug.js"></script>
+  <script src="../scripts/chat.js"></script>
+  <script src="../scripts/error-fix.js"></script>
+</body>
+</html>

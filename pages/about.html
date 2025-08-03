@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acerca de RSC Chain - ReeskCapital.co</title>
+  <meta name="description" content="Conoce la historia, visión y valores de RSC Chain. La blockchain más avanzada y rebelde del mundo.">
+  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/about.css">
+  <link rel="stylesheet" href="../styles/notifications.css">
+  <link rel="stylesheet" href="../styles/animations.css">
+  <link rel="stylesheet" href="../styles/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Prism.js para syntax highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body class="dark-mode">
+  <!-- Fondo 4D animado -->
+  <div class="background-4d"></div>
+  
+  <!-- Contenedor de notificaciones -->
+  <div class="notifications-container" id="notificationsContainer"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+      <span>ReeskCapital.co</span>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="about.html" class="active">Acerca</a></li>
+      <li><a href="wallet.html">Wallet</a></li>
+      <li><a href="mine.html">Minar</a></li>
+      <li><a href="p2p.html">P2P</a></li>
+      <li><a href="staking.html">Staking</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
+      <li><a href="bank.html">Bank</a></li>
+      <li><a href="docs.html">Docs</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="language-selector" id="languageSelector">
+        <span>ES</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+    <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+  </nav>
+
+  <!-- About Container Enhanced -->
+  <div class="about-container-enhanced">
+    <!-- Sidebar Avanzado -->
+    <aside class="about-sidebar-enhanced">
+      <!-- Header del Sidebar -->
+      <div class="sidebar-header">
+        <div class="about-logo">
+          <div class="logo-icon">🏢</div>
+          <div class="logo-text">
+            <h3>RSC Chain</h3>
+            <span class="company-type">Blockchain Company</span>
+          </div>
+        </div>
+        
+        <!-- Búsqueda Inteligente -->
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <input type="text" id="aboutSearch" placeholder="Buscar en Acerca..." class="search-input-enhanced">
+            <div class="search-icon">🔍</div>
+            <div class="search-shortcuts">
+              <span class="shortcut">⌘K</span>
+            </div>
+          </div>
+          <div class="search-results-dropdown" id="aboutSearchResults">
+            <!-- Resultados dinámicos -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Navegación Mejorada -->
+      <nav class="about-navigation-enhanced">
+        <div class="nav-section">
+          <h4 class="nav-section-title">📖 Información</h4>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#story" class="nav-link active" data-section="story">
+                <span class="nav-icon">📖</span>
+                <span class="nav-text">Historia</span>
+                <span class="nav-badge">Fundación</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#vision" class="nav-link" data-section="vision">
+                <span class="nav-icon">🎯</span>
+                <span class="nav-text">Visión & Misión</span>
+                <span class="nav-badge">Valores</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#values" class="nav-link" data-section="values">
+                <span class="nav-icon">💎</span>
+                <span class="nav-text">Valores</span>
+                <span class="nav-badge">Core</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <h4 class="nav-section-title">🗺️ Desarrollo</h4>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#roadmap" class="nav-link" data-section="roadmap">
+                <span class="nav-icon">🗺️</span>
+                <span class="nav-text">Roadmap</span>
+                <span class="nav-badge">En Progreso</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#milestones" class="nav-link" data-section="milestones">
+                <span class="nav-icon">🏆</span>
+                <span class="nav-text">Hitos</span>
+                <span class="nav-badge">Logros</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#metrics" class="nav-link" data-section="metrics">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Métricas</span>
+                <span class="nav-badge">Live</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <h4 class="nav-section-title">👥 Equipo</h4>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#team" class="nav-link" data-section="team">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Equipo</span>
+                <span class="nav-badge">12 Miembros</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#culture" class="nav-link" data-section="culture">
+                <span class="nav-icon">🎭</span>
+                <span class="nav-text">Cultura</span>
+                <span class="nav-badge">Valores</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#careers" class="nav-link" data-section="careers">
+                <span class="nav-icon">💼</span>
+                <span class="nav-text">Carreras</span>
+                <span class="nav-badge">Abiertas</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <h4 class="nav-section-title">📞 Contacto</h4>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#contact" class="nav-link" data-section="contact">
+                <span class="nav-icon">📧</span>
+                <span class="nav-text">Contacto</span>
+                <span class="nav-badge">24/7</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#support" class="nav-link" data-section="support">
+                <span class="nav-icon">🆘</span>
+                <span class="nav-text">Soporte</span>
+                <span class="nav-badge">Live</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#press" class="nav-link" data-section="press">
+                <span class="nav-icon">📰</span>
+                <span class="nav-text">Prensa</span>
+                <span class="nav-badge">Kit</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Footer del Sidebar -->
+      <div class="sidebar-footer">
+        <div class="company-status">
+          <div class="status-indicator online"></div>
+          <span>Empresa Activa</span>
+        </div>
+        <div class="company-actions">
+          <button class="action-btn" id="downloadPressKit" title="Press Kit">
+            <span>📰</span>
+          </button>
+          <button class="action-btn" id="shareAbout" title="Compartir">
+            <span>📤</span>
+          </button>
+          <button class="action-btn" id="printAbout" title="Imprimir">
+            <span>🖨️</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Contenido principal mejorado -->
+    <main class="about-main-enhanced">
+      <!-- Breadcrumb -->
+      <nav class="about-breadcrumb">
+        <ol class="breadcrumb-list">
+          <li class="breadcrumb-item">
+            <a href="../index.html">Inicio</a>
+          </li>
+          <li class="breadcrumb-item active">
+            <span>Acerca de RSC Chain</span>
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Contenido Dinámico -->
+      <div class="about-content-wrapper">
+        <!-- Página: Historia Mejorada -->
+        <div class="about-page active" id="story-page">
+          <div class="page-header-enhanced">
+            <div class="header-content">
+              <h1 class="page-title">Nuestra Historia</h1>
+              <p class="page-subtitle">La revolución blockchain que cambió todo</p>
+              <div class="page-meta">
+                <span class="meta-item">
+                  <span class="meta-icon">📅</span>
+                  <span>Fundada en 2023</span>
+                </span>
+                <span class="meta-item">
+                  <span class="meta-icon">👥</span>
+                  <span>12 Miembros del equipo</span>
+                </span>
+                <span class="meta-item">
+                  <span class="meta-icon">🌍</span>
+                  <span>Global</span>
+                </span>
+              </div>
+            </div>
+            <div class="header-actions">
+              <button class="btn-primary" id="downloadStory">
+                <span class="btn-icon">📄</span>
+                <span class="btn-text">Descargar Historia</span>
+              </button>
+              <button class="btn-secondary" id="shareStory">
+                <span class="btn-icon">📤</span>
+                <span class="btn-text">Compartir</span>
+              </button>
+            </div>
+          </div>
+
+        <div class="story-content-enhanced">
+          <!-- Hero Section Interactivo -->
+          <div class="story-hero-enhanced">
+            <div class="hero-text">
+              <h2 class="hero-title">Sin Bancos, Sin Fronteras, Sin Permiso</h2>
+              <p class="hero-subtitle">RSC Chain nació de la necesidad de crear una alternativa real al sistema financiero tradicional. Una blockchain que no solo fuera tecnológicamente avanzada, sino que representara los valores de libertad, privacidad y autonomía.</p>
+              
+              <!-- Estadísticas de la empresa -->
+              <div class="company-stats">
+                <div class="stat-item">
+                  <div class="stat-value">50K+</div>
+                  <div class="stat-label">Usuarios Activos</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value">$2.5M</div>
+                  <div class="stat-label">Market Cap</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value">12</div>
+                  <div class="stat-label">Miembros del Equipo</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value">15+</div>
+                  <div class="stat-label">Países</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="hero-visual">
+              <!-- Timeline Interactivo -->
+              <div class="story-timeline-enhanced">
+                <div class="timeline-item active" data-year="2023">
+                  <div class="timeline-marker">
+                    <div class="marker-dot"></div>
+                    <div class="marker-line"></div>
+                  </div>
+                  <div class="timeline-content">
+                    <div class="timeline-date">2023</div>
+                    <h3>El Inicio</h3>
+                    <p>Un grupo de desarrolladores rebeldes se reunió con una visión clara: crear la blockchain más avanzada del mundo.</p>
+                    <div class="timeline-achievements">
+                      <span class="achievement">✅ Fundación</span>
+                      <span class="achievement">✅ Whitepaper</span>
+                      <span class="achievement">✅ MVP</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="timeline-item" data-year="2024">
+                  <div class="timeline-marker">
+                    <div class="marker-dot"></div>
+                    <div class="marker-line"></div>
+                  </div>
+                  <div class="timeline-content">
+                    <div class="timeline-date">2024</div>
+                    <h3>El Lanzamiento</h3>
+                    <p>RSC Chain se lanza al mundo, con minería web, P2P sin KYC y staking avanzado.</p>
+                    <div class="timeline-achievements">
+                      <span class="achievement">✅ Lanzamiento</span>
+                      <span class="achievement">✅ Minería Web</span>
+                      <span class="achievement">✅ P2P Trading</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="timeline-item" data-year="2025">
+                  <div class="timeline-marker">
+                    <div class="marker-dot"></div>
+                    <div class="marker-line"></div>
+                  </div>
+                  <div class="timeline-content">
+                    <div class="timeline-date">2025</div>
+                    <h3>El Futuro</h3>
+                    <p>Expansión global con RSC Bank, pagos sin contacto y adopción masiva.</p>
+                    <div class="timeline-achievements">
+                      <span class="achievement">⏳ RSC Bank</span>
+                      <span class="achievement">⏳ Mobile App</span>
+                      <span class="achievement">⏳ Global Expansion</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Controles del Timeline -->
+              <div class="timeline-controls">
+                <button class="timeline-btn" data-year="2023">2023</button>
+                <button class="timeline-btn active" data-year="2024">2024</button>
+                <button class="timeline-btn" data-year="2025">2025</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección de Valores Mejorada -->
+          <div class="story-values-enhanced">
+            <div class="values-header">
+              <h3>Nuestros Valores Fundamentales</h3>
+              <p>Los principios que guían cada decisión que tomamos</p>
+            </div>
+            
+            <div class="values-grid-enhanced">
+              <div class="value-card-enhanced" data-value="privacy">
+                <div class="value-header">
+                  <div class="value-icon">🔒</div>
+                  <div class="value-badge">Core</div>
+                </div>
+                <div class="value-content">
+                  <h4>Privacidad Total</h4>
+                  <p>Tu información es tuya. No recopilamos datos innecesarios ni compartimos información personal. La privacidad es un derecho fundamental, no un privilegio.</p>
+                  <div class="value-features">
+                    <span class="feature">Sin KYC</span>
+                    <span class="feature">Encriptación E2E</span>
+                    <span class="feature">Anonimato</span>
+                  </div>
+                </div>
+                <div class="value-hover">
+                  <span>Saber más →</span>
+                </div>
+              </div>
+              
+              <div class="value-card-enhanced" data-value="freedom">
+                <div class="value-header">
+                  <div class="value-icon">🌐</div>
+                  <div class="value-badge">Core</div>
+                </div>
+                <div class="value-content">
+                  <h4>Libertad Financiera</h4>
+                  <p>Sin fronteras, sin restricciones. Acceso global a servicios financieros sin intermediarios. La libertad financiera es el derecho de todos.</p>
+                  <div class="value-features">
+                    <span class="feature">Sin Fronteras</span>
+                    <span class="feature">Sin Bancos</span>
+                    <span class="feature">Sin Permisos</span>
+                  </div>
+                </div>
+                <div class="value-hover">
+                  <span>Saber más →</span>
+                </div>
+              </div>
+              
+              <div class="value-card-enhanced" data-value="innovation">
+                <div class="value-header">
+                  <div class="value-icon">⚡</div>
+                  <div class="value-badge">Core</div>
+                </div>
+                <div class="value-content">
+                  <h4>Innovación Constante</h4>
+                  <p>Pioneros en tecnología blockchain. Siempre a la vanguardia de las últimas innovaciones. La innovación es nuestro motor de crecimiento.</p>
+                  <div class="value-features">
+                    <span class="feature">50K TPS</span>
+                    <span class="feature">Minería Web</span>
+                    <span class="feature">DeFi Nativo</span>
+                  </div>
+                </div>
+                <div class="value-hover">
+                  <span>Saber más →</span>
+                </div>
+              </div>
+              
+              <div class="value-card-enhanced" data-value="community">
+                <div class="value-header">
+                  <div class="value-icon">🤝</div>
+                  <div class="value-badge">Core</div>
+                </div>
+                <div class="value-content">
+                  <h4>Comunidad Primero</h4>
+                  <p>Construido por la comunidad, para la comunidad. Cada usuario es parte de nuestra historia. La comunidad es nuestro mayor activo.</p>
+                  <div class="value-features">
+                    <span class="feature">Gobernanza DAO</span>
+                    <span class="feature">Votos Comunitarios</span>
+                    <span class="feature">Transparencia</span>
+                  </div>
+                </div>
+                <div class="value-hover">
+                  <span>Saber más →</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Valores Adicionales -->
+            <div class="additional-values">
+              <h4>Valores Adicionales</h4>
+              <div class="values-tags">
+                <span class="value-tag">🔐 Seguridad</span>
+                <span class="value-tag">⚖️ Transparencia</span>
+                <span class="value-tag">🌱 Sostenibilidad</span>
+                <span class="value-tag">🎯 Enfoque</span>
+                <span class="value-tag">🚀 Escalabilidad</span>
+                <span class="value-tag">💡 Creatividad</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección de Misión y Visión Mejorada -->
+          <div class="story-mission-enhanced">
+            <div class="mission-vision-grid">
+              <div class="mission-card">
+                <div class="card-header">
+                  <div class="card-icon">🎯</div>
+                  <h3>Nuestra Misión</h3>
+                </div>
+                <div class="card-content">
+                  <p>Democratizar el acceso a servicios financieros de calidad. Eliminar las barreras geográficas y económicas que impiden a millones de personas acceder a herramientas financieras básicas.</p>
+                  <div class="mission-goals">
+                    <div class="goal-item">
+                      <span class="goal-icon">🌍</span>
+                      <span class="goal-text">Acceso Global</span>
+                    </div>
+                    <div class="goal-item">
+                      <span class="goal-icon">💰</span>
+                      <span class="goal-text">Inclusión Financiera</span>
+                    </div>
+                    <div class="goal-item">
+                      <span class="goal-icon">🔒</span>
+                      <span class="goal-text">Seguridad Total</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="vision-card">
+                <div class="card-header">
+                  <div class="card-icon">🔮</div>
+                  <h3>Nuestra Visión</h3>
+                </div>
+                <div class="card-content">
+                  <p>Crear un ecosistema donde la tecnología sirva a las personas, no al revés. Donde cada transacción sea transparente, segura y eficiente.</p>
+                  <div class="vision-pillars">
+                    <div class="pillar-item">
+                      <span class="pillar-icon">⚡</span>
+                      <span class="pillar-text">Tecnología Avanzada</span>
+                    </div>
+                    <div class="pillar-item">
+                      <span class="pillar-icon">🤝</span>
+                      <span class="pillar-text">Comunidad Unida</span>
+                    </div>
+                    <div class="pillar-item">
+                      <span class="pillar-icon">🚀</span>
+                      <span class="pillar-text">Innovación Constante</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mission-statement">
+              <div class="statement-content">
+                <h4>Construir el futuro de las finanzas, un bloque a la vez.</h4>
+                <p>Esta es nuestra promesa a la comunidad global. Cada línea de código, cada transacción, cada innovación nos acerca más a este objetivo.</p>
+              </div>
+              <div class="statement-stats">
+                <div class="stat-item">
+                  <div class="stat-number">1M+</div>
+                  <div class="stat-label">Bloques Minados</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">50K+</div>
+                  <div class="stat-label">Usuarios Activos</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">15+</div>
+                  <div class="stat-label">Países</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Página: Roadmap -->
+      <div class="about-page" id="roadmap-page">
+        <div class="page-header">
+          <h1>Roadmap</h1>
+          <p>Nuestro camino hacia el futuro</p>
+        </div>
+
+        <div class="roadmap-content">
+          <div class="roadmap-timeline">
+            <div class="timeline-phase completed">
+              <div class="phase-header">
+                <div class="phase-number">1</div>
+                <div class="phase-info">
+                  <h3>Fase Fundacional</h3>
+                  <span class="phase-date">Q2 2024 - Completado</span>
+                </div>
+              </div>
+              <div class="phase-content">
+                <ul class="phase-items">
+                  <li class="completed">✅ Lanzamiento de RSC Token</li>
+                  <li class="completed">✅ Minería Web Funcional</li>
+                  <li class="completed">✅ Wallet Básica</li>
+                  <li class="completed">✅ P2P Marketplace</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-phase active">
+              <div class="phase-header">
+                <div class="phase-number">2</div>
+                <div class="phase-info">
+                  <h3>Fase de Expansión</h3>
+                  <span class="phase-date">Q3-Q4 2024 - En Progreso</span>
+                </div>
+              </div>
+              <div class="phase-content">
+                <ul class="phase-items">
+                  <li class="completed">✅ Staking Avanzado</li>
+                  <li class="in-progress">🔄 Explorer de Blockchain</li>
+                  <li class="pending">⏳ RSC Bank Beta</li>
+                  <li class="pending">⏳ Pagos Sin Contacto</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-phase">
+              <div class="phase-header">
+                <div class="phase-number">3</div>
+                <div class="phase-info">
+                  <h3>Fase de Adopción</h3>
+                  <span class="phase-date">Q1-Q2 2025 - Planificado</span>
+                </div>
+              </div>
+              <div class="phase-content">
+                <ul class="phase-items">
+                  <li class="pending">⏳ RSC Bank Completo</li>
+                  <li class="pending">⏳ DeFi Protocols</li>
+                  <li class="pending">⏳ Mobile Apps</li>
+                  <li class="pending">⏳ Partnership Program</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-phase">
+              <div class="phase-header">
+                <div class="phase-number">4</div>
+                <div class="phase-info">
+                  <h3>Fase de Dominancia</h3>
+                  <span class="phase-date">Q3-Q4 2025 - Visión</span>
+                </div>
+              </div>
+              <div class="phase-content">
+                <ul class="phase-items">
+                  <li class="pending">⏳ Cross-Chain Bridges</li>
+                  <li class="pending">⏳ Enterprise Solutions</li>
+                  <li class="pending">⏳ Global Adoption</li>
+                  <li class="pending">⏳ Regulatory Compliance</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="roadmap-metrics">
+            <h3>Métricas de Progreso</h3>
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-value">75%</div>
+                <div class="metric-label">Fase 2 Completada</div>
+                <div class="metric-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-value">12</div>
+                <div class="metric-label">Funcionalidades Activas</div>
+                <div class="metric-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-value">3</div>
+                <div class="metric-label">Fases Completadas</div>
+                <div class="metric-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 25%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Página: Equipo -->
+      <div class="about-page" id="team-page">
+        <div class="page-header">
+          <h1>Nuestro Equipo</h1>
+          <p>Los visionarios detrás de RSC Chain</p>
+        </div>
+
+        <div class="team-content">
+          <div class="team-intro">
+            <p>RSC Chain es el resultado del trabajo de un equipo diverso de desarrolladores, diseñadores, economistas y visionarios que comparten una pasión común: crear un futuro financiero más justo y accesible.</p>
+          </div>
+
+          <div class="team-grid">
+            <div class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">👨‍💻</div>
+              </div>
+              <div class="member-info">
+                <h3>Alex Chen</h3>
+                <span class="member-role">CEO & Fundador</span>
+                <p>Experto en blockchain con más de 10 años en el sector. Visionario detrás de la arquitectura de RSC Chain.</p>
+                <div class="member-social">
+                  <a href="#" class="social-link">Twitter</a>
+                  <a href="#" class="social-link">LinkedIn</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">👩‍🔬</div>
+              </div>
+              <div class="member-info">
+                <h3>Maria Rodriguez</h3>
+                <span class="member-role">CTO</span>
+                <p>Especialista en criptografía y seguridad. Líder del desarrollo técnico de la plataforma.</p>
+                <div class="member-social">
+                  <a href="#" class="social-link">Twitter</a>
+                  <a href="#" class="social-link">GitHub</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">👨‍🎨</div>
+              </div>
+              <div class="member-info">
+                <h3>David Kim</h3>
+                <span class="member-role">Lead Designer</span>
+                <p>Creador de la experiencia de usuario revolucionaria que hace RSC Chain accesible para todos.</p>
+                <div class="member-social">
+                  <a href="#" class="social-link">Behance</a>
+                  <a href="#" class="social-link">Dribbble</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">👩‍💼</div>
+              </div>
+              <div class="member-info">
+                <h3>Sarah Johnson</h3>
+                <span class="member-role">Head of Growth</span>
+                <p>Estratega de crecimiento que lleva RSC Chain a nuevas audiencias globales.</p>
+                <div class="member-social">
+                  <a href="#" class="social-link">LinkedIn</a>
+                  <a href="#" class="social-link">Medium</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-values">
+            <h3>Valores del Equipo</h3>
+            <div class="values-list">
+              <div class="value-item">
+                <span class="value-icon">🎯</span>
+                <div class="value-content">
+                  <h4>Enfoque en el Usuario</h4>
+                  <p>Cada decisión se toma pensando en cómo mejorar la experiencia del usuario final.</p>
+                </div>
+              </div>
+              <div class="value-item">
+                <span class="value-icon">🚀</span>
+                <div class="value-content">
+                  <h4>Innovación Constante</h4>
+                  <p>Buscamos siempre las mejores tecnologías y metodologías para mejorar nuestra plataforma.</p>
+                </div>
+              </div>
+              <div class="value-item">
+                <span class="value-icon">🤝</span>
+                <div class="value-content">
+                  <h4>Colaboración</h4>
+                  <p>Trabajamos como un equipo unido, compartiendo conocimientos y apoyándonos mutuamente.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Página: Contacto -->
+      <div class="about-page" id="contact-page">
+        <div class="page-header">
+          <h1>Contacto</h1>
+          <p>Conecta con nuestro equipo</p>
+        </div>
+
+        <div class="contact-content">
+          <div class="contact-info">
+            <div class="contact-card">
+              <div class="contact-icon">📧</div>
+              <h3>Email</h3>
+              <p>hello@reeskcapital.co</p>
+              <span class="response-time">Respuesta en 24h</span>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">💬</div>
+              <h3>Telegram</h3>
+              <p>@RSCChain</p>
+              <span class="response-time">Respuesta inmediata</span>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">🐦</div>
+              <h3>Twitter</h3>
+              <p>@RSCChain</p>
+              <span class="response-time">Respuesta en 12h</span>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">📱</div>
+              <h3>Discord</h3>
+              <p>RSC Chain Community</p>
+              <span class="response-time">Respuesta en 6h</span>
+            </div>
+          </div>
+
+          <div class="contact-form">
+            <h3>Envíanos un Mensaje</h3>
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="contactName">Nombre</label>
+                <input type="text" id="contactName" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label for="contactEmail">Email</label>
+                <input type="email" id="contactEmail" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label for="contactSubject">Asunto</label>
+                <select id="contactSubject" class="form-select">
+                  <option value="">Selecciona un asunto...</option>
+                  <option value="support">Soporte Técnico</option>
+                  <option value="partnership">Partnership</option>
+                  <option value="press">Prensa</option>
+                  <option value="general">Consulta General</option>
+                  <option value="bug">Reportar Bug</option>
+                  <option value="feature">Sugerencia de Feature</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="contactMessage">Mensaje</label>
+                <textarea id="contactMessage" class="form-textarea" rows="5" placeholder="Cuéntanos cómo podemos ayudarte..." required></textarea>
+              </div>
+              <div class="form-group">
+                <label class="checkbox-option">
+                  <input type="checkbox" id="contactNewsletter" checked>
+                  <span class="checkbox-custom"></span>
+                  <span>Suscribirme al newsletter</span>
+                </label>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary">Enviar Mensaje</button>
+                <button type="reset" class="btn-secondary">Limpiar</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="contact-faq">
+            <h3>Preguntas Frecuentes</h3>
+            <div class="faq-list">
+              <div class="faq-item">
+                <div class="faq-question">
+                  <h4>¿Cómo puedo empezar a usar RSC Chain?</h4>
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>Simplemente crea una wallet en nuestra plataforma y comienza a minar RSC desde tu navegador. No necesitas hardware especializado.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-question">
+                  <h4>¿Es seguro usar RSC Chain?</h4>
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>Absolutamente. Utilizamos las mejores prácticas de seguridad y criptografía. Tu privacidad es nuestra prioridad.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-question">
+                  <h4>¿Puedo usar RSC Chain desde cualquier país?</h4>
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>Sí, RSC Chain está diseñado para ser accesible globalmente, sin restricciones geográficas.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../scripts/feature-flags.js"></script>
+  <script src="../scripts/admin-panel.js"></script>
+  <script src="../scripts/ai-assistant.js"></script>
+  <script src="../scripts/chat-component.js"></script>
+  <script src="../scripts/config.js"></script>
+  <script src="../scripts/cleanup.js"></script>
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/about.js"></script>
+  <script src="../scripts/notifications.js"></script>
+  <script src="../scripts/animations.js"></script>
+  <script src="../scripts/init.js"></script>
+  <script src="../scripts/debug.js"></script>
+  <script src="../scripts/chat.js"></script>
+  <script src="../scripts/error-fix.js"></script>
+</body>
+</html> 
