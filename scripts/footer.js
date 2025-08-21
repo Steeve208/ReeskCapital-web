@@ -80,21 +80,18 @@ class AdvancedFooter {
   }
 
   getMockData() {
-    const basePrice = 0.15 + (Math.random() - 0.5) * 0.02;
-    const priceChange = (Math.random() - 0.5) * 0.1;
-    
     return {
-      price: basePrice,
-      priceChange: priceChange,
-      marketCap: 1500000 + Math.random() * 100000,
-      marketCapChange: (Math.random() - 0.5) * 0.05,
-      activeNodes: 16 + Math.floor(Math.random() * 5),
-      tps: 8500 + Math.floor(Math.random() * 2000),
-      stakedSupply: 44 + Math.random() * 10,
-      uptime: 99.9,
-      tokenPrice: basePrice,
-      stakingAPY: 12.5 + Math.random() * 2,
-      hashrate: 2.5 + Math.random() * 0.5
+      price: 0,
+      priceChange: 0,
+      marketCap: 0,
+      marketCapChange: 0,
+      activeNodes: 0,
+      tps: 0,
+      stakedSupply: 0,
+      uptime: 0,
+      tokenPrice: 0,
+      stakingAPY: 0,
+      hashrate: 0
     };
   }
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso - RSC Mining</title>
+  <meta name="description" content="Accede al sistema de minería simulada RSC">
+  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/notifications.css">
+  <link rel="stylesheet" href="../styles/animations.css">
+  <link rel="stylesheet" href="../styles/login.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+  <!-- Fondo 4D animado -->
+  <div class="background-4d"></div>
+  
+  <!-- Contenedor de notificaciones -->
+  <div class="notifications-container" id="notificationsContainer"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+      <span>ReeskCapital.co</span>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="about.html">Acerca</a></li>
+      <li><a href="wallet.html">Wallet</a></li>
+      <li><a href="mine.html">Minar</a></li>
+      <li><a href="p2p.html">P2P</a></li>
+      <li><a href="staking.html">Staking</a></li>
+      <li><a href="explorer.html">Explorer</a></li>
+      <li><a href="bank.html">Bank</a></li>
+      <li><a href="docs.html">Docs</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="language-selector" id="languageSelector">
+        <span>ES</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+    <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+  </nav>
+
+  <!-- Login Container -->
+  <main class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo-container">
+          <img src="../assets/img/logo.png" alt="RSC Logo" class="login-logo">
+        </div>
+        <h1>🚀 RSC Mining</h1>
+        <p>Accede al sistema de minería simulada RSC</p>
+      </div>
+
+      <!-- Formulario de acceso simple -->
+      <div class="access-form">
+        <div class="form-group">
+          <label for="username">Nombre de Usuario</label>
+          <input type="text" id="username" name="username" required placeholder="Tu nombre de usuario">
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="tu@email.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="walletAddress">Dirección de Wallet (Opcional)</label>
+          <input type="text" id="walletAddress" name="walletAddress" placeholder="0x... (para cuando tengas wallet)">
+          <small>Si no tienes wallet aún, déjalo vacío. Podrás agregarla después.</small>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-access" onclick="window.loginManager.createAccount()">
+            Crear Cuenta
+          </button>
+          <button type="button" class="btn-demo" onclick="window.loginManager.enableDemoMode()">
+            🎮 Modo Demo
+          </button>
+        </div>
+      </div>
+
+      <div class="login-footer">
+        <p>🔒 Tu información está segura y será usada solo para rastrear tus tokens minados</p>
+        <p>🎯 Los tokens simulados se migrarán a mainnet cuando esté disponible</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="../scripts/notifications.js"></script>
+  <script src="../scripts/login.js"></script>
+</body>
+</html>

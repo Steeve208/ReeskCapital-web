@@ -1,0 +1,214 @@
+/* ================================
+   ERROR MESSAGES - RSC CHAIN
+================================ */
+
+/* Mensajes de error generales */
+.error-message {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1);
+}
+
+.error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.error-icon {
+  font-size: 2.5rem;
+  animation: pulse 2s infinite;
+}
+
+.error-text {
+  font-size: 1.1rem;
+  color: #ef4444;
+  font-weight: 600;
+  margin: 0;
+}
+
+.retry-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.retry-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+.retry-btn:active {
+  transform: translateY(0);
+}
+
+/* Mensajes específicos para diferentes secciones */
+.blockchain-error-message {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  margin: 30px auto;
+  max-width: 600px;
+}
+
+.blockchain-error-message .error-icon {
+  color: #3b82f6;
+}
+
+.blockchain-error-message .error-text {
+  color: #3b82f6;
+}
+
+.stats-error-message {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  margin: 20px 0;
+}
+
+.stats-error-message .error-icon {
+  color: #10b981;
+}
+
+.stats-error-message .error-text {
+  color: #10b981;
+}
+
+/* Mensajes de "sin datos" */
+.no-data-message {
+  background: linear-gradient(135deg, rgba(156, 163, 175, 0.1) 0%, rgba(107, 114, 128, 0.1) 100%);
+  border: 1px solid rgba(156, 163, 175, 0.3);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.no-data-icon {
+  font-size: 3rem;
+  color: #9ca3af;
+  margin-bottom: 15px;
+}
+
+.no-data-message h3 {
+  color: #6b7280;
+  font-size: 1.3rem;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.no-data-message p {
+  color: #9ca3af;
+  font-size: 1rem;
+  margin: 0 0 20px 0;
+}
+
+/* Estados de conexión */
+.connection-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.connection-status.connected {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.connection-status.disconnected {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.connection-status.error {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* Indicadores de estado */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.status-dot.online {
+  background: #10b981;
+}
+
+.status-dot.offline {
+  background: #ef4444;
+}
+
+.status-dot.warning {
+  background: #f59e0b;
+}
+
+/* Animaciones */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .error-message {
+    margin: 15px;
+    padding: 15px;
+  }
+  
+  .error-icon {
+    font-size: 2rem;
+  }
+  
+  .error-text {
+    font-size: 1rem;
+  }
+  
+  .retry-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .no-data-message {
+    padding: 20px;
+    margin: 15px;
+  }
+  
+  .no-data-icon {
+    font-size: 2.5rem;
+  }
+}

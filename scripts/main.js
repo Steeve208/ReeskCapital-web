@@ -319,51 +319,71 @@ function initStats() {
 }
 
 function updateStats() {
-  // Simular datos de la blockchain
-  const mockData = {
-    price: (Math.random() * 10 + 0.1).toFixed(2),
-    supply: Math.floor(Math.random() * 1000000),
-    tps: Math.floor(Math.random() * 1000),
-    nodes: Math.floor(Math.random() * 100),
-    marketCap: (Math.random() * 1000000 + 100000).toFixed(0),
-    volume24h: (Math.random() * 500000 + 50000).toFixed(0),
-    totalBlocks: Math.floor(Math.random() * 1000000),
-    activeUsers: Math.floor(Math.random() * 10000)
-  };
-  
-  // Actualizar elementos con animación
-  const elements = {
-    'rscPrice': `$${mockData.price}`,
-    'rscSupply': mockData.supply.toLocaleString(),
-    'tpsValue': mockData.tps,
-    'nodesValue': mockData.nodes,
-    'marketCap': `$${mockData.marketCap}`,
-    'volume24h': `$${mockData.volume24h}`,
-    'totalBlocks': mockData.totalBlocks.toLocaleString(),
-    'activeUsers': mockData.activeUsers.toLocaleString(),
-    'dashboardPrice': `$${mockData.price}`,
-    'dashboardSupply': mockData.supply.toLocaleString()
-  };
-  
-  Object.keys(elements).forEach(id => {
-    const element = document.getElementById(id);
-    if (element) {
-      // Animación de cambio de valor
-      const oldValue = element.textContent;
-      const newValue = elements[id];
-      
-      if (oldValue !== newValue) {
-        element.style.transform = 'scale(1.1)';
-        element.style.color = '#00ff88';
+  // Obtener datos reales de la blockchain
+  fetch('/api/blockchain/stats')
+    .then(response => response.json())
+    .then(data => {
+      if (data.success && data.stats) {
+        const stats = data.stats;
         
-        setTimeout(() => {
-          element.textContent = newValue;
-          element.style.transform = 'scale(1)';
-          element.style.color = '';
-        }, 150);
+        // Actualizar elementos con animación
+        const elements = {
+          'rscPrice': `$${stats.price || 0}`,
+          'rscSupply': (stats.circulatingSupply || 0).toLocaleString(),
+          'tpsValue': stats.tps || 0,
+          'nodesValue': stats.activeValidators || 0,
+          'marketCap': `$${(stats.marketCap || 0).toLocaleString()}`,
+          'volume24h': `$${(stats.volume24h || 0).toLocaleString()}`,
+          'totalBlocks': (stats.totalBlocks || 0).toLocaleString(),
+          'activeUsers': (stats.activeUsers || 0).toLocaleString(),
+          'dashboardPrice': `$${stats.price || 0}`,
+          'dashboardSupply': (stats.circulatingSupply || 0).toLocaleString()
+        };
+        
+        Object.keys(elements).forEach(id => {
+          const element = document.getElementById(id);
+          if (element) {
+            // Animación de cambio de valor
+            const oldValue = element.textContent;
+            const newValue = elements[id];
+            
+            if (oldValue !== newValue) {
+              element.style.transform = 'scale(1.1)';
+              element.style.color = '#00ff88';
+              
+              setTimeout(() => {
+                element.textContent = newValue;
+                element.style.transform = 'scale(1)';
+                element.style.color = '';
+              }, 150);
+            }
+          }
+        });
       }
-    }
-  });
+    })
+    .catch(error => {
+      console.warn('Error obteniendo estadísticas de la blockchain:', error);
+      // Si no hay datos, mostrar 0
+      const elements = {
+        'rscPrice': '$0',
+        'rscSupply': '0',
+        'tpsValue': '0',
+        'nodesValue': '0',
+        'marketCap': '$0',
+        'volume24h': '$0',
+        'totalBlocks': '0',
+        'activeUsers': '0',
+        'dashboardPrice': '$0',
+        'dashboardSupply': '0'
+      };
+      
+      Object.keys(elements).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = elements[id];
+        }
+      });
+    });
 }
 
 // Inicializar chat

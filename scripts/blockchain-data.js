@@ -690,19 +690,42 @@ class EpicBlockchainStats {
     }
 
     showFallbackData() {
-        console.warn('⚠️ Mostrando datos de respaldo');
+        console.warn('⚠️ No se pueden cargar datos de la blockchain');
         
-        const fallbackData = {
-            price: 0.85,
-            supply: 10000000,
-            tps: 50000,
-            nodes: 1247
-        };
+        // En lugar de mostrar datos simulados, mostrar indicadores de error
+        if (this.elements.price) this.elements.price.textContent = '--';
+        if (this.elements.supply) this.elements.supply.textContent = '--';
+        if (this.elements.tps) this.elements.tps.textContent = '--';
+        if (this.elements.nodes) this.elements.nodes.textContent = '--';
+        
+        // Mostrar mensaje de error en la UI
+        this.showConnectionError();
+    }
 
-        if (this.elements.price) this.elements.price.textContent = '$' + fallbackData.price.toFixed(4);
-        if (this.elements.supply) this.elements.supply.textContent = this.formatNumber(fallbackData.supply);
-        if (this.elements.tps) this.elements.tps.textContent = this.formatNumber(fallbackData.tps);
-        if (this.elements.nodes) this.elements.nodes.textContent = this.formatNumber(fallbackData.nodes);
+    showConnectionError() {
+        // Crear o actualizar mensaje de error
+        let errorElement = document.getElementById('blockchain-error');
+        if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.id = 'blockchain-error';
+            errorElement.className = 'blockchain-error-message';
+            errorElement.innerHTML = `
+                <div class="error-content">
+                    <span class="error-icon">⚠️</span>
+                    <span class="error-text">No se puede conectar a RSC Chain</span>
+                    <button class="retry-btn" onclick="window.epicBlockchainStats.forceUpdate()">Reintentar</button>
+                </div>
+            `;
+            
+            // Insertar después del hero
+            const heroSection = document.querySelector('.hero-epic');
+            if (heroSection) {
+                heroSection.parentNode.insertBefore(errorElement, heroSection.nextSibling);
+            }
+        }
+        
+        // Mostrar el error
+        errorElement.style.display = 'block';
     }
 
     // Métodos públicos para control externo

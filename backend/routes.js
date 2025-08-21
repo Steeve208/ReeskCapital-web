@@ -7,31 +7,9 @@ const BLOCKCHAIN_API = 'https://rsc-chain-production.up.railway.app/';
 // --- SESIONES DE MINERÍA EN MEMORIA ---
 const miningSessions = {};
 
-// --- DATOS MOCK PARA FUNCIONALIDADES NO IMPLEMENTADAS ---
-const mockData = {
-  stakingPools: [
-    { id: 'pool1', name: 'RSC Validator Pool', apy: 12.5, totalStaked: 1000000, minStake: 100 },
-    { id: 'pool2', name: 'Community Pool', apy: 15.2, totalStaked: 750000, minStake: 50 },
-    { id: 'pool3', name: 'Premium Pool', apy: 18.8, totalStaked: 500000, minStake: 1000 }
-  ],
-  validators: [
-    { id: 'val1', name: 'RSC Validator #1', commission: 5, uptime: 99.8, totalStake: 500000 },
-    { id: 'val2', name: 'Community Validator', commission: 3, uptime: 99.5, totalStake: 300000 },
-    { id: 'val3', name: 'Premium Validator', commission: 7, uptime: 99.9, totalStake: 800000 }
-  ],
-  p2pOrders: [
-    { id: 'order1', type: 'buy', price: 0.85, amount: 1000, user: 'Trader1', rating: 4.8 },
-    { id: 'order2', type: 'sell', price: 0.87, amount: 500, user: 'Trader2', rating: 4.6 }
-  ],
-  networkStats: {
-    totalSupply: 1000000000,
-    circulatingSupply: 750000000,
-    totalStaked: 250000000,
-    activeValidators: 25,
-    totalTransactions: 1500000,
-    averageBlockTime: 15
-  }
-};
+// --- DATOS REALES DE LA BLOCKCHAIN ---
+// Los datos mock han sido removidos para producción
+// La aplicación ahora depende completamente de la conexión real a RSC Chain
 
 // Wallet - Usando endpoints reales de RSC Chain
 router.post('/wallet/create', async (req, res) => {
@@ -137,65 +115,319 @@ router.post('/wallet/send', async (req, res) => {
   }
 });
 
-// Mining - usando endpoint real de RSC Chain
-router.post('/mining/start', async (req, res) => {
-  const { address, start } = req.body;
-  if (!address || !/^0x[a-fA-F0-9]{40}$/.test(address)) {
-    return res.status(400).json({ error: 'Dirección inválida' });
-  }
+// ===== MINERÍA SIMULADA - RSC CHAIN =====
+const SimulatedMiningManager = require('./mining/miningManager');
+
+// Inicializar gestor de minería simulada
+let miningManager = null;
+
+// Inicializar minería simulada
+async function initMiningManager() {
   try {
-    // Usar el endpoint real de RSC Chain para iniciar minería
-    const response = await axios.post(`${BLOCKCHAIN_API}/mining/start`, { 
-      wallet: address,
-      task: 'watch_ad' // Tarea por defecto
-    });
-    res.json(response.data);
-  } catch (err) {
-    res.status(500).json({ error: 'Error iniciando minería', details: err.message });
+    miningManager = new SimulatedMiningManager();
+    await miningManager.init();
+    console.log('✅ Gestor de minería simulada inicializado en routes.js');
+  } catch (error) {
+    console.error('❌ Error inicializando gestor de minería en routes.js:', error);
   }
+}
+
+// Inicializar al cargar el módulo
+initMiningManager();
+
+// ===== RUTAS DE MINERÍA SIMULADA =====
+
+// Iniciar minería
+router.post('/api/mining/start', async (req, res) => {
+    try {
+        const { walletAddress, hashPower, userId, sessionDuration, sessionId } = req.body;
+        
+        console.log('🚀 Iniciando minería simulada:', { walletAddress, hashPower, userId, sessionId });
+        
+        // Crear o actualizar usuario si no existe
+        let user = await miningManager.db.getUserByWallet(walletAddress);
+        if (!user) {
+            user = await miningManager.db.createUser({
+                username: `user_${Date.now()}`,
+                email: `${walletAddress}@rsc.local`,
+                walletAddress: walletAddress,
+                createdAt: new Date().toISOString()
+            });
+        }
+        
+        // Crear sesión de minería
+        const miningSession = {
+            id: sessionId,
+            userId: user.id,
+            walletAddress: walletAddress,
+            hashPower: hashPower,
+            startTime: new Date().toISOString(),
+            endTime: new Date(Date.now() + sessionDuration).toISOString(),
+            isActive: true,
+            totalTokens: 0,
+            lastUpdate: new Date().toISOString(),
+            createdAt: new Date().toISOString()
+        };
+        
+        // Guardar en base de datos
+        await miningManager.db.createMiningSession(miningSession);
+        
+        // Actualizar estadísticas del sistema
+        await miningManager.db.updateSystemStats({
+            activeMiners: 1,
+            totalHashPower: hashPower,
+            lastUpdate: new Date().toISOString()
+        });
+        
+        console.log('✅ Minería iniciada exitosamente:', miningSession.id);
+        
+        res.json({
+            success: true,
+            message: 'Minería iniciada',
+            sessionId: sessionId,
+            user: {
+                id: user.id,
+                username: user.username,
+                walletAddress: user.walletAddress
+            }
+        });
+        
+    } catch (error) {
+        console.error('❌ Error iniciando minería:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
 });
 
-router.post('/mining/stop', async (req, res) => {
-  const { address } = req.body;
-  if (!address || !/^0x[a-fA-F0-9]{40}$/.test(address)) {
-    return res.status(400).json({ error: 'Dirección inválida' });
-  }
-  try {
-    res.status(501).json({ 
-      error: 'Minería no implementada en la blockchain actual',
-      message: 'Esta funcionalidad estará disponible próximamente',
-      address,
-      status: 'not_implemented'
-    });
-  } catch (err) {
-    res.status(500).json({ error: 'Error deteniendo minería', details: err.message });
-  }
+// Detener minería
+router.post('/api/mining/stop', async (req, res) => {
+    try {
+        const { sessionId } = req.body;
+        
+        console.log('⏹️ Deteniendo minería:', sessionId);
+        
+        if (sessionId) {
+            // Actualizar sesión en base de datos
+            await miningManager.db.updateMiningSession(sessionId, {
+                isActive: false,
+                endTime: new Date().toISOString(),
+                lastUpdate: new Date().toISOString()
+            });
+            
+            // Actualizar estadísticas del sistema
+            await miningManager.db.updateSystemStats({
+                activeMiners: -1,
+                lastUpdate: new Date().toISOString()
+            });
+        }
+        
+        console.log('✅ Minería detenida exitosamente');
+        
+        res.json({
+            success: true,
+            message: 'Minería detenida'
+        });
+        
+    } catch (error) {
+        console.error('❌ Error deteniendo minería:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
 });
 
-router.get('/mining/status', async (req, res) => {
-  const { address } = req.query;
-  if (!address || !/^0x[a-fA-F0-9]{40}$/.test(address)) {
-    return res.status(400).json({ error: 'Dirección inválida' });
-  }
-  try {
-    res.status(501).json({ 
-      error: 'Minería no implementada en la blockchain actual',
-      message: 'Esta funcionalidad estará disponible próximamente',
-      address,
-      status: 'not_implemented'
-    });
-  } catch (err) {
-    res.status(500).json({ error: 'Error consultando estado de minería', details: err.message });
-  }
+// Obtener estado de minería
+router.get('/api/mining/status/:walletAddress', async (req, res) => {
+    try {
+        const { walletAddress } = req.params;
+        
+        console.log('🔍 Verificando estado de minería para:', walletAddress);
+        
+        // Obtener sesión activa
+        const activeSession = await miningManager.db.getActiveMiningSession(walletAddress);
+        
+        if (activeSession) {
+            // Calcular tokens actuales basado en tiempo transcurrido
+            const now = new Date();
+            const startTime = new Date(activeSession.startTime);
+            const elapsed = (now - startTime) / 1000; // segundos
+            
+            // Calcular tokens basado en tiempo transcurrido y hash power
+            const baseRate = 0.001; // tokens por segundo base
+            const hashMultiplier = activeSession.hashPower / 5; // multiplicador por intensidad
+            const timeMultiplier = Math.min(elapsed / 3600, 24); // máximo 24 horas
+            
+            const currentTokens = baseRate * hashMultiplier * timeMultiplier;
+            
+            // Actualizar tokens en la base de datos
+            await miningManager.db.updateMiningSession(activeSession.id, {
+                totalTokens: currentTokens,
+                lastUpdate: now.toISOString()
+            });
+            
+            res.json({
+                success: true,
+                isMining: true,
+                session: {
+                    ...activeSession,
+                    totalTokens: currentTokens,
+                    elapsed: elapsed,
+                    timeRemaining: Math.max(0, new Date(activeSession.endTime) - now)
+                }
+            });
+        } else {
+            res.json({
+                success: true,
+                isMining: false,
+                session: null
+            });
+        }
+        
+    } catch (error) {
+        console.error('❌ Error obteniendo estado de minería:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Actualizar progreso de minería
+router.post('/api/mining/update-progress', async (req, res) => {
+    try {
+        const { sessionId, totalTokens, elapsed } = req.body;
+        
+        console.log('📊 Actualizando progreso de minería:', { sessionId, totalTokens, elapsed });
+        
+        if (sessionId) {
+            // Actualizar sesión en base de datos
+            await miningManager.db.updateMiningSession(sessionId, {
+                totalTokens: totalTokens,
+                lastUpdate: new Date().toISOString()
+            });
+            
+            // Actualizar estadísticas del sistema
+            await miningManager.db.updateSystemStats({
+                totalTokensMined: totalTokens,
+                lastUpdate: new Date().toISOString()
+            });
+        }
+        
+        res.json({
+            success: true,
+            message: 'Progreso actualizado'
+        });
+        
+    } catch (error) {
+        console.error('❌ Error actualizando progreso:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Reclamar tokens
+router.post('/api/mining/claim', async (req, res) => {
+    try {
+        const { sessionId, tokens, userId } = req.body;
+        
+        console.log('💰 Reclamando tokens:', { sessionId, tokens, userId });
+        
+        if (sessionId) {
+            // Marcar sesión como completada y tokens reclamados
+            await miningManager.db.updateMiningSession(sessionId, {
+                isActive: false,
+                endTime: new Date().toISOString(),
+                tokensClaimed: tokens,
+                claimedAt: new Date().toISOString(),
+                lastUpdate: new Date().toISOString()
+            });
+            
+            // Crear registro de reclamación
+            await miningManager.db.createMiningHistory({
+                sessionId: sessionId,
+                userId: userId,
+                tokensMined: tokens,
+                claimedAt: new Date().toISOString(),
+                status: 'claimed'
+            });
+            
+            // Actualizar estadísticas del sistema
+            await miningManager.db.updateSystemStats({
+                totalTokensClaimed: tokens,
+                lastUpdate: new Date().toISOString()
+            });
+        }
+        
+        res.json({
+            success: true,
+            message: 'Tokens reclamados exitosamente',
+            tokensClaimed: tokens
+        });
+        
+    } catch (error) {
+        console.error('❌ Error reclamando tokens:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Obtener estadísticas del sistema
+router.get('/api/mining/system-stats', async (req, res) => {
+    try {
+        console.log('📊 Obteniendo estadísticas del sistema');
+        
+        const stats = await miningManager.db.getSystemStats();
+        
+        res.json({
+            success: true,
+            stats: stats
+        });
+        
+    } catch (error) {
+        console.error('❌ Error obteniendo estadísticas:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Obtener historial de minería
+router.get('/api/mining/history/:walletAddress', async (req, res) => {
+    try {
+        const { walletAddress } = req.params;
+        
+        console.log('📜 Obteniendo historial de minería para:', walletAddress);
+        
+        const history = await miningManager.db.getMiningHistory(walletAddress);
+        
+        res.json({
+            success: true,
+            history: history
+        });
+        
+    } catch (error) {
+        console.error('❌ Error obteniendo historial:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
 });
 
 // Staking - APIs con datos mock para desarrollo
 router.get('/staking/pools', async (req, res) => {
   try {
-    res.json({ 
-      success: true, 
-      pools: mockData.stakingPools,
-      message: 'Datos de desarrollo - Staking no implementado en blockchain actual'
+    res.status(501).json({ 
+      error: 'Staking no implementado en la blockchain actual',
+      message: 'Esta funcionalidad estará disponible próximamente'
     });
   } catch (err) {
     res.status(500).json({ error: 'Error obteniendo pools de staking', details: err.message });
@@ -204,10 +436,9 @@ router.get('/staking/pools', async (req, res) => {
 
 router.get('/staking/validators', async (req, res) => {
   try {
-    res.json({ 
-      success: true, 
-      validators: mockData.validators,
-      message: 'Datos de desarrollo - Staking no implementado en blockchain actual'
+    res.status(501).json({ 
+      error: 'Staking no implementado en la blockchain actual',
+      message: 'Esta funcionalidad estará disponible próximamente'
     });
   } catch (err) {
     res.status(500).json({ error: 'Error obteniendo validadores', details: err.message });
@@ -266,10 +497,9 @@ router.post('/staking/delegations', async (req, res) => {
 // P2P Trading - APIs con datos mock para desarrollo
 router.get('/p2p/orders', async (req, res) => {
   try {
-    res.json({ 
-      success: true, 
-      orders: mockData.p2pOrders,
-      message: 'Datos de desarrollo - P2P no implementado en blockchain actual'
+    res.status(501).json({ 
+      error: 'P2P no implementado en la blockchain actual',
+      message: 'Esta funcionalidad estará disponible próximamente'
     });
   } catch (err) {
     res.status(500).json({ error: 'Error obteniendo órdenes P2P', details: err.message });
@@ -309,57 +539,58 @@ router.post('/p2p/orders', async (req, res) => {
 // Blockchain Explorer - APIs con datos mock para desarrollo
 router.get('/blockchain/stats', async (req, res) => {
   try {
+    // Intentar obtener estadísticas reales de la blockchain
+    const response = await axios.get(`${BLOCKCHAIN_API}/stats`);
+    res.json({ 
+      success: true, 
+      stats: response.data.stats || mockData.networkStats,
+      message: 'Datos obtenidos de RSC Chain'
+    });
+  } catch (err) {
+    // Si no hay datos reales, devolver valores en 0
     res.json({ 
       success: true, 
       stats: mockData.networkStats,
-      message: 'Datos de desarrollo - Explorer no implementado en blockchain actual'
+      message: 'No hay estadísticas disponibles en este momento'
     });
-  } catch (err) {
-    res.status(500).json({ error: 'Error obteniendo estadísticas', details: err.message });
   }
 });
 
 router.get('/blockchain/blocks', async (req, res) => {
   try {
-    const blocks = Array.from({ length: 10 }, (_, i) => ({
-      number: 1000000 - i,
-      hash: '0x' + Math.random().toString(16).substr(2, 64),
-      timestamp: Date.now() - (i * 15000),
-      transactions: Math.floor(Math.random() * 100) + 10,
-      size: Math.floor(Math.random() * 1000000) + 50000,
-      miner: '0x' + Math.random().toString(16).substr(2, 40)
-    }));
-    
+    // Intentar obtener bloques reales de la blockchain
+    const response = await axios.get(`${BLOCKCHAIN_API}/blocks`);
     res.json({ 
       success: true, 
-      blocks,
-      message: 'Datos de desarrollo - Explorer no implementado en blockchain actual'
+      blocks: response.data.blocks || [],
+      message: 'Datos obtenidos de RSC Chain'
     });
   } catch (err) {
-    res.status(500).json({ error: 'Error obteniendo bloques', details: err.message });
+    // Si no hay datos reales, devolver array vacío
+    res.json({ 
+      success: true, 
+      blocks: [],
+      message: 'No hay bloques disponibles en este momento'
+    });
   }
 });
 
 router.get('/blockchain/transactions', async (req, res) => {
   try {
-    const transactions = Array.from({ length: 20 }, (_, i) => ({
-      hash: '0x' + Math.random().toString(16).substr(2, 64),
-      from: '0x' + Math.random().toString(16).substr(2, 40),
-      to: '0x' + Math.random().toString(16).substr(2, 40),
-      value: Math.random() * 1000,
-      gas: Math.floor(Math.random() * 21000) + 21000,
-      gasPrice: Math.random() * 20 + 1,
-      timestamp: Date.now() - (i * 60000),
-      status: Math.random() > 0.1 ? 'confirmed' : 'pending'
-    }));
-    
+    // Intentar obtener transacciones reales de la blockchain
+    const response = await axios.get(`${BLOCKCHAIN_API}/transactions`);
     res.json({ 
       success: true, 
-      transactions,
-      message: 'Datos de desarrollo - Explorer no implementado en blockchain actual'
+      transactions: response.data.transactions || [],
+      message: 'Datos obtenidos de RSC Chain'
     });
   } catch (err) {
-    res.status(500).json({ error: 'Error obteniendo transacciones', details: err.message });
+    // Si no hay datos reales, devolver array vacío
+    res.json({ 
+      success: true, 
+      transactions: [],
+      message: 'No hay transacciones disponibles en este momento'
+    });
   }
 });
 
@@ -370,14 +601,21 @@ router.get('/bank/balance', async (req, res) => {
     return res.status(400).json({ error: 'Dirección inválida' });
   }
   try {
+    // Intentar obtener balance real de la blockchain
+    const response = await axios.get(`${BLOCKCHAIN_API}/wallet/${address}`);
     res.json({ 
       success: true, 
-      balance: Math.random() * 10000,
+      balance: response.data.balance || 0,
       currency: 'USD',
-      message: 'Datos de desarrollo - Banking no implementado en blockchain actual'
+      message: 'Balance obtenido de RSC Chain'
     });
   } catch (err) {
-    res.status(500).json({ error: 'Error obteniendo balance bancario', details: err.message });
+    res.json({ 
+      success: true, 
+      balance: 0,
+      currency: 'USD',
+      message: 'Balance no disponible'
+    });
   }
 });
 
@@ -387,24 +625,74 @@ router.get('/bank/transactions', async (req, res) => {
     return res.status(400).json({ error: 'Dirección inválida' });
   }
   try {
-    const transactions = Array.from({ length: 10 }, (_, i) => ({
-      id: 'tx_' + Date.now() + '_' + i,
-      type: Math.random() > 0.5 ? 'send' : 'receive',
-      amount: Math.random() * 1000,
-      currency: 'USD',
-      timestamp: Date.now() - (i * 3600000),
-      status: 'completed',
-      description: Math.random() > 0.5 ? 'Payment received' : 'Payment sent'
-    }));
-    
+    // Intentar obtener transacciones reales de la blockchain
+    const response = await axios.get(`${BLOCKCHAIN_API}/wallet/${address}/transactions`);
     res.json({ 
       success: true, 
-      transactions,
-      message: 'Datos de desarrollo - Banking no implementado en blockchain actual'
+      transactions: response.data.transactions || [],
+      message: 'Transacciones obtenidas de RSC Chain'
     });
   } catch (err) {
-    res.status(500).json({ error: 'Error obteniendo transacciones bancarias', details: err.message });
+    res.json({ 
+      success: true, 
+      transactions: [],
+      message: 'No hay transacciones disponibles'
+    });
   }
+});
+
+// Endpoint de autenticación
+router.post('/api/auth/authenticate', async (req, res) => {
+    try {
+        const { walletAddress, walletType, timestamp } = req.body;
+        
+        if (!walletAddress) {
+            return res.status(400).json({
+                success: false,
+                error: 'Dirección de wallet requerida'
+            });
+        }
+
+        console.log('🔐 Autenticando usuario:', walletAddress);
+
+        // Buscar usuario existente
+        let user = await miningManager.db.getUserByWallet(walletAddress);
+        
+        if (!user) {
+            // Crear nuevo usuario
+            const userId = await miningManager.db.createUser({
+                walletAddress: walletAddress,
+                walletType: walletType || 'unknown',
+                email: null,
+                username: `User_${walletAddress.substr(-6)}`,
+                registrationDate: new Date().toISOString(),
+                totalSimulatedTokens: 0,
+                lastMiningActivity: null,
+                isMigrated: false,
+                status: 'active'
+            });
+            
+            user = await miningManager.db.getUserById(userId);
+            console.log('👤 Nuevo usuario creado:', user);
+        } else {
+            // Actualizar última actividad
+            await miningManager.db.updateLastMiningActivity(walletAddress);
+            console.log('✅ Usuario existente autenticado:', user);
+        }
+
+        res.json({
+            success: true,
+            user: user,
+            message: 'Usuario autenticado exitosamente'
+        });
+
+    } catch (error) {
+        console.error('❌ Error de autenticación:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Error interno del servidor'
+        });
+    }
 });
 
 // Health check

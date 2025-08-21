@@ -1,0 +1,62 @@
+/* Estilos para mensajes de "no hay datos" */
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px dashed #444;
+  margin: 1rem 0;
+}
+
+.no-data::before {
+  content: "📊";
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Estilos para estados de carga */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #00ff88;
+}
+
+.loading::before {
+  content: "⏳";
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Estilos para datos en 0 */
+.zero-data {
+  color: #666;
+  font-style: italic;
+}
+
+/* Estilos para mensajes de error */
+.error-message {
+  text-align: center;
+  padding: 1rem;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  margin: 1rem 0;
+}
+
+.error-message::before {
+  content: "⚠️";
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+} 

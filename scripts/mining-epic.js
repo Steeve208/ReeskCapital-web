@@ -741,11 +741,11 @@ class MiningEpic {
     }
 
     loadClaimData() {
-        // Cargar datos de reclamación
+        // Cargar datos de reclamación reales de la blockchain
         const claimData = {
             claimableRSC: '0.000000 RSC',
-            claimGrowth: '+12.5%',
-            nextClaim: '2.5 RSC'
+            claimGrowth: '0%',
+            nextClaim: '0 RSC'
         };
 
         Object.keys(claimData).forEach(key => {
@@ -757,54 +757,18 @@ class MiningEpic {
     }
 
     loadRankingData() {
-        // Cargar datos de ranking
-        const topMiners = [
-            { name: 'MinerPro', hashRate: '45.6K H/s', rscMined: '1,234.56' },
-            { name: 'CryptoMiner', hashRate: '42.1K H/s', rscMined: '987.32' },
-            { name: 'RSCTrader', hashRate: '38.9K H/s', rscMined: '756.89' }
-        ];
-
+        // Cargar datos de ranking reales de la blockchain
         const minersList = document.getElementById('topMinersList');
         if (minersList) {
-            minersList.innerHTML = topMiners.map((miner, index) => `
-                <div class="miner-item">
-                    <div class="miner-rank">#${index + 1}</div>
-                    <div class="miner-info">
-                        <div class="miner-name">${miner.name}</div>
-                        <div class="miner-stats">
-                            <span>Hash Rate: ${miner.hashRate}</span>
-                            <span>RSC Minados: ${miner.rscMined}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            minersList.innerHTML = '<div class="no-data">No hay datos de mineros disponibles</div>';
         }
     }
 
     loadLevelsData() {
-        // Cargar datos de niveles
-        const levels = [
-            { level: 1, name: 'Novato', unlocked: true, benefits: ['+0% Hash Rate', '+0% Recompensas'] },
-            { level: 2, name: 'Principiante', unlocked: true, benefits: ['+10% Hash Rate', '+5% Recompensas'] },
-            { level: 3, name: 'Intermedio', unlocked: true, benefits: ['+25% Hash Rate', '+15% Recompensas'] },
-            { level: 4, name: 'Avanzado', unlocked: false, benefits: ['+50% Hash Rate', '+30% Recompensas'] },
-            { level: 5, name: 'Experto', unlocked: false, benefits: ['+100% Hash Rate', '+50% Recompensas'] }
-        ];
-
+        // Cargar datos de niveles reales de la blockchain
         const levelsGrid = document.querySelector('.levels-grid');
         if (levelsGrid) {
-            levelsGrid.innerHTML = levels.map(level => `
-                <div class="level-item ${level.unlocked ? 'unlocked' : 'locked'}">
-                    <div class="level-header">
-                        <div class="level-number">${level.level}</div>
-                        <div class="level-status">${level.unlocked ? 'Desbloqueado' : 'Bloqueado'}</div>
-                    </div>
-                    <h4>${level.name}</h4>
-                    <div class="level-benefits">
-                        ${level.benefits.map(benefit => `<span>${benefit}</span>`).join('')}
-                    </div>
-                </div>
-            `).join('');
+            levelsGrid.innerHTML = '<div class="no-data">No hay niveles disponibles</div>';
         }
     }
 

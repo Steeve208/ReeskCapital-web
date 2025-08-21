@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="styles/staking.css">
   <link rel="stylesheet" href="styles/explorer.css">
   <link rel="stylesheet" href="styles/bank.css">
-  <link rel="stylesheet" href="styles/about.css">
+  <link rel="stylesheet" href="styles/about.html">
   <link rel="stylesheet" href="styles/docs.css">
   <link rel="stylesheet" href="styles/faq.css">
   <link rel="stylesheet" href="styles/roadmap.css">
@@ -39,6 +39,9 @@
   <link rel="stylesheet" href="styles/sections/highlights.css">
   <link rel="stylesheet" href="styles/sections/p2p.css">
   <link rel="stylesheet" href="styles/footer.css">
+  <!-- ===== SISTEMA DE GRID AVANZADO - FASE 1 ===== -->
+  <link rel="stylesheet" href="styles/grid-system.css">
+  <link rel="stylesheet" href="styles/grid-demo.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -72,6 +75,7 @@
       <li><a href="pages/explorer.html">Explorer</a></li>
       <li><a href="pages/bank.html">Bank</a></li>
       <li><a href="pages/docs.html">Docs</a></li>
+      <li><a href="pages/login.html" class="login-link">🔐 Login</a></li>
       
       <!-- Sección de Navegación para móvil -->
       <div class="mobile-nav-section">
@@ -316,9 +320,9 @@
             <div class="stat-status online"></div>
           </div>
           <div class="stat-content">
-        <div class="stat-value" id="rscPrice">$0.00</div>
+        <div class="stat-value" id="rscPrice">--</div>
         <div class="stat-label">Precio RSC</div>
-        <div class="stat-change" id="priceChange">+0.00%</div>
+        <div class="stat-change" id="priceChange">--</div>
       </div>
           <div class="stat-glow"></div>
           <div class="stat-particles"></div>
@@ -330,11 +334,11 @@
             <div class="stat-status online"></div>
           </div>
           <div class="stat-content">
-        <div class="stat-value" id="rscSupply">0</div>
+        <div class="stat-value" id="rscSupply">--</div>
         <div class="stat-label">RSC en Circulación</div>
             <div class="stat-progress">
               <div class="progress-bar">
-                <div class="progress-fill" style="width: 65%"></div>
+                <div class="progress-fill" style="width: 0%"></div>
       </div>
             </div>
           </div>
@@ -347,7 +351,7 @@
             <div class="stat-status online"></div>
           </div>
           <div class="stat-content">
-        <div class="stat-value" id="tpsValue">0</div>
+        <div class="stat-value" id="tpsValue">--</div>
         <div class="stat-label">TPS</div>
             <div class="stat-graph">
               <canvas id="tpsGraph" width="60" height="20"></canvas>
@@ -604,131 +608,87 @@
         </div>
         
         <!-- Advanced Roadmap Nodes -->
-        <div class="roadmap-node node-1 completed" data-stage="token-issue" data-progress="100">
+        <div class="roadmap-node node-1 pending" data-stage="blockchain-launch" data-progress="0">
           <div class="node-platform"></div>
           <div class="node-content">
             <div class="node-header">
-              <h3 class="node-title">Token Issue</h3>
-              <div class="node-status completed">
-                <span class="status-icon">✅</span>
-                <span class="status-text">Completado</span>
+              <h3 class="node-title">Lanzamiento Blockchain</h3>
+              <div class="node-status pending">
+                <span class="status-icon">⏳</span>
+                <span class="status-text">Pendiente</span>
               </div>
             </div>
-            <p class="node-description">Lanzamiento inicial del token RSC con distribución inicial a validadores y early adopters.</p>
+            <p class="node-description">Lanzamiento oficial de RSC Chain Mainnet con activación del bloque Génesis y explorador blockchain operativo.</p>
             <div class="node-progress">
               <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%"></div>
+                <div class="progress-fill" style="width: 0%"></div>
               </div>
-              <span class="progress-text">100% Completado</span>
+              <span class="progress-text">0% Completado</span>
             </div>
             <div class="node-metrics">
               <div class="metric">
-                <span class="metric-value">1M</span>
-                <span class="metric-label">RSC Tokens</span>
+                <span class="metric-value">-</span>
+                <span class="metric-label">Nodos</span>
               </div>
               <div class="metric">
-                <span class="metric-value">15</span>
-                <span class="metric-label">Validadores</span>
+                <span class="metric-value">-</span>
+                <span class="metric-label">Bloques</span>
               </div>
             </div>
             <div class="node-date">
-              <span class="date-text">October 2022</span>
+              <span class="date-text">Q2 2025</span>
               <span class="date-dot"></span>
             </div>
             <div class="node-links">
-              <a href="https://github.com/rscchain" class="node-link" target="_blank">
-                <span class="link-icon">🐙</span>
-                <span class="link-text">GitHub</span>
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">🔗</span>
+                <span class="link-text">Mainnet</span>
               </a>
-              <a href="docs.html" class="node-link">
-                <span class="link-icon">📖</span>
-                <span class="link-text">Docs</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="roadmap-node node-2 completed" data-stage="new-protocol" data-progress="100">
-          <div class="node-platform"></div>
-          <div class="node-content">
-            <div class="node-header">
-              <h3 class="node-title">New Protocol</h3>
-              <div class="node-status completed">
-                <span class="status-icon">✅</span>
-                <span class="status-text">Completado</span>
-              </div>
-            </div>
-            <p class="node-description">Protocolo PoS avanzado implementado con validación distribuida y consenso mejorado.</p>
-            <div class="node-progress">
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%"></div>
-              </div>
-              <span class="progress-text">100% Completado</span>
-            </div>
-            <div class="node-metrics">
-              <div class="metric">
-                <span class="metric-value">25</span>
-                <span class="metric-label">Validadores</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">10K+</span>
-                <span class="metric-label">TPS</span>
-              </div>
-            </div>
-            <div class="node-date">
-              <span class="date-text">October 2023</span>
-              <span class="date-dot"></span>
-            </div>
-            <div class="node-links">
-              <a href="explorer.html" class="node-link">
+              <a href="#" class="node-link disabled">
                 <span class="link-icon">🔍</span>
                 <span class="link-text">Explorer</span>
               </a>
-              <a href="docs.html" class="node-link">
-                <span class="link-icon">📖</span>
-                <span class="link-text">Docs</span>
-              </a>
             </div>
           </div>
         </div>
 
-        <div class="roadmap-node node-3 active" data-stage="token-upgrade" data-progress="75">
+        <div class="roadmap-node node-2 pending" data-stage="community-ecosystem" data-progress="0">
           <div class="node-platform"></div>
           <div class="node-content">
             <div class="node-header">
-              <h3 class="node-title">Token Upgrade</h3>
-              <div class="node-status active">
-                <span class="status-icon">🔄</span>
-                <span class="status-text">En Progreso</span>
+              <h3 class="node-title">Comunidad y Ecosistema</h3>
+              <div class="node-status pending">
+                <span class="status-icon">⏳</span>
+                <span class="status-text">Pendiente</span>
               </div>
             </div>
-            <p class="node-description">Actualización del token con nuevas funcionalidades DeFi y staking avanzado.</p>
+            <p class="node-description">Programa Global de Embajadores, lanzamiento de minería inicial (beta) y construcción de comunidades regionales.</p>
             <div class="node-progress">
               <div class="progress-bar">
-                <div class="progress-fill" style="width: 75%"></div>
+                <div class="progress-fill" style="width: 0%"></div>
               </div>
-              <span class="progress-text">75% Completado</span>
+              <span class="progress-text">0% Completado</span>
             </div>
             <div class="node-metrics">
               <div class="metric">
-                <span class="metric-value">40%</span>
-                <span class="metric-label">Staked</span>
+                <span class="metric-value">-</span>
+                <span class="metric-label">Embajadores</span>
               </div>
               <div class="metric">
-                <span class="metric-value">8</span>
-                <span class="metric-label">Pools</span>
+                <span class="metric-value">-</span>
+                <span class="metric-label">Miners</span>
               </div>
             </div>
             <div class="node-date">
-              <span class="date-text">October 2024</span>
+              <span class="date-text">Q2 2025</span>
               <span class="date-dot"></span>
             </div>
             <div class="node-links">
-              <a href="staking.html" class="node-link">
-                <span class="link-icon">🔒</span>
-                <span class="link-text">Staking</span>
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">👥</span>
+                <span class="link-text">Comunidad</span>
               </a>
-              <a href="mine.html" class="node-link">
+              <a href="#" class="node-link disabled">
                 <span class="link-icon">⛏️</span>
                 <span class="link-text">Minería</span>
               </a>
@@ -736,17 +696,17 @@
           </div>
         </div>
 
-        <div class="roadmap-node node-4 pending" data-stage="app-start" data-progress="0">
+        <div class="roadmap-node node-3 pending" data-stage="apps-launch" data-progress="0">
           <div class="node-platform"></div>
           <div class="node-content">
             <div class="node-header">
-              <h3 class="node-title">APP Start</h3>
+              <h3 class="node-title">Lanzamiento de Apps</h3>
               <div class="node-status pending">
                 <span class="status-icon">⏳</span>
                 <span class="status-text">Pendiente</span>
               </div>
             </div>
-            <p class="node-description">Lanzamiento de la aplicación móvil con wallet integrado y trading P2P.</p>
+            <p class="node-description">RSC Wallet (Android/iOS), App oficial de Minería RSC y RSC Bank con pagos rápidos QR.</p>
             <div class="node-progress">
               <div class="progress-bar">
                 <div class="progress-fill" style="width: 0%"></div>
@@ -756,41 +716,41 @@
             <div class="node-metrics">
               <div class="metric">
                 <span class="metric-value">-</span>
-                <span class="metric-label">Usuarios</span>
+                <span class="metric-label">Apps</span>
               </div>
               <div class="metric">
                 <span class="metric-value">-</span>
-                <span class="metric-label">Transacciones</span>
+                <span class="metric-label">Usuarios</span>
               </div>
             </div>
             <div class="node-date">
-              <span class="date-text">October 2025</span>
+              <span class="date-text">Q4 2025</span>
               <span class="date-dot"></span>
             </div>
             <div class="node-links">
               <a href="#" class="node-link disabled">
                 <span class="link-icon">📱</span>
-                <span class="link-text">App</span>
+                <span class="link-text">Wallet</span>
               </a>
               <a href="#" class="node-link disabled">
-                <span class="link-icon">💱</span>
-                <span class="link-text">P2P</span>
+                <span class="link-icon">🏦</span>
+                <span class="link-text">Bank</span>
               </a>
             </div>
           </div>
         </div>
 
-        <div class="roadmap-node node-5 pending" data-stage="distribution" data-progress="0">
+        <div class="roadmap-node node-4 pending" data-stage="token-market" data-progress="0">
           <div class="node-platform"></div>
           <div class="node-content">
             <div class="node-header">
-              <h3 class="node-title">Distribution</h3>
+              <h3 class="node-title">Token RSC en el Mercado</h3>
               <div class="node-status pending">
                 <span class="status-icon">⏳</span>
                 <span class="status-text">Pendiente</span>
               </div>
             </div>
-            <p class="node-description">Expansión global con partnerships estratégicos y adopción masiva.</p>
+            <p class="node-description">Primera etapa de listado en exchanges, Sistema de Staking activado y Plataforma de Trading P2P.</p>
             <div class="node-progress">
               <div class="progress-bar">
                 <div class="progress-fill" style="width: 0%"></div>
@@ -800,69 +760,113 @@
             <div class="node-metrics">
               <div class="metric">
                 <span class="metric-value">-</span>
-                <span class="metric-label">Países</span>
+                <span class="metric-label">Exchanges</span>
               </div>
               <div class="metric">
                 <span class="metric-value">-</span>
-                <span class="metric-label">Partnerships</span>
+                <span class="metric-label">Staking</span>
               </div>
             </div>
             <div class="node-date">
-              <span class="date-text">October 2026</span>
+              <span class="date-text">Q4 2025</span>
               <span class="date-dot"></span>
             </div>
             <div class="node-links">
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">💱</span>
+                <span class="link-text">Trading</span>
+              </a>
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">🔒</span>
+                <span class="link-text">Staking</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-node node-5 pending" data-stage="innovation-growth" data-progress="0">
+          <div class="node-platform"></div>
+          <div class="node-content">
+            <div class="node-header">
+              <h3 class="node-title">Innovación y Crecimiento</h3>
+              <div class="node-status pending">
+                <span class="status-icon">⏳</span>
+                <span class="status-text">Pendiente</span>
+              </div>
+            </div>
+            <p class="node-description">Contratos inteligentes avanzados, Gobernanza comunitaria (IA integrada) y Alianzas estratégicas Web3.</p>
+            <div class="node-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+              </div>
+              <span class="progress-text">0% Completado</span>
+            </div>
+            <div class="node-metrics">
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">Smart Contracts</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">Gobernanza</span>
+              </div>
+            </div>
+            <div class="node-date">
+              <span class="date-text">Q1 2026</span>
+              <span class="date-dot"></span>
+            </div>
+            <div class="node-links">
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">🤖</span>
+                <span class="link-text">IA</span>
+              </a>
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">🔗</span>
+                <span class="link-text">Web3</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-node node-6 pending" data-stage="global-expansion" data-progress="0">
+          <div class="node-platform"></div>
+          <div class="node-content">
+            <div class="node-header">
+              <h3 class="node-title">Expansión Global</h3>
+              <div class="node-status pending">
+                <span class="status-icon">⏳</span>
+                <span class="status-text">Pendiente</span>
+              </div>
+            </div>
+            <p class="node-description">Integración en Exchanges mayores (CEX), Lanzamiento Tarjeta RSC Bank y Acuerdos estratégicos globales.</p>
+            <div class="node-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+              </div>
+              <span class="progress-text">0% Completado</span>
+            </div>
+            <div class="node-metrics">
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">CEX</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">-</span>
+                <span class="metric-label">Tarjetas</span>
+              </div>
+            </div>
+            <div class="node-date">
+              <span class="date-text">Q2 2027</span>
+              <span class="date-dot"></span>
+            </div>
+            <div class="node-links">
+              <a href="#" class="node-link disabled">
+                <span class="link-icon">🏦</span>
+                <span class="link-text">Bank</span>
+              </a>
               <a href="#" class="node-link disabled">
                 <span class="link-icon">🌍</span>
                 <span class="link-text">Global</span>
-              </a>
-              <a href="#" class="node-link disabled">
-                <span class="link-icon">🤝</span>
-                <span class="link-text">Partners</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="roadmap-node node-6 pending" data-stage="moon" data-progress="0">
-          <div class="node-platform"></div>
-          <div class="node-content">
-            <div class="node-header">
-              <h3 class="node-title">To the MOON!</h3>
-              <div class="node-status pending">
-                <span class="status-icon">⏳</span>
-                <span class="status-text">Pendiente</span>
-              </div>
-            </div>
-            <p class="node-description">Dominio total del mercado DeFi y liderazgo en finanzas descentralizadas.</p>
-            <div class="node-progress">
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: 0%"></div>
-              </div>
-              <span class="progress-text">0% Completado</span>
-            </div>
-            <div class="node-metrics">
-              <div class="metric">
-                <span class="metric-value">-</span>
-                <span class="metric-label">Market Cap</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">-</span>
-                <span class="metric-label">Usuarios</span>
-              </div>
-            </div>
-            <div class="node-date">
-              <span class="date-text">Future here</span>
-              <span class="date-dot"></span>
-            </div>
-            <div class="node-links">
-              <a href="#" class="node-link disabled">
-                <span class="link-icon">🚀</span>
-                <span class="link-text">Moon</span>
-              </a>
-              <a href="#" class="node-link disabled">
-                <span class="link-icon">💎</span>
-                <span class="link-text">Diamond</span>
               </a>
             </div>
           </div>
@@ -1716,5 +1720,7 @@
   <script src="scripts/ai-assistant.js"></script>
   <script src="scripts/chat-component.js"></script>
   <script src="scripts/stats-enhanced.js"></script>
+  <!-- ===== SISTEMA DE GRID AVANZADO - FASE 1 ===== -->
+  <script src="scripts/grid-manager.js"></script>
 </body>
 </html>

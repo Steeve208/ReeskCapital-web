@@ -206,16 +206,26 @@ async function loadBlockchainData() {
     const response = await fetch('/api/blockchain/stats');
     if (response.ok) {
       const data = await response.json();
-      updateBlockchainStats(data);
+      if (data.success && data.stats) {
+        updateBlockchainStats(data.stats);
+      } else {
+        // Si no hay datos, usar valores en 0
+        updateBlockchainStats({
+          price: 0,
+          marketCap: 0,
+          volume: 0,
+          miners: 0
+        });
+      }
     }
   } catch (error) {
     console.warn('⚠️ Error cargando datos de blockchain:', error);
-    // Usar datos mock como fallback
+    // Si hay error, usar valores en 0
     updateBlockchainStats({
-      price: 0.85,
-      marketCap: 850000000,
-      volume: 15000000,
-      miners: 1250
+      price: 0,
+      marketCap: 0,
+      volume: 0,
+      miners: 0
     });
   }
 }

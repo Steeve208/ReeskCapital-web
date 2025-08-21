@@ -1203,6 +1203,342 @@
   }
 }
 
+/* ===== ESTILOS PARA CONTROLES PRINCIPALES DE MINERÍA ===== */
+
+/* Controles principales */
+.mining-controls-main {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 2px solid var(--mining-border);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.mining-controls-main::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+  animation: headerGlow 8s ease-in-out infinite;
+}
+
+.control-panel-main {
+  position: relative;
+  z-index: 2;
+}
+
+.control-header-main {
+  display: flex;
+  justify-content: center; /* Centrar el título */
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.control-header-main h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--mining-primary);
+  margin: 0;
+}
+
+.mining-status-main {
+  display: none; /* Ocultar indicador de estado */
+}
+
+/* Botones principales */
+.control-actions-main {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn-epic-primary-main,
+.btn-epic-secondary-main,
+.btn-epic-tertiary-main {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 200px;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-epic-primary-main {
+  background: linear-gradient(135deg, var(--mining-success) 0%, #059669 100%);
+  color: white;
+  box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-epic-primary-main:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+}
+
+.btn-epic-primary-main:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-epic-secondary-main {
+  background: linear-gradient(135deg, var(--mining-danger) 0%, #dc2626 100%);
+  color: white;
+  box-shadow: 0 5px 20px rgba(239, 68, 68, 0.4);
+}
+
+.btn-epic-secondary-main:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
+}
+
+.btn-epic-secondary-main:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-epic-tertiary-main {
+  background: linear-gradient(135deg, var(--mining-primary) 0%, var(--mining-secondary) 100%);
+  color: white;
+  box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+}
+
+.btn-epic-tertiary-main:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
+}
+
+.btn-epic-tertiary-main:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+}
+
+.btn-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-epic-primary-main:hover .btn-glow,
+.btn-epic-secondary-main:hover .btn-glow,
+.btn-epic-tertiary-main:hover .btn-glow {
+  transform: translateX(100%);
+}
+
+/* Configuración de minería */
+.mining-settings-main {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--mining-border);
+}
+
+.setting-group-main {
+  margin-bottom: 1rem;
+}
+
+.setting-group-main label {
+  display: block;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+.intensity-slider-main {
+  position: relative;
+}
+
+.intensity-slider-main input[type="range"] {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.intensity-slider-main input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--mining-primary);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+  transition: all 0.3s ease;
+}
+
+.intensity-slider-main input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.8);
+}
+
+.intensity-labels-main {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Estadísticas del usuario */
+.user-stats-real {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.stat-card-real {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--mining-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.stat-card-real:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.stat-header-real {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.stat-icon {
+  font-size: 2rem;
+}
+
+.stat-status-real {
+  display: none; /* Ocultar indicadores de estado */
+}
+
+.stat-content-real {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--mining-primary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Información útil */
+.mining-info-real {
+  margin: 2rem 0;
+}
+
+.info-grid-real {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.info-card-real {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--mining-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.info-card-real:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.info-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.info-content h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--mining-primary);
+  margin-bottom: 0.5rem;
+}
+
+.info-content p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* Botón de actualización */
+.refresh-section {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.refresh-btn-main {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.refresh-btn-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+/* Sección de descripción */
+.section-description {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
@@ -1235,4 +1571,346 @@
   .analytics-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Responsive para controles principales */
+  .control-actions-main {
+    flex-direction: column;
+  }
+  
+  .btn-epic-primary-main,
+  .btn-epic-secondary-main,
+  .btn-epic-tertiary-main {
+    min-width: 100%;
+  }
+  
+  .user-stats-real {
+    grid-template-columns: 1fr;
+  }
+  
+  .info-grid-real {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== MODAL DE RESUMEN DE MINERÍA ===== */
+
+.mining-summary-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+.mining-summary-modal .modal-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(245, 158, 11, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+.mining-summary-modal h3 {
+    color: #f59e0b;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+.summary-stats {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.summary-stats p {
+    margin: 10px 0;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.summary-stats strong {
+    color: #f59e0b;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.modal-actions button {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+}
+
+.modal-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+}
+
+.modal-actions button:last-child {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.modal-actions button:last-child:hover {
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* ===== ANIMACIONES ===== */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== MEJORAS EN LA FUNCIONALIDAD ===== */
+
+.has-active-mining .mining-header-epic {
+    border-bottom: 3px solid #f59e0b;
+    box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
+}
+
+.has-active-mining .mining-sidebar-epic {
+    border-right: 3px solid #f59e0b;
+}
+
+.has-active-mining .nav-item.active {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+/* ===== INDICADORES DE ESTADO ===== */
+
+.mining-status-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(16, 185, 129, 0.9);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    z-index: 1000;
+    animation: pulse 2s infinite;
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+    }
+}
+
+/* ===== MEJORAS EN LAS ESTADÍSTICAS ===== */
+
+.user-stats-real .stat-card-real {
+    transition: all 0.3s ease;
+}
+
+.user-stats-real .stat-card-real:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+}
+
+.user-stats-real .stat-card-real.mining-active {
+    border: 2px solid #f59e0b;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+/* ===== BARRA DE PROGRESO MEJORADA ===== */
+
+.session-progress-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.session-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.session-progress-header h4 {
+    color: #f59e0b;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.session-time-remaining {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.session-progress-bar-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.session-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #f59e0b, #d97706);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.session-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ===== NOTIFICACIONES MEJORADAS ===== */
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    max-width: 400px;
+    animation: slideInRight 0.3s ease;
+}
+
+.notification.success {
+    border-left: 4px solid #10b981;
+}
+
+.notification.error {
+    border-left: 4px solid #ef4444;
+}
+
+.notification.warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.notification.info {
+    border-left: 4px solid #3b82f6;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.notification-close:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.notification-message {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+    .mining-summary-modal .modal-content {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
 }

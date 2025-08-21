@@ -114,16 +114,34 @@ class RSCApp {
   }
 
   loadInitialData() {
-    // Cargar datos mock para mostrar algo
-    const mockData = {
-      price: 0.85 + Math.random() * 0.1,
-      marketCap: 850000000 + Math.random() * 100000000,
-      volume: 15000000 + Math.random() * 5000000,
-      miners: 1250 + Math.floor(Math.random() * 100),
-      tps: 1500 + Math.floor(Math.random() * 500)
-    };
-
-    this.updateStats(mockData);
+    // Cargar datos reales de la blockchain
+    fetch('/api/blockchain/stats')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.stats) {
+          this.updateStats(data.stats);
+        } else {
+          // Si no hay datos, usar valores en 0
+          this.updateStats({
+            price: 0,
+            marketCap: 0,
+            volume: 0,
+            miners: 0,
+            tps: 0
+          });
+        }
+      })
+      .catch(error => {
+        console.warn('Error cargando datos iniciales:', error);
+        // Si hay error, usar valores en 0
+        this.updateStats({
+          price: 0,
+          marketCap: 0,
+          volume: 0,
+          miners: 0,
+          tps: 0
+        });
+      });
   }
 
   updateStats(data) {

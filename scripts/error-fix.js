@@ -188,18 +188,31 @@ function setupBasicNotifications() {
 // Cargar datos básicos
 async function loadBasicData() {
   try {
-    // Cargar datos mock de blockchain
-    const mockData = {
-      price: 0.85 + Math.random() * 0.1,
-      marketCap: 850000000 + Math.random() * 100000000,
-      volume: 15000000 + Math.random() * 5000000,
-      miners: 1250 + Math.floor(Math.random() * 100)
-    };
+    // Cargar datos reales de blockchain
+    const response = await fetch('/api/blockchain/stats');
+    const data = await response.json();
     
-    updateBlockchainStats(mockData);
+    if (data.success && data.stats) {
+      updateBlockchainStats(data.stats);
+    } else {
+      // Si no hay datos, usar valores en 0
+      updateBlockchainStats({
+        price: 0,
+        marketCap: 0,
+        volume: 0,
+        miners: 0
+      });
+    }
     
   } catch (error) {
     console.warn('⚠️ Error cargando datos básicos:', error);
+    // Si hay error, usar valores en 0
+    updateBlockchainStats({
+      price: 0,
+      marketCap: 0,
+      volume: 0,
+      miners: 0
+    });
   }
 }
 

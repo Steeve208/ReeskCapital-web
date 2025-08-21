@@ -53,6 +53,26 @@
     <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
   </nav>
 
+  <!-- Indicador de Minería en Segundo Plano -->
+  <div class="background-mining-indicator" id="backgroundMiningIndicator" style="display: none;">
+    ⚡ Minando en Segundo Plano
+  </div>
+
+  <!-- Indicador Principal de Minería Activa -->
+  <div class="active-mining-banner" id="activeMiningBanner" style="display: none;">
+    <div class="banner-content">
+      <div class="banner-icon">⚡</div>
+      <div class="banner-text">
+        <h3>🚀 MINERÍA RSC ACTIVA</h3>
+        <p>Tu sesión de 24 horas está funcionando continuamente</p>
+      </div>
+      <div class="banner-status">
+        <span class="status-text" id="bannerStatusText">Funcionando</span>
+        <div class="status-indicator"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Mining Épico -->
   <main class="mining-epic">
     <!-- Header Épico -->
@@ -62,63 +82,9 @@
           <h1 class="epic-title">
             <span class="title-word">RSC</span>
             <span class="title-word">MINING</span>
-            <span class="title-word">ÉPICO</span>
+            <span class="title-word">SIMULADO</span>
           </h1>
-          <p class="epic-subtitle">Mina RSC directamente desde tu navegador con la tecnología más avanzada</p>
-        </div>
-        
-        <div class="header-stats">
-          <div class="stat-item">
-            <div class="stat-icon">⚡</div>
-            <div class="stat-content">
-              <div class="stat-value" id="globalHashRate">0 TH/s</div>
-              <div class="stat-label">Hash Rate Global</div>
-            </div>
-            <div class="stat-glow"></div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon">💎</div>
-            <div class="stat-content">
-              <div class="stat-value" id="totalMinedGlobal">0 RSC</div>
-              <div class="stat-label">Total Minado</div>
-            </div>
-            <div class="stat-glow"></div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon">👥</div>
-            <div class="stat-content">
-              <div class="stat-value" id="activeMiners">0</div>
-              <div class="stat-label">Mineros Activos</div>
-            </div>
-            <div class="stat-glow"></div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-content">
-              <div class="stat-value" id="difficulty">0</div>
-              <div class="stat-label">Dificultad</div>
-            </div>
-            <div class="stat-glow"></div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Nivel de Minero -->
-      <div class="miner-level-epic">
-        <div class="level-container">
-          <div class="level-badge">
-            <div class="level-icon">⛏️</div>
-            <div class="level-info">
-              <div class="level-title">Miner Épico</div>
-              <div class="level-number">8</div>
-            </div>
-          </div>
-          <div class="level-progress">
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 90%"></div>
-            </div>
-            <div class="progress-text">90% al siguiente nivel</div>
-          </div>
+          <p class="epic-subtitle">Mina tokens RSC simulados antes del lanzamiento de mainnet</p>
         </div>
       </div>
     </header>
@@ -202,196 +168,144 @@
         <!-- Mining Section -->
         <section id="mining" class="mining-section active">
           <div class="section-header">
-            <h2>Minería RSC</h2>
-            <div class="section-actions">
-              <button class="refresh-btn" id="refreshBtn">
-                <span class="btn-icon">🔄</span>
-                <span>Actualizar</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Estadísticas en Tiempo Real -->
-          <div class="realtime-stats">
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">⚡</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="myHashRate">0 H/s</div>
-                <div class="stat-label">Mi Hash Rate</div>
-                <div class="stat-change positive" id="hashRateChange">+15.2%</div>
-              </div>
-              <div class="stat-chart">
-                <canvas id="hashRateChart" width="200" height="60"></canvas>
-              </div>
-            </div>
-
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">💎</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="myMinedRSC">0.000000 RSC</div>
-                <div class="stat-label">RSC Minados</div>
-                <div class="stat-progress">
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">⏱️</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="myActiveTime">00:00:00</div>
-                <div class="stat-label">Tiempo Activo</div>
-                <div class="stat-graph">
-                  <canvas id="timeGraph" width="200" height="60"></canvas>
-                </div>
-              </div>
-            </div>
-
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">🏆</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="myRank">#1,247</div>
-                <div class="stat-label">Mi Ranking</div>
-                <div class="rank-progress">
-                  <div class="rank-bar">
-                    <div class="rank-fill" style="width: 85%"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <h2>🚀 MINERÍA RSC - SIMULACIÓN</h2>
+            <p class="section-description">Mina tokens RSC simulados antes del lanzamiento de mainnet</p>
           </div>
           
-          <!-- Visualización 3D de Minería -->
-          <div class="mining-3d">
-            <div class="visualization-header">
-              <h3>Visualización de Minería</h3>
-              <div class="visualization-controls">
-                <button class="control-btn" data-view="blocks">Bloques</button>
-                <button class="control-btn active" data-view="mining">Minería</button>
-                <button class="control-btn" data-view="network">Red</button>
-              </div>
-            </div>
-            <div class="visualization-container">
-              <div id="mining3d" class="mining-canvas"></div>
-              <div class="visualization-overlay">
-                <div class="overlay-stats">
-                  <div class="overlay-stat">
-                    <span class="stat-label">Bloques Minados</span>
-                    <span class="stat-value" id="overlayBlocks">1,247</span>
-                  </div>
-                  <div class="overlay-stat">
-                    <span class="stat-label">Hash Rate</span>
-                    <span class="stat-value" id="overlayHashRate">45.6K H/s</span>
-                  </div>
-                  <div class="overlay-stat">
-                    <span class="stat-label">Mineros Online</span>
-                    <span class="stat-value" id="overlayMiners">892</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Controles de Minería -->
-          <div class="mining-controls">
-            <div class="control-panel">
-              <div class="control-header">
-                <h3>Controles de Minería</h3>
-                <div class="mining-status" id="miningStatus">
-                  <div class="status-indicator">
-                    <div class="status-dot offline"></div>
-                    <span>Desconectado</span>
-                  </div>
-                </div>
+          <!-- CONTROLES PRINCIPALES DE MINERÍA -->
+          <div class="mining-controls-main">
+            <div class="control-panel-main">
+              <div class="control-header-main">
+                <h3>⚡ Controles de Minería</h3>
               </div>
               
-              <div class="control-actions">
-                <button class="btn-epic-primary" id="startMiningBtn">
+              <div class="control-actions-main">
+                <button class="btn-epic-primary-main" id="startMiningBtn">
                   <span class="btn-icon">⚡</span>
-                  <span class="btn-text">Iniciar Minería</span>
+                  <span class="btn-text">INICIAR MINERÍA</span>
                   <div class="btn-glow"></div>
                 </button>
-                <button class="btn-epic-secondary" id="stopMiningBtn" disabled>
+                <button class="btn-epic-secondary-main" id="stopMiningBtn" disabled>
                   <span class="btn-icon">⏹️</span>
-                  <span class="btn-text">Detener Minería</span>
+                  <span class="btn-text">DETENER MINERÍA</span>
                 </button>
-                <button class="btn-epic-tertiary" id="claimBtn">
+                <button class="btn-epic-tertiary-main" id="claimBtn">
                   <span class="btn-icon">🎁</span>
-                  <span class="btn-text">Reclamar RSC</span>
-                </button>
+                  <span class="btn-text">RECLAMAR RSC</span>
+              </button>
               </div>
               
-              <div class="mining-settings">
-                <div class="setting-group">
-                  <label>Intensidad de Minería</label>
-                  <div class="intensity-slider">
+              <!-- PROGRESO DE SESIÓN DE 24 HORAS -->
+              <div class="session-progress-container" id="sessionProgressContainer" style="display: none;">
+                <div class="session-progress-header">
+                  <h4>⏰ Progreso de Sesión de 24h</h4>
+                  <span class="session-time-remaining" id="sessionTimeRemaining">24h 0m restantes</span>
+                </div>
+                <div class="session-progress-bar-container">
+                  <div class="session-progress-bar" id="sessionProgressBar" style="width: 0%"></div>
+                </div>
+              </div>
+              
+              <!-- ESTADÍSTICAS DEL USUARIO -->
+            <div class="mining-settings-main">
+                <div class="setting-group-main">
+                  <label>🎚️ Intensidad de Minería</label>
+                  <div class="intensity-slider-main">
                     <input type="range" id="miningIntensity" min="1" max="10" value="5">
-                    <div class="intensity-labels">
+                    <div class="intensity-labels-main">
                       <span>Baja</span>
                       <span id="intensityValue">Media</span>
                       <span>Alta</span>
                     </div>
                   </div>
                 </div>
-                
-                <div class="setting-group">
-                  <label>Prioridad de Proceso</label>
-                  <select id="processPriority">
-                    <option value="low">Baja</option>
-                    <option value="medium" selected>Media</option>
-                    <option value="high">Alta</option>
-                  </select>
-                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ESTADÍSTICAS DEL USUARIO (SOLO DATOS REALES) -->
+          <div class="user-stats-real">
+            <div class="stat-card-real">
+              <div class="stat-header-real">
+                <div class="stat-icon">⚡</div>
+              </div>
+              <div class="stat-content-real">
+                <div class="stat-value" id="myHashRate">0 H/s</div>
+                <div class="stat-label">Mi Hash Rate</div>
+              </div>
+            </div>
+
+            <div class="stat-card-real">
+              <div class="stat-header-real">
+                <div class="stat-icon">💎</div>
+              </div>
+              <div class="stat-content-real">
+                <div class="stat-value" id="myMinedRSC">0.000000 RSC</div>
+                <div class="stat-label">RSC Minados</div>
+              </div>
+            </div>
+
+            <div class="stat-card-real">
+              <div class="stat-header-real">
+                <div class="stat-icon">⏱️</div>
+              </div>
+              <div class="stat-content-real">
+                <div class="stat-value" id="myActiveTime">00:00:00</div>
+                <div class="stat-label">Tiempo Activo</div>
+              </div>
+            </div>
+
+            <div class="stat-card-real">
+              <div class="stat-header-real">
+                <div class="stat-icon">🏆</div>
+              </div>
+              <div class="stat-content-real">
+                <div class="stat-value" id="myLevel">Nivel 1</div>
+                <div class="stat-label">Mi Nivel</div>
               </div>
             </div>
           </div>
           
-          <!-- Información de Minería -->
-          <div class="mining-info-epic">
-            <div class="info-grid">
-              <div class="info-card-epic">
+          <!-- INFORMACIÓN ÚTIL -->
+          <div class="mining-info-real">
+            <div class="info-grid-real">
+              <div class="info-card-real">
                 <div class="info-icon">🔧</div>
                 <div class="info-content">
-                  <h4>Sin Hardware</h4>
-                  <p>Mina usando el poder de tu navegador. No necesitas equipos especializados.</p>
+                  <h4>Simulación</h4>
+                  <p>Mina tokens simulados mientras esperamos el lanzamiento de mainnet.</p>
                 </div>
               </div>
-              <div class="info-card-epic">
+              <div class="info-card-real">
                 <div class="info-icon">⚡</div>
                 <div class="info-content">
                   <h4>Inmediato</h4>
-                  <p>Comienza a minar en segundos. Los RSC se acumulan automáticamente.</p>
+                  <p>Comienza a minar en segundos. Los tokens se acumulan automáticamente.</p>
                 </div>
               </div>
-              <div class="info-card-epic">
+              <div class="info-card-real">
                 <div class="info-icon">🎁</div>
                 <div class="info-content">
                   <h4>Recompensas</h4>
-                  <p>Reclama tus RSC minados cuando quieras. Sin límites de tiempo.</p>
+                  <p>Reclama tus tokens cuando quieras. Se migrarán a mainnet.</p>
                 </div>
               </div>
-              <div class="info-card-epic">
+              <div class="info-card-real">
                 <div class="info-icon">🏆</div>
                 <div class="info-content">
-                  <h4>Competitivo</h4>
-                  <p>Compite con otros mineros y sube en el ranking global.</p>
+                  <h4>Progreso</h4>
+                  <p>Sube de nivel mientras más minas. ¡Cada sesión cuenta!</p>
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- Botón de actualización -->
+          <div class="refresh-section">
+            <button class="refresh-btn-main" id="refreshBtn">
+              <span class="btn-icon">🔄</span>
+              <span>Actualizar Datos</span>
+            </button>
           </div>
         </section>
 
@@ -647,23 +561,10 @@
   </div>
 
   <!-- Scripts -->
-  <script src="../scripts/feature-flags.js"></script>
-  <script src="../scripts/admin-panel.js"></script>
-  <script src="../scripts/ai-assistant.js"></script>
-  <script src="../scripts/chat-component.js"></script>
   <script src="../scripts/config.js"></script>
-  <script src="../scripts/blockchain-connection.js"></script>
-  <script src="../scripts/cleanup.js"></script>
-  <script src="../scripts/main.js"></script>
-  <script src="../scripts/mining.js"></script>
-  <script src="../scripts/mining-epic.js"></script>
+  <script src="../scripts/mining-config.js"></script>
   <script src="../scripts/notifications.js"></script>
-  <script src="../scripts/animations.js"></script>
-  <script src="../scripts/blockchain-data.js"></script>
-  <script src="../scripts/charts.js"></script>
-  <script src="../scripts/init.js"></script>
-  <script src="../scripts/debug.js"></script>
-  <script src="../scripts/chat.js"></script>
-  <script src="../scripts/error-fix.js"></script>
+  <!-- ===== SISTEMA DE MINERÍA RSC AVANZADO Y FUNCIONAL ===== -->
+  <script src="../scripts/mining-system.js"></script>
 </body>
 </html>

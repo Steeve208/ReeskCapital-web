@@ -60,26 +60,75 @@ class StatsManager {
       
     } catch (error) {
       console.error('❌ Error cargando stats:', error);
-      // Usar datos simulados en caso de error
-      const mockData = this.generateMockData();
-      this.updateStats(mockData);
+      // En lugar de usar datos simulados, mostrar indicadores de error
+      this.showErrorState();
     }
     
     this.isUpdating = false;
   }
 
   generateMockData() {
+    // En lugar de generar datos simulados, retornar valores vacíos
+    console.warn('⚠️ No se pueden cargar datos reales, mostrando indicadores vacíos');
     return {
-      market_cap: (Math.random() * 1000000 + 100000).toFixed(0),
-      volume_24h: (Math.random() * 500000 + 50000).toFixed(0),
-      total_blocks: Math.floor(Math.random() * 1000000),
-      active_users: Math.floor(Math.random() * 10000),
-      rsc_price: (Math.random() * 10 + 0.1).toFixed(2),
-      rsc_supply: Math.floor(Math.random() * 1000000),
-      tps: Math.floor(Math.random() * 1000),
-      nodes: Math.floor(Math.random() * 100),
-      price_change: (Math.random() * 20 - 10).toFixed(2)
+      market_cap: 0,
+      volume_24h: 0,
+      total_blocks: 0,
+      active_users: 0,
+      rsc_price: 0,
+      rsc_supply: 0,
+      tps: 0,
+      nodes: 0,
+      price_change: 0
     };
+  }
+
+  showErrorState() {
+    console.warn('⚠️ Mostrando estado de error en lugar de datos simulados');
+    
+    // Mostrar indicadores de error en lugar de datos simulados
+    const errorData = {
+      market_cap: 0,
+      volume_24h: 0,
+      total_blocks: 0,
+      active_users: 0,
+      rsc_price: 0,
+      rsc_supply: 0,
+      tps: 0,
+      nodes: 0,
+      price_change: 0
+    };
+    
+    this.updateStats(errorData);
+    
+    // Mostrar mensaje de error en la UI
+    this.displayErrorMessage();
+  }
+
+  displayErrorMessage() {
+    // Crear o actualizar mensaje de error
+    let errorElement = document.getElementById('stats-error');
+    if (!errorElement) {
+      errorElement = document.createElement('div');
+      errorElement.id = 'stats-error';
+      errorElement.className = 'stats-error-message';
+      errorElement.innerHTML = `
+        <div class="error-content">
+          <span class="error-icon">⚠️</span>
+          <span class="error-text">No se pueden cargar estadísticas en tiempo real</span>
+          <button class="retry-btn" onclick="window.statsEnhanced.forceUpdate()">Reintentar</button>
+        </div>
+      `;
+      
+      // Insertar en la sección de stats
+      const statsSection = document.querySelector('.stats-section');
+      if (statsSection) {
+        statsSection.appendChild(errorElement);
+      }
+    }
+    
+    // Mostrar el error
+    errorElement.style.display = 'block';
   }
 
   updateStats(data) {

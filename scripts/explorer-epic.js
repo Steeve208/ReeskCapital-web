@@ -851,21 +851,97 @@ class ExplorerEpic {
   }
 
   loadBlocksData() {
-    // Simular carga de bloques
-    const blocks = this.generateMockBlocks();
-    this.updateBlocksTable(blocks);
+    // Intentar cargar bloques reales de la blockchain
+    this.loadRealBlocksData();
   }
 
   loadTransactionsData() {
-    // Simular carga de transacciones
-    const transactions = this.generateMockTransactions();
-    this.updateTransactionsTable(transactions);
+    // Intentar cargar transacciones reales de la blockchain
+    this.loadRealTransactionsData();
   }
 
   loadAddressesData() {
-    // Simular carga de direcciones
-    const addresses = this.generateMockAddresses();
-    this.updateAddressesGrid(addresses);
+    // Intentar cargar direcciones reales de la blockchain
+    this.loadRealAddressesData();
+  }
+
+  async loadRealBlocksData() {
+    try {
+      if (window.blockchainConnection && window.blockchainConnection.isConnected) {
+        const blocksResult = await window.blockchainConnection.getRecentBlocks();
+        if (blocksResult.success) {
+          this.updateBlocksTable(blocksResult.data);
+        } else {
+          this.showNoDataMessage('blocks', 'No se pueden cargar bloques');
+        }
+      } else {
+        this.showNoDataMessage('blocks', 'No conectado a RSC Chain');
+      }
+    } catch (error) {
+      console.error('Error cargando bloques:', error);
+      this.showNoDataMessage('blocks', 'Error de conexión');
+    }
+  }
+
+  async loadRealTransactionsData() {
+    try {
+      if (window.blockchainConnection && window.blockchainConnection.isConnected) {
+        const transactionsResult = await window.blockchainConnection.getRecentTransactions();
+        if (transactionsResult.success) {
+          this.updateTransactionsTable(transactionsResult.data);
+        } else {
+          this.showNoDataMessage('transactions', 'No se pueden cargar transacciones');
+        }
+      } else {
+        this.showNoDataMessage('transactions', 'No conectado a RSC Chain');
+      }
+    } catch (error) {
+      console.error('Error cargando transacciones:', error);
+      this.showNoDataMessage('transactions', 'Error de conexión');
+    }
+  }
+
+  async loadRealAddressesData() {
+    try {
+      if (window.blockchainConnection && window.blockchainConnection.isConnected) {
+        const addressesResult = await window.blockchainConnection.getTopAddresses();
+        if (addressesResult.success) {
+          this.updateAddressesGrid(addressesResult.data);
+        } else {
+          this.showNoDataMessage('addresses', 'No se pueden cargar direcciones');
+        }
+      } else {
+        this.showNoDataMessage('addresses', 'No conectado a RSC Chain');
+      }
+    } catch (error) {
+      console.error('Error cargando direcciones:', error);
+      this.showNoDataMessage('addresses', 'Error de conexión');
+    }
+  }
+
+  showNoDataMessage(type, message) {
+    const container = this.getContainerByType(type);
+    if (container) {
+      container.innerHTML = `
+        <div class="no-data-message">
+          <div class="no-data-icon">🔍</div>
+          <h3>Sin datos disponibles</h3>
+          <p>${message}</p>
+          <button class="retry-btn" onclick="window.explorerEpic.loadReal${type.charAt(0).toUpperCase() + type.slice(1)}Data()">
+            Reintentar
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  getContainerByType(type) {
+    switch (type) {
+      case 'blocks': return document.getElementById('blocksTableBody');
+      case 'transactions': return document.getElementById('transactionsTableBody');
+      case 'addresses': return document.querySelector('.addresses-grid');
+      default: return null;
+    }
   }
 
   loadNetworkData() {
@@ -877,49 +953,15 @@ class ExplorerEpic {
   }
 
   generateMockBlocks() {
-    const blocks = [];
-    for (let i = 0; i < 10; i++) {
-      blocks.push({
-        number: 1234567 - i,
-        hash: '0x' + Math.random().toString(16).substr(2, 64),
-        miner: 'RSC1' + Math.random().toString(36).substr(2, 20),
-        transactions: Math.floor(Math.random() * 100) + 10,
-        size: Math.floor(Math.random() * 1000) + 100,
-        timestamp: new Date(Date.now() - i * 60000).toISOString(),
-        status: 'confirmed'
-      });
-    }
-    return blocks;
+    return [];
   }
 
   generateMockTransactions() {
-    const transactions = [];
-    for (let i = 0; i < 10; i++) {
-      transactions.push({
-        hash: '0x' + Math.random().toString(16).substr(2, 64),
-        type: ['transfer', 'contract', 'stake'][Math.floor(Math.random() * 3)],
-        from: 'RSC1' + Math.random().toString(36).substr(2, 20),
-        to: 'RSC1' + Math.random().toString(36).substr(2, 20),
-        amount: (Math.random() * 1000).toFixed(2),
-        fee: (Math.random() * 0.1).toFixed(4),
-        status: ['confirmed', 'pending', 'failed'][Math.floor(Math.random() * 3)],
-        timestamp: new Date(Date.now() - i * 30000).toISOString()
-      });
-    }
-    return transactions;
+    return [];
   }
 
   generateMockAddresses() {
-    const addresses = [];
-    for (let i = 0; i < 6; i++) {
-      addresses.push({
-        address: 'RSC1' + Math.random().toString(36).substr(2, 20),
-        balance: (Math.random() * 10000).toFixed(2),
-        transactions: Math.floor(Math.random() * 1000),
-        lastActivity: new Date(Date.now() - Math.random() * 86400000).toISOString()
-      });
-    }
-    return addresses;
+    return [];
   }
 
   updateBlocksTable(blocks) {

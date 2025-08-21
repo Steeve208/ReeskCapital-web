@@ -604,37 +604,7 @@ class P2PEpic {
         const adsGrid = document.getElementById('adsGrid');
         if (!adsGrid) return;
 
-        const mockAds = [
-            {
-                type: 'buy',
-                price: 0.95,
-                amount: 1000,
-                user: 'TraderPro',
-                rating: 4.8,
-                payment: ['Transferencia Bancaria', 'Efectivo'],
-                time: '2 min'
-            },
-            {
-                type: 'sell',
-                price: 0.98,
-                amount: 500,
-                user: 'CryptoMaster',
-                rating: 4.9,
-                payment: ['Crypto'],
-                time: '5 min'
-            },
-            {
-                type: 'buy',
-                price: 0.92,
-                amount: 2000,
-                user: 'RSCTrader',
-                rating: 4.7,
-                payment: ['Transferencia Bancaria'],
-                time: '1 min'
-            }
-        ];
-
-        adsGrid.innerHTML = mockAds.map(ad => this.createAdCard(ad)).join('');
+        adsGrid.innerHTML = '<div class="no-data">No hay anuncios disponibles</div>';
     }
 
     createAdCard(ad) {
@@ -674,19 +644,7 @@ class P2PEpic {
         const myAdsGrid = document.getElementById('myAdsGrid');
         if (!myAdsGrid) return;
 
-        const mockMyAds = [
-            {
-                type: 'sell',
-                price: 0.97,
-                amount: 1500,
-                status: 'active',
-                views: 45,
-                time: '1 hora'
-            },
-            {
-                type: 'buy',
-                price: 0.94,
-                amount: 800,
+        myAdsGrid.innerHTML = '<div class="no-data">No tienes anuncios activos</div>';
                 status: 'active',
                 views: 23,
                 time: '30 min'

@@ -132,44 +132,7 @@ class ExplorerManager {
     }
 
     loadMockBlocks() {
-        this.blocks = [
-            {
-                number: 125000,
-                hash: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-                timestamp: new Date(Date.now() - 5000).toISOString(),
-                transactions: 45,
-                size: 2048,
-                gasUsed: 1500000,
-                gasLimit: 2000000,
-                miner: '0x9876543210fedcba9876543210fedcba9876543210fedcba9876543210fedcba',
-                difficulty: '2.5M',
-                totalDifficulty: '125.5T'
-            },
-            {
-                number: 124999,
-                hash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-                timestamp: new Date(Date.now() - 10000).toISOString(),
-                transactions: 38,
-                size: 1856,
-                gasUsed: 1200000,
-                gasLimit: 2000000,
-                miner: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-                difficulty: '2.4M',
-                totalDifficulty: '125.2T'
-            },
-            {
-                number: 124998,
-                hash: '0x567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef123456',
-                timestamp: new Date(Date.now() - 15000).toISOString(),
-                transactions: 52,
-                size: 2304,
-                gasUsed: 1800000,
-                gasLimit: 2000000,
-                miner: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-                difficulty: '2.3M',
-                totalDifficulty: '124.9T'
-            }
-        ];
+        this.blocks = [];
         this.updateBlocksUI();
     }
 
@@ -191,41 +154,7 @@ class ExplorerManager {
     }
 
     loadMockTransactions() {
-        this.transactions = [
-            {
-                hash: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-                blockNumber: 125000,
-                from: '0x9876543210fedcba9876543210fedcba9876543210fedcba9876543210fedcba',
-                to: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-                value: 1000,
-                gasPrice: 20,
-                gasUsed: 21000,
-                status: 'success',
-                timestamp: new Date(Date.now() - 5000).toISOString()
-            },
-            {
-                hash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-                blockNumber: 124999,
-                from: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-                to: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-                value: 500,
-                gasPrice: 25,
-                gasUsed: 65000,
-                status: 'success',
-                timestamp: new Date(Date.now() - 10000).toISOString()
-            },
-            {
-                hash: '0x567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef123456',
-                blockNumber: 124998,
-                from: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-                to: '0x567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef123456',
-                value: 2500,
-                gasPrice: 18,
-                gasUsed: 45000,
-                status: 'success',
-                timestamp: new Date(Date.now() - 15000).toISOString()
-            }
-        ];
+        this.transactions = [];
         this.updateTransactionsUI();
     }
 

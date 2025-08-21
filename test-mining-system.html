@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba del Sistema de Minería RSC</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .mining-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #00ff88, #00cc6a);
+            color: #000;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: #fff;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .intensity-control {
+            margin: 20px 0;
+        }
+        
+        .intensity-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #333;
+            outline: none;
+            margin: 10px 0;
+        }
+        
+        .intensity-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #ccc;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00cc6a);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        
+        .status.active {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+        }
+        
+        .status.inactive {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+        
+        .logs {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        
+        .log-info { color: #00ff88; }
+        .log-warning { color: #ffaa00; }
+        .log-error { color: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⛏️ Sistema de Minería RSC - Prueba</h1>
+        
+        <!-- Estado del Sistema -->
+        <div class="status" id="systemStatus">
+            <span id="statusText">Sistema Inactivo</span>
+        </div>
+        
+        <!-- Controles de Minería -->
+        <div class="mining-controls">
+            <button class="btn btn-primary" id="startMiningBtn">
+                🚀 INICIAR MINERÍA
+            </button>
+            <button class="btn btn-secondary" id="stopMiningBtn" disabled>
+                ⏹️ DETENER MINERÍA
+            </button>
+        </div>
+        
+        <!-- Control de Intensidad -->
+        <div class="intensity-control">
+            <label>🎚️ Intensidad de Minería: <span id="intensityValue">Media</span></label>
+            <input type="range" id="miningIntensity" class="intensity-slider" min="1" max="10" value="5">
+            <div class="intensity-labels">
+                <span>Baja</span>
+                <span>Media</span>
+                <span>Alta</span>
+            </div>
+        </div>
+        
+        <!-- Progreso de Sesión -->
+        <div class="progress-container" id="sessionProgressContainer" style="display: none;">
+            <h3>⏰ Progreso de Sesión de 24h</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="sessionProgressBar"></div>
+            </div>
+            <p id="sessionTimeRemaining">24h 0m restantes</p>
+        </div>
+        
+        <!-- Estadísticas -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="myHashRate">0 H/s</div>
+                <div class="stat-label">Mi Hash Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="myMinedRSC">0.000000 RSC</div>
+                <div class="stat-label">RSC Minados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="myActiveTime">00:00:00</div>
+                <div class="stat-label">Tiempo Activo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="myLevel">Nivel 1</div>
+                <div class="stat-label">Mi Nivel</div>
+            </div>
+        </div>
+        
+        <!-- Botón de Reclamar -->
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn btn-primary" id="claimBtn" disabled>
+                🎁 RECLAMAR RSC
+            </button>
+        </div>
+        
+        <!-- Logs del Sistema -->
+        <div class="logs" id="systemLogs">
+            <div class="log-entry log-info">Sistema de minería RSC inicializado</div>
+            <div class="log-entry log-info">Esperando inicio de minería...</div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../scripts/mining-config.js"></script>
+    <script src="../scripts/mining.js"></script>
+    
+    <script>
+        // Función para mostrar logs
+        function addLog(message, type = 'info') {
+            const logsContainer = document.getElementById('systemLogs');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logsContainer.appendChild(logEntry);
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }
+        
+        // Función para mostrar notificaciones
+        function showNotification(type, title, message) {
+            addLog(`${title}: ${message}`, type);
+        }
+        
+        // Inicializar sistema de minería
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('Página cargada, inicializando sistema...');
+            
+            // Verificar si el sistema de minería está disponible
+            if (typeof MiningSystem !== 'undefined') {
+                addLog('Sistema de minería detectado, creando instancia...');
+                
+                // Crear instancia del sistema de minería
+                window.miningSystem = new MiningSystem();
+                
+                addLog('Sistema de minería inicializado correctamente');
+                addLog('Puedes comenzar a minar RSC simulados');
+                
+            } else {
+                addLog('ERROR: Sistema de minería no disponible', 'error');
+                addLog('Verifica que los scripts estén cargados correctamente', 'error');
+            }
+        });
+        
+        // Event listeners para controles
+        document.getElementById('startMiningBtn').addEventListener('click', function() {
+            if (window.miningSystem) {
+                addLog('Usuario inició minería', 'info');
+                window.miningSystem.startMining();
+            } else {
+                addLog('ERROR: Sistema de minería no disponible', 'error');
+            }
+        });
+        
+        document.getElementById('stopMiningBtn').addEventListener('click', function() {
+            if (window.miningSystem) {
+                addLog('Usuario detuvo minería', 'info');
+                window.miningSystem.stopMining();
+            }
+        });
+        
+        document.getElementById('claimBtn').addEventListener('click', function() {
+            if (window.miningSystem) {
+                addLog('Usuario reclamando tokens', 'info');
+                window.miningSystem.claimTokens();
+            }
+        });
+        
+        document.getElementById('miningIntensity').addEventListener('input', function(e) {
+            const value = parseInt(e.target.value);
+            const intensityValue = document.getElementById('intensityValue');
+            
+            if (value <= 3) {
+                intensityValue.textContent = 'Baja';
+            } else if (value <= 7) {
+                intensityValue.textContent = 'Media';
+            } else {
+                intensityValue.textContent = 'Alta';
+            }
+            
+            if (window.miningSystem) {
+                window.miningSystem.hashPower = value;
+                addLog(`Intensidad cambiada a: ${value}/10`, 'info');
+            }
+        });
+    </script>
+</body>
+</html>

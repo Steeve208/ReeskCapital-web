@@ -797,123 +797,127 @@ class StakingEpic {
   }
 
   loadPoolsData() {
-    // Simular carga de pools
-    const pools = this.generateMockPools();
-    this.updatePoolsGrid(pools);
+    // Intentar cargar datos reales de la blockchain
+    this.loadRealPoolsData();
   }
 
   loadMyStakesData() {
-    // Simular carga de stakes
-    const stakes = this.generateMockStakes();
-    this.updateStakesTable(stakes);
+    // Intentar cargar stakes reales de la blockchain
+    this.loadRealStakesData();
   }
 
   loadValidatorsData() {
-    // Simular carga de validadores
-    const validators = this.generateMockValidators();
-    this.updateValidatorsGrid(validators);
+    // Intentar cargar validadores reales de la blockchain
+    this.loadRealValidatorsData();
   }
 
   loadRewardsData() {
-    // Simular carga de recompensas
-    const rewards = this.generateMockRewards();
-    this.updateRewardsUI(rewards);
+    // Intentar cargar recompensas reales de la blockchain
+    this.loadRealRewardsData();
   }
 
-  loadAnalyticsData() {
-    // Los gráficos de analytics ya están inicializados
-  }
-
-  generateMockPools() {
-    return [
-      {
-        id: 1,
-        name: 'Pool Líquido Épico',
-        type: 'liquid',
-        apy: 12.5,
-        totalStaked: 500000,
-        minStake: 100,
-        status: 'active'
-      },
-      {
-        id: 2,
-        name: 'Pool Bloqueado Premium',
-        type: 'locked',
-        apy: 15.2,
-        totalStaked: 300000,
-        minStake: 1000,
-        status: 'active'
-      },
-      {
-        id: 3,
-        name: 'Pool Flexible Plus',
-        type: 'flexible',
-        apy: 10.8,
-        totalStaked: 200000,
-        minStake: 50,
-        status: 'active'
+  async loadRealPoolsData() {
+    try {
+      // Intentar conectar a la blockchain real
+      if (window.blockchainConnection && window.blockchainConnection.isConnected) {
+        const poolsResult = await window.blockchainConnection.getStakingPools();
+        if (poolsResult.success) {
+          this.updatePoolsGrid(poolsResult.data);
+        } else {
+          this.showNoDataMessage('pools', 'No se pueden cargar pools de staking');
+        }
+      } else {
+        this.showNoDataMessage('pools', 'No conectado a RSC Chain');
       }
-    ];
+    } catch (error) {
+      console.error('Error cargando pools:', error);
+      this.showNoDataMessage('pools', 'Error de conexión');
+    }
   }
 
-  generateMockStakes() {
-    return [
-      {
-        id: 1,
-        pool: 'Pool Líquido Épico',
-        amount: 1000,
-        apy: 12.5,
-        rewards: 45.6,
-        time: '7 días',
-        status: 'active'
-      },
-      {
-        id: 2,
-        pool: 'Pool Bloqueado Premium',
-        amount: 2500,
-        apy: 15.2,
-        rewards: 89.3,
-        time: '14 días',
-        status: 'active'
+  async loadRealStakesData() {
+    try {
+      if (window.blockchainConnection && window.blockchainConnection.isConnected) {
+        const stakesResult = await window.blockchainConnection.getUserStakes();
+        if (stakesResult.success) {
+          this.updateStakesTable(stakesResult.data);
+        } else {
+          this.showNoDataMessage('stakes', 'No se pueden cargar stakes');
+        }
+      } else {
+        this.showNoDataMessage('stakes', 'No conectado a RSC Chain');
       }
-    ];
+    } catch (error) {
+      console.error('Error cargando stakes:', error);
+      this.showNoDataMessage('stakes', 'Error de conexión');
+    }
   }
 
-  generateMockValidators() {
-    return [
-      {
-        id: 1,
-        name: 'Validador Épico',
-        address: 'RSC1abc...def',
-        stake: 50000,
-        commission: 5.0,
-        uptime: 99.9,
-        status: 'online'
-      },
-      {
-        id: 2,
-        name: 'Validador Premium',
-        address: 'RSC1xyz...123',
-        stake: 35000,
-        commission: 3.5,
-        uptime: 99.8,
-        status: 'online'
+  async loadRealValidatorsData() {
+    try {
+      if (window.blockchainConnection && window.blockchainConnection.isConnected) {
+        const validatorsResult = await window.blockchainConnection.getValidators();
+        if (validatorsResult.success) {
+          this.updateValidatorsGrid(validatorsResult.data);
+        } else {
+          this.showNoDataMessage('validators', 'No se pueden cargar validadores');
+        }
+      } else {
+        this.showNoDataMessage('validators', 'No conectado a RSC Chain');
       }
-    ];
+    } catch (error) {
+      console.error('Error cargando validadores:', error);
+      this.showNoDataMessage('validators', 'Error de conexión');
+    }
   }
 
-  generateMockRewards() {
-    return {
-      total: 134.9,
-      growth: '+12.5%',
-      nextReward: 2.5,
-      history: [
-        { date: '2024-01-15', amount: 12.5, pool: 'Pool Líquido' },
-        { date: '2024-01-14', amount: 15.2, pool: 'Pool Bloqueado' },
-        { date: '2024-01-13', amount: 8.9, pool: 'Pool Flexible' }
-      ]
-    };
+  async loadRealRewardsData() {
+    try {
+      if (window.blockchainConnection && window.blockchainConnection.isConnected) {
+        const rewardsResult = await window.blockchainConnection.getUserRewards();
+        if (rewardsResult.success) {
+          this.updateRewardsUI(rewardsResult.data);
+        } else {
+          this.showNoDataMessage('rewards', 'No se pueden cargar recompensas');
+        }
+      } else {
+        this.showNoDataMessage('rewards', 'No conectado a RSC Chain');
+      }
+    } catch (error) {
+      console.error('Error cargando recompensas:', error);
+      this.showNoDataMessage('rewards', 'Error de conexión');
+    }
   }
+
+  showNoDataMessage(type, message) {
+    // Mostrar mensaje apropiado en lugar de datos simulados
+    const container = this.getContainerByType(type);
+    if (container) {
+      container.innerHTML = `
+        <div class="no-data-message">
+          <div class="no-data-icon">📊</div>
+          <h3>Sin datos disponibles</h3>
+          <p>${message}</p>
+          <button class="retry-btn" onclick="window.stakingEpic.loadReal${type.charAt(0).toUpperCase() + type.slice(1)}Data()">
+            Reintentar
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  getContainerByType(type) {
+    switch (type) {
+      case 'pools': return document.getElementById('poolsGrid');
+      case 'stakes': return document.getElementById('stakesTable');
+      case 'validators': return document.getElementById('validatorsGrid');
+      case 'rewards': return document.getElementById('rewardsContainer');
+      default: return null;
+    }
+  }
+
+  // Las funciones de generación de datos mock han sido removidas
+  // Los datos ahora se cargan desde la blockchain real o se muestran mensajes de error apropiados
 
   updatePoolsGrid(pools) {
     const grid = document.querySelector('.pools-grid-epic');
