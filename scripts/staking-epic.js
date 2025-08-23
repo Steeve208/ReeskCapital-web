@@ -620,22 +620,45 @@ class StakingEpic {
 
   setupWebSocket() {
     // Simular WebSocket para datos en tiempo real
-    setInterval(() => {
-      this.updateRealTimeData();
+    setInterval(async () => {
+      await this.updateRealTimeData();
     }, 5000);
   }
 
-  updateRealTimeData() {
-    // Actualizar estadísticas en tiempo real
-    const stats = {
-      totalStaked: Math.floor(Math.random() * 1000000) + 500000,
-      totalRewards: Math.floor(Math.random() * 10000) + 5000,
-      avgAPY: (Math.random() * 5 + 10).toFixed(1),
-      myStaked: Math.floor(Math.random() * 10000) + 1000,
-      myRewards: Math.floor(Math.random() * 100) + 50,
-      myAPY: (Math.random() * 3 + 10).toFixed(1),
-      myRank: Math.floor(Math.random() * 2000) + 1
+  async updateRealTimeData() {
+    // Intentar obtener datos reales de la API de RSC Chain
+    let stats = {
+      totalStaked: 0,
+      totalRewards: 0,
+      avgAPY: 0,
+      myStaked: 0,
+      myRewards: 0,
+      myAPY: 0,
+      myRank: 0
     };
+
+    try {
+      // Obtener estadísticas de staking de la API
+      const response = await fetch('https://rsc-chain-production.up.railway.app/api/staking/stats');
+      if (response.ok) {
+        const data = await response.json();
+        stats = {
+          totalStaked: data.total_staked || 0,
+          totalRewards: data.total_rewards || 0,
+          avgAPY: data.average_apy || 0,
+          myStaked: data.my_staked || 0,
+          myRewards: data.my_rewards || 0,
+          myAPY: data.my_apy || 0,
+          myRank: data.my_rank || 0
+        };
+        console.log('✅ Datos de staking reales obtenidos desde RSC Chain API');
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.warn('⚠️ No se pudieron cargar datos de staking reales:', error.message);
+      // Mantener valores en 0 si no hay conexión
+    }
 
     // Actualizar UI
     document.getElementById('totalStaked').textContent = stats.totalStaked.toLocaleString() + ' RSC';
@@ -694,19 +717,39 @@ class StakingEpic {
     }
   }
 
-  claimAllRewards() {
-    // Simular reclamación de recompensas
-    const totalRewards = Math.floor(Math.random() * 100) + 50;
-    
-    // Mostrar modal de recompensas
-    this.showRewardsModal(totalRewards);
-    
-    // Actualizar UI
-    document.getElementById('myRewards').textContent = '0 RSC';
-    
-    // Mostrar notificación
-    if (window.showNotification) {
-      window.showNotification('success', '¡Recompensas Reclamadas!', `Has reclamado ${totalRewards} RSC en recompensas`);
+  async claimAllRewards() {
+    try {
+      // Intentar reclamar recompensas reales de la API
+      const response = await fetch('https://rsc-chain-production.up.railway.app/api/staking/claim-rewards', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        const totalRewards = data.claimed_amount || 0;
+        
+        // Mostrar modal de recompensas
+        this.showRewardsModal(totalRewards);
+        
+        // Actualizar UI
+        document.getElementById('myRewards').textContent = '0 RSC';
+        
+        // Mostrar notificación
+        if (window.showNotification) {
+          window.showNotification('success', '¡Recompensas Reclamadas!', `Has reclamado ${totalRewards} RSC en recompensas`);
+        }
+        
+        // Actualizar datos en tiempo real
+        await this.updateRealTimeData();
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.warn('⚠️ No se pudieron reclamar recompensas:', error.message);
+      if (window.showNotification) {
+        window.showNotification('error', 'Error', 'No se pudieron reclamar las recompensas');
+      }
     }
   }
 
@@ -1083,8 +1126,8 @@ class StakingEpic {
   }
 
   startAutoRefresh() {
-    setInterval(() => {
-      this.updateRealTimeData();
+    setInterval(async () => {
+      await this.updateRealTimeData();
     }, 30000); // Cada 30 segundos
   }
 }

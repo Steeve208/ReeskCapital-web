@@ -51,16 +51,33 @@ class RSCMiningSystem {
     }
 
     async checkAuthentication() {
-        // Simular usuario autenticado para pruebas
-        // En producción, esto vendría del sistema de login
+        try {
+            // Intentar obtener usuario autenticado de la API
+            const token = localStorage.getItem('rsc_auth_token');
+            if (token) {
+                const response = await fetch('https://rsc-chain-production.up.railway.app/api/auth/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const userData = await response.json();
+                    this.currentUser = userData.user;
+                    console.log('✅ Usuario autenticado:', this.currentUser.username);
+                    return;
+                }
+            }
+        } catch (error) {
+            console.warn('⚠️ No se pudo verificar autenticación:', error.message);
+        }
+        
+        // Fallback para desarrollo
         this.currentUser = {
             id: 'user_' + Date.now(),
             username: 'Usuario_RSC',
             walletAddress: '0x' + Math.random().toString(16).substr(2, 40),
             email: 'usuario@rsc.local'
         };
-        
-        console.log('👤 Usuario autenticado:', this.currentUser.username);
+        console.log('⚠️ Usando usuario de desarrollo (no autenticado)');
     }
 
     setupEventListeners() {

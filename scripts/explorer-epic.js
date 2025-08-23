@@ -684,30 +684,28 @@ class ExplorerEpic {
 
   showSearchResults(query) {
     // Simular resultados de búsqueda
-    const results = this.generateSearchResults(query);
+    const results = await this.generateSearchResults(query);
     
     // Mostrar en modal
     this.showModal('Resultados de Búsqueda', this.formatSearchResults(results));
   }
 
-  generateSearchResults(query) {
-    return [
-      {
-        type: 'block',
-        id: Math.floor(Math.random() * 1000000),
-        hash: '0x' + Math.random().toString(16).substr(2, 64),
-        timestamp: new Date().toISOString(),
-        transactions: Math.floor(Math.random() * 100) + 10
-      },
-      {
-        type: 'transaction',
-        hash: '0x' + Math.random().toString(16).substr(2, 64),
-        from: 'RSC1' + Math.random().toString(36).substr(2, 20),
-        to: 'RSC1' + Math.random().toString(36).substr(2, 20),
-        amount: (Math.random() * 1000).toFixed(2),
-        timestamp: new Date().toISOString()
+  async generateSearchResults(query) {
+    try {
+      // Intentar obtener resultados reales de la API de RSC Chain
+      const response = await fetch(`https://rsc-chain-production.up.railway.app/api/blockchain/search?q=${encodeURIComponent(query)}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        return data.results || [];
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-    ];
+    } catch (error) {
+      console.warn('⚠️ No se pudieron obtener resultados de búsqueda reales:', error.message);
+      // Fallback a resultados vacíos
+      return [];
+    }
   }
 
   formatSearchResults(results) {

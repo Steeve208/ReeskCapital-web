@@ -94,23 +94,47 @@ class ExplorerManager {
             }
         } catch (error) {
             console.error('Failed to load network stats:', error);
-            // Load mock data
-            this.loadMockNetworkStats();
+            // Load real data
+            await this.loadMockNetworkStats();
         }
     }
 
-    loadMockNetworkStats() {
-        this.networkStats = {
-            totalBlocks: 125000,
-            totalTransactions: 850000,
-            totalAddresses: 45000,
-            currentTPS: 1250,
-            averageBlockTime: 2.5,
-            totalSupply: 100000000,
-            circulatingSupply: 75000000,
-            marketCap: 85000000,
-            price: 0.85
-        };
+    async loadMockNetworkStats() {
+        try {
+            // Intentar obtener datos reales de la API de RSC Chain
+            const response = await fetch('https://rsc-chain-production.up.railway.app/api/blockchain/stats');
+            if (response.ok) {
+                const data = await response.json();
+                this.networkStats = {
+                    totalBlocks: data.total_blocks || 0,
+                    totalTransactions: data.total_transactions || 0,
+                    totalAddresses: data.total_addresses || 0,
+                    currentTPS: data.tps || 0,
+                    averageBlockTime: data.average_block_time || 0,
+                    totalSupply: data.total_supply || 0,
+                    circulatingSupply: data.circulating_supply || 0,
+                    marketCap: data.market_cap || 0,
+                    price: data.rsc_price || 0
+                };
+                console.log('✅ Estadísticas de red reales cargadas desde RSC Chain API');
+            } else {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.warn('⚠️ No se pudieron cargar estadísticas de red reales:', error.message);
+            // Fallback a estadísticas vacías
+            this.networkStats = {
+                totalBlocks: 0,
+                totalTransactions: 0,
+                totalAddresses: 0,
+                currentTPS: 0,
+                averageBlockTime: 0,
+                totalSupply: 0,
+                circulatingSupply: 0,
+                marketCap: 0,
+                price: 0
+            };
+        }
         this.updateNetworkStatsUI();
     }
 

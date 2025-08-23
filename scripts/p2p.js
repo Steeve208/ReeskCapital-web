@@ -113,46 +113,27 @@ class P2PManager {
             }
         } catch (error) {
             console.error('Failed to load market data:', error);
-            // Load mock data
-            this.loadMockAds();
+            // Load real data
+            await this.loadMockAds();
         }
     }
 
-    loadMockAds() {
-        this.ads = [
-            {
-                id: '1',
-                type: 'buy',
-                price: 0.85,
-                amount: 1000,
-                minAmount: 50,
-                maxAmount: 500,
-                paymentMethods: ['Bank Transfer', 'PayPal'],
-                user: {
-                    id: 'user1',
-                    username: 'CryptoTrader',
-                    rating: 4.8,
-                    completedTrades: 45
-                },
-                createdAt: new Date(Date.now() - 3600000).toISOString()
-            },
-            {
-                id: '2',
-                type: 'sell',
-                price: 0.87,
-                amount: 500,
-                minAmount: 25,
-                maxAmount: 250,
-                paymentMethods: ['Cash', 'Venmo'],
-                user: {
-                    id: 'user2',
-                    username: 'RSCHolder',
-                    rating: 4.6,
-                    completedTrades: 23
-                },
-                createdAt: new Date(Date.now() - 7200000).toISOString()
+    async loadMockAds() {
+        try {
+            // Intentar obtener datos reales de la API de RSC Chain
+            const response = await fetch('https://rsc-chain-production.up.railway.app/api/p2p/orders');
+            if (response.ok) {
+                const data = await response.json();
+                this.ads = data.orders || [];
+                console.log('✅ Anuncios P2P reales cargados desde RSC Chain API');
+            } else {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
-        ];
+        } catch (error) {
+            console.warn('⚠️ No se pudieron cargar anuncios P2P reales:', error.message);
+            // Fallback a anuncios vacíos
+            this.ads = [];
+        }
         this.updateMarketplaceUI();
     }
 

@@ -18,12 +18,12 @@ class WalletEpic {
         this.init();
     }
 
-    init() {
+    async init() {
         this.setupEventListeners();
         this.initializeCharts();
         this.init3DVisualization();
         this.simulateWebSocket();
-        this.loadWalletData();
+        await this.loadWalletData();
         this.generateQRCode();
         this.updateWalletStats();
     }
@@ -744,7 +744,7 @@ class WalletEpic {
         this.balance = 1250.456789;
         this.miningRewards = 45.123456;
         this.stakingRewards = 78.987654;
-        this.transactions = this.generateTransactionHistory();
+        this.transactions = await this.generateTransactionHistory();
 
         this.updateWalletStats();
         this.updateRecentActivity();
@@ -844,48 +844,72 @@ class WalletEpic {
         return labels;
     }
 
-    generateBalanceData(count) {
-        const data = [];
-        let baseBalance = this.balance;
-        
-        for (let i = 0; i < count; i++) {
-            baseBalance += (Math.random() - 0.5) * 10;
-            data.push(Math.max(0, baseBalance));
+    async generateBalanceData(count) {
+        try {
+            // Intentar obtener datos reales de balance de la API
+            const response = await fetch(`https://rsc-chain-production.up.railway.app/api/wallet/balance-history/${this.walletAddress}`);
+            if (response.ok) {
+                const data = await response.json();
+                return data.balance_history || Array(count).fill(this.balance);
+            } else {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.warn('⚠️ No se pudieron cargar datos de balance reales:', error.message);
+            // Fallback a datos estáticos
+            return Array(count).fill(this.balance);
         }
-        
-        return data;
     }
 
-    generateTransactionData(count) {
-        const data = [];
-        for (let i = 0; i < count; i++) {
-            data.push(Math.floor(Math.random() * 10) + 1);
+    async generateTransactionData(count) {
+        try {
+            // Intentar obtener datos reales de transacciones de la API
+            const response = await fetch(`https://rsc-chain-production.up.railway.app/api/wallet/transaction-stats/${this.walletAddress}`);
+            if (response.ok) {
+                const data = await response.json();
+                return data.transaction_counts || Array(count).fill(0);
+            } else {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.warn('⚠️ No se pudieron cargar datos de transacciones reales:', error.message);
+            // Fallback a datos vacíos
+            return Array(count).fill(0);
         }
-        return data;
     }
 
-    generateMiningData(count) {
-        const data = [];
-        let baseHashRate = 100;
-        
-        for (let i = 0; i < count; i++) {
-            baseHashRate += (Math.random() - 0.5) * 20;
-            data.push(Math.max(50, Math.min(150, baseHashRate)));
+    async generateMiningData(count) {
+        try {
+            // Intentar obtener datos reales de minería de la API
+            const response = await fetch(`https://rsc-chain-production.up.railway.app/api/mining/hashrate-history/${this.walletAddress}`);
+            if (response.ok) {
+                const data = await response.json();
+                return data.hashrate_history || Array(count).fill(0);
+            } else {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.warn('⚠️ No se pudieron cargar datos de minería reales:', error.message);
+            // Fallback a datos vacíos
+            return Array(count).fill(0);
         }
-        
-        return data;
     }
 
-    generatePredictionData(count) {
-        const data = [];
-        let basePrice = 0.98;
-        
-        for (let i = 0; i < count; i++) {
-            basePrice += (Math.random() - 0.5) * 0.05;
-            data.push(Math.max(0.9, Math.min(1.1, basePrice)));
+    async generatePredictionData(count) {
+        try {
+            // Intentar obtener datos reales de predicción de la API
+            const response = await fetch('https://rsc-chain-production.up.railway.app/api/blockchain/price-prediction');
+            if (response.ok) {
+                const data = await response.json();
+                return data.prediction_data || Array(count).fill(0);
+            } else {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.warn('⚠️ No se pudieron cargar datos de predicción reales:', error.message);
+            // Fallback a datos vacíos
+            return Array(count).fill(0);
         }
-        
-        return data;
     }
 
     updateCharts() {
@@ -1126,8 +1150,9 @@ class WalletEpic {
 }
 
 // Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-    new WalletEpic();
+document.addEventListener('DOMContentLoaded', async () => {
+    window.walletEpic = new WalletEpic();
+    await window.walletEpic.init();
 });
 
 // Exportar para uso global

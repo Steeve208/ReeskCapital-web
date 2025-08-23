@@ -391,11 +391,13 @@ class ChartManager {
     try {
       const response = await apiRequest('/blockchain/stats');
       if (response.success && response.data.stats) {
-        const price = response.data.stats.price || 0.85 + Math.random() * 0.1;
+        const price = response.data.stats.price || 0;
         this.updatePriceChart(price);
       }
     } catch (error) {
       console.error('Error fetching price data:', error);
+      // Fallback a precio 0 si no hay conexión
+      this.updatePriceChart(0);
     }
   }
 
@@ -403,11 +405,13 @@ class ChartManager {
     try {
       const response = await apiRequest('/blockchain/stats');
       if (response.success && response.data.stats) {
-        const volume = response.data.stats.dailyVolume || Math.random() * 1000000;
+        const volume = response.data.stats.dailyVolume || 0;
         this.updateVolumeChart(volume);
       }
     } catch (error) {
       console.error('Error fetching volume data:', error);
+      // Fallback a volumen 0 si no hay conexión
+      this.updateVolumeChart(0);
     }
   }
 
@@ -426,11 +430,19 @@ class ChartManager {
 
   async fetchMiningData() {
     try {
-      // Simular datos de minería
-      const hashRate = 1000 + Math.random() * 5000;
-      this.updateMiningChart(hashRate);
+      // Intentar obtener datos reales de minería
+      const response = await apiRequest('/mining/stats');
+      if (response.success && response.data.stats) {
+        const hashRate = response.data.stats.hashRate || 0;
+        this.updateMiningChart(hashRate);
+      } else {
+        // Fallback a hashRate 0 si no hay datos
+        this.updateMiningChart(0);
+      }
     } catch (error) {
       console.error('Error fetching mining data:', error);
+      // Fallback a hashRate 0 si no hay conexión
+      this.updateMiningChart(0);
     }
   }
 

@@ -467,71 +467,72 @@ class DocsManager {
         statusCode.className = 'status-code loading';
         responseTime.textContent = '...';
 
-        // Simular delay
-        await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
-
-        // Simular respuesta
-        const responses = {
-            'wallet/create': {
-                status: '201 Created',
-                time: '45ms',
-                data: {
-                    "success": true,
-                    "data": {
-                        "address": "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6",
-                        "privateKey": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
-                    }
+        // Realizar request real a la API de RSC Chain
+        const startTime = Date.now();
+        
+        try {
+            const apiResponse = await fetch(`https://rsc-chain-production.up.railway.app/api/${endpoint}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ test: true })
+            });
+            
+            const responseTime = Date.now() - startTime;
+            const responseData = await apiResponse.json();
+            
+            // Usar respuesta real de la API
+            const responses = {
+                'wallet/create': {
+                    status: `${apiResponse.status} ${apiResponse.statusText}`,
+                    time: `${responseTime}ms`,
+                    data: responseData
+                },
+                'wallet/balance': {
+                    status: `${apiResponse.status} ${apiResponse.statusText}`,
+                    time: `${responseTime}ms`,
+                    data: responseData
+                },
+                'tx/send': {
+                    status: `${apiResponse.status} ${apiResponse.statusText}`,
+                    time: `${responseTime}ms`,
+                    data: responseData
+                },
+                'mining/start': {
+                    status: `${apiResponse.status} ${apiResponse.statusText}`,
+                    time: `${responseTime}ms`,
+                    data: responseData
+                },
+                'blockchain/stats': {
+                    status: `${apiResponse.status} ${apiResponse.statusText}`,
+                    time: `${responseTime}ms`,
+                    data: responseData
                 }
-            },
-            'wallet/balance': {
-                status: '200 OK',
-                time: '32ms',
-                data: {
-                    "success": true,
-                    "data": {
-                        "address": "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6",
-                        "balance": 1250.75
-                    }
-                }
-            },
-            'tx/send': {
-                status: '200 OK',
-                time: '67ms',
-                data: {
-                    "success": true,
-                    "data": {
-                        "txHash": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-                        "status": "pending"
-                    }
-                }
-            },
-            'mining/start': {
-                status: '200 OK',
-                time: '89ms',
-                data: {
-                    "success": true,
-                    "data": {
-                        "sessionId": "mining_session_12345",
-                        "status": "started",
-                        "estimatedReward": 50.0
-                    }
-                }
-            },
-            'blockchain/stats': {
-                status: '200 OK',
-                time: '23ms',
-                data: {
-                    "success": true,
-                    "data": {
-                        "totalSupply": 1000000000,
-                        "circulatingSupply": 650000000,
-                        "totalTransactions": 15420,
-                        "activeNodes": 47,
-                        "currentTPS": 1250
-                    }
-                }
-            }
         };
+        
+        // Si no hay respuesta de la API, usar fallback
+        if (!responses[endpoint]) {
+            try {
+                const apiResponse = await fetch(`https://rsc-chain-production.up.railway.app/api/${endpoint}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const responseTime = Date.now() - startTime;
+                const responseData = await apiResponse.json();
+                
+                responses[endpoint] = {
+                    status: `${apiResponse.status} ${apiResponse.statusText}`,
+                    time: `${responseTime}ms`,
+                    data: responseData
+                };
+            } catch (error) {
+                responses[endpoint] = {
+                    status: '503 Service Unavailable',
+                    time: '0ms',
+                    data: { "error": "API no disponible", "message": error.message }
+                };
+            }
+        }
 
         const response = responses[endpoint] || {
             status: '404 Not Found',

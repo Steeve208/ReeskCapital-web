@@ -44,74 +44,40 @@ class StakingEnhanced {
     });
   }
 
-  loadPools() {
-    this.pools = [
-      {
-        id: 1,
-        name: 'Pool Principal',
-        apy: 12.5,
-        totalStaked: 2500000,
-        minStake: 100,
-        maxStake: 100000,
-        stakedAmount: 10000,
-        rewards: 1250.45,
-        status: 'active'
-      },
-      {
-        id: 2,
-        name: 'Pool de Alto Rendimiento',
-        apy: 15.2,
-        totalStaked: 1800000,
-        minStake: 500,
-        maxStake: 50000,
-        stakedAmount: 5000,
-        rewards: 760.23,
-        status: 'active'
-      },
-      {
-        id: 3,
-        name: 'Pool de Liquidez',
-        apy: 8.7,
-        totalStaked: 3200000,
-        minStake: 50,
-        maxStake: 200000,
-        stakedAmount: 0,
-        rewards: 0,
-        status: 'active'
+  async loadPools() {
+    try {
+      // Intentar obtener pools reales de la API de RSC Chain
+      const response = await fetch('https://rsc-chain-production.up.railway.app/api/staking/pools');
+      if (response.ok) {
+        const data = await response.json();
+        this.pools = data.pools || [];
+        console.log('✅ Pools de staking reales cargados desde RSC Chain API');
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-    ];
+    } catch (error) {
+      console.warn('⚠️ No se pudieron cargar pools de staking reales:', error.message);
+      // Fallback a pools vacíos
+      this.pools = [];
+    }
   }
 
-  loadValidators() {
-    this.validators = [
-      {
-        id: 1,
-        name: 'Validator Alpha',
-        commission: 5.0,
-        uptime: 99.8,
-        totalStaked: 450000,
-        delegators: 1250,
-        status: 'active'
-      },
-      {
-        id: 2,
-        name: 'Validator Beta',
-        commission: 3.5,
-        uptime: 99.9,
-        totalStaked: 380000,
-        delegators: 980,
-        status: 'active'
-      },
-      {
-        id: 3,
-        name: 'Validator Gamma',
-        commission: 7.2,
-        uptime: 99.5,
-        totalStaked: 290000,
-        delegators: 750,
-        status: 'active'
+  async loadValidators() {
+    try {
+      // Intentar obtener validadores reales de la API de RSC Chain
+      const response = await fetch('https://rsc-chain-production.up.railway.app/api/staking/validators');
+      if (response.ok) {
+        const data = await response.json();
+        this.validators = data.validators || [];
+        console.log('✅ Validadores reales cargados desde RSC Chain API');
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-    ];
+    } catch (error) {
+      console.warn('⚠️ No se pudieron cargar validadores reales:', error.message);
+      // Fallback a validadores vacíos
+      this.validators = [];
+    }
   }
 
   renderDashboard() {
@@ -365,9 +331,10 @@ class StakingEnhanced {
 }
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (window.location.pathname.includes('staking.html')) {
     window.stakingEnhanced = new StakingEnhanced();
+    await window.stakingEnhanced.init();
   }
 });
 

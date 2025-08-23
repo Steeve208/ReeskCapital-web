@@ -90,11 +90,23 @@ class MiningSimulator {
 
   async connectWallet() {
     try {
-      // Simular conexión de wallet (en producción esto sería con MetaMask o similar)
-      const mockWallet = '0x' + '1234567890abcdef'.repeat(4); // Wallet de ejemplo
-      
-      this.walletAddress = mockWallet;
-      localStorage.setItem('rsc_wallet_address', mockWallet);
+      // Intentar conectar wallet real (MetaMask o similar)
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          this.walletAddress = accounts[0];
+          localStorage.setItem('rsc_wallet_address', accounts[0]);
+          console.log('✅ Wallet conectada:', accounts[0]);
+        } catch (error) {
+          throw new Error('Usuario rechazó la conexión de wallet');
+        }
+      } else {
+        // Fallback para desarrollo
+        const mockWallet = '0x' + '1234567890abcdef'.repeat(4);
+        this.walletAddress = mockWallet;
+        localStorage.setItem('rsc_wallet_address', mockWallet);
+        console.log('⚠️ Usando wallet de desarrollo (MetaMask no disponible)');
+      }
       
       this.updateWalletDisplay();
       await this.loadMiningStatus();

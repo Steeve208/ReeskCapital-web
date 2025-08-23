@@ -51,9 +51,9 @@ class StatsManager {
         data = await response.json();
         console.log('✅ Datos reales cargados:', data);
       } else {
-        // Fallback a datos simulados si la API no está disponible
-        data = this.generateMockData();
-        console.log('⚠️ Usando datos simulados');
+        // Fallback a datos reales si la API no está disponible
+        data = await this.generateMockData();
+        console.log('⚠️ Usando datos de fallback');
       }
       
       this.updateStats(data);
@@ -67,9 +67,21 @@ class StatsManager {
     this.isUpdating = false;
   }
 
-  generateMockData() {
-    // En lugar de generar datos simulados, retornar valores vacíos
-    console.warn('⚠️ No se pueden cargar datos reales, mostrando indicadores vacíos');
+  async generateMockData() {
+    // Intentar obtener datos reales de la API de RSC Chain
+    try {
+      const response = await fetch('https://rsc-chain-production.up.railway.app/api/blockchain/stats');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('✅ Datos reales obtenidos de RSC Chain API');
+        return data;
+      }
+    } catch (error) {
+      console.warn('⚠️ No se pudieron cargar datos reales:', error.message);
+    }
+    
+    // Fallback a valores vacíos si no hay conexión
+    console.warn('⚠️ Usando valores vacíos como fallback');
     return {
       market_cap: 0,
       volume_24h: 0,

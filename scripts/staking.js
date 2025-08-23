@@ -115,56 +115,27 @@ class StakingManager {
             }
         } catch (error) {
             console.error('Failed to load staking pools:', error);
-            // Load mock data
-            this.loadMockPools();
+            // Load real data
+            await this.loadMockPools();
         }
     }
 
-    loadMockPools() {
-        this.stakingPools = [
-            {
-                id: 'pool1',
-                name: 'RSC Validator Pool',
-                description: 'High-performance validator pool with maximum security',
-                apy: 12.5,
-                minStake: 100,
-                maxStake: 10000,
-                totalStaked: 50000,
-                participants: 125,
-                validatorCount: 8,
-                status: 'active',
-                lockPeriod: 30,
-                rewards: 0.025
-            },
-            {
-                id: 'pool2',
-                name: 'Community Pool',
-                description: 'Community-driven staking pool with democratic governance',
-                apy: 10.8,
-                minStake: 50,
-                maxStake: 5000,
-                totalStaked: 25000,
-                participants: 89,
-                validatorCount: 5,
-                status: 'active',
-                lockPeriod: 15,
-                rewards: 0.018
-            },
-            {
-                id: 'pool3',
-                name: 'Premium Pool',
-                description: 'Exclusive pool for high-volume stakers with premium benefits',
-                apy: 15.2,
-                minStake: 500,
-                maxStake: 50000,
-                totalStaked: 75000,
-                participants: 45,
-                validatorCount: 12,
-                status: 'active',
-                lockPeriod: 60,
-                rewards: 0.035
+    async loadMockPools() {
+        try {
+            // Intentar obtener datos reales de la API de RSC Chain
+            const response = await fetch('https://rsc-chain-production.up.railway.app/api/staking/pools');
+            if (response.ok) {
+                const data = await response.json();
+                this.stakingPools = data.pools || [];
+                console.log('✅ Pools de staking reales cargados desde RSC Chain API');
+            } else {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
-        ];
+        } catch (error) {
+            console.warn('⚠️ No se pudieron cargar pools de staking reales:', error.message);
+            // Fallback a pools vacíos
+            this.stakingPools = [];
+        }
         this.updatePoolsUI();
     }
 

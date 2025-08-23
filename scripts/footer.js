@@ -79,7 +79,32 @@ class AdvancedFooter {
     }
   }
 
-  getMockData() {
+  async getMockData() {
+    try {
+      // Intentar obtener datos reales de la API de RSC Chain
+      const response = await fetch('https://rsc-chain-production.up.railway.app/api/blockchain/stats');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('✅ Métricas reales obtenidas desde RSC Chain API');
+        return {
+          price: data.rsc_price || 0,
+          priceChange: data.price_change || 0,
+          marketCap: data.market_cap || 0,
+          marketCapChange: data.market_cap_change || 0,
+          activeNodes: data.nodes || 0,
+          tps: data.tps || 0,
+          stakedSupply: data.staked_supply || 0,
+          uptime: data.uptime || 0,
+          tokenPrice: data.rsc_price || 0,
+          stakingAPY: data.staking_apy || 0,
+          hashrate: data.hashrate || 0
+        };
+      }
+    } catch (error) {
+      console.warn('⚠️ No se pudieron cargar métricas reales:', error.message);
+    }
+    
+    // Fallback a valores vacíos si no hay conexión
     return {
       price: 0,
       priceChange: 0,
