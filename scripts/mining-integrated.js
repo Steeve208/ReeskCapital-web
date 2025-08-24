@@ -1036,3 +1036,4 @@ class MiningIntegratedComponent {
 window.miningIntegrated = new MiningIntegratedComponent();
 
 console.log('⛏️ Componente de Minería Integrado cargado');
+

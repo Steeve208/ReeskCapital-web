@@ -720,3 +720,4 @@ class LeaderboardComponent {
 window.leaderboardComponent = new LeaderboardComponent();
 
 console.log('🏆 Componente de Leaderboard cargado');
+

@@ -662,3 +662,4 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 console.log('🚀 Módulo de integración con Backend RSC Mining cargado');
+

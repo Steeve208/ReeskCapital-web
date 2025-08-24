@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ReeskCapital - RSC Chain</title>
-  <meta name="description" content="La blockchain más avanzada y rebelde del mundo. Sin bancos, sin fronteras, sin permiso.">
+  <meta name="description" content="The world's most advanced and rebellious blockchain. No banks, no borders, no permission.">
   <meta name="keywords" content="blockchain, RSC, cryptocurrency, wallet, mining, staking, P2P">
   <meta property="og:title" content="ReeskCapital.co - RSC Chain">
-  <meta property="og:description" content="La blockchain más avanzada y rebelde del mundo">
+  <meta property="og:description" content="The world's most advanced and rebellious blockchain">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://reeskcapital">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ReeskCapital.co - RSC Chain">
-  <meta name="twitter:description" content="La blockchain más avanzada y rebelde del mundo">
+  <meta name="twitter:description" content="The world's most advanced and rebellious blockchain">
   
   <link rel="icon" href="assets/img/logo.png" type="image/png">
   <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/navbar.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/app.css">
   <link rel="stylesheet" href="styles/responsive.css">
@@ -38,18 +39,39 @@
   <link rel="stylesheet" href="styles/sections/hero.css">
   <link rel="stylesheet" href="styles/sections/highlights.css">
   <link rel="stylesheet" href="styles/sections/p2p.css">
+  <link rel="stylesheet" href="styles/sections/mining-controls.css">
+  <link rel="stylesheet" href="styles/sections/leaderboard.css">
+  <link rel="stylesheet" href="styles/sections/docs-whitepaper.css">
+  <link rel="stylesheet" href="styles/auth-modal.css">
   <link rel="stylesheet" href="styles/footer.css">
+  <!-- ===== PERFORMANCE OPTIMIZATIONS ===== -->
+  <link rel="stylesheet" href="styles/performance.css">
   <!-- ===== SISTEMA DE GRID AVANZADO - FASE 1 ===== -->
   <link rel="stylesheet" href="styles/grid-system.css">
   <link rel="stylesheet" href="styles/grid-demo.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Chart.js para gráficos en vivo -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Three.js para animaciones 3D -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Internationalization System -->
+  <script src="scripts/i18n.js"></script>
+  
+  <!-- Wallet Authentication System -->
+  <script src="scripts/wallet-auth.js"></script>
+  
+  <!-- Whitepaper Download System -->
+  <script src="scripts/whitepaper-download.js"></script>
+  
+  <!-- Leaderboard Manager -->
+  <script src="scripts/leaderboard-manager.js"></script>
+  
+  <!-- Navbar Manager -->
+  <script src="scripts/navbar.js"></script>
 </head>
 <body class="dark-mode">
   <!-- Fondo 4D animado -->
@@ -60,107 +82,98 @@
 
   <!-- Navbar -->
   <nav class="navbar">
-    <div class="navbar-logo">
-      <img src="assets/img/logo.png" alt="RSC Chain Logo">
-      <span>RSC CHAIN</RSC-chain></span>
-    </div>
-    <ul class="navbar-links">
-      <!-- Enlaces de navegación para desktop -->
-      <li><a href="index.html" class="active">Inicio</a></li>
-      <li><a href="pages/about.html">Acerca</a></li>
-      <li><a href="pages/wallet.html">Wallet</a></li>
-      <li><a href="pages/mine.html">Minar</a></li>
-      <li><a href="pages/p2p.html">P2P</a></li>
-      <li><a href="pages/staking.html">Staking</a></li>
-      <li><a href="pages/explorer.html">Explorer</a></li>
-      <li><a href="pages/bank.html">Bank</a></li>
-      <li><a href="pages/docs.html">Docs</a></li>
-      <li><a href="pages/login.html" class="login-link">🔐 Login</a></li>
+    <div class="navbar-container">
+      <!-- Logo Section (Left) -->
+      <a href="index.html" class="navbar-logo">
+        <img src="assets/img/logo.png" alt="RSC Chain Logo">
+        <span>RSC CHAIN</span>
+      </a>
       
-      <!-- Sección de Navegación para móvil -->
-      <div class="mobile-nav-section">
-        <div class="mobile-nav-title">Navegación</div>
-        <li><a href="index.html" class="active">🏠 Inicio</a></li>
-        <li><a href="pages/about.html">ℹ️ Acerca</a></li>
+      <!-- Center Title (Mobile Only) -->
+      <div class="navbar-center-title">
+        <span>RSC CHAIN</span>
+      </div>
+      
+      <!-- Desktop Navigation Links -->
+      <ul class="navbar-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="pages/about.html">About</a></li>
+        <li><a href="pages/wallet.html">Wallet</a></li>
+        <li><a href="pages/mine.html">Mine</a></li>
+        <li><a href="pages/p2p.html">P2P</a></li>
+        <li><a href="pages/staking.html">Staking</a></li>
+        <li><a href="pages/explorer.html">Explorer</a></li>
+        <li><a href="pages/bank.html">Bank</a></li>
+        <li><a href="pages/docs.html">Docs</a></li>
+      </ul>
+      
+      <!-- Right Side Actions (Desktop Only) -->
+      <div class="navbar-actions">
+        <!-- Language Toggle -->
+        <div class="language-toggle">
+          <button id="languageToggle" class="lang-btn">
+            <span class="lang-text">EN</span>
+            <span class="lang-icon">🌐</span>
+          </button>
+        </div>
+        
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle">
+          <span>🌙</span>
+        </button>
+        
+        <!-- Login Button -->
+        <a href="pages/login.html" class="login-link">Login</a>
+        
+        <!-- Connect Wallet Button -->
+        <a href="#" id="walletConnectBtn" class="btn-wallet-connect">
+          <span class="wallet-icon">🔒</span>
+          <span class="wallet-text">Connect Wallet</span>
+        </a>
+      </div>
+      
+      <!-- Mobile Menu Toggle (Right) -->
+      <button class="navbar-toggle" id="navbarToggle">
+        <span>☰</span>
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <h3>RSC CHAIN</h3>
+    </div>
+    
+    <div class="mobile-menu-section">
+      <div class="mobile-menu-section-title">Navigation</div>
+      <ul class="mobile-menu-links">
+        <li><a href="index.html" class="active">🏠 Home</a></li>
+        <li><a href="pages/about.html">ℹ️ About</a></li>
         <li><a href="pages/wallet.html">👛 Wallet</a></li>
-        <li><a href="pages/mine.html">⛏️ Minar</a></li>
+        <li><a href="pages/mine.html">⛏️ Mine</a></li>
         <li><a href="pages/p2p.html">🤝 P2P</a></li>
         <li><a href="pages/staking.html">💰 Staking</a></li>
         <li><a href="pages/explorer.html">🔍 Explorer</a></li>
         <li><a href="pages/bank.html">🏦 Bank</a></li>
         <li><a href="pages/docs.html">📚 Docs</a></li>
-      </div>
-      
-      <!-- Sección de Controles para móvil -->
-      <div class="mobile-controls-section">
-        <div class="mobile-nav-title">Controles</div>
-        <div class="mobile-controls">
-          <!-- Selector de idioma móvil -->
-          <div class="mobile-control-item">
-            <div class="mobile-control-label">
-              <span class="mobile-control-icon">🌐</span>
-              <span>Idioma</span>
-            </div>
-            <button class="mobile-language-selector">
-              <span>ES</span>
-              <span>▼</span>
-            </button>
-            <div class="mobile-language-dropdown">
-              <div class="mobile-language-option" data-lang="es">🇪🇸 Español</div>
-              <div class="mobile-language-option" data-lang="en">🇺🇸 English</div>
-              <div class="mobile-language-option" data-lang="fr">🇫🇷 Français</div>
-              <div class="mobile-language-option" data-lang="pt">🇧🇷 Português</div>
-              <div class="mobile-language-option" data-lang="ht">🇭🇹 Kreyòl</div>
-            </div>
-          </div>
-          
-          <!-- Toggle de tema móvil -->
-          <div class="mobile-control-item">
-            <div class="mobile-control-label">
-              <span class="mobile-control-icon">🎨</span>
-              <span>Tema</span>
-            </div>
-            <button class="mobile-theme-toggle">
-              <span>🌙</span>
-              <span>Oscuro</span>
-            </button>
-          </div>
-          
-          <!-- Botón de wallet móvil -->
-          <div class="mobile-control-item">
-            <div class="mobile-control-label">
-              <span class="mobile-control-icon">👛</span>
-              <span>Wallet</span>
-            </div>
-            <button class="mobile-wallet-btn">
-              <span>Conectar</span>
-              <span>→</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </ul>
-    <div class="navbar-actions">
-      <button class="language-selector" id="languageSelector">
-        <span>ES</span>
-        <div class="language-dropdown">
-          <div class="language-option" data-lang="es">Español</div>
-          <div class="language-option" data-lang="en">English</div>
-          <div class="language-option" data-lang="fr">Français</div>
-          <div class="language-option" data-lang="pt">Português</div>
-          <div class="language-option" data-lang="ht">Kreyòl</div>
-        </div>
-      </button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-        <span class="theme-icon">🌙</span>
-      </button>
-      <a href="pages/wallet.html" class="btn-wallet-connect" id="walletConnectBtn">
-        <span class="wallet-icon">👛</span>
-        <span class="wallet-text">Conectar Wallet</span>
-      </a>
+      </ul>
     </div>
-    <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
-  </nav>
+    
+    <div class="mobile-menu-section">
+      <div class="mobile-menu-section-title">Account</div>
+      <div class="mobile-menu-actions">
+        <a href="pages/login.html" class="login-link">🔐 Login</a>
+        <a href="#" id="mobileWalletConnectBtn" class="btn-wallet-connect">
+          <span class="wallet-icon">🔒</span>
+          <span class="wallet-text">Connect Wallet</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
   <!-- Hero Section Épico - RSC Chain -->
   <section class="hero-epic" id="hero">
@@ -190,12 +203,12 @@
       <div class="hero-status-badge">
         <div class="status-indicator">
           <div class="pulse-dot"></div>
-          <span class="status-text">RED ACTIVA</span>
+          <span class="status-text">NETWORK ACTIVE</span>
         </div>
         <div class="network-stats">
-          <span class="stat">🟢 1,247 Nodos</span>
+          <span class="stat">🟢 1,247 Nodes</span>
           <span class="stat">⚡ 50,000 TPS</span>
-          <span class="stat">🔒 100% Seguro</span>
+          <span class="stat">🔒 100% Secure</span>
         </div>
       </div>
 
@@ -207,9 +220,9 @@
             <span class="title-word title-word-2">CHAIN</span>
       </h1>
           <div class="title-subtitle">
-            <span class="subtitle-line">LA BLOCKCHAIN MÁS</span>
-            <span class="subtitle-line">AVANZADA Y REBELDE</span>
-            <span class="subtitle-line">DEL MUNDO</span>
+            <span class="subtitle-line">THE WORLD'S MOST</span>
+            <span class="subtitle-line">ADVANCED AND REBELLIOUS</span>
+            <span class="subtitle-line">BLOCKCHAIN</span>
           </div>
         </div>
         
@@ -227,12 +240,12 @@
       <!-- Descripción Épica -->
       <div class="hero-description-epic">
         <p class="epic-text">
-          <span class="highlight-word">Sin bancos.</span>
-          <span class="highlight-word">Sin fronteras.</span>
-          <span class="highlight-word">Sin permiso.</span>
+          <span class="highlight-word">No banks.</span>
+          <span class="highlight-word">No borders.</span>
+          <span class="highlight-word">No permission.</span>
         </p>
         <p class="epic-subtitle">
-          La revolución financiera que cambiará el mundo para siempre.
+          The financial revolution that will change the world forever.
           <span class="typing-cursor">|</span>
         </p>
       </div>
@@ -242,11 +255,11 @@
         <div class="cta-primary">
           <a href="pages/wallet.html" class="btn-epic-primary">
             <div class="btn-content">
-              <div class="btn-icon">👛</div>
+              <div class="btn-icon">🔒</div>
               <div class="btn-text">
-                <span class="btn-main">CREAR WALLET</span>
-                <span class="btn-sub">Acceso Total</span>
-    </div>
+                <span class="btn-main">CREATE WALLET</span>
+                <span class="btn-sub">Full Access</span>
+              </div>
             </div>
             <div class="btn-glow"></div>
             <div class="btn-particles"></div>
@@ -258,8 +271,8 @@
             <div class="btn-content">
               <div class="btn-icon">⛏️</div>
               <div class="btn-text">
-                <span class="btn-main">INICIAR MINERÍA</span>
-                <span class="btn-sub">Gana RSC</span>
+                <span class="btn-main">START MINING</span>
+                <span class="btn-sub">Earn RSC</span>
               </div>
             </div>
             <div class="btn-glow"></div>
@@ -269,8 +282,8 @@
             <div class="btn-content">
               <div class="btn-icon">💱</div>
               <div class="btn-text">
-                <span class="btn-main">COMERCIAR P2P</span>
-                <span class="btn-sub">Sin Intermediarios</span>
+                <span class="btn-main">P2P TRADE</span>
+                <span class="btn-sub">No Intermediaries</span>
               </div>
             </div>
             <div class="btn-glow"></div>
@@ -283,8 +296,8 @@
         <div class="feature-item">
           <div class="feature-icon">🔓</div>
           <div class="feature-content">
-            <span class="feature-title">100% Descentralizado</span>
-            <span class="feature-desc">Sin control central</span>
+            <span class="feature-title">100% Decentralized</span>
+            <span class="feature-desc">No central control</span>
           </div>
         </div>
         <div class="feature-item">
@@ -463,44 +476,44 @@
     </div>
   </section>
 
-  <!-- Features Section -->
-  <section class="features-section">
+  <!-- Mining Controls Section -->
+  <section class="mining-controls-section" id="mining-controls">
     <div class="container">
-      <h2 class="section-title">Características Principales</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">👛</div>
-          <h3>Wallet No Custodial</h3>
-          <p>Control total de tus fondos. Sin intermediarios, sin restricciones.</p>
-          <a href="wallet.html" class="feature-link">Crear Wallet →</a>
+      <h2 class="section-title">Mining Controls</h2>
+      <div class="mining-controls-grid">
+        <div class="mining-control-card">
+          <div class="control-icon">⛏️</div>
+          <h3>Start Mining</h3>
+          <p>Begin mining RSC tokens with our distributed mining system.</p>
+          <a href="pages/mine.html" class="control-link">Launch Mining →</a>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">⛏️</div>
-          <h3>Minería Distribuida</h3>
-          <p>Mina RSC desde cualquier dispositivo. Recompensas justas y transparentes.</p>
-          <a href="mine.html" class="feature-link">Iniciar Minería →</a>
+        <div class="mining-control-card">
+          <div class="control-icon">📊</div>
+          <h3>Mining Dashboard</h3>
+          <p>Monitor your mining performance and rewards in real-time.</p>
+          <a href="pages/mine.html#dashboard" class="control-link">View Dashboard →</a>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">💱</div>
-          <h3>Trading P2P</h3>
-          <p>Comercio directo entre usuarios. Sin exchanges centralizados.</p>
-          <a href="p2p.html" class="feature-link">Comerciar P2P →</a>
+        <div class="mining-control-card">
+          <div class="control-icon">⚙️</div>
+          <h3>Mining Settings</h3>
+          <p>Configure your mining parameters and optimization settings.</p>
+          <a href="pages/mine.html#settings" class="control-link">Configure →</a>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">🔒</div>
-          <h3>Staking Seguro</h3>
-          <p>Delega tus RSC y gana recompensas. Validadores verificados.</p>
-          <a href="staking.html" class="feature-link">Ver Staking →</a>
+        <div class="mining-control-card">
+          <div class="control-icon">🔗</div>
+          <h3>Mining Pool</h3>
+          <p>Join mining pools for increased efficiency and rewards.</p>
+          <a href="pages/mine.html#pools" class="control-link">Join Pool →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Stats Section -->
-  <section class="stats-section">
+  <!-- Stats & Rewards Section -->
+  <section class="stats-rewards-section" id="stats-rewards">
     <div class="container">
-      <h2 class="section-title">Estadísticas en Tiempo Real</h2>
-      <div class="stats-grid">
+      <h2 class="section-title">Stats & Rewards</h2>
+      <div class="stats-rewards-grid">
         <div class="stat-card">
           <div class="stat-icon">📊</div>
           <div class="stat-value" id="marketCap">$0.00</div>
@@ -509,17 +522,114 @@
         <div class="stat-card">
           <div class="stat-icon">💰</div>
           <div class="stat-value" id="volume24h">$0.00</div>
-          <div class="stat-label">Volumen 24h</div>
+          <div class="stat-label">Volume 24h</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">🔗</div>
           <div class="stat-value" id="totalBlocks">0</div>
-          <div class="stat-label">Bloques Totales</div>
+          <div class="stat-label">Total Blocks</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">👥</div>
           <div class="stat-value" id="activeUsers">0</div>
-          <div class="stat-label">Usuarios Activos</div>
+          <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⛏️</div>
+          <div class="stat-value" id="totalMiners">0</div>
+          <div class="stat-label">Total Miners</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-value" id="totalRewards">0 RSC</div>
+          <div class="stat-label">Total Rewards</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leaderboard Section -->
+  <section class="leaderboard-section" id="leaderboard">
+    <div class="container">
+      <h2 class="section-title">Mining Leaderboard</h2>
+      <div class="leaderboard-container">
+        <div class="leaderboard-header">
+          <div class="leaderboard-tabs">
+            <button class="tab-btn active" data-tab="miners">Top Miners</button>
+            <button class="tab-btn" data-tab="validators">Top Validators</button>
+            <button class="tab-btn" data-tab="stakers">Top Stakers</button>
+          </div>
+          <div class="leaderboard-refresh">
+            <button class="refresh-btn" id="refreshLeaderboard">
+              <span class="refresh-icon">🔄</span>
+              <span>Refresh</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="leaderboard-content">
+          <div class="leaderboard-table" id="leaderboardTable">
+            <!-- Leaderboard data will be populated by JavaScript -->
+            <div class="loading-placeholder">
+              <div class="loading-spinner"></div>
+              <p>Loading leaderboard data...</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="leaderboard-footer">
+          <div class="leaderboard-stats">
+            <span class="stat">Total Participants: <strong id="totalParticipants">0</strong></span>
+            <span class="stat">Total Rewards: <strong id="totalLeaderboardRewards">0 RSC</strong></span>
+          </div>
+          <a href="pages/explorer.html" class="view-all-btn">View Full Leaderboard →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Docs & Whitepaper Section -->
+  <section class="docs-whitepaper-section" id="docs-whitepaper">
+    <div class="container">
+      <h2 class="section-title">Documentation & Whitepaper</h2>
+      <div class="docs-whitepaper-grid">
+        <div class="docs-card">
+          <div class="docs-icon">📚</div>
+          <h3>Technical Documentation</h3>
+          <p>Complete API documentation, integration guides, and technical specifications.</p>
+          <div class="docs-links">
+            <a href="pages/docs.html" class="docs-link">View Docs →</a>
+            <a href="pages/docs.html#api" class="docs-link">API Reference →</a>
+            <a href="pages/docs.html#guides" class="docs-link">Integration Guides →</a>
+          </div>
+        </div>
+        
+        <div class="whitepaper-card">
+          <div class="whitepaper-icon">📄</div>
+          <h3>RSC Chain Whitepaper</h3>
+          <p>Comprehensive technical and economic overview of the RSC Chain ecosystem.</p>
+          <div class="whitepaper-actions">
+            <button class="download-btn" id="downloadWhitepaper">
+              <span class="download-icon">⬇️</span>
+              <span>Download PDF</span>
+            </button>
+            <a href="pages/docs.html#whitepaper" class="view-online-btn">View Online →</a>
+          </div>
+          <div class="whitepaper-info">
+            <span class="version">Version 1.0</span>
+            <span class="last-updated">Last updated: Q1 2025</span>
+          </div>
+        </div>
+        
+        <div class="resources-card">
+          <div class="resources-icon">🔗</div>
+          <h3>Additional Resources</h3>
+          <p>Community resources, tutorials, and educational content.</p>
+          <div class="resources-links">
+            <a href="pages/faq.html" class="resource-link">FAQ →</a>
+            <a href="pages/about.html" class="resource-link">About →</a>
+            <a href="pages/roadmap.html" class="resource-link">Roadmap →</a>
+          </div>
         </div>
       </div>
     </div>
@@ -1414,7 +1524,7 @@
         <!-- Categorías de soporte -->
         <div class="message assistant-message">
           <div class="message-avatar">
-            <div class="avatar-icon">🤖</div>
+            <div class="avatar-icon">��</div>
           </div>
           <div class="message-content">
             <div class="message-bubble">

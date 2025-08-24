@@ -1,0 +1,210 @@
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* Reduce paint and layout operations */
+* {
+  will-change: auto;
+}
+
+/* Optimize animations and transitions */
+.btn,
+.card,
+.mining-control-card,
+.leaderboard-container,
+.docs-card,
+.whitepaper-card,
+.resources-card {
+  will-change: auto;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Reduce backdrop-filter usage for better performance */
+.navbar,
+.auth-modal-overlay {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Optimize gradients for better performance */
+.gradient-bg {
+  background: var(--gradient-primary);
+  background-attachment: scroll; /* Prevent fixed background */
+}
+
+/* Reduce box-shadow complexity */
+.btn:hover,
+.card:hover,
+.mining-control-card:hover,
+.docs-card:hover,
+.whitepaper-card:hover,
+.resources-card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Optimize table rendering */
+.leaderboard-table-content {
+  table-layout: fixed; /* Better performance for fixed-width tables */
+}
+
+.leaderboard-table-content th,
+.leaderboard-table-content td {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Reduce animation complexity */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Optimize loading states */
+.loading-spinner {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Reduce hover effects complexity */
+.btn:hover,
+.control-link:hover,
+.docs-link:hover,
+.resource-link:hover {
+  transform: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+/* Optimize form inputs */
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.1);
+  transform: none;
+}
+
+/* Reduce mobile animations */
+@media (max-width: 768px) {
+  .btn:hover,
+  .card:hover,
+  .mining-control-card:hover,
+  .docs-card:hover,
+  .whitepaper-card:hover,
+  .resources-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  /* Disable complex animations on mobile for better performance */
+  .auth-modal {
+    animation: none;
+  }
+  
+  .loading-spinner {
+    animation: spin 1.5s linear infinite; /* Slower animation on mobile */
+  }
+}
+
+/* Optimize for low-end devices */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .btn:hover,
+  .card:hover,
+  .mining-control-card:hover,
+  .docs-card:hover,
+  .whitepaper-card:hover,
+  .resources-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .auth-modal {
+    animation: none;
+  }
+  
+  .loading-spinner {
+    animation: none;
+  }
+}
+
+/* Optimize scroll performance */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Better iOS scrolling */
+}
+
+/* Reduce repaints on scroll */
+.navbar {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize image rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Reduce CSS complexity for better parsing */
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-ghost {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Optimize focus states */
+.btn:focus,
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.1);
+}
+
+/* Reduce layout thrashing */
+.container {
+  contain: layout style paint;
+}
+
+/* Optimize grid layouts */
+.mining-controls-grid,
+.docs-whitepaper-grid {
+  contain: layout style;
+}
+
+/* Reduce paint operations */
+.section-title {
+  contain: layout style paint;
+}
+
+/* Optimize modal performance */
+.auth-modal-overlay {
+  contain: layout style paint;
+}
+
+.auth-modal {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
