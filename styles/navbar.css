@@ -307,7 +307,7 @@
 
 /* Mobile Menu */
 .mobile-menu {
-  display: block;
+  display: none; /* Cambiar a display: none */
   position: fixed;
   top: 70px;
   left: 0;
@@ -315,35 +315,31 @@
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 20, 40, 0.98) 100%);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(0, 255, 136, 0.3);
-  padding: var(--spacing-xl);
+  padding: var(--spacing-md); /* Reducir padding de xl a md */
   z-index: 999;
-  transform: translateY(-100%);
+  transform: translateY(0); /* Cambiar a translateY(0) */
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  visibility: hidden;
-  max-height: 0;
-  overflow: hidden;
+  opacity: 1; /* Cambiar a opacity: 1 */
+  visibility: visible; /* Cambiar a visibility: visible */
+  /* Debug: Eliminar max-height y overflow que causan problemas */
+  height: auto;
+  overflow-y: auto; /* Agregar scroll vertical */
+  max-height: 80vh; /* Limitar altura máxima al 80% de la pantalla */
   box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
-  /* Debug: Asegurar que el menú sea visible cuando esté activo */
-  min-height: 200px;
+  /* Debug: Asegurar que el contenido sea visible */
+  width: 100% !important;
 }
 
 .mobile-menu.active {
-  transform: translateY(0) !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  max-height: 85vh !important;
-  /* Debug: Forzar visibilidad */
+  /* Debug: Solo cambiar display para mostrar/ocultar */
   display: block !important;
-  position: fixed !important;
-  z-index: 999 !important;
 }
 
 /* Mobile menu header */
 .mobile-menu-header {
   text-align: center;
-  margin-bottom: var(--spacing-xl);
-  padding-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md); /* Reducir margen de xl a md */
+  padding-bottom: var(--spacing-md); /* Reducir padding de lg a md */
   border-bottom: 2px solid rgba(0, 255, 136, 0.2);
   position: relative;
 }
@@ -363,30 +359,30 @@
 .mobile-menu-header h3 {
   color: var(--primary-color);
   margin: 0;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg); /* Reducir tamaño de fuente de xl a lg */
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 2px; /* Reducir letter-spacing de 3px a 2px */
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Mobile menu section dividers */
 .mobile-menu-section {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-md); /* Reducir margen de xl a md */
 }
 
 .mobile-menu-section-title {
   color: var(--primary-color);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs); /* Reducir tamaño de fuente de sm a xs */
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: var(--spacing-lg);
+  letter-spacing: 1px; /* Reducir letter-spacing de 2px a 1px */
+  margin-bottom: var(--spacing-md); /* Reducir margen de lg a md */
   text-align: center;
   opacity: 0.9;
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm); /* Reducir padding de md a sm */
   background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-md); /* Reducir border-radius de lg a md */
   border: 1px solid rgba(0, 255, 136, 0.2);
   position: relative;
   overflow: hidden;
@@ -413,29 +409,43 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm); /* Reducir gap entre elementos */
+  /* Debug: Asegurar que todas las páginas sean visibles */
+  width: 100% !important;
+  /* Debug: Eliminar altura mínima que puede causar problemas */
+  overflow: visible !important;
 }
 
 .mobile-menu-links li {
   margin: 0;
+  /* Debug: Asegurar que cada elemento sea visible */
+  display: block !important;
+  width: 100% !important;
+  min-height: 50px !important;
+  margin-bottom: var(--spacing-sm) !important;
 }
 
 .mobile-menu-links a {
   color: var(--text-secondary);
   text-decoration: none;
-  padding: var(--spacing-lg);
-  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md); /* Reducir padding de lg a md */
+  border-radius: var(--border-radius-md); /* Reducir border-radius */
   transition: all 0.3s ease;
   display: block;
   font-weight: 600;
-  border: 2px solid transparent;
-  font-size: var(--font-size-lg);
+  border: 1px solid transparent; /* Reducir borde de 2px a 1px */
+  font-size: var(--font-size-md); /* Reducir tamaño de fuente */
   text-align: left;
   position: relative;
   overflow: hidden;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs); /* Reducir margen inferior */
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(10px);
+  /* Debug: Forzar visibilidad */
+  opacity: 1 !important;
+  visibility: visible !important;
+  height: auto !important;
+  min-height: 40px !important; /* Reducir altura mínima */
 }
 
 .mobile-menu-links a::before {

@@ -1,5 +1,5 @@
 /* ================================
-   CHARTS.JS — GRÁFICOS EN TIEMPO REAL
+   CHARTS.JS — GRÁFICOS FUNCIONALES PARA WALLET
 ================================ */
 
 class ChartManager {
@@ -16,38 +16,44 @@ class ChartManager {
   }
 
   setupCharts() {
-    // Gráfico de precio RSC
-    this.createPriceChart();
+    // Gráfico de balance principal
+    this.createBalanceChart();
     
-    // Gráfico de volumen de transacciones
-    this.createVolumeChart();
+    // Gráfico de transacciones
+    this.createTransactionsChart();
+    
+    // Gráfico de minería
+    this.createMiningChart();
     
     // Gráfico de staking
     this.createStakingChart();
     
-    // Gráfico de minería
-    this.createMiningChart();
+    // Gráficos de analytics
+    this.createBalanceHistoryChart();
+    this.createAssetsDistributionChart();
+    this.createMonthlyActivityChart();
+    this.createPredictionsChart();
   }
 
-  createPriceChart() {
-    const ctx = document.getElementById('priceChart');
+  createBalanceChart() {
+    const ctx = document.getElementById('balanceChart');
     if (!ctx) return;
 
     const chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [],
+        labels: this.generateTimeLabels(24),
         datasets: [{
-          label: 'Precio RSC (USD)',
-          data: [],
-          borderColor: '#7657fc',
-          backgroundColor: 'rgba(118, 87, 252, 0.1)',
+          label: 'Balance RSC',
+          data: this.generateMockData(24, 0.000001, 0.000100),
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16, 185, 129, 0.1)',
           borderWidth: 2,
           fill: true,
           tension: 0.4,
           pointRadius: 0,
-          pointHoverRadius: 6,
-          pointHoverBackgroundColor: '#7657fc'
+          pointHoverRadius: 4,
+          pointHoverBackgroundColor: '#10b981'
         }]
       },
       options: {
@@ -60,11 +66,16 @@ class ChartManager {
           tooltip: {
             mode: 'index',
             intersect: false,
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
             titleColor: '#ffffff',
             bodyColor: '#ffffff',
-            borderColor: '#7657fc',
-            borderWidth: 1
+            borderColor: '#10b981',
+            borderWidth: 1,
+            callbacks: {
+              label: function(context) {
+                return `Balance: ${context.parsed.y.toFixed(6)} RSC`;
+              }
+            }
           }
         },
         scales: {
@@ -82,7 +93,10 @@ class ChartManager {
             ticks: {
               color: '#ffffff',
               font: {
-                size: 12
+                size: 10
+              },
+              callback: function(value) {
+                return value.toFixed(6);
               }
             }
           }
@@ -95,25 +109,25 @@ class ChartManager {
       }
     });
 
-    this.charts.set('price', chart);
-    this.dataSources.set('price', []);
+    this.charts.set('balance', chart);
   }
 
-  createVolumeChart() {
-    const ctx = document.getElementById('volumeChart');
+  createTransactionsChart() {
+    const ctx = document.getElementById('transactionsChart');
     if (!ctx) return;
 
     const chart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: [],
+        labels: this.generateTimeLabels(7),
         datasets: [{
-          label: 'Volumen (RSC)',
-          data: [],
-          backgroundColor: 'rgba(16, 185, 129, 0.8)',
-          borderColor: '#10b981',
+          label: 'Transacciones',
+          data: this.generateMockData(7, 0, 50),
+          backgroundColor: 'rgba(59, 130, 246, 0.8)',
+          borderColor: '#3b82f6',
           borderWidth: 1,
-          borderRadius: 4
+          borderRadius: 4,
+          borderSkipped: false
         }]
       },
       options: {
@@ -124,18 +138,24 @@ class ChartManager {
             display: false
           },
           tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
             titleColor: '#ffffff',
             bodyColor: '#ffffff',
-            borderColor: '#10b981',
+            borderColor: '#3b82f6',
             borderWidth: 1
           }
         },
         scales: {
           x: {
-            display: false,
+            display: true,
             grid: {
               display: false
+            },
+            ticks: {
+              color: '#ffffff',
+              font: {
+                size: 10
+              }
             }
           },
           y: {
@@ -146,64 +166,16 @@ class ChartManager {
             ticks: {
               color: '#ffffff',
               font: {
-                size: 12
-              }
+                size: 10
+              },
+              stepSize: 10
             }
           }
         }
       }
     });
 
-    this.charts.set('volume', chart);
-    this.dataSources.set('volume', []);
-  }
-
-  createStakingChart() {
-    const ctx = document.getElementById('stakingChart');
-    if (!ctx) return;
-
-    const chart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Staked', 'Available'],
-        datasets: [{
-          data: [0, 100],
-          backgroundColor: [
-            '#7657fc',
-            'rgba(118, 87, 252, 0.2)'
-          ],
-          borderColor: [
-            '#7657fc',
-            '#7657fc'
-          ],
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              color: '#ffffff',
-              font: {
-                size: 12
-              }
-            }
-          },
-          tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            titleColor: '#ffffff',
-            bodyColor: '#ffffff',
-            borderColor: '#7657fc',
-            borderWidth: 1
-          }
-        }
-      }
-    });
-
-    this.charts.set('staking', chart);
+    this.charts.set('transactions', chart);
   }
 
   createMiningChart() {
@@ -213,17 +185,17 @@ class ChartManager {
     const chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [],
+        labels: this.generateTimeLabels(12),
         datasets: [{
           label: 'Hash Rate (H/s)',
-          data: [],
+          data: this.generateMockData(12, 1000, 50000),
           borderColor: '#f59e0b',
           backgroundColor: 'rgba(245, 158, 11, 0.1)',
           borderWidth: 2,
           fill: true,
           tension: 0.4,
           pointRadius: 0,
-          pointHoverRadius: 6,
+          pointHoverRadius: 4,
           pointHoverBackgroundColor: '#f59e0b'
         }]
       },
@@ -237,11 +209,16 @@ class ChartManager {
           tooltip: {
             mode: 'index',
             intersect: false,
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
             titleColor: '#ffffff',
             bodyColor: '#ffffff',
             borderColor: '#f59e0b',
-            borderWidth: 1
+            borderWidth: 1,
+            callbacks: {
+              label: function(context) {
+                return `Hash Rate: ${context.parsed.y.toLocaleString()} H/s`;
+              }
+            }
           }
         },
         scales: {
@@ -259,7 +236,10 @@ class ChartManager {
             ticks: {
               color: '#ffffff',
               font: {
-                size: 12
+                size: 10
+              },
+              callback: function(value) {
+                return value.toLocaleString();
               }
             }
           }
@@ -273,177 +253,433 @@ class ChartManager {
     });
 
     this.charts.set('mining', chart);
-    this.dataSources.set('mining', []);
   }
 
-  updatePriceChart(price) {
-    const chart = this.charts.get('price');
-    const dataSource = this.dataSources.get('price');
-    
-    if (!chart || !dataSource) return;
+  createStakingChart() {
+    const ctx = document.getElementById('stakingChart');
+    if (!ctx) return;
 
-    const now = new Date();
-    const timeLabel = now.toLocaleTimeString();
-    
-    dataSource.push({
-      x: timeLabel,
-      y: price
+    const chart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Staked', 'Available', 'Rewards'],
+        datasets: [{
+          data: [65, 25, 10],
+          backgroundColor: [
+            'rgba(16, 185, 129, 0.8)',
+            'rgba(59, 130, 246, 0.8)',
+            'rgba(245, 158, 11, 0.8)'
+          ],
+          borderColor: [
+            '#10b981',
+            '#3b82f6',
+            '#f59e0b'
+          ],
+          borderWidth: 2,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: '#ffffff',
+              font: {
+                size: 12
+              },
+              padding: 20
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#10b981',
+            borderWidth: 1,
+            callbacks: {
+              label: function(context) {
+                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                return `${context.label}: ${percentage}%`;
+              }
+            }
+          }
+        }
+      }
     });
 
-    // Mantener solo los últimos 50 puntos
-    if (dataSource.length > 50) {
-      dataSource.shift();
-    }
-
-    chart.data.labels = dataSource.map(d => d.x);
-    chart.data.datasets[0].data = dataSource.map(d => d.y);
-    chart.update('none');
+    this.charts.set('staking', chart);
   }
 
-  updateVolumeChart(volume) {
-    const chart = this.charts.get('volume');
-    const dataSource = this.dataSources.get('volume');
-    
-    if (!chart || !dataSource) return;
+  createBalanceHistoryChart() {
+    const ctx = document.getElementById('balanceHistoryChart');
+    if (!ctx) return;
 
-    const now = new Date();
-    const timeLabel = now.toLocaleTimeString();
-    
-    dataSource.push({
-      x: timeLabel,
-      y: volume
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: this.generateTimeLabels(30),
+        datasets: [{
+          label: 'Balance Histórico',
+          data: this.generateMockData(30, 0.000001, 0.000200),
+          borderColor: '#8b5cf6',
+          backgroundColor: 'rgba(139, 92, 246, 0.1)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 0,
+          pointHoverRadius: 6,
+          pointHoverBackgroundColor: '#8b5cf6'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#8b5cf6',
+            borderWidth: 1
+          }
+        },
+        scales: {
+          x: {
+            display: true,
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            },
+            ticks: {
+              color: '#ffffff',
+              font: {
+                size: 11
+              }
+            }
+          },
+          y: {
+            display: true,
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            },
+            ticks: {
+              color: '#ffffff',
+              font: {
+                size: 11
+              }
+            }
+          }
+        }
+      }
     });
 
-    // Mantener solo los últimos 20 puntos
-    if (dataSource.length > 20) {
-      dataSource.shift();
-    }
-
-    chart.data.labels = dataSource.map(d => d.x);
-    chart.data.datasets[0].data = dataSource.map(d => d.y);
-    chart.update('none');
+    this.charts.set('balanceHistory', chart);
   }
 
-  updateStakingChart(staked, total) {
-    const chart = this.charts.get('staking');
-    if (!chart) return;
+  createAssetsDistributionChart() {
+    const ctx = document.getElementById('assetsDistributionChart');
+    if (!ctx) return;
 
-    const available = total - staked;
-    const stakedPercentage = (staked / total) * 100;
-
-    chart.data.datasets[0].data = [stakedPercentage, 100 - stakedPercentage];
-    chart.update('none');
-  }
-
-  updateMiningChart(hashRate) {
-    const chart = this.charts.get('mining');
-    const dataSource = this.dataSources.get('mining');
-    
-    if (!chart || !dataSource) return;
-
-    const now = new Date();
-    const timeLabel = now.toLocaleTimeString();
-    
-    dataSource.push({
-      x: timeLabel,
-      y: hashRate
+    const chart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['RSC', 'BTC', 'ETH', 'USDT', 'Otros'],
+        datasets: [{
+          data: [45, 20, 15, 15, 5],
+          backgroundColor: [
+            'rgba(16, 185, 129, 0.8)',
+            'rgba(245, 158, 11, 0.8)',
+            'rgba(59, 130, 246, 0.8)',
+            'rgba(34, 197, 94, 0.8)',
+            'rgba(156, 163, 175, 0.8)'
+          ],
+          borderColor: [
+            '#10b981',
+            '#f59e0b',
+            '#3b82f6',
+            '#22c55e',
+            '#9ca3af'
+          ],
+          borderWidth: 2,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right',
+            labels: {
+              color: '#ffffff',
+              font: {
+                size: 12
+              },
+              padding: 15
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#10b981',
+            borderWidth: 1
+          }
+        }
+      }
     });
 
-    // Mantener solo los últimos 30 puntos
-    if (dataSource.length > 30) {
-      dataSource.shift();
-    }
+    this.charts.set('assetsDistribution', chart);
+  }
 
-    chart.data.labels = dataSource.map(d => d.x);
-    chart.data.datasets[0].data = dataSource.map(d => d.y);
-    chart.update('none');
+  createMonthlyActivityChart() {
+    const ctx = document.getElementById('monthlyActivityChart');
+    if (!ctx) return;
+
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        datasets: [{
+          label: 'Actividad Mensual',
+          data: this.generateMockData(12, 50, 200),
+          backgroundColor: 'rgba(59, 130, 246, 0.8)',
+          borderColor: '#3b82f6',
+          borderWidth: 1,
+          borderRadius: 6,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#3b82f6',
+            borderWidth: 1
+          }
+        },
+        scales: {
+          x: {
+            display: true,
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: '#ffffff',
+              font: {
+                size: 11
+              }
+            }
+          },
+          y: {
+            display: true,
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            },
+            ticks: {
+              color: '#ffffff',
+              font: {
+                size: 11
+              }
+            }
+          }
+        }
+      }
+    });
+
+    this.charts.set('monthlyActivity', chart);
+  }
+
+  createPredictionsChart() {
+    const ctx = document.getElementById('predictionsChart');
+    if (!ctx) return;
+
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: this.generateTimeLabels(15),
+        datasets: [{
+          label: 'Predicción de Precio',
+          data: this.generateMockData(15, 0.000001, 0.000150),
+          borderColor: '#ef4444',
+          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+          borderWidth: 2,
+          fill: false,
+          tension: 0.4,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          pointHoverBackgroundColor: '#ef4444',
+          borderDash: [5, 5]
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#ef4444',
+            borderWidth: 1
+          }
+        },
+        scales: {
+          x: {
+            display: true,
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            },
+            ticks: {
+              color: '#ffffff',
+              font: {
+                size: 11
+              }
+            }
+          },
+          y: {
+            display: true,
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            },
+            ticks: {
+              color: '#ffffff',
+              font: {
+                size: 11
+              }
+            }
+          }
+        }
+      }
+    });
+
+    this.charts.set('predictions', chart);
+  }
+
+  generateTimeLabels(count) {
+    const labels = [];
+    const now = new Date();
+    
+    for (let i = count - 1; i >= 0; i--) {
+      const time = new Date(now.getTime() - (i * 60 * 60 * 1000)); // Cada hora
+      labels.push(time.toLocaleTimeString('es-ES', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      }));
+    }
+    
+    return labels;
+  }
+
+  generateMockData(count, min, max) {
+    const data = [];
+    for (let i = 0; i < count; i++) {
+      data.push(Math.random() * (max - min) + min);
+    }
+    return data;
   }
 
   startRealTimeUpdates() {
-    // Actualizar precio cada 30 segundos
-    this.updateIntervals.set('price', setInterval(() => {
-      this.fetchPriceData();
+    // Actualizar gráficos cada 30 segundos
+    this.updateIntervals.set('general', setInterval(() => {
+      this.updateAllCharts();
     }, 30000));
 
-    // Actualizar volumen cada 60 segundos
-    this.updateIntervals.set('volume', setInterval(() => {
-      this.fetchVolumeData();
-    }, 60000));
-
-    // Actualizar datos de staking cada 2 minutos
-    this.updateIntervals.set('staking', setInterval(() => {
-      this.fetchStakingData();
-    }, 120000));
-
-    // Actualizar datos de minería cada 10 segundos
-    this.updateIntervals.set('mining', setInterval(() => {
-      this.fetchMiningData();
-    }, 10000));
-
     // Cargar datos iniciales
-    this.fetchPriceData();
-    this.fetchVolumeData();
-    this.fetchStakingData();
-    this.fetchMiningData();
+    this.updateAllCharts();
   }
 
-  async fetchPriceData() {
-    try {
-      const response = await apiRequest('/blockchain/stats');
-      if (response.success && response.data.stats) {
-        const price = response.data.stats.price || 0;
-        this.updatePriceChart(price);
+  updateAllCharts() {
+    // Actualizar datos de todos los gráficos con nuevos valores mock
+    this.charts.forEach((chart, key) => {
+      if (key === 'balance') {
+        this.updateBalanceChart();
+      } else if (key === 'transactions') {
+        this.updateTransactionsChart();
+      } else if (key === 'mining') {
+        this.updateMiningChart();
+      } else if (key === 'balanceHistory') {
+        this.updateBalanceHistoryChart();
+      } else if (key === 'monthlyActivity') {
+        this.updateMonthlyActivityChart();
+      } else if (key === 'predictions') {
+        this.updatePredictionsChart();
       }
-    } catch (error) {
-      console.error('Error fetching price data:', error);
-      // Fallback a precio 0 si no hay conexión
-      this.updatePriceChart(0);
-    }
+    });
   }
 
-  async fetchVolumeData() {
-    try {
-      const response = await apiRequest('/blockchain/stats');
-      if (response.success && response.data.stats) {
-        const volume = response.data.stats.dailyVolume || 0;
-        this.updateVolumeChart(volume);
-      }
-    } catch (error) {
-      console.error('Error fetching volume data:', error);
-      // Fallback a volumen 0 si no hay conexión
-      this.updateVolumeChart(0);
-    }
+  updateBalanceChart() {
+    const chart = this.charts.get('balance');
+    if (!chart) return;
+
+    const newData = this.generateMockData(24, 0.000001, 0.000100);
+    chart.data.datasets[0].data = newData;
+    chart.update('none');
   }
 
-  async fetchStakingData() {
-    try {
-      const response = await apiRequest('/staking/pools');
-      if (response.success && response.data.pools) {
-        const totalStaked = response.data.pools.reduce((sum, pool) => sum + pool.totalStaked, 0);
-        const totalSupply = 1000000000; // Supply total de RSC
-        this.updateStakingChart(totalStaked, totalSupply);
-      }
-    } catch (error) {
-      console.error('Error fetching staking data:', error);
-    }
+  updateTransactionsChart() {
+    const chart = this.charts.get('transactions');
+    if (!chart) return;
+
+    const newData = this.generateMockData(7, 0, 50);
+    chart.data.datasets[0].data = newData;
+    chart.update('none');
   }
 
-  async fetchMiningData() {
-    try {
-      // Intentar obtener datos reales de minería
-      const response = await apiRequest('/mining/stats');
-      if (response.success && response.data.stats) {
-        const hashRate = response.data.stats.hashRate || 0;
-        this.updateMiningChart(hashRate);
-      } else {
-        // Fallback a hashRate 0 si no hay datos
-        this.updateMiningChart(0);
-      }
-    } catch (error) {
-      console.error('Error fetching mining data:', error);
-      // Fallback a hashRate 0 si no hay conexión
-      this.updateMiningChart(0);
-    }
+  updateMiningChart() {
+    const chart = this.charts.get('mining');
+    if (!chart) return;
+
+    const newData = this.generateMockData(12, 1000, 50000);
+    chart.data.datasets[0].data = newData;
+    chart.update('none');
+  }
+
+  updateBalanceHistoryChart() {
+    const chart = this.charts.get('balanceHistory');
+    if (!chart) return;
+
+    const newData = this.generateMockData(30, 0.000001, 0.000200);
+    chart.data.datasets[0].data = newData;
+    chart.update('none');
+  }
+
+  updateMonthlyActivityChart() {
+    const chart = this.charts.get('monthlyActivity');
+    if (!chart) return;
+
+    const newData = this.generateMockData(12, 50, 200);
+    chart.data.datasets[0].data = newData;
+    chart.update('none');
+  }
+
+  updatePredictionsChart() {
+    const chart = this.charts.get('predictions');
+    if (!chart) return;
+
+    const newData = this.generateMockData(15, 0.000001, 0.000150);
+    chart.data.datasets[0].data = newData;
+    chart.update('none');
   }
 
   destroy() {
@@ -465,7 +701,15 @@ class ChartManager {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
-  window.chartManager = new ChartManager();
+  // Esperar un poco más para asegurar que Chart.js esté cargado
+  setTimeout(() => {
+    if (typeof Chart !== 'undefined') {
+      window.chartManager = new ChartManager();
+      console.log('✅ ChartManager inicializado correctamente');
+    } else {
+      console.error('❌ Chart.js no está disponible');
+    }
+  }, 100);
 });
 
 // Exportar para uso global

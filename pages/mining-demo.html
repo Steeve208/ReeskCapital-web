@@ -238,10 +238,10 @@
           <div class="config-card">
             <h3>🔗 URL del Backend</h3>
             <div class="config-input-group">
-              <input type="text" id="backend-url" value="http://localhost:4000" placeholder="URL del backend">
-              <button onclick="updateBackendUrl()" class="config-btn">Actualizar</button>
+              <input type="text" id="backend-url" value="BACKEND DISCONNECTED" placeholder="URL del backend" disabled>
+              <button onclick="updateBackendUrl()" class="config-btn" disabled>Desconectado</button>
             </div>
-            <p class="config-note">Cambia la URL para conectar a diferentes entornos</p>
+            <p class="config-note">🚫 Backend desconectado - Modo offline activado</p>
           </div>
           
           <div class="config-card">
@@ -276,16 +276,16 @@
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-section">
-        <h3>RSC Mining Backend</h3>
-        <p>Sistema profesional de minería con backend integrado</p>
+        <h3>RSC Mining Frontend</h3>
+        <p>Sistema de minería en modo offline (backend desconectado)</p>
       </div>
       <div class="footer-section">
         <h3>Características</h3>
         <ul>
-          <li>✅ Backend Node.js + PostgreSQL</li>
-          <li>✅ API pública con caché</li>
-          <li>✅ Sistema anti-abuso</li>
-          <li>✅ Panel administrativo</li>
+          <li>🚫 Backend desconectado</li>
+          <li>✅ Interfaz frontend completa</li>
+          <li>✅ Modo offline activado</li>
+          <li>✅ Simulación local de minería</li>
         </ul>
       </div>
       <div class="footer-section">
@@ -307,9 +307,10 @@
   <script src="../scripts/notifications.js"></script>
   
   <!-- ===== INTEGRACIÓN CON BACKEND RSC MINING ===== -->
-  <script src="../scripts/backend-integration.js"></script>
-  <script src="../scripts/leaderboard-component.js"></script>
-  <script src="../scripts/mining-integrated.js"></script>
+  <!-- BACKEND DISCONNECTED - FRONTEND ONLY MODE -->
+  <!-- <script src="../scripts/backend-integration.js"></script> -->
+  <!-- <script src="../scripts/leaderboard-component.js"></script> -->
+  <!-- <script src="../scripts/mining-integrated.js"></script> -->
   
   <!-- Script de la página -->
   <script>

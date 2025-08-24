@@ -123,7 +123,12 @@ class StakingManager {
     async loadMockPools() {
         try {
             // Intentar obtener datos reales de la API de RSC Chain
-            const response = await fetch('https://rsc-chain-production.up.railway.app/api/staking/pools');
+            // const response = await fetch('https://rsc-chain-production.up.railway.app/api/staking/pools');
+        // Backend desconectado - usando datos simulados
+        const response = { ok: true, json: () => Promise.resolve({ 
+          pools: [],
+          status: 'offline'
+        })};
             if (response.ok) {
                 const data = await response.json();
                 this.stakingPools = data.pools || [];

@@ -59,7 +59,7 @@ class WalletEnhanced {
     if (usdElement && !this.isBalanceHidden) {
       // Obtener precio real desde la blockchain
       try {
-        const response = await fetch(getApiUrl('/blockchain/stats'), {
+        // const response = await fetch(getApiUrl('/blockchain/stats'), { // Backend desconectado
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
         });

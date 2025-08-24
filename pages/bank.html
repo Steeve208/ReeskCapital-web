@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="../styles/notifications.css">
   <link rel="stylesheet" href="../styles/animations.css">
   <link rel="stylesheet" href="../styles/app.css">
+  <!-- ===== NAVBAR RESPONSIVE ===== -->
+  <link rel="stylesheet" href="../styles/navbar.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -24,33 +26,100 @@
   <!-- Contenedor de notificaciones -->
   <div class="notifications-container" id="notificationsContainer"></div>
 
-  <!-- Navbar -->
+    <!-- Navbar -->
   <nav class="navbar">
-    <div class="navbar-logo">
-      <img src="../assets/img/logo.png" alt="RSC Chain Logo">
-      <span>ReeskCapital.co</span>
-    </div>
-    <ul class="navbar-links">
-      <li><a href="../index.html">Inicio</a></li>
-      <li><a href="about.html">Acerca</a></li>
-      <li><a href="wallet.html">Wallet</a></li>
-      <li><a href="mine.html">Minar</a></li>
-      <li><a href="p2p.html">P2P</a></li>
-      <li><a href="staking.html">Staking</a></li>
-      <li><a href="explorer.html">Explorer</a></li>
-      <li><a href="bank.html" class="active">Bank</a></li>
-      <li><a href="docs.html">Docs</a></li>
-    </ul>
-    <div class="navbar-actions">
-      <button class="language-selector" id="languageSelector">
-        <span>ES</span>
+    <div class="navbar-container">
+      <!-- Logo Section (Left) -->
+      <a href="../index.html" class="navbar-logo">
+        <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+        <span>RSC CHAIN</span>
+      </a>
+      
+      <!-- Center Title (Mobile Only) -->
+      <div class="navbar-center-title">
+        <span>RSC CHAIN</span>
+      </div>
+      
+      <!-- Desktop Navigation Links -->
+      <ul class="navbar-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="wallet.html">Wallet</a></li>
+        <li><a href="mine.html">Mine</a></li>
+        <li><a href="p2p.html">P2P</a></li>
+        <li><a href="staking.html">Staking</a></li>
+        <li><a href="explorer.html">Explorer</a></li>
+        <li><a href="bank.html">Bank</a></li>
+        <li><a href="docs.html">Docs</a></li>
+      </ul>
+      
+      <!-- Right Side Actions -->
+      <div class="navbar-actions">
+        <!-- Language Toggle -->
+        <div class="language-toggle">
+          <button class="lang-btn" id="languageToggle">
+            <span class="lang-text">EN</span>
+            <span class="lang-icon">🌐</span>
+          </button>
+        </div>
+        
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+        
+        <!-- Login Button -->
+        <a href="login.html" class="login-link">🔐 Login</a>
+        
+        <!-- Connect Wallet Button -->
+        <a href="#" id="walletConnectBtn" class="btn-wallet-connect">
+          <span class="wallet-icon">🔒</span>
+          <span class="wallet-text">Connect Wallet</span>
+        </a>
+      </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle mobile menu">
+        <span>☰</span>
       </button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-        <span class="theme-icon">🌙</span>
-      </button>
     </div>
-    <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
   </nav>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <h3>RSC CHAIN</h3>
+    </div>
+    
+    <div class="mobile-menu-section">
+      <div class="mobile-menu-section-title">Navigation</div>
+      <ul class="mobile-menu-links">
+        <li><a href="../index.html">🏠 Home</a></li>
+        <li><a href="about.html">ℹ️ About</a></li>
+        <li><a href="wallet.html">👛 Wallet</a></li>
+        <li><a href="mine.html">⛏️ Mine</a></li>
+        <li><a href="p2p.html">🤝 P2P</a></li>
+        <li><a href="staking.html">💰 Staking</a></li>
+        <li><a href="explorer.html">🔍 Explorer</a></li>
+        <li><a href="bank.html">🏦 Bank</a></li>
+        <li><a href="docs.html">📚 Docs</a></li>
+      </ul>
+    </div>
+    
+    <div class="mobile-menu-section">
+      <div class="mobile-menu-section-title">Account</div>
+      <div class="mobile-menu-actions">
+        <a href="login.html" class="login-link">🔐 Login</a>
+        <a href="#" id="mobileWalletConnectBtn" class="btn-wallet-connect">
+          <span class="wallet-icon">🔒</span>
+          <span class="wallet-text">Connect Wallet</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
   <!-- Bank Container -->
   <div class="bank-container">
@@ -540,5 +609,8 @@
   <script src="../scripts/debug.js"></script>
   <script src="../scripts/chat.js"></script>
   <script src="../scripts/error-fix.js"></script>
+  
+  <!-- ===== NAVBAR RESPONSIVE ===== -->
+  <script src="../scripts/navbar.js"></script>
 </body>
 </html> 

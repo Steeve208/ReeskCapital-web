@@ -70,7 +70,15 @@ class StatsManager {
   async generateMockData() {
     // Intentar obtener datos reales de la API de RSC Chain
     try {
-      const response = await fetch('https://rsc-chain-production.up.railway.app/api/blockchain/stats');
+              // const response = await fetch('https://rsc-chain-production.up.railway.app/api/blockchain/stats');
+        // Backend desconectado - usando datos simulados
+        const response = { ok: true, json: () => Promise.resolve({ 
+          totalTransactions: 0,
+          totalBlocks: 0,
+          activeWallets: 0,
+          networkHashrate: 0,
+          status: 'offline'
+        })};
       if (response.ok) {
         const data = await response.json();
         console.log('✅ Datos reales obtenidos de RSC Chain API');

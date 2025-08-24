@@ -1,9 +1,12 @@
 // ===== MAIN.JS - FUNCIONALIDAD PRINCIPAL MEJORADA =====
 
+// 🚫 BACKEND DISCONNECTED - OFFLINE MODE
+// La aplicación funciona completamente offline sin conexión a backend
+
 // Configuración global
 const CONFIG = {
-  API_BASE_URL: 'http://localhost:3000/api',
-  UPDATE_INTERVAL: 5000,
+  API_BASE_URL: null, // Backend desconectado
+  UPDATE_INTERVAL: 0, // No actualizar en modo offline
   SUPPORT_EMAIL: 'support@reeskcapital.co'
 };
 
@@ -38,12 +41,107 @@ function initApp() {
     appState.isInitialized = true;
     console.log('✅ Aplicación inicializada correctamente');
     
+    // Mostrar notificación de modo offline
+    showOfflineNotification();
+    
     // Ocultar mensaje de error si existe
     hideError();
     
   } catch (error) {
     console.error('❌ Error al inicializar:', error);
     showError('Error al inicializar la aplicación');
+  }
+}
+
+// Mostrar notificación de modo offline
+function showOfflineNotification() {
+  try {
+    // Crear banner de notificación offline
+    const offlineBanner = document.createElement('div');
+    offlineBanner.className = 'offline-banner';
+    offlineBanner.innerHTML = `
+      <div class="offline-content">
+        <span class="offline-icon">🚫</span>
+        <span class="offline-text">
+          <strong>Modo Offline Activado</strong><br>
+          El backend ha sido desconectado. La aplicación funciona completamente offline.
+        </span>
+        <button class="offline-close" onclick="this.parentElement.parentElement.remove()">×</button>
+      </div>
+    `;
+    
+    // Agregar estilos inline para el banner
+    offlineBanner.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 12px 20px;
+      z-index: 9999;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      font-family: 'Inter', sans-serif;
+    `;
+    
+    // Estilos para el contenido
+    const offlineContent = offlineBanner.querySelector('.offline-content');
+    offlineContent.style.cssText = `
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+      font-size: 14px;
+    `;
+    
+    // Estilos para el icono
+    const offlineIcon = offlineBanner.querySelector('.offline-icon');
+    offlineIcon.style.cssText = `
+      font-size: 20px;
+      flex-shrink: 0;
+    `;
+    
+    // Estilos para el texto
+    const offlineText = offlineBanner.querySelector('.offline-text');
+    offlineText.style.cssText = `
+      flex: 1;
+      line-height: 1.4;
+    `;
+    
+    // Estilos para el botón de cerrar
+    const offlineClose = offlineBanner.querySelector('.offline-close');
+    offlineClose.style.cssText = `
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.3s;
+    `;
+    
+    offlineClose.addEventListener('mouseenter', () => {
+      offlineClose.style.background = 'rgba(255,255,255,0.3)';
+    });
+    
+    offlineClose.addEventListener('mouseleave', () => {
+      offlineClose.style.background = 'rgba(255,255,255,0.2)';
+    });
+    
+    // Insertar al inicio del body
+    document.body.insertBefore(offlineBanner, document.body.firstChild);
+    
+    console.log('🚫 Banner de modo offline mostrado');
+    
+  } catch (error) {
+    console.error('❌ Error al mostrar notificación offline:', error);
   }
 }
 
@@ -320,7 +418,7 @@ function initStats() {
 
 function updateStats() {
   // Obtener datos reales de la blockchain
-  fetch('/api/blockchain/stats')
+          // fetch('/api/blockchain/stats') // Backend desconectado
     .then(response => response.json())
     .then(data => {
       if (data.success && data.stats) {

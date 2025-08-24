@@ -1,11 +1,17 @@
 /* ================================
-   CONFIG.JS — CONFIGURACIÓN DE APIS
+   CONFIG.JS — CONFIGURACIÓN DE APIS (OFFLINE MODE)
 ================================ */
+
+// 🚫 BACKEND DISCONNECTED - FRONTEND ONLY MODE
+// Todas las APIs externas han sido desconectadas
+// La aplicación funciona completamente offline
 
 // Configuración de APIs y endpoints
 const API_CONFIG = {
-  // API Base URL - RSC Chain Production
-  BASE_URL: 'https://rsc-chain-production.up.railway.app',
+  // 🚫 BACKEND DISCONNECTED - OFFLINE MODE
+  // Todas las APIs externas han sido desconectadas
+  // La aplicación funciona completamente offline
+  BASE_URL: null, // Backend desconectado
   
   // Endpoints de Wallet
   WALLET: {
@@ -53,9 +59,9 @@ const API_CONFIG = {
   
   // Configuración de WebSocket
   WEBSOCKET: {
-    URL: 'wss://rsc-chain-production.up.railway.app/ws',
-    RECONNECT_INTERVAL: 5000,
-    MAX_RECONNECT_ATTEMPTS: 5
+    URL: null, // WebSocket desconectado
+    RECONNECT_INTERVAL: 0, // No reconectar
+    MAX_RECONNECT_ATTEMPTS: 0
   }
 };
 
@@ -77,15 +83,15 @@ const APP_CONFIG = {
   
   // Configuración de datos en tiempo real
   REALTIME: {
-    UPDATE_INTERVAL: 30000, // 30 segundos
-    ENABLED: true
+    UPDATE_INTERVAL: 0, // Deshabilitado en modo offline
+    ENABLED: false
   },
   
   // Configuración de cache
   CACHE: {
-    ENABLED: true,
-    DURATION: 5 * 60 * 1000, // 5 minutos
-    MAX_SIZE: 50
+    ENABLED: false, // Cache deshabilitado en modo offline
+    DURATION: 0,
+    MAX_SIZE: 0
   }
 };
 

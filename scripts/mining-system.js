@@ -55,7 +55,12 @@ class RSCMiningSystem {
             // Intentar obtener usuario autenticado de la API
             const token = localStorage.getItem('rsc_auth_token');
             if (token) {
-                const response = await fetch('https://rsc-chain-production.up.railway.app/api/auth/me', {
+                // const response = await fetch('https://rsc-chain-production.up.railway.app/api/auth/me', {
+        // Backend desconectado - usando datos simulados
+        const response = { ok: true, json: () => Promise.resolve({ 
+          user: { id: 'offline-user', username: 'Usuario Offline' },
+          status: 'offline'
+        })};
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 

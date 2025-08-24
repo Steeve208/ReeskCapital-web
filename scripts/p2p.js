@@ -121,7 +121,12 @@ class P2PManager {
     async loadMockAds() {
         try {
             // Intentar obtener datos reales de la API de RSC Chain
-            const response = await fetch('https://rsc-chain-production.up.railway.app/api/p2p/orders');
+            // const response = await fetch('https://rsc-chain-production.up.railway.app/api/p2p/orders');
+        // Backend desconectado - usando datos simulados
+        const response = { ok: true, json: () => Promise.resolve({ 
+          orders: [],
+          status: 'offline'
+        })};
             if (response.ok) {
                 const data = await response.json();
                 this.ads = data.orders || [];

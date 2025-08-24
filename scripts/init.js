@@ -203,7 +203,7 @@ async function loadInitialData() {
 // Cargar datos de blockchain
 async function loadBlockchainData() {
   try {
-    const response = await fetch('/api/blockchain/stats');
+            // const response = await fetch('/api/blockchain/stats'); // Backend desconectado
     if (response.ok) {
       const data = await response.json();
       if (data.success && data.stats) {

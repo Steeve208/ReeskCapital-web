@@ -4,7 +4,7 @@
 
 // Configuración básica
 const APP_CONFIG = {
-  API_BASE_URL: 'http://localhost:4000/api',
+  API_BASE_URL: null, // Backend desconectado - modo offline
   THEME: localStorage.getItem('rsc_theme') || 'dark'
 };
 

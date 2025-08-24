@@ -75,7 +75,7 @@ function createFallbackFunctions(functions) {
         
       case 'API_CONFIG':
         window.API_CONFIG = {
-          BASE_URL: 'http://localhost:4000/api',
+          BASE_URL: null, // Backend desconectado - modo offline
           WALLET: { CREATE: '/wallet/create' },
           MINING: { START: '/mining/start' },
           STAKING: { POOLS: '/staking/pools' },

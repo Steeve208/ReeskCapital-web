@@ -111,7 +111,7 @@ class BankManager {
     async loadCurrencies() {
         try {
             // Load currencies from API
-            const response = await fetch(`${API_BASE_URL}/api/bank/currencies`);
+            // const response = await fetch(`${API_BASE_URL}/api/bank/currencies`); // Backend desconectado
             const data = await response.json();
             
             if (data.success) {
@@ -142,7 +142,7 @@ class BankManager {
     async loadExchangeRates() {
         try {
             // Load exchange rates from API
-            const response = await fetch(`${API_BASE_URL}/api/bank/exchange-rates`);
+            // const response = await fetch(`${API_BASE_URL}/api/bank/exchange-rates`); // Backend desconectado
             const data = await response.json();
             
             if (data.success) {
@@ -167,7 +167,7 @@ class BankManager {
     async loadPaymentMethods() {
         try {
             // Load payment methods from API
-            const response = await fetch(`${API_BASE_URL}/api/bank/payment-methods`);
+            // const response = await fetch(`${API_BASE_URL}/api/bank/payment-methods`); // Backend desconectado
             const data = await response.json();
             
             if (data.success) {
