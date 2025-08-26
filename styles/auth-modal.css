@@ -1,228 +1,299 @@
-/* ===== AUTH MODAL STYLES ===== */
-
-.auth-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  backdrop-filter: blur(5px);
-}
+/* ========================================
+   AUTH MODAL STYLES - RSC CHAIN
+   Estilos para el modal de autenticación
+================================ */
 
 .auth-modal {
-  background: var(--bg-card);
-  border: 1px solid var(--text-muted);
-  border-radius: var(--border-radius-lg);
-  width: 90%;
-  max-width: 450px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: var(--shadow-xl);
-  animation: modalSlideIn 0.2s ease-out;
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.auth-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-lg);
-  border-bottom: 1px solid var(--text-muted);
-}
-
-.auth-modal-header h2 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: var(--font-size-xl);
-}
-
-.auth-modal-close {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: var(--spacing-xs);
-  border-radius: var(--border-radius-sm);
-  transition: color var(--transition-fast), background-color var(--transition-fast);
-}
-
-.auth-modal-close:hover {
-  color: var(--text-primary);
-  background: var(--bg-tertiary);
-}
-
-.auth-modal-tabs {
-  display: flex;
-  border-bottom: 1px solid var(--text-muted);
-}
-
-.auth-modal-tabs .tab-btn {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  padding: var(--spacing-md);
-  cursor: pointer;
-  transition: color var(--transition-fast), background-color var(--transition-fast);
-  font-weight: 500;
-  border-bottom: 2px solid transparent;
-}
-
-.auth-modal-tabs .tab-btn:hover {
-  color: var(--text-primary);
-  background: var(--bg-tertiary);
-}
-
-.auth-modal-tabs .tab-btn.active {
-  color: var(--primary-color);
-  border-bottom-color: var(--primary-color);
-  background: rgba(0, 255, 136, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(10px);
 }
 
 .auth-modal-content {
-  padding: var(--spacing-lg);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 20px;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 2px solid #00d4ff;
+    position: relative;
+    overflow: hidden;
 }
 
+.auth-modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #00d4ff, #ff6b6b, #4ecdc4, #45b7d1);
+    animation: rainbow-border 3s linear infinite;
+}
+
+@keyframes rainbow-border {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.auth-modal-header {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.auth-modal-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.auth-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.auth-modal-body {
+    padding: 30px;
+}
+
+/* Tabs de autenticación */
+.auth-tabs {
+    display: flex;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.auth-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #ccc;
+    padding: 15px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.auth-tab.active {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+}
+
+.auth-tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Formularios */
 .auth-form {
-  display: none;
+    display: none;
 }
 
 .auth-form.active {
-  display: block;
+    display: block;
 }
 
 .form-group {
-  margin-bottom: var(--spacing-md);
+    margin-bottom: 20px;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: var(--spacing-xs);
-  color: var(--text-primary);
-  font-weight: 500;
-  font-size: var(--font-size-sm);
+    display: block;
+    margin-bottom: 8px;
+    color: #00d4ff;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .form-group input {
-  width: 100%;
-  padding: var(--spacing-md);
-  border: 1px solid var(--text-muted);
-  border-radius: var(--border-radius-md);
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  font-size: var(--font-size-md);
-  transition: border-color var(--transition-fast);
-  box-sizing: border-box;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.1);
+    width: 100%;
+    padding: 15px;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-group input::placeholder {
-  color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.5);
 }
 
-.login-btn,
-.register-btn {
-  width: 100%;
-  background: var(--gradient-primary);
-  border: none;
-  color: var(--bg-primary);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-md);
-  font-weight: 600;
-  font-size: var(--font-size-md);
-  cursor: pointer;
-  transition: background-color var(--transition-fast);
-  margin-top: var(--spacing-md);
+.form-group input:focus {
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
 }
 
-.login-btn:hover,
-.register-btn:hover {
-  background: var(--primary-color);
-}
-
-.auth-modal-footer {
-  padding: var(--spacing-lg);
-  border-top: 1px solid var(--text-muted);
-  text-align: center;
-}
-
-.auth-modal-footer p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: var(--font-size-sm);
-  line-height: 1.4;
-}
-
-/* Wallet Button States */
-.btn-wallet-connect.authenticated {
-  background: var(--gradient-primary);
-  color: var(--bg-primary);
-}
-
-.btn-wallet-connect.authenticated:hover {
-  background: var(--primary-color);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .auth-modal {
-    width: 95%;
-    margin: var(--spacing-md);
-  }
-  
-  .auth-modal-header {
-    padding: var(--spacing-md);
-  }
-  
-  .auth-modal-content {
-    padding: var(--spacing-md);
-  }
-  
-  .auth-modal-footer {
-    padding: var(--spacing-md);
-  }
-}
-
-@media (max-width: 480px) {
-  .auth-modal {
+.auth-btn {
     width: 100%;
-    margin: 0;
-    border-radius: 0;
-    max-height: 100vh;
-  }
-  
-  .auth-modal-tabs .tab-btn {
-    padding: var(--spacing-sm);
-    font-size: var(--font-size-sm);
-  }
-  
-  .form-group input {
-    padding: var(--spacing-sm);
-  }
-  
-  .login-btn,
-  .register-btn {
-    padding: var(--spacing-sm);
-  }
+    padding: 15px;
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+}
+
+.auth-btn:active {
+    transform: translateY(0);
+}
+
+/* Acceso rápido */
+.quick-access {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.quick-access p {
+    margin: 0 0 15px 0;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.quick-btn {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quick-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Estados de autenticación */
+.login-link.authenticated {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+
+.btn-wallet-connect.connected {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    border-color: #4ecdc4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .auth-modal-content {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .auth-modal-body {
+        padding: 20px;
+    }
+    
+    .auth-tabs {
+        flex-direction: column;
+    }
+    
+    .auth-tab {
+        margin-bottom: 5px;
+    }
+}
+
+/* Animaciones */
+.auth-modal {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.auth-form.active {
+    animation: formSlideIn 0.4s ease-out;
+}
+
+@keyframes formSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efectos de hover para inputs */
+.form-group input:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Efectos de focus mejorados */
+.form-group input:focus {
+    transform: scale(1.02);
+}
+
+/* Transiciones suaves */
+.auth-modal-content * {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

@@ -1,642 +1,1298 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSC Mining Épico - RSC CHAIN</title>
-  <meta name="description" content="Mina RSC directamente desde tu navegador. La experiencia de minería más avanzada y épica del mundo.">
-  <link rel="icon" href="../assets/img/logo.png" type="image/png">
-  <link rel="stylesheet" href="../styles/global.css">
-  <link rel="stylesheet" href="../styles/layout.css">
-  <link rel="stylesheet" href="../styles/mine.css">
-  <link rel="stylesheet" href="../styles/notifications.css">
-  <link rel="stylesheet" href="../styles/animations.css">
-  <link rel="stylesheet" href="../styles/app.css">
-  <!-- ===== NAVBAR RESPONSIVE ===== -->
-  <link rel="stylesheet" href="../styles/navbar.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSC Mining - Sistema Integrado - RSC CHAIN</title>
+    <meta name="description" content="Sistema de minería RSC completamente integrado con Supabase. Minera tokens RSC en tiempo real.">
+    <link rel="icon" href="../assets/img/logo.png" type="image/png">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/layout.css">
+    <link rel="stylesheet" href="../styles/mine.css">
+    <link rel="stylesheet" href="../styles/notifications.css">
+    <link rel="stylesheet" href="../styles/animations.css">
+    <link rel="stylesheet" href="../styles/app.css">
+    <link rel="stylesheet" href="../styles/auth-modal.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Librerías -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Estilos específicos para la nueva interfaz */
+        .mining-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .mining-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 20px;
+            color: white;
+        }
+        
+        .mining-header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .mining-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .mining-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .mining-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .mining-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mining-card h3 {
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mining-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .control-group label {
+            min-width: 120px;
+            color: #e0e0e0;
+        }
+        
+        .control-group input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: #2a2a2a;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4ecdc4;
+            cursor: pointer;
+        }
+        
+        .mining-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn-mining {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn-start {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+        }
+        
+        .btn-stop {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+        }
+        
+        .btn-claim {
+            background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
+            color: white;
+        }
+        
+        .btn-mining:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-mining:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .mining-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4ecdc4;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .progress-section {
+            margin-bottom: 40px;
+        }
+        
+        .progress-bar-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+        
+        .mining-history {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .history-table th,
+        .history-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .history-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: #4ecdc4;
+            font-weight: 600;
+        }
+        
+        .history-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-online {
+            background: #4ecdc4;
+        }
+        
+        .status-offline {
+            background: #ff6b6b;
+        }
+        
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .connection-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            animation: pulse 2s infinite;
+        }
+        
+        .connection-dot.connected {
+            background: #4ecdc4;
+            animation: none;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .auth-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .auth-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .user-info h4 {
+            color: #4ecdc4;
+            margin-bottom: 5px;
+        }
+        
+        .user-info p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+        
+        .auth-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn-auth {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+        }
+        
+        .btn-logout {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+        }
+        
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .mining-alerts {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .alert-icon {
+            font-size: 1.5rem;
+        }
+        
+        .alert-content h5 {
+            color: #4ecdc4;
+            margin-bottom: 5px;
+        }
+        
+        .alert-content p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .mining-tips {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1) 0%, rgba(68, 160, 141, 0.1) 100%);
+            border: 1px solid rgba(78, 205, 196, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .tips-header {
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .tips-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.1);
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tips-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .tip-icon {
+            color: #4ecdc4;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .mining-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mining-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .mining-header h1 {
+                font-size: 2rem;
+            }
+            
+            .mining-container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body class="dark-mode">
-  <!-- Fondo 4D animado -->
-  <div class="background-4d"></div>
-  
-  <!-- Contenedor de notificaciones -->
-  <div class="notifications-container" id="notificationsContainer"></div>
-
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-container">
-      <!-- Logo Section (Left) -->
-      <a href="../index.html" class="navbar-logo">
-        <img src="../assets/img/logo.png" alt="RSC Chain Logo">
-        <span>RSC CHAIN</span>
-      </a>
-      
-      <!-- Center Title (Mobile Only) -->
-      <div class="navbar-center-title">
-        <span>RSC CHAIN</span>
-      </div>
-      
-      <!-- Desktop Navigation Links -->
-      <ul class="navbar-links">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="wallet.html">Wallet</a></li>
-        <li><a href="mine.html" class="active">Mine</a></li>
-        <li><a href="p2p.html">P2P</a></li>
-        <li><a href="staking.html">Staking</a></li>
-        <li><a href="explorer.html">Explorer</a></li>
-        <li><a href="bank.html">Bank</a></li>
-        <li><a href="docs.html">Docs</a></li>
-      </ul>
-      
-      <!-- Right Side Actions -->
-      <div class="navbar-actions">
-        <!-- Language Toggle -->
-        <div class="language-toggle">
-          <button class="lang-btn" id="languageToggle">
-            <span class="lang-text">EN</span>
-            <span class="lang-icon">🌐</span>
-          </button>
-        </div>
-        
-        <!-- Theme Toggle -->
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-          <span class="theme-icon">🌙</span>
-        </button>
-        
-        <!-- Login Button -->
-        <a href="login.html" class="login-link">🔐 Login</a>
-        
-        <!-- Connect Wallet Button -->
-        <a href="#" id="walletConnectBtn" class="btn-wallet-connect">
-          <span class="wallet-icon">🔒</span>
-          <span class="wallet-text">Connect Wallet</span>
-        </a>
-      </div>
-      
-      <!-- Mobile Menu Toggle -->
-      <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle mobile menu">
-        <span>☰</span>
-      </button>
-    </div>
-  </nav>
-  
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-      <h3>RSC CHAIN</h3>
-    </div>
+    <!-- Fondo 4D animado -->
+    <div class="background-4d"></div>
     
-    <div class="mobile-menu-section">
-      <div class="mobile-menu-section-title">Navigation</div>
-      <ul class="mobile-menu-links">
-        <li><a href="../index.html">🏠 Home</a></li>
-        <li><a href="about.html">ℹ️ About</a></li>
-        <li><a href="wallet.html">👛 Wallet</a></li>
-        <li><a href="mine.html" class="active">⛏️ Mine</a></li>
-        <li><a href="p2p.html">🤝 P2P</a></li>
-        <li><a href="staking.html">💰 Staking</a></li>
-        <li><a href="explorer.html">🔍 Explorer</a></li>
-        <li><a href="bank.html">🏦 Bank</a></li>
-        <li><a href="docs.html">📚 Docs</a></li>
-      </ul>
-    </div>
-    
-    <div class="mobile-menu-section">
-      <div class="mobile-menu-section-title">Account</div>
-      <div class="mobile-menu-actions">
-        <a href="login.html" class="login-link">🔐 Login</a>
-        <a href="#" id="mobileWalletConnectBtn" class="btn-wallet-connect">
-          <span class="wallet-icon">🔒</span>
-          <span class="wallet-text">Connect Wallet</span>
-        </a>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <!-- Contenedor de notificaciones -->
+    <div class="notifications-container" id="notificationsContainer"></div>
 
-  <!-- Indicador de Minería en Segundo Plano -->
-  <div class="background-mining-indicator" id="backgroundMiningIndicator" style="display: none;">
-    ⚡ Minando en Segundo Plano
-  </div>
-
-  <!-- Indicador Principal de Minería Activa -->
-  <div class="active-mining-banner" id="activeMiningBanner" style="display: none;">
-    <div class="banner-content">
-      <div class="banner-icon">⚡</div>
-      <div class="banner-text">
-        <h3>🚀 MINERÍA RSC ACTIVA</h3>
-        <p>Tu sesión de 24 horas está funcionando continuamente</p>
-      </div>
-      <div class="banner-status">
-        <span class="status-text" id="bannerStatusText">Funcionando</span>
-        <div class="status-indicator"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mining Épico -->
-  <main class="mining-epic">
-    <!-- Header Épico -->
-    <header class="mining-header-epic">
-      <div class="header-content">
-        <div class="header-title">
-          <h1 class="epic-title">
-            <span class="title-word">RSC</span>
-            <span class="title-word">MINING</span>
-            <span class="title-word">SIMULADO</span>
-          </h1>
-          <p class="epic-subtitle">Mina tokens RSC simulados antes del lanzamiento de mainnet</p>
-        </div>
-      </div>
-    </header>
-
-    <!-- Dashboard Principal -->
-    <div class="mining-dashboard">
-      <!-- Sidebar Épico -->
-      <aside class="mining-sidebar-epic">
-        <div class="sidebar-header">
-          <h3>Navegación</h3>
-          <div class="sidebar-status">
-            <div class="status-dot online"></div>
-            <span>Conectado</span>
-          </div>
-        </div>
-        
-        <nav class="sidebar-nav">
-          <a href="#mining" class="nav-item active" data-section="mining">
-            <div class="nav-icon">⚡</div>
-            <span>Minería</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#progress" class="nav-item" data-section="progress">
-            <div class="nav-icon">📊</div>
-            <span>Progreso</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#claim" class="nav-item" data-section="claim">
-            <div class="nav-icon">🎁</div>
-            <span>Reclamar</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#ranking" class="nav-item" data-section="ranking">
-            <div class="nav-icon">🏆</div>
-            <span>Ranking</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#levels" class="nav-item" data-section="levels">
-            <div class="nav-icon">⭐</div>
-            <span>Niveles</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#analytics" class="nav-item" data-section="analytics">
-            <div class="nav-icon">📈</div>
-            <span>Analytics</span>
-            <div class="nav-glow"></div>
-          </a>
-        </nav>
-
-        <!-- Logros del Minero -->
-        <div class="achievements-section">
-          <h4>Logros</h4>
-          <div class="achievements-list">
-            <div class="achievement-item unlocked">
-              <div class="achievement-icon">🥇</div>
-              <div class="achievement-info">
-                <div class="achievement-title">Primer Bloque</div>
-                <div class="achievement-desc">Mina tu primer bloque</div>
-              </div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <!-- Logo Section (Left) -->
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+                <span>RSC CHAIN</span>
+            </a>
+            
+            <!-- Center Title (Mobile Only) -->
+            <div class="navbar-center-title">
+                <span>RSC CHAIN</span>
             </div>
-            <div class="achievement-item unlocked">
-              <div class="achievement-icon">⚡</div>
-              <div class="achievement-info">
-                <div class="achievement-title">Miner Activo</div>
-                <div class="achievement-desc">Mina por 24 horas</div>
-              </div>
-            </div>
-            <div class="achievement-item locked">
-              <div class="achievement-icon">👑</div>
-              <div class="achievement-info">
-                <div class="achievement-title">Miner Épico</div>
-                <div class="achievement-desc">Mina 1000 RSC</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
-      
-      <!-- Contenido Principal -->
-      <main class="mining-main-epic">
-        <!-- Mining Section -->
-        <section id="mining" class="mining-section active">
-          <div class="section-header">
-            <h2>🚀 MINERÍA RSC - SIMULACIÓN</h2>
-            <p class="section-description">Mina tokens RSC simulados antes del lanzamiento de mainnet</p>
-          </div>
-          
-          <!-- CONTROLES PRINCIPALES DE MINERÍA -->
-          <div class="mining-controls-main">
-            <div class="control-panel-main">
-              <div class="control-header-main">
-                <h3>⚡ Controles de Minería</h3>
-              </div>
-              
-              <div class="control-actions-main">
-                <button class="btn-epic-primary-main" id="startMiningBtn">
-                  <span class="btn-icon">⚡</span>
-                  <span class="btn-text">INICIAR MINERÍA</span>
-                  <div class="btn-glow"></div>
+            
+            <!-- Desktop Navigation Links -->
+            <ul class="navbar-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="wallet.html">Wallet</a></li>
+                <li><a href="mine.html" class="active">Mine</a></li>
+                <li><a href="p2p.html">P2P</a></li>
+                <li><a href="staking.html">Staking</a></li>
+                <li><a href="explorer.html">Explorer</a></li>
+                <li><a href="bank.html">Bank</a></li>
+                <li><a href="docs.html">Docs</a></li>
+            </ul>
+            
+            <!-- Right Side Actions -->
+            <div class="navbar-actions">
+                <!-- Language Toggle -->
+                <div class="language-toggle">
+                    <button class="lang-btn" id="languageToggle">
+                        <span class="lang-text">EN</span>
+                        <span class="lang-icon">🌐</span>
+                    </button>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
                 </button>
-                <button class="btn-epic-secondary-main" id="stopMiningBtn" disabled>
-                  <span class="btn-icon">⏹️</span>
-                  <span class="btn-text">DETENER MINERÍA</span>
-                </button>
-                <button class="btn-epic-tertiary-main" id="claimBtn">
-                  <span class="btn-icon">🎁</span>
-                  <span class="btn-text">RECLAMAR RSC</span>
-              </button>
-              </div>
-              
-              <!-- PROGRESO DE SESIÓN DE 24 HORAS -->
-              <div class="session-progress-container" id="sessionProgressContainer" style="display: none;">
-                <div class="session-progress-header">
-                  <h4>⏰ Progreso de Sesión de 24h</h4>
-                  <span class="session-time-remaining" id="sessionTimeRemaining">24h 0m restantes</span>
-                </div>
-                <div class="session-progress-bar-container">
-                  <div class="session-progress-bar" id="sessionProgressBar" style="width: 0%"></div>
-                </div>
-              </div>
-              
-              <!-- ESTADÍSTICAS DEL USUARIO -->
-            <div class="mining-settings-main">
-                <div class="setting-group-main">
-                  <label>🎚️ Intensidad de Minería</label>
-                  <div class="intensity-slider-main">
-                    <input type="range" id="miningIntensity" min="1" max="10" value="5">
-                    <div class="intensity-labels-main">
-                      <span>Baja</span>
-                      <span id="intensityValue">Media</span>
-                      <span>Alta</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                
+                <!-- Login Button -->
+                <a href="#" class="login-link" id="loginBtn">🔐 Login</a>
+                
+                <!-- Connect Wallet Button -->
+                <a href="#" id="walletConnectBtn" class="btn-wallet-connect">
+                    <span class="wallet-icon">🔒</span>
+                    <span class="wallet-text">Connect Wallet</span>
+                </a>
             </div>
-          </div>
-
-          <!-- ESTADÍSTICAS DEL USUARIO (SOLO DATOS REALES) -->
-          <div class="user-stats-real">
-            <div class="stat-card-real">
-              <div class="stat-header-real">
-                <div class="stat-icon">⚡</div>
-              </div>
-              <div class="stat-content-real">
-                <div class="stat-value" id="myHashRate">0 H/s</div>
-                <div class="stat-label">Mi Hash Rate</div>
-              </div>
-            </div>
-
-            <div class="stat-card-real">
-              <div class="stat-header-real">
-                <div class="stat-icon">💎</div>
-              </div>
-              <div class="stat-content-real">
-                <div class="stat-value" id="myMinedRSC">0.000000 RSC</div>
-                <div class="stat-label">RSC Minados</div>
-              </div>
-            </div>
-
-            <div class="stat-card-real">
-              <div class="stat-header-real">
-                <div class="stat-icon">⏱️</div>
-              </div>
-              <div class="stat-content-real">
-                <div class="stat-value" id="myActiveTime">00:00:00</div>
-                <div class="stat-label">Tiempo Activo</div>
-              </div>
-            </div>
-
-            <div class="stat-card-real">
-              <div class="stat-header-real">
-                <div class="stat-icon">🏆</div>
-              </div>
-              <div class="stat-content-real">
-                <div class="stat-value" id="myLevel">Nivel 1</div>
-                <div class="stat-label">Mi Nivel</div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- INFORMACIÓN ÚTIL -->
-          <div class="mining-info-real">
-            <div class="info-grid-real">
-              <div class="info-card-real">
-                <div class="info-icon">🔧</div>
-                <div class="info-content">
-                  <h4>Simulación</h4>
-                  <p>Mina tokens simulados mientras esperamos el lanzamiento de mainnet.</p>
-                </div>
-              </div>
-              <div class="info-card-real">
-                <div class="info-icon">⚡</div>
-                <div class="info-content">
-                  <h4>Inmediato</h4>
-                  <p>Comienza a minar en segundos. Los tokens se acumulan automáticamente.</p>
-                </div>
-              </div>
-              <div class="info-card-real">
-                <div class="info-icon">🎁</div>
-                <div class="info-content">
-                  <h4>Recompensas</h4>
-                  <p>Reclama tus tokens cuando quieras. Se migrarán a mainnet.</p>
-                </div>
-              </div>
-              <div class="info-card-real">
-                <div class="info-icon">🏆</div>
-                <div class="info-content">
-                  <h4>Progreso</h4>
-                  <p>Sube de nivel mientras más minas. ¡Cada sesión cuenta!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Botón de actualización -->
-          <div class="refresh-section">
-            <button class="refresh-btn-main" id="refreshBtn">
-              <span class="btn-icon">🔄</span>
-              <span>Actualizar Datos</span>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle mobile menu">
+                <span>☰</span>
             </button>
-          </div>
-        </section>
-
-        <!-- Progreso Section -->
-        <section id="progress" class="mining-section">
-          <div class="section-header">
-            <h2>Progreso de Minería</h2>
-          </div>
-
-          <div class="progress-charts">
-            <div class="chart-container">
-              <div class="chart-header">
-                <h3>Hash Rate en Tiempo Real</h3>
-                <div class="chart-controls">
-                  <button class="time-btn active" data-period="1h">1H</button>
-                  <button class="time-btn" data-period="24h">24H</button>
-                  <button class="time-btn" data-period="7d">7D</button>
-                </div>
-              </div>
-              <div class="chart-wrapper">
-                <canvas id="hashRateProgressChart"></canvas>
-              </div>
-            </div>
-
-            <div class="chart-container">
-              <div class="chart-header">
-                <h3>RSC Acumulados</h3>
-              </div>
-              <div class="chart-wrapper">
-                <canvas id="rscAccumulatedChart"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <div class="progress-stats-epic">
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">⚡</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="currentHashRate">0 H/s</div>
-                <div class="stat-label">Hash Rate Actual</div>
-                <div class="stat-change positive" id="hashRateChange">+0%</div>
-              </div>
-            </div>
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">💎</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="totalMined">0.000000 RSC</div>
-                <div class="stat-label">Total Minado</div>
-                <div class="stat-change positive" id="minedChange">+0.000000</div>
-              </div>
-            </div>
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">⏱️</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="sessionTime">00:00:00</div>
-                <div class="stat-label">Tiempo de Sesión</div>
-                <div class="stat-change" id="timeChange">Activo</div>
-              </div>
-            </div>
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">🎯</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="efficiency">0%</div>
-                <div class="stat-label">Eficiencia</div>
-                <div class="stat-change" id="efficiencyChange">Óptima</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mining-log-epic">
-            <h3>Registro de Actividad</h3>
-            <div class="log-container" id="miningLog">
-              <!-- El registro se cargará dinámicamente -->
-            </div>
-          </div>
-        </section>
-
-        <!-- Reclamar Section -->
-        <section id="claim" class="mining-section">
-          <div class="section-header">
-            <h2>Reclamar RSC</h2>
-          </div>
-
-          <div class="claim-overview">
-            <div class="claim-summary">
-              <div class="summary-card">
-                <div class="summary-icon">💎</div>
-                <div class="summary-content">
-                  <div class="summary-value" id="claimableRSC">0.000000 RSC</div>
-                  <div class="summary-label">Disponible para Reclamar</div>
-                </div>
-              </div>
-              <div class="summary-card">
-                <div class="summary-icon">📈</div>
-                <div class="summary-content">
-                  <div class="summary-value" id="claimGrowth">+12.5%</div>
-                  <div class="summary-label">Crecimiento</div>
-                </div>
-              </div>
-              <div class="summary-card">
-                <div class="summary-icon">🎯</div>
-                <div class="summary-content">
-                  <div class="summary-value" id="nextClaim">2.5 RSC</div>
-                  <div class="summary-label">Próxima Recompensa</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="claim-actions">
-              <button class="btn-epic-primary" id="claimAllBtn">
-                <span class="btn-icon">🎁</span>
-                <span>Reclamar Todo</span>
-              </button>
-              <button class="btn-epic-secondary" id="claimPartialBtn">
-                <span class="btn-icon">💰</span>
-                <span>Reclamar Parcial</span>
-              </button>
-            </div>
-
-            <div class="claim-history">
-              <h3>Historial de Reclamaciones</h3>
-              <div class="history-list" id="claimHistory">
-                <!-- El historial se cargará dinámicamente -->
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Ranking Section -->
-        <section id="ranking" class="mining-section">
-          <div class="section-header">
-            <h2>Ranking de Mineros</h2>
-          </div>
-
-          <div class="ranking-overview">
-            <div class="my-ranking">
-              <div class="ranking-card">
-                <div class="ranking-position">#1,247</div>
-                <div class="ranking-info">
-                  <div class="ranking-name">Tu Posición</div>
-                  <div class="ranking-stats">
-                    <span>Hash Rate: 1,234 H/s</span>
-                    <span>RSC Minados: 45.67</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="top-miners">
-              <h3>Top 10 Mineros</h3>
-              <div class="miners-list" id="topMinersList">
-                <!-- Los mineros se cargarán dinámicamente -->
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Niveles Section -->
-        <section id="levels" class="mining-section">
-          <div class="section-header">
-            <h2>Sistema de Niveles</h2>
-          </div>
-
-          <div class="levels-overview">
-            <div class="current-level">
-              <div class="level-card-epic">
-                <div class="level-header">
-                  <div class="level-icon">⛏️</div>
-                  <div class="level-info">
-                    <div class="level-title">Miner Épico</div>
-                    <div class="level-number">Nivel 8</div>
-                  </div>
-                </div>
-                <div class="level-progress">
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 90%"></div>
-                  </div>
-                  <div class="progress-text">90% al siguiente nivel</div>
-                </div>
-                <div class="level-benefits">
-                  <h4>Beneficios del Nivel:</h4>
-                  <ul>
-                    <li>+25% Hash Rate</li>
-                    <li>+15% Recompensas</li>
-                    <li>Acceso a pools exclusivos</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="levels-grid">
-              <!-- Los niveles se cargarán dinámicamente -->
-            </div>
-          </div>
-        </section>
-
-        <!-- Analytics Section -->
-        <section id="analytics" class="mining-section">
-          <div class="section-header">
-            <h2>Analytics de Minería</h2>
-          </div>
-
-          <div class="analytics-grid">
-            <div class="analytics-chart-container">
-              <h3>Rendimiento Histórico</h3>
-              <canvas id="historicalPerformanceChart"></canvas>
-            </div>
-            <div class="analytics-chart-container">
-              <h3>Distribución de Hash Rate</h3>
-              <canvas id="hashRateDistributionChart"></canvas>
-            </div>
-            <div class="analytics-chart-container">
-              <h3>Optimización de Minería</h3>
-              <canvas id="miningOptimizationChart"></canvas>
-            </div>
-            <div class="analytics-chart-container">
-              <h3>Predicciones</h3>
-              <canvas id="miningPredictionsChart"></canvas>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  </main>
-
-  <!-- Modal de Recompensa -->
-  <div class="reward-modal" id="rewardModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>¡Recompensa Épica!</h3>
-        <button class="modal-close" id="rewardModalClose">×</button>
-      </div>
-      <div class="modal-body">
-        <div class="reward-animation">
-          <div class="reward-particles"></div>
-          <div class="reward-amount" id="rewardAmount">0 RSC</div>
-          <div class="reward-message">¡Has minado RSC épicos!</div>
         </div>
-      </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h3>RSC CHAIN</h3>
+        </div>
+        
+        <div class="mobile-menu-section">
+            <div class="mobile-menu-section-title">Navigation</div>
+            <ul class="mobile-menu-links">
+                <li><a href="../index.html">🏠 Home</a></li>
+                <li><a href="about.html">ℹ️ About</a></li>
+                <li><a href="wallet.html">👛 Wallet</a></li>
+                <li><a href="mine.html" class="active">⛏️ Mine</a></li>
+                <li><a href="p2p.html">🤝 P2P</a></li>
+                <li><a href="staking.html">💰 Staking</a></li>
+                <li><a href="explorer.html">🔍 Explorer</a></li>
+                <li><a href="bank.html">🏦 Bank</a></li>
+                <li><a href="docs.html">📚 Docs</a></li>
+            </ul>
+        </div>
+        
+        <div class="mobile-menu-section">
+            <div class="mobile-menu-section-title">Account</div>
+            <div class="mobile-menu-actions">
+                <a href="#" class="login-link" id="mobileLoginBtn">🔐 Login</a>
+                <a href="#" id="mobileWalletConnectBtn" class="btn-wallet-connect">
+                    <span class="wallet-icon">🔒</span>
+                    <span class="wallet-text">Connect Wallet</span>
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
-  <!-- Scripts -->
-  <script src="../scripts/config.js"></script>
-  <script src="../scripts/mining-config.js"></script>
-  <script src="../scripts/notifications.js"></script>
-  <!-- ===== SISTEMA DE MINERÍA RSC AVANZADO Y FUNCIONAL ===== -->
-  <script src="../scripts/mining-system.js"></script>
-  
-  <!-- ===== NAVBAR RESPONSIVE ===== -->
-  <script src="../scripts/navbar.js"></script>
+    <!-- Contenido Principal -->
+    <div class="mining-container">
+        <!-- Header de Minería -->
+        <div class="mining-header">
+            <h1>⚡ RSC MINING</h1>
+            <p>Sistema de minería completamente integrado con Supabase - Minera tokens RSC en tiempo real</p>
+        </div>
+
+        <!-- Estado de Conexión -->
+        <div class="connection-status" id="connectionStatus">
+            <div class="connection-dot" id="connectionDot"></div>
+            <span id="connectionText">Conectando a Supabase...</span>
+        </div>
+
+        <!-- Sección de Autenticación -->
+        <div class="auth-section" id="authSection" style="display: none;">
+            <h3>🔐 Estado de Autenticación</h3>
+            <div class="auth-info">
+                <div class="user-avatar" id="userAvatar">👤</div>
+                <div class="user-info">
+                    <h4 id="userName">Usuario</h4>
+                    <p id="userEmail">email@ejemplo.com</p>
+                </div>
+            </div>
+            <div class="auth-actions">
+                <button class="btn-auth btn-logout" onclick="logoutUser()">Cerrar Sesión</button>
+            </div>
+        </div>
+
+        <!-- Grid Principal de Minería -->
+        <div class="mining-grid">
+            <!-- Controles de Minería -->
+            <div class="mining-card">
+                <h3>🎮 Controles de Minería</h3>
+                <div class="mining-controls">
+                    <div class="control-group">
+                        <label>Intensidad:</label>
+                        <input type="range" id="intensitySlider" min="1" max="100" value="50">
+                        <span id="intensityValue">50%</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Hash Power:</label>
+                        <span id="hashPowerValue">1000 H/s</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Estado:</label>
+                        <span id="miningStatus">Detenido</span>
+                    </div>
+                </div>
+                
+                <div class="mining-buttons">
+                    <button class="btn-mining btn-start" id="startMiningBtn" onclick="startMining()">
+                        🚀 Iniciar Minería
+                    </button>
+                    <button class="btn-mining btn-stop" id="stopMiningBtn" onclick="stopMining()" disabled>
+                        ⏹️ Detener Minería
+                    </button>
+                    <button class="btn-mining btn-claim" id="claimBtn" onclick="claimRewards()" disabled>
+                        🎁 Reclamar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Estadísticas en Tiempo Real -->
+            <div class="mining-card">
+                <h3>📊 Estadísticas en Tiempo Real</h3>
+                <div class="mining-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="tokensMined">0</div>
+                        <div class="stat-label">RSC Minados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="sessionTime">00:00:00</div>
+                        <div class="stat-label">Tiempo Sesión</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="hashRate">0 H/s</div>
+                        <div class="stat-label">Hash Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="miningEfficiency">0%</div>
+                        <div class="stat-label">Eficiencia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progreso de la Sesión -->
+        <div class="progress-section">
+            <h3>📈 Progreso de la Sesión</h3>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="sessionProgress" style="width: 0%"></div>
+            </div>
+            <div class="progress-text">
+                <span>Sesión actual: <span id="currentSession">No iniciada</span></span>
+                <span>Progreso: <span id="progressPercentage">0%</span></span>
+            </div>
+        </div>
+
+        <!-- Alertas y Consejos -->
+        <div class="mining-alerts">
+            <h3>⚠️ Alertas y Consejos</h3>
+            <div class="alert-item">
+                <div class="alert-icon">💡</div>
+                <div class="alert-content">
+                    <h5>Consejo de Minería</h5>
+                    <p>Mantén tu navegador abierto para maximizar las recompensas. La minería continúa incluso en segundo plano.</p>
+                </div>
+            </div>
+            <div class="alert-item">
+                <div class="alert-icon">⚡</div>
+                <div class="alert-content">
+                    <h5>Estado del Sistema</h5>
+                    <p id="systemStatus">Sistema listo para minería. Conectado a Supabase.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consejos de Optimización -->
+        <div class="mining-tips">
+            <h3 class="tips-header">🚀 Consejos de Optimización</h3>
+            <ul class="tips-list">
+                <li><span class="tip-icon">💻</span> Usa un navegador moderno (Chrome, Firefox, Edge)</li>
+                <li><span class="tip-icon">🔋</span> Mantén tu dispositivo conectado a la corriente</li>
+                <li><span class="tip-icon">🌐</span> Asegúrate de tener una conexión estable a internet</li>
+                <li><span class="tip-icon">⏰</span> Las sesiones de 24 horas dan mejores recompensas</li>
+                <li><span class="tip-icon">📱</span> La minería funciona en móviles y tablets</li>
+            </ul>
+        </div>
+
+        <!-- Historial de Minería -->
+        <div class="mining-history">
+            <div class="history-header">
+                <h3>📚 Historial de Minería</h3>
+                <button class="btn-auth btn-login" onclick="refreshHistory()">🔄 Actualizar</button>
+            </div>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Duración</th>
+                        <th>RSC Minados</th>
+                        <th>Hash Rate</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="miningHistoryTable">
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #666;">No hay historial disponible</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+    
+    <!-- Scripts de Integración -->
+    <script src="../scripts/supabase-mining-integration.js"></script>
+    <script src="../scripts/mining-ui-manager.js"></script>
+    <script src="../scripts/auth-manager.js"></script>
+    <script src="../scripts/navbar.js"></script>
+    
+    <!-- Script Principal de la Página -->
+    <script>
+        // Variables globales
+        let miningSystem = null;
+        let isMining = false;
+        let sessionStartTime = null;
+        let sessionInterval = null;
+        let currentSessionId = null;
+        
+        // Elementos del DOM
+        const elements = {
+            intensitySlider: document.getElementById('intensitySlider'),
+            intensityValue: document.getElementById('intensityValue'),
+            hashPowerValue: document.getElementById('hashPowerValue'),
+            miningStatus: document.getElementById('miningStatus'),
+            startMiningBtn: document.getElementById('startMiningBtn'),
+            stopMiningBtn: document.getElementById('stopMiningBtn'),
+            claimBtn: document.getElementById('claimBtn'),
+            tokensMined: document.getElementById('tokensMined'),
+            sessionTime: document.getElementById('sessionTime'),
+            hashRate: document.getElementById('hashRate'),
+            miningEfficiency: document.getElementById('miningEfficiency'),
+            sessionProgress: document.getElementById('sessionProgress'),
+            currentSession: document.getElementById('currentSession'),
+            progressPercentage: document.getElementById('progressPercentage'),
+            systemStatus: document.getElementById('systemStatus')
+        };
+
+        // Inicialización cuando la página carga
+        window.addEventListener('load', async () => {
+            console.log('🚀 Inicializando página de minería...');
+            
+            // Esperar a que Supabase esté disponible
+            await waitForSupabase();
+            
+            // Inicializar sistemas
+            initializeSystems();
+            
+            // Configurar event listeners
+            setupEventListeners();
+            
+            // Configurar controles
+            setupControls();
+            
+            // Inicializar autenticación automática
+            await initializeAuth();
+            
+            console.log('✅ Página de minería inicializada');
+        });
+
+        // Esperar a que Supabase esté disponible
+        async function waitForSupabase() {
+            return new Promise((resolve) => {
+                const checkSupabase = () => {
+                    if (window.supabaseMining && window.supabaseMining.isConnected) {
+                        console.log('✅ Supabase conectado');
+                        resolve();
+                    } else {
+                        setTimeout(checkSupabase, 100);
+                    }
+                };
+                checkSupabase();
+            });
+        }
+
+        // Inicializar sistemas
+        function initializeSystems() {
+            // Verificar sistema de minería
+            if (window.miningUIManager) {
+                miningSystem = window.miningUIManager;
+                console.log('✅ Sistema de minería detectado');
+            }
+            
+            // Verificar sistema de minería directo
+            if (window.miningSystem) {
+                miningSystem = window.miningSystem;
+                console.log('✅ Sistema de minería directo detectado');
+            }
+            
+            console.log('✅ Sistemas inicializados');
+        }
+
+        // Inicializar autenticación
+        async function initializeAuth() {
+            try {
+                if (window.authManager) {
+                    // Esperar a que se autentique automáticamente
+                    await new Promise(resolve => {
+                        const checkAuth = () => {
+                            if (window.authManager.isUserAuthenticated()) {
+                                resolve();
+                            } else {
+                                setTimeout(checkAuth, 100);
+                            }
+                        };
+                        checkAuth();
+                    });
+                    
+                    console.log('✅ Usuario autenticado automáticamente');
+                    elements.systemStatus.textContent = 'Sistema listo para minería. Usuario autenticado.';
+                }
+            } catch (error) {
+                console.log('⚠️ Usuario no autenticado, continuando...');
+                elements.systemStatus.textContent = 'Sistema listo para minería. Inicia sesión para minar.';
+            }
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Eventos de Supabase
+            window.addEventListener('supabase:connected', () => {
+                updateConnectionStatus(true);
+                elements.systemStatus.textContent = 'Sistema conectado a Supabase. Listo para minería.';
+            });
+
+            window.addEventListener('supabase:error', (event) => {
+                updateConnectionStatus(false);
+                elements.systemStatus.textContent = `Error de conexión: ${event.detail.error}`;
+            });
+
+            // Eventos de autenticación
+            window.addEventListener('auth:user:authenticated', (event) => {
+                updateAuthUI(event.detail.user);
+            });
+
+            window.addEventListener('auth:user:loggedout', () => {
+                hideAuthUI();
+            });
+
+            // Eventos de minería
+            window.addEventListener('mining:stats:updated', (event) => {
+                updateMiningStats(event.detail);
+            });
+
+            window.addEventListener('mining:session:started', () => {
+                onMiningStarted();
+            });
+
+            window.addEventListener('mining:session:stopped', () => {
+                onMiningStopped();
+            });
+
+            // Eventos de recompensas
+            window.addEventListener('mining:rewards:claimed', (event) => {
+                showRewardNotification(event.detail.amount);
+            });
+        }
+
+        // Configurar controles
+        function setupControls() {
+            // Slider de intensidad
+            elements.intensitySlider.addEventListener('input', (e) => {
+                const value = e.target.value;
+                elements.intensityValue.textContent = value + '%';
+                
+                if (miningSystem) {
+                    miningSystem.setMiningIntensity(value);
+                }
+            });
+
+            // Botón de login
+            const loginBtns = document.querySelectorAll('.login-link');
+            loginBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (window.authManager) {
+                        window.authManager.showAuthModal();
+                    }
+                });
+            });
+        }
+
+        // Actualizar estado de conexión
+        function updateConnectionStatus(connected) {
+            if (connected) {
+                elements.connectionDot.classList.add('connected');
+                elements.connectionText.textContent = 'Conectado a Supabase';
+                elements.connectionStatus.style.borderColor = 'rgba(78, 205, 196, 0.3)';
+            } else {
+                elements.connectionDot.classList.remove('connected');
+                elements.connectionText.textContent = 'Desconectado de Supabase';
+                elements.connectionStatus.style.borderColor = 'rgba(255, 107, 107, 0.3)';
+            }
+        }
+
+        // Actualizar UI de autenticación
+        function updateAuthUI(user = null) {
+            if (!user && window.authManager) {
+                user = window.authManager.getUser();
+            }
+            
+            if (user) {
+                elements.authSection.style.display = 'block';
+                elements.userName.textContent = user.name;
+                elements.userEmail.textContent = user.email;
+                elements.userAvatar.textContent = user.name.charAt(0).toUpperCase();
+                
+                // Actualizar botones de login
+                const loginBtns = document.querySelectorAll('.login-link');
+                loginBtns.forEach(btn => {
+                    btn.textContent = `👤 ${user.name}`;
+                    btn.classList.add('authenticated');
+                });
+            }
+        }
+
+        // Ocultar UI de autenticación
+        function hideAuthUI() {
+            elements.authSection.style.display = 'none';
+            
+            // Restaurar botones de login
+            const loginBtns = document.querySelectorAll('.login-link');
+            loginBtns.forEach(btn => {
+                btn.textContent = '🔐 Login';
+                btn.classList.remove('authenticated');
+            });
+        }
+
+        // Función de inicio de minería
+        async function startMining() {
+            try {
+                // Verificar autenticación
+                if (!window.authManager || !window.authManager.isUserAuthenticated()) {
+                    alert('Por favor, inicia sesión antes de minar');
+                    return;
+                }
+
+                // Verificar conexión a Supabase
+                if (!window.supabaseMining || !window.supabaseMining.isConnected) {
+                    alert('No hay conexión a la base de datos. Intenta recargar la página.');
+                    return;
+                }
+
+                // Iniciar sesión de minería en Supabase
+                const sessionData = {
+                    start_time: new Date().toISOString(),
+                    intensity: parseInt(elements.intensitySlider.value),
+                    hash_power: calculateHashPower(parseInt(elements.intensitySlider.value)),
+                    status: 'active'
+                };
+
+                if (window.supabaseMining) {
+                    currentSessionId = await window.supabaseMining.startMiningSession(sessionData);
+                    console.log('✅ Sesión de minería iniciada en Supabase:', currentSessionId);
+                }
+
+                // Iniciar minería local
+                onMiningStarted();
+                
+                // Iniciar sincronización con Supabase
+                startSupabaseSync();
+                
+                elements.systemStatus.textContent = 'Minería activa. Sincronizando con la base de datos...';
+                
+            } catch (error) {
+                console.error('❌ Error iniciando minería:', error);
+                alert('Error iniciando minería: ' + error.message);
+            }
+        }
+
+        // Función de detención de minería
+        async function stopMining() {
+            try {
+                // Detener minería local
+                onMiningStopped();
+                
+                // Completar sesión en Supabase
+                if (currentSessionId && window.supabaseMining) {
+                    const finalData = {
+                        end_time: new Date().toISOString(),
+                        duration: Math.floor((Date.now() - sessionStartTime) / 1000),
+                        tokens_mined: parseFloat(elements.tokensMined.textContent),
+                        final_hash_rate: elements.hashRate.textContent,
+                        status: 'completed'
+                    };
+                    
+                    await window.supabaseMining.completeMiningSession(currentSessionId, finalData);
+                    console.log('✅ Sesión de minería completada en Supabase');
+                    
+                    // Crear transacción
+                    await window.supabaseMining.createMiningTransaction({
+                        session_id: currentSessionId,
+                        tokens_mined: parseFloat(elements.tokensMined.textContent),
+                        transaction_type: 'mining_reward'
+                    });
+                    
+                    currentSessionId = null;
+                }
+                
+                // Detener sincronización
+                stopSupabaseSync();
+                
+                elements.systemStatus.textContent = 'Minería detenida. Sesión guardada en la base de datos.';
+                
+            } catch (error) {
+                console.error('❌ Error deteniendo minería:', error);
+                alert('Error deteniendo minería: ' + error.message);
+            }
+        }
+
+        // Función de reclamar recompensas
+        async function claimRewards() {
+            try {
+                if (!window.supabaseMining || !window.supabaseMining.isConnected) {
+                    alert('No hay conexión a la base de datos');
+                    return;
+                }
+
+                const tokensToClaim = parseFloat(elements.tokensMined.textContent);
+                if (tokensToClaim <= 0) {
+                    alert('No hay recompensas para reclamar');
+                    return;
+                }
+
+                // Reclamar recompensas en Supabase
+                await window.supabaseMining.claimRewards(tokensToClaim);
+                
+                // Resetear contador local
+                elements.tokensMined.textContent = '0';
+                
+                // Mostrar notificación
+                showRewardNotification(tokensToClaim);
+                
+                elements.systemStatus.textContent = `Recompensas reclamadas: ${tokensToClaim} RSC`;
+                
+            } catch (error) {
+                console.error('❌ Error reclamando recompensas:', error);
+                alert('Error reclamando recompensas: ' + error.message);
+            }
+        }
+
+        // Calcular hash power basado en intensidad
+        function calculateHashPower(intensity) {
+            const baseHashPower = 1000;
+            return Math.floor(baseHashPower * (intensity / 100));
+        }
+
+        // Iniciar sincronización con Supabase
+        function startSupabaseSync() {
+            if (window.supabaseMining) {
+                window.supabaseMining.startSync();
+                console.log('✅ Sincronización con Supabase iniciada');
+            }
+        }
+
+        // Detener sincronización con Supabase
+        function stopSupabaseSync() {
+            if (window.supabaseMining) {
+                window.supabaseMining.disconnect();
+                console.log('✅ Sincronización con Supabase detenida');
+            }
+        }
+
+        // Función de logout
+        function logoutUser() {
+            if (window.authManager) {
+                window.authManager.logout();
+            }
+        }
+
+        // Función de actualizar historial
+        function refreshHistory() {
+            loadMiningHistory();
+        }
+
+        // Cargar historial de minería
+        async function loadMiningHistory() {
+            try {
+                if (window.supabaseMining && window.supabaseMining.isConnected) {
+                    const history = await window.supabaseMining.getMiningHistory();
+                    updateMiningHistoryTable(history);
+                }
+            } catch (error) {
+                console.error('Error cargando historial:', error);
+            }
+        }
+
+        // Actualizar tabla de historial
+        function updateMiningHistoryTable(history) {
+            if (!history || history.length === 0) {
+                elements.miningHistoryTable.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #666;">No hay historial disponible</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            const tbody = elements.miningHistoryTable;
+            tbody.innerHTML = '';
+
+            history.forEach(session => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(session.created_at).toLocaleDateString()}</td>
+                    <td>${formatDuration(session.duration || 0)}</td>
+                    <td>${session.tokens_mined || 0} RSC</td>
+                    <td>${session.hash_rate || 0} H/s</td>
+                    <td><span class="status-indicator status-online"></span>Completado</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Formatear duración
+        function formatDuration(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Actualizar estadísticas de minería
+        function updateMiningStats(stats) {
+            if (stats.tokensMined !== undefined) {
+                elements.tokensMined.textContent = stats.tokensMined.toFixed(2);
+            }
+            if (stats.hashRate !== undefined) {
+                elements.hashRate.textContent = stats.hashRate + ' H/s';
+            }
+            if (stats.efficiency !== undefined) {
+                elements.miningEfficiency.textContent = stats.efficiency + '%';
+            }
+            
+            // Sincronizar con Supabase si hay una sesión activa
+            if (currentSessionId && window.supabaseMining && isMining) {
+                syncProgressWithSupabase();
+            }
+        }
+
+        // Sincronizar progreso con Supabase
+        async function syncProgressWithSupabase() {
+            try {
+                if (currentSessionId && window.supabaseMining) {
+                    const progressData = {
+                        tokens_mined: parseFloat(elements.tokensMined.textContent),
+                        hash_rate: elements.hashRate.textContent,
+                        efficiency: parseFloat(elements.miningEfficiency.textContent),
+                        session_duration: Math.floor((Date.now() - sessionStartTime) / 1000)
+                    };
+                    
+                    await window.supabaseMining.updateMiningProgress(currentSessionId, progressData);
+                }
+            } catch (error) {
+                console.warn('⚠️ No se pudo sincronizar progreso con Supabase:', error.message);
+            }
+        }
+
+        // Evento de minería iniciada
+        function onMiningStarted() {
+            isMining = true;
+            sessionStartTime = Date.now();
+            elements.miningStatus.textContent = 'Minando';
+            elements.startMiningBtn.disabled = true;
+            elements.stopMiningBtn.disabled = false;
+            elements.claimBtn.disabled = true;
+            
+            // Iniciar contador de sesión
+            sessionInterval = setInterval(updateSessionTime, 1000);
+            
+            // Iniciar simulación de minería
+            startMiningSimulation();
+            
+            elements.systemStatus.textContent = 'Minería activa. Generando tokens RSC...';
+        }
+
+        // Simulación de minería
+        function startMiningSimulation() {
+            const intensity = parseInt(elements.intensitySlider.value);
+            const baseHashRate = 1000;
+            const hashRate = Math.floor(baseHashRate * (intensity / 100));
+            
+            // Actualizar hash rate
+            elements.hashPowerValue.textContent = hashRate + ' H/s';
+            elements.hashRate.textContent = hashRate + ' H/s';
+            
+            // Simular generación de tokens
+            const miningInterval = setInterval(() => {
+                if (!isMining) {
+                    clearInterval(miningInterval);
+                    return;
+                }
+                
+                // Calcular tokens basados en hash rate y tiempo
+                const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
+                const tokensPerSecond = (hashRate / 10000) * (intensity / 100);
+                const newTokens = parseFloat(elements.tokensMined.textContent) + tokensPerSecond;
+                
+                elements.tokensMined.textContent = newTokens.toFixed(4);
+                
+                // Calcular eficiencia
+                const efficiency = Math.min(100, (elapsed / 3600) * 100); // Máximo 100% en 1 hora
+                elements.miningEfficiency.textContent = efficiency.toFixed(1) + '%';
+                
+            }, 1000);
+        }
+
+        // Evento de minería detenida
+        function onMiningStopped() {
+            isMining = false;
+            elements.miningStatus.textContent = 'Detenido';
+            elements.startMiningBtn.disabled = false;
+            elements.stopMiningBtn.disabled = true;
+            elements.claimBtn.disabled = false;
+            
+            // Detener contador de sesión
+            if (sessionInterval) {
+                clearInterval(sessionInterval);
+                sessionInterval = null;
+            }
+            
+            elements.systemStatus.textContent = 'Minería detenida. Puedes reclamar tus recompensas.';
+        }
+
+        // Actualizar tiempo de sesión
+        function updateSessionTime() {
+            if (sessionStartTime) {
+                const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
+                elements.sessionTime.textContent = formatDuration(elapsed);
+                
+                // Calcular progreso (sesión de 24 horas = 86400 segundos)
+                const progress = Math.min((elapsed / 86400) * 100, 100);
+                elements.sessionProgress.style.width = progress + '%';
+                elements.progressPercentage.textContent = progress.toFixed(1) + '%';
+            }
+        }
+
+        // Mostrar notificación de recompensa
+        function showRewardNotification(amount) {
+            if (window.showNotification) {
+                window.showNotification('success', '🎁 Recompensa Reclamada', `Has reclamado ${amount} RSC exitosamente`);
+            } else {
+                alert(`🎁 ¡Recompensa reclamada! Has obtenido ${amount} RSC`);
+            }
+        }
+
+        // Función de utilidad para mostrar notificaciones
+        window.showNotification = function(type, title, message) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-header">
+                    <span class="notification-title">${title}</span>
+                    <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                </div>
+                <div class="notification-message">${message}</div>
+            `;
+
+            const container = document.getElementById('notificationsContainer');
+            if (container) {
+                container.appendChild(notification);
+                
+                // Auto-remover después de 5 segundos
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 5000);
+            }
+        };
+    </script>
 </body>
 </html>

@@ -1,0 +1,25 @@
+# Edge Functions Environment Variables
+# Copy these values to your Supabase Edge Functions environment
+
+# Supabase Configuration
+SUPABASE_URL=https://unevdceponbnmhvpzlzf.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
+
+# Mining Configuration
+HEARTBEAT_INTERVAL_SEC=15
+SESSION_TIMEOUT_SEC=60
+RATE_RSC_PER_SEC=0.002
+MAX_CONCURRENT_SESSIONS=1
+
+# Security
+# These values control the mining behavior:
+# - HEARTBEAT_INTERVAL_SEC: How often heartbeats are sent (15 seconds)
+# - SESSION_TIMEOUT_SEC: How long a session can be inactive before timeout (60 seconds)
+# - RATE_RSC_PER_SEC: RSC tokens earned per second of active mining (0.002 RSC/sec)
+# - MAX_CONCURRENT_SESSIONS: Maximum active sessions per user (1)
+
+# To get your service role key:
+# 1. Go to Supabase Dashboard
+# 2. Navigate to Settings > API
+# 3. Copy the "service_role" key (NOT the anon key)
+# 4. Keep this key secret and never expose it in client-side code

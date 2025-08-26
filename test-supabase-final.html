@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Final - RSC Mining</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+        .warning { color: #ff9800; }
+        .info { color: #2196F3; }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #45a049; }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        .log {
+            background: #000;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 10px 0;
+        }
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+        .status.connected { background: #4CAF50; color: white; }
+        .status.disconnected { background: #f44336; color: white; }
+        .status.connecting { background: #ff9800; color: white; }
+        .status.error { background: #9c27b0; color: white; }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .stat-card {
+            background: #333;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .stat-label {
+            color: #ccc;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Test Supabase Final - RSC Mining</h1>
+    
+    <div class="test-section">
+        <h2>📡 Estado de Conexión</h2>
+        <div id="connection-status" class="status connecting">🔄 Inicializando Supabase...</div>
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <button onclick="testConnection()" id="test-btn" disabled>Test Conexión</button>
+        <button onclick="manualInit()" id="manual-btn">Inicialización Manual</button>
+        <button onclick="resetSystem()" id="reset-btn">Reset Sistema</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Estadísticas del Sistema</h2>
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="attempts">0</div>
+                <div class="stat-label">Intentos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="success-rate">0%</div>
+                <div class="stat-label">Tasa de Éxito</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="last-success">N/A</div>
+                <div class="stat-label">Último Éxito</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="uptime">0s</div>
+                <div class="stat-label">Tiempo Activo</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>⛏️ Test de Sistema de Minería</h2>
+        <button onclick="testMiningSystem()" id="mining-btn" disabled>Test Sistema de Minería</button>
+        <div id="mining-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Test de Base de Datos</h2>
+        <button onclick="testDatabase()" id="db-btn" disabled>Test Base de Datos</button>
+        <div id="database-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 Log de Eventos</h2>
+        <div id="event-log" class="log"></div>
+        <button onclick="clearLog()">Limpiar Log</button>
+        <button onclick="exportLog()">Exportar Log</button>
+    </div>
+
+    <!-- CDN más confiable de Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+    
+    <script>
+        // Variables del sistema
+        let supabaseClient = null;
+        let isConnected = false;
+        let systemStats = {
+            attempts: 0,
+            successes: 0,
+            failures: 0,
+            startTime: Date.now(),
+            lastSuccess: null
+        };
+        let initInterval = null;
+        let progressInterval = null;
+
+        // Elementos del DOM
+        const elements = {
+            status: document.getElementById('connection-status'),
+            progress: document.getElementById('progress-fill'),
+            testBtn: document.getElementById('test-btn'),
+            manualBtn: document.getElementById('manual-btn'),
+            resetBtn: document.getElementById('reset-btn'),
+            miningBtn: document.getElementById('mining-btn'),
+            dbBtn: document.getElementById('db-btn'),
+            attempts: document.getElementById('attempts'),
+            successRate: document.getElementById('success-rate'),
+            lastSuccess: document.getElementById('last-success'),
+            uptime: document.getElementById('uptime')
+        };
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('event-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = type;
+            logEntry.innerHTML = `[${timestamp}] ${message}`;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function clearLog() {
+            document.getElementById('event-log').innerHTML = '';
+        }
+
+        function exportLog() {
+            const logContent = document.getElementById('event-log').innerText;
+            const blob = new Blob([logContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `supabase-test-log-${new Date().toISOString().slice(0,19)}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function updateConnectionStatus(status, message) {
+            elements.status.className = `status ${status}`;
+            elements.status.innerHTML = message;
+            isConnected = (status === 'connected');
+            
+            // Habilitar/deshabilitar botones según el estado
+            elements.testBtn.disabled = !isConnected;
+            elements.miningBtn.disabled = !isConnected;
+            elements.dbBtn.disabled = !isConnected;
+        }
+
+        function updateStats() {
+            elements.attempts.textContent = systemStats.attempts;
+            const rate = systemStats.attempts > 0 ? Math.round((systemStats.successes / systemStats.attempts) * 100) : 0;
+            elements.successRate.textContent = `${rate}%`;
+            elements.lastSuccess.textContent = systemStats.lastSuccess ? systemStats.lastSuccess.toLocaleTimeString() : 'N/A';
+            
+            const uptime = Math.floor((Date.now() - systemStats.startTime) / 1000);
+            elements.uptime.textContent = `${uptime}s`;
+        }
+
+        function startProgressBar() {
+            let progress = 0;
+            elements.progress.style.width = '0%';
+            
+            progressInterval = setInterval(() => {
+                progress += 2;
+                if (progress > 100) progress = 100;
+                elements.progress.style.width = `${progress}%`;
+                
+                if (progress === 100) {
+                    clearInterval(progressInterval);
+                }
+            }, 100);
+        }
+
+        function stopProgressBar() {
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                elements.progress.style.width = '100%';
+            }
+        }
+
+        function initializeSupabase() {
+            try {
+                log('🔄 Intentando inicializar Supabase...', 'info');
+                systemStats.attempts++;
+                
+                // Verificar si Supabase está disponible
+                if (typeof window.supabase === 'undefined') {
+                    throw new Error('Supabase no está disponible en window.supabase');
+                }
+                
+                log('✅ Supabase detectado en window.supabase', 'success');
+                
+                // Crear cliente
+                supabaseClient = window.supabase.createClient(
+                    'https://unevdceponbnmhvpzlzf.supabase.co',
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVuZXZkY2Vwb25ibm1odnB6bHpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5MTIyMTksImV4cCI6MjA3MTQ4ODIxOX0.OLHbZrezgBiXWQplN1jrGD_xkARqG2uD8ECqzo05jE4'
+                );
+                
+                log('✅ Cliente Supabase creado exitosamente', 'success');
+                systemStats.successes++;
+                systemStats.lastSuccess = new Date();
+                updateStats();
+                return true;
+                
+            } catch (error) {
+                log(`❌ Error inicializando Supabase: ${error.message}`, 'error');
+                systemStats.failures++;
+                updateStats();
+                return false;
+            }
+        }
+
+        async function testConnection() {
+            if (!supabaseClient) {
+                log('⚠️ Primero inicializa Supabase', 'warning');
+                return;
+            }
+
+            log('🔄 Probando conexión...', 'info');
+            startProgressBar();
+            
+            try {
+                // Test simple de conexión
+                const { data, error } = await supabaseClient
+                    .from('miners')
+                    .select('count')
+                    .limit(1);
+                
+                stopProgressBar();
+                
+                if (error) {
+                    if (error.code === 'PGRST116') {
+                        log('ℹ️ Tabla "miners" no existe, pero la conexión funciona', 'warning');
+                        updateConnectionStatus('connected', '✅ Conectado (tabla no existe)');
+                    } else {
+                        log(`❌ Error de conexión: ${error.message}`, 'error');
+                        updateConnectionStatus('error', '❌ Error de conexión');
+                    }
+                } else {
+                    log('✅ Conexión exitosa a Supabase', 'success');
+                    updateConnectionStatus('connected', '✅ Conectado a Supabase');
+                }
+            } catch (error) {
+                stopProgressBar();
+                log(`❌ Excepción en test: ${error.message}`, 'error');
+                updateConnectionStatus('error', '❌ Error de conexión');
+            }
+        }
+
+        async function testMiningSystem() {
+            if (!isConnected) {
+                log('⚠️ Primero inicializa Supabase', 'warning');
+                return;
+            }
+
+            const resultDiv = document.getElementById('mining-result');
+            resultDiv.innerHTML = '<p>🔄 Probando sistema de minería...</p>';
+            log('🔄 Probando sistema de minería...', 'info');
+            
+            try {
+                // Test de inserción de minero
+                const { data, error } = await supabaseClient
+                    .from('miners')
+                    .insert([
+                        {
+                            email: 'test@mining.com',
+                            name: 'Test Miner',
+                            hash_power: 100,
+                            balance: 0,
+                            created_at: new Date().toISOString(),
+                            last_active: new Date().toISOString()
+                        }
+                    ])
+                    .select();
+                
+                if (error) {
+                    resultDiv.innerHTML = `<p class="error">❌ Error en sistema de minería: ${error.message}</p>`;
+                    log(`❌ Error en minería: ${error.message}`, 'error');
+                } else {
+                    resultDiv.innerHTML = '<p class="success">✅ Sistema de minería funcionando</p>';
+                    log('✅ Sistema de minería funcionando correctamente', 'success');
+                    
+                    // Limpiar el test
+                    await supabaseClient.from('miners').delete().eq('email', 'test@mining.com');
+                    log('🧹 Test cleanup completado', 'info');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">❌ Excepción en minería: ${error.message}</p>`;
+                log(`❌ Excepción en minería: ${error.message}`, 'error');
+            }
+        }
+
+        async function testDatabase() {
+            if (!isConnected) {
+                log('⚠️ Primero inicializa Supabase', 'warning');
+                return;
+            }
+
+            const resultDiv = document.getElementById('database-result');
+            resultDiv.innerHTML = '<p>🔄 Probando base de datos...</p>';
+            log('🔄 Probando base de datos...', 'info');
+            
+            try {
+                // Test de estructura de tablas
+                const tables = ['miners', 'mining_transactions'];
+                let allTablesExist = true;
+                
+                for (const table of tables) {
+                    try {
+                        const { data, error } = await supabaseClient.from(table).select('*').limit(1);
+                        if (error) {
+                            log(`❌ Tabla ${table} no existe o no es accesible: ${error.message}`, 'error');
+                            allTablesExist = false;
+                        } else {
+                            log(`✅ Tabla ${table} accesible`, 'success');
+                        }
+                    } catch (e) {
+                        log(`❌ Error accediendo a tabla ${table}: ${e.message}`, 'error');
+                        allTablesExist = false;
+                    }
+                }
+                
+                if (allTablesExist) {
+                    resultDiv.innerHTML = '<p class="success">✅ Todas las tablas son accesibles</p>';
+                } else {
+                    resultDiv.innerHTML = '<p class="warning">⚠️ Algunas tablas no son accesibles</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">❌ Error en test de BD: ${error.message}</p>`;
+                log(`❌ Error en test de BD: ${error.message}`, 'error');
+            }
+        }
+
+        function manualInit() {
+            log('🔧 Inicialización manual solicitada', 'info');
+            if (initializeSupabase()) {
+                updateConnectionStatus('connecting', '🔄 Inicializado, probando conexión...');
+                setTimeout(() => {
+                    testConnection();
+                }, 1000);
+            } else {
+                updateConnectionStatus('disconnected', '❌ Falló la inicialización');
+            }
+        }
+
+        function resetSystem() {
+            log('🔄 Reseteando sistema...', 'info');
+            
+            // Limpiar intervalos
+            if (initInterval) clearInterval(initInterval);
+            if (progressInterval) clearInterval(progressInterval);
+            
+            // Resetear variables
+            supabaseClient = null;
+            isConnected = false;
+            systemStats = {
+                attempts: 0,
+                successes: 0,
+                failures: 0,
+                startTime: Date.now(),
+                lastSuccess: null
+            };
+            
+            // Resetear UI
+            updateConnectionStatus('connecting', '🔄 Sistema reseteado');
+            elements.progress.style.width = '0%';
+            updateStats();
+            
+            // Reiniciar
+            setTimeout(() => {
+                startAutoInit();
+            }, 1000);
+        }
+
+        function startAutoInit() {
+            log('🚀 Iniciando inicialización automática...', 'info');
+            
+            // Verificar Supabase cada 2 segundos
+            initInterval = setInterval(() => {
+                if (typeof window.supabase !== 'undefined' && !supabaseClient) {
+                    log('🎉 Supabase detectado automáticamente', 'success');
+                    clearInterval(initInterval);
+                    manualInit();
+                }
+            }, 2000);
+        }
+
+        // Auto-inicialización al cargar
+        window.addEventListener('load', () => {
+            log('🚀 Página cargada, iniciando sistema...', 'info');
+            updateStats();
+            startAutoInit();
+        });
+
+        // Actualizar stats cada segundo
+        setInterval(updateStats, 1000);
+    </script>
+</body>
+</html>

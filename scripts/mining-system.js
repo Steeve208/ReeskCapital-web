@@ -36,8 +36,8 @@ class RSCMiningSystem {
             // Cargar datos existentes
             await this.loadMiningData();
             
-            // Iniciar sincronización con backend
-            this.startBackendSync();
+            // Iniciar sincronización con Supabase
+            this.startSupabaseSync();
             
             // Iniciar actualización de UI
             this.startUIUpdates();
@@ -96,6 +96,12 @@ class RSCMiningSystem {
         const stopBtn = document.getElementById('stopMiningBtn');
         if (stopBtn) {
             stopBtn.addEventListener('click', () => this.stopMining());
+        }
+
+        // Botón de reclamar recompensas
+        const claimBtn = document.getElementById('claimBtn');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', () => this.claimRewards());
         }
 
         // Botón de reclamar
@@ -193,8 +199,15 @@ class RSCMiningSystem {
             // Guardar datos localmente
             this.saveMiningData();
             
-            // Sincronizar con backend
-            await this.syncWithBackend();
+            // Sincronizar con Supabase si está disponible
+            if (window.supabaseMining && window.supabaseMining.isConnected) {
+                try {
+                    await window.supabaseMining.startMiningSession(this.miningSession);
+                    console.log('✅ Sesión de minería iniciada en Supabase');
+                } catch (supabaseError) {
+                    console.warn('⚠️ No se pudo iniciar sesión en Supabase:', supabaseError.message);
+                }
+            }
 
             // Actualizar UI
             this.updateMiningUI();
@@ -231,8 +244,21 @@ class RSCMiningSystem {
         // Detener cálculo de tokens
         this.stopTokenCalculation();
         
-        // Sincronizar con backend
-        this.syncWithBackend();
+        // Sincronizar con Supabase si está disponible
+        if (window.supabaseMining && window.supabaseMining.isConnected) {
+            try {
+                await window.supabaseMining.completeMiningSession(
+                    this.miningSession.id,
+                    {
+                        totalTokens: this.miningSession.totalTokens,
+                        hashPower: this.hashPower
+                    }
+                );
+                console.log('✅ Sesión de minería completada en Supabase');
+            } catch (supabaseError) {
+                console.warn('⚠️ No se pudo completar sesión en Supabase:', supabaseError.message);
+            }
+        }
         
         this.updateMiningUI();
         this.showNotification('info', 'Minería Detenida', 'Has detenido la minería manualmente');
@@ -301,9 +327,9 @@ class RSCMiningSystem {
             this.lastSaveTime = currentTime;
         }
         
-        // Sincronizar con backend cada 30 segundos
+        // Sincronizar con Supabase cada 30 segundos
         if (currentTime - this.lastBackendSync > 30000) {
-            this.syncWithBackend();
+            this.syncWithSupabase();
             this.lastBackendSync = currentTime;
         }
     }
@@ -322,8 +348,21 @@ class RSCMiningSystem {
         // Detener cálculo de tokens
         this.stopTokenCalculation();
         
-        // Sincronizar con backend
-        this.syncWithBackend();
+        // Sincronizar con Supabase si está disponible
+        if (window.supabaseMining && window.supabaseMining.isConnected) {
+            try {
+                await window.supabaseMining.completeMiningSession(
+                    this.miningSession.id,
+                    {
+                        totalTokens: this.miningSession.totalTokens,
+                        hashPower: this.hashPower
+                    }
+                );
+                console.log('✅ Sesión de minería completada en Supabase');
+            } catch (supabaseError) {
+                console.warn('⚠️ No se pudo completar sesión en Supabase:', supabaseError.message);
+            }
+        }
         
         this.updateMiningUI();
         
@@ -335,39 +374,37 @@ class RSCMiningSystem {
         this.showMiningSummary(this.miningSession);
     }
 
-    startBackendSync() {
-        // Sincronizar con backend cada 30 segundos
+    startSupabaseSync() {
+        // Sincronizar con Supabase cada 30 segundos
         this.backendSyncInterval = setInterval(() => {
             if (this.isMining) {
-                this.syncWithBackend();
+                this.syncWithSupabase();
             }
         }, 30000);
 
-        console.log('🔄 Sincronización con backend iniciada');
+        console.log('🔄 Sincronización con Supabase iniciada');
     }
 
-    async syncWithBackend() {
+    async syncWithSupabase() {
         if (!this.miningSession) return;
 
         try {
-            // Intentar sincronizar con el backend
-            const response = await fetch('/api/mining/update-progress', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    sessionId: this.miningSession.id,
-                    totalTokens: this.miningSession.totalTokens,
-                    elapsed: this.getElapsedTime(),
-                    hashPower: this.hashPower,
-                    walletAddress: this.currentUser.walletAddress
-                })
-            });
-
-            if (response.ok) {
-                console.log('✅ Progreso sincronizado con backend');
+            // Sincronizar con Supabase si está disponible
+            if (window.supabaseMining && window.supabaseMining.isConnected) {
+                await window.supabaseMining.updateMiningProgress(
+                    this.miningSession.id,
+                    {
+                        totalTokens: this.miningSession.totalTokens,
+                        hashPower: this.hashPower,
+                        elapsed: this.getElapsedTime()
+                    }
+                );
+                console.log('✅ Progreso sincronizado con Supabase');
+            } else {
+                console.log('🔄 Supabase no disponible, continuando en modo local');
             }
         } catch (error) {
-            console.log('🔄 Backend no disponible, continuando en modo local');
+            console.log('🔄 Error sincronizando con Supabase:', error.message);
         }
     }
 
@@ -856,6 +893,35 @@ class RSCMiningSystem {
         if (this.miningSession && this.isMining) {
             this.miningSession.hashPower = this.hashPower;
             this.saveMiningData();
+        }
+    }
+
+    async claimRewards() {
+        try {
+            if (!window.supabaseMining || !window.supabaseMining.isConnected) {
+                throw new Error('Supabase no está conectado');
+            }
+
+            const claimedAmount = await window.supabaseMining.claimRewards();
+            
+            // Actualizar UI local
+            if (this.miningSession) {
+                this.miningSession.totalTokens = 0;
+                this.miningStats.totalTokens = 0;
+                this.saveMiningData();
+                this.updateMiningUI();
+            }
+            
+            this.showNotification('success', '¡Recompensas Reclamadas!', 
+                `Has reclamado ${this.formatNumber(claimedAmount)} RSC`);
+            
+            console.log('✅ Recompensas reclamadas:', claimedAmount);
+            return claimedAmount;
+            
+        } catch (error) {
+            console.error('❌ Error reclamando recompensas:', error);
+            this.showNotification('error', 'Error al Reclamar', error.message);
+            throw error;
         }
     }
 
