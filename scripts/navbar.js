@@ -1,6 +1,6 @@
-/* ===== RESPONSIVE NAVBAR FUNCTIONALITY ===== */
+/* ===== MODERN NAVBAR FUNCTIONALITY ===== */
 
-class NavbarManager {
+class ModernNavbarManager {
     constructor() {
         this.isMobileMenuOpen = false;
         this.init();
@@ -10,13 +10,21 @@ class NavbarManager {
         this.setupEventListeners();
         this.setupMobileMenu();
         this.handleResize();
+        this.setupThemeToggle();
+        this.setupLanguageToggle();
     }
     
     setupEventListeners() {
-        // Mobile menu toggle
-        const navbarToggle = document.getElementById('navbarToggle');
-        if (navbarToggle) {
-            navbarToggle.addEventListener('click', () => this.toggleMobileMenu());
+        // Hamburger menu toggle
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        if (hamburgerMenu) {
+            hamburgerMenu.addEventListener('click', () => this.toggleMobileMenu());
+        }
+        
+        // Close menu button
+        const closeMenu = document.getElementById('closeMenu');
+        if (closeMenu) {
+            closeMenu.addEventListener('click', () => this.closeMobileMenu());
         }
         
         // Mobile menu overlay
@@ -29,15 +37,17 @@ class NavbarManager {
         window.addEventListener('resize', () => this.handleResize());
         
         // Close mobile menu when clicking on links
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
-        mobileMenuLinks.forEach(link => {
+        const menuLinks = document.querySelectorAll('.menu-link');
+        menuLinks.forEach(link => {
             link.addEventListener('click', () => this.closeMobileMenu());
         });
         
         // Close mobile menu when clicking on action buttons
-        const mobileMenuActions = document.querySelectorAll('.mobile-menu-actions a');
-        mobileMenuActions.forEach(action => {
-            action.addEventListener('click', () => this.closeMobileMenu());
+        const menuActions = document.querySelectorAll('.menu-action');
+        menuActions.forEach(action => {
+            if (!action.classList.contains('theme-toggle') && !action.classList.contains('language-toggle')) {
+                action.addEventListener('click', () => this.closeMobileMenu());
+            }
         });
         
         // Handle escape key
@@ -65,6 +75,66 @@ class NavbarManager {
         }
     }
     
+    setupThemeToggle() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+    }
+    
+    setupLanguageToggle() {
+        const languageToggle = document.getElementById('languageToggle');
+        if (languageToggle) {
+            languageToggle.addEventListener('click', () => this.toggleLanguage());
+        }
+    }
+    
+    toggleTheme() {
+        const body = document.body;
+        const themeToggle = document.getElementById('themeToggle');
+        
+        if (body.classList.contains('dark-theme')) {
+            body.classList.remove('dark-theme');
+            body.classList.add('light-theme');
+            if (themeToggle) {
+                themeToggle.innerHTML = `
+                    <span class="action-icon">☀️</span>
+                    <span>Light Mode</span>
+                `;
+            }
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.classList.remove('light-theme');
+            body.classList.add('dark-theme');
+            if (themeToggle) {
+                themeToggle.innerHTML = `
+                    <span class="action-icon">🌙</span>
+                    <span>Dark Mode</span>
+                `;
+            }
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+    
+    toggleLanguage() {
+        const languageToggle = document.getElementById('languageToggle');
+        const currentLang = languageToggle.querySelector('span:last-child').textContent;
+        
+        if (currentLang === 'English') {
+            languageToggle.innerHTML = `
+                <span class="action-icon">🇪🇸</span>
+                <span>Español</span>
+            `;
+            localStorage.setItem('language', 'es');
+        } else {
+            languageToggle.innerHTML = `
+                <span class="action-icon">🌐</span>
+                <span>English</span>
+            `;
+            localStorage.setItem('language', 'en');
+        }
+    }
+    
     toggleMobileMenu() {
         if (this.isMobileMenuOpen) {
             this.closeMobileMenu();
@@ -76,20 +146,17 @@ class NavbarManager {
     openMobileMenu() {
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        const navbarToggle = document.getElementById('navbarToggle');
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
         
-        console.log('Opening mobile menu...', { mobileMenu, mobileMenuOverlay, navbarToggle });
-        
-        if (mobileMenu && mobileMenuOverlay && navbarToggle) {
+        if (mobileMenu && mobileMenuOverlay && hamburgerMenu) {
             this.isMobileMenuOpen = true;
             
             // Show mobile menu
             mobileMenu.classList.add('active');
             mobileMenuOverlay.classList.add('active');
             
-            // Update toggle button
-            navbarToggle.innerHTML = '<span>✕</span>';
-            navbarToggle.setAttribute('aria-expanded', 'true');
+            // Update hamburger menu
+            hamburgerMenu.classList.add('active');
             
             // Prevent body scroll
             document.body.style.overflow = 'hidden';
@@ -98,8 +165,6 @@ class NavbarManager {
             document.querySelector('.navbar').classList.add('mobile-menu-open');
             
             console.log('Mobile menu opened successfully');
-            console.log('Mobile menu classes:', mobileMenu.className);
-            console.log('Mobile menu style:', mobileMenu.style.cssText);
         } else {
             console.error('Some elements not found for mobile menu');
         }
@@ -108,18 +173,17 @@ class NavbarManager {
     closeMobileMenu() {
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        const navbarToggle = document.getElementById('navbarToggle');
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
         
-        if (mobileMenu && mobileMenuOverlay && navbarToggle) {
+        if (mobileMenu && mobileMenuOverlay && hamburgerMenu) {
             this.isMobileMenuOpen = false;
             
             // Hide mobile menu
             mobileMenu.classList.remove('active');
             mobileMenuOverlay.classList.remove('active');
             
-            // Update toggle button
-            navbarToggle.innerHTML = '<span>☰</span>';
-            navbarToggle.setAttribute('aria-expanded', 'false');
+            // Update hamburger menu
+            hamburgerMenu.classList.remove('active');
             
             // Restore body scroll
             document.body.style.overflow = 'auto';
@@ -139,9 +203,9 @@ class NavbarManager {
     // Update active navigation link
     updateActiveLink() {
         const currentPath = window.location.pathname;
-        const allNavLinks = document.querySelectorAll('.navbar-links a, .mobile-menu-links a');
+        const allMenuLinks = document.querySelectorAll('.menu-link');
         
-        allNavLinks.forEach(link => {
+        allMenuLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === currentPath || 
                 (currentPath === '/' && link.getAttribute('href') === 'index.html')) {
@@ -152,46 +216,55 @@ class NavbarManager {
     
     // Update wallet button state
     updateWalletButtonState(isAuthenticated, username) {
-        const mainWalletBtn = document.getElementById('walletConnectBtn');
         const mobileWalletBtn = document.getElementById('mobileWalletConnectBtn');
         
         if (isAuthenticated) {
             const walletText = username || 'Connected';
             
-            if (mainWalletBtn) {
-                mainWalletBtn.innerHTML = `
-                    <span class="wallet-icon">🔒</span>
-                    <span class="wallet-text">${walletText}</span>
-                `;
-                mainWalletBtn.href = 'pages/wallet.html';
-                mainWalletBtn.classList.add('authenticated');
-            }
-            
             if (mobileWalletBtn) {
                 mobileWalletBtn.innerHTML = `
-                    <span class="wallet-icon">🔒</span>
-                    <span class="wallet-text">${walletText}</span>
+                    <span class="action-icon">🔒</span>
+                    <span>${walletText}</span>
                 `;
                 mobileWalletBtn.href = 'pages/wallet.html';
                 mobileWalletBtn.classList.add('authenticated');
             }
         } else {
-            if (mainWalletBtn) {
-                mainWalletBtn.innerHTML = `
-                    <span class="wallet-icon">🔒</span>
-                    <span class="wallet-text">Connect Wallet</span>
-                `;
-                mainWalletBtn.href = '#';
-                mainWalletBtn.classList.remove('authenticated');
-            }
-            
             if (mobileWalletBtn) {
                 mobileWalletBtn.innerHTML = `
-                    <span class="wallet-icon">🔒</span>
-                    <span class="wallet-text">Connect Wallet</span>
+                    <span class="action-icon">🔒</span>
+                    <span>Connect Wallet</span>
                 `;
                 mobileWalletBtn.href = '#';
                 mobileWalletBtn.classList.remove('authenticated');
+            }
+        }
+    }
+    
+    // Load saved preferences
+    loadPreferences() {
+        // Load theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.classList.add(`${savedTheme}-theme`);
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle && savedTheme === 'light') {
+                themeToggle.innerHTML = `
+                    <span class="action-icon">☀️</span>
+                    <span>Light Mode</span>
+                `;
+            }
+        }
+        
+        // Load language
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage === 'es') {
+            const languageToggle = document.getElementById('languageToggle');
+            if (languageToggle) {
+                languageToggle.innerHTML = `
+                    <span class="action-icon">🇪🇸</span>
+                    <span>Español</span>
+                `;
             }
         }
     }
@@ -199,10 +272,11 @@ class NavbarManager {
 
 // Initialize navbar when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.navbarManager = new NavbarManager();
+    window.navbarManager = new ModernNavbarManager();
     
-    // Update active link
+    // Load saved preferences
     if (window.navbarManager) {
+        window.navbarManager.loadPreferences();
         window.navbarManager.updateActiveLink();
     }
     
@@ -211,4 +285,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Export for use in other modules
-window.NavbarManager = NavbarManager;
+window.ModernNavbarManager = ModernNavbarManager;

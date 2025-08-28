@@ -26,94 +26,116 @@
   <!-- Contenedor de notificaciones -->
   <div class="notifications-container" id="notificationsContainer"></div>
 
-    <!-- Navbar -->
+      <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-container">
       <!-- Logo Section (Left) -->
-      <a href="../index.html" class="navbar-logo">
-        <img src="../assets/img/logo.png" alt="RSC Chain Logo">
-        <span>RSC CHAIN</span>
-      </a>
-      
-      <!-- Center Title (Mobile Only) -->
-      <div class="navbar-center-title">
-        <span>RSC CHAIN</span>
-      </div>
-      
-      <!-- Desktop Navigation Links -->
-      <ul class="navbar-links">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="wallet.html">Wallet</a></li>
-        <li><a href="mine.html">Mine</a></li>
-        <li><a href="p2p.html">P2P</a></li>
-        <li><a href="staking.html">Staking</a></li>
-        <li><a href="explorer.html">Explorer</a></li>
-        <li><a href="bank.html">Bank</a></li>
-        <li><a href="docs.html">Docs</a></li>
-      </ul>
-      
-      <!-- Right Side Actions -->
-      <div class="navbar-actions">
-        <!-- Language Toggle -->
-        <div class="language-toggle">
-          <button class="lang-btn" id="languageToggle">
-            <span class="lang-text">EN</span>
-            <span class="lang-icon">🌐</span>
-          </button>
-        </div>
-        
-        <!-- Theme Toggle -->
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-          <span class="theme-icon">🌙</span>
-        </button>
-        
-        <!-- Login Button -->
-        <a href="login.html" class="login-link">🔐 Login</a>
-        
-        <!-- Connect Wallet Button -->
-        <a href="#" id="walletConnectBtn" class="btn-wallet-connect">
-          <span class="wallet-icon">🔒</span>
-          <span class="wallet-text">Connect Wallet</span>
+      <div class="navbar-left">
+        <a href="../index.html" class="navbar-logo">
+          <img src="../assets/img/logo.png" alt="RSC Chain Logo">
         </a>
       </div>
       
-      <!-- Mobile Menu Toggle -->
-      <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle mobile menu">
-        <span>☰</span>
-      </button>
+      <!-- Center Title -->
+      <div class="navbar-center">
+        <h1 class="navbar-brand">RSC CHAIN</h1>
+      </div>
+      
+      <!-- Hamburger Menu (Right) -->
+      <div class="navbar-right">
+        <button class="hamburger-menu" id="hamburgerMenu" aria-label="Toggle menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
     </div>
   </nav>
   
-  <!-- Mobile Menu -->
+    <!-- Modern Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
-      <h3>RSC CHAIN</h3>
+      <div class="mobile-menu-logo">
+        <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+        <span>RSC CHAIN</span>
+      </div>
+      <button class="close-menu" id="closeMenu" aria-label="Close menu">
+        <span>×</span>
+      </button>
     </div>
     
-    <div class="mobile-menu-section">
-      <div class="mobile-menu-section-title">Navigation</div>
-      <ul class="mobile-menu-links">
-        <li><a href="../index.html">🏠 Home</a></li>
-        <li><a href="about.html">ℹ️ About</a></li>
-        <li><a href="wallet.html">👛 Wallet</a></li>
-        <li><a href="mine.html">⛏️ Mine</a></li>
-        <li><a href="p2p.html">🤝 P2P</a></li>
-        <li><a href="staking.html">💰 Staking</a></li>
-        <li><a href="explorer.html">🔍 Explorer</a></li>
-        <li><a href="bank.html">🏦 Bank</a></li>
-        <li><a href="docs.html">📚 Docs</a></li>
-      </ul>
-    </div>
-    
-    <div class="mobile-menu-section">
-      <div class="mobile-menu-section-title">Account</div>
-      <div class="mobile-menu-actions">
-        <a href="login.html" class="login-link">🔐 Login</a>
-        <a href="#" id="mobileWalletConnectBtn" class="btn-wallet-connect">
-          <span class="wallet-icon">🔒</span>
-          <span class="wallet-text">Connect Wallet</span>
-        </a>
+    <div class="mobile-menu-content">
+      <!-- Navigation Section -->
+      <div class="menu-section">
+        <h3 class="menu-section-title">Navigation</h3>
+        <ul class="menu-links">
+          <li><a href="../index.html" class="menu-link">
+            <span class="menu-icon">🏠</span>
+            <span>Home</span>
+          </a></li>
+          <li><a href="about.html" class="menu-link">
+            <span class="menu-icon">ℹ️</span>
+            <span>About</span>
+          </a></li>
+          <li><a href="wallet.html" class="menu-link">
+            <span class="menu-icon">👛</span>
+            <span>Wallet</span>
+          </a></li>
+          <li><a href="mine.html" class="menu-link">
+            <span class="menu-icon">⛏️</span>
+            <span>Mine</span>
+          </a></li>
+          <li><a href="p2p.html" class="menu-link">
+            <span class="menu-icon">🤝</span>
+            <span>P2P</span>
+          </a></li>
+          <li><a href="staking.html" class="menu-link">
+            <span class="menu-icon">💰</span>
+            <span>Staking</span>
+          </a></li>
+          <li><a href="explorer.html" class="menu-link">
+            <span class="menu-icon">🔍</span>
+            <span>Explorer</span>
+          </a></li>
+          <li><a href="bank.html" class="menu-link">
+            <span class="menu-icon">🏦</span>
+            <span>Bank</span>
+          </a></li>
+          <li><a href="docs.html" class="menu-link">
+            <span class="menu-icon">📚</span>
+            <span>Docs</span>
+          </a></li>
+        </ul>
+      </div>
+      
+      <!-- Account Section -->
+      <div class="menu-section">
+        <h3 class="menu-section-title">Account</h3>
+        <div class="menu-actions">
+          <a href="login.html" class="menu-action login-btn">
+            <span class="action-icon">🔐</span>
+            <span>Login</span>
+          </a>
+          <a href="#" id="mobileWalletConnectBtn" class="menu-action wallet-btn">
+            <span class="action-icon">🔒</span>
+            <span>Connect Wallet</span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Settings Section -->
+      <div class="menu-section">
+        <h3 class="menu-section-title">Settings</h3>
+        <div class="menu-actions">
+          <button class="menu-action theme-toggle" id="themeToggle">
+            <span class="action-icon">🌙</span>
+            <span>Dark Mode</span>
+          </button>
+          <button class="menu-action language-toggle" id="languageToggle">
+            <span class="action-icon">🌐</span>
+            <span>English</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

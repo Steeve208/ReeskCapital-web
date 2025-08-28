@@ -9,7 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
     
     <!-- CSS Rediseñado -->
-    <link rel="stylesheet" href="../styles/mining-redesigned.css">
+    <link rel="stylesheet" href="/styles/mining-redesigned.css">
+    
+    <!-- 🔥 CSS de Persistencia de Minería -->
+    <link rel="stylesheet" href="/styles/mining-persistence.css">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -227,6 +230,59 @@
                     </h3>
                     <div class="status-indicator" id="systemIndicator"></div>
                     <span id="systemStatus">Inicializando sistema...</span>
+                </div>
+
+                <!-- 🔥 ESTADO DE WALLET -->
+                <div class="info-card wallet-status" id="walletStatusCard">
+                    <h3>
+                        <i class="fas fa-wallet"></i>
+                        Estado de Wallet
+                    </h3>
+                    <div class="wallet-info">
+                        <div class="wallet-status-indicator" id="walletStatus">❌ Wallet Desconectada</div>
+                        <div class="wallet-balance">
+                            <span class="balance-label">Balance Total:</span>
+                            <span class="balance-value" id="walletBalance">0.0000 RSC</span>
+                        </div>
+                        <div class="mining-rewards">
+                            <span class="rewards-label">Recompensas de Minería:</span>
+                            <span class="rewards-value" id="miningRewards">0.0000 RSC</span>
+                        </div>
+                    </div>
+                    <button class="wallet-sync-btn" onclick="window.rscMiningSystem.showWalletIntegrationStatus()">
+                        <i class="fas fa-sync-alt"></i>
+                        Ver Estado
+                    </button>
+                    
+                    <!-- 🔥 BOTÓN DE ESTADO DE MINERÍA PERSISTENTE -->
+                    <button class="mining-status-btn" onclick="window.rscMiningSystem.showMiningStatus()" style="margin-top: 10px;">
+                        <i class="fas fa-info-circle"></i>
+                        Estado de Minería
+                    </button>
+                    
+                    <!-- 🔥 BOTÓN DE RECUPERACIÓN DE EMERGENCIA -->
+                    <button class="emergency-recovery-btn" onclick="window.rscMiningSystem.emergencyTokenRecovery()" style="margin-top: 10px;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Recuperar Tokens Perdidos
+                    </button>
+                    
+                    <!-- 🔥 BOTÓN DE PRUEBA DEL SISTEMA -->
+                    <button class="test-persistence-btn" onclick="window.rscMiningSystem.testPersistenceSystem()" style="margin-top: 10px;">
+                        <i class="fas fa-vial"></i>
+                        Probar Sistema de Persistencia
+                    </button>
+                    
+                    <!-- 🔥 BOTÓN DE VERIFICACIÓN DE TOKENS -->
+                    <button class="check-tokens-btn" onclick="window.rscMiningSystem.checkCurrentTokens()" style="margin-top: 10px;">
+                        <i class="fas fa-search"></i>
+                        Verificar Estado de Tokens
+                    </button>
+                    
+                    <!-- 🔥 BOTÓN DE MINERÍA REAL -->
+                    <button class="real-mining-btn" onclick="window.rscMiningSystem.startRealMining()" style="margin-top: 10px;">
+                        <i class="fas fa-rocket"></i>
+                        🚀 INICIAR MINERÍA REAL
+                    </button>
                 </div>
                 
                 <!-- Consejos de Optimización -->

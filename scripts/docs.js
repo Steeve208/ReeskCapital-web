@@ -373,7 +373,7 @@ class DocsManager {
             },
             'wallet/balance': {
                 method: 'GET',
-                path: '/api/wallet/0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6',
+                path: '/api/wallet/{address}',
                 description: 'Obtener balance de una dirección',
                 params: ['address'],
                 body: null
@@ -383,14 +383,14 @@ class DocsManager {
                 path: '/api/tx/send',
                 description: 'Enviar transacción',
                 params: ['from', 'to', 'amount', 'privateKey'],
-                body: '{\n  "from": "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6",\n  "to": "0x1234567890abcdef",\n  "amount": "100.0",\n  "private_key": "0x..."\n}'
+                body: '{\n  "from": "{wallet_address}",\n  "to": "{recipient_address}",\n  "amount": "100.0",\n  "private_key": "0x..."\n}'
             },
             'mining/start': {
                 method: 'POST',
                 path: '/api/mining/start',
                 description: 'Iniciar sesión de minería',
                 params: ['address'],
-                body: '{\n  "address": "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"\n}'
+                body: '{\n  "address": "{wallet_address}"\n}'
             },
             'blockchain/stats': {
                 method: 'GET',
@@ -558,9 +558,9 @@ class DocsManager {
         
         const curlCommands = {
             'wallet/create': 'curl -X POST "https://rsc-chain-production.up.railway.app/api/wallet/create" \\\n  -H "Content-Type: application/json"',
-            'wallet/balance': 'curl -X GET "https://rsc-chain-production.up.railway.app/api/wallet/0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"',
-            'tx/send': 'curl -X POST "https://rsc-chain-production.up.railway.app/api/tx/send" \\\n  -H "Content-Type: application/json" \\\n  -d \'{\n    "from": "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6",\n    "to": "0x1234567890abcdef",\n    "amount": "100.0",\n    "private_key": "0x..."\n  }\'',
-            'mining/start': 'curl -X POST "https://rsc-chain-production.up.railway.app/api/mining/start" \\\n  -H "Content-Type: application/json" \\\n  -d \'{\n    "address": "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"\n  }\'',
+            'wallet/balance': 'curl -X GET "https://rsc-chain-production.up.railway.app/api/wallet/{address}"',
+            'tx/send': 'curl -X POST "https://rsc-chain-production.up.railway.app/api/tx/send" \\\n  -H "Content-Type: application/json" \\\n  -d \'{\n    "from": "{wallet_address}",\n    "to": "{recipient_address}",\n    "amount": "100.0",\n    "private_key": "0x..."\n  }\'',
+            'mining/start': 'curl -X POST "https://rsc-chain-production.up.railway.app/api/mining/start" \\\n  -H "Content-Type: application/json" \\\n  -d \'{\n    "address": "{wallet_address}"\n  }\'',
             'blockchain/stats': 'curl -X GET "https://rsc-chain-production.up.railway.app/api/blockchain/stats"'
         };
 

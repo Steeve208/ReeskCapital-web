@@ -2,7 +2,7 @@
 
 class WalletRSC {
     constructor() {
-        // Estado de la wallet
+        // Estado de la wallet - Inicializado en 0 para usuarios nuevos
         this.state = {
             balance: 0,
             miningRewards: 0,
@@ -15,14 +15,14 @@ class WalletRSC {
             isMiningConnected: false
         };
 
-        // Configuración
+        // Configuración - Sin datos simulados
         this.config = {
-            walletAddress: '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6',
-            rscPrice: 0.85, // Precio simulado en USD
+            walletAddress: null, // Se obtendrá de la blockchain
+            rscPrice: 0, // Se obtendrá de la blockchain
             gasFees: {
-                slow: 0.0001,
-                normal: 0.0002,
-                fast: 0.0003
+                slow: 0,
+                normal: 0,
+                fast: 0
             }
         };
 
@@ -34,14 +34,19 @@ class WalletRSC {
         try {
             console.log('🚀 Inicializando Wallet RSC...');
             
+            // Verificar si ya existe una wallet
+            await this.checkExistingWallet();
+            
             // Configurar event listeners
             this.setupEventListeners();
             
             // Configurar navegación
             this.setupNavigation();
             
-            // Cargar datos iniciales
-            await this.loadInitialData();
+            // Cargar datos iniciales (solo si hay wallet)
+            if (this.config.walletAddress) {
+                await this.loadInitialData();
+            }
             
             // Inicializar integraciones
             await this.initializeIntegrations();
@@ -51,6 +56,101 @@ class WalletRSC {
         } catch (error) {
             console.error('❌ Error inicializando wallet:', error);
             this.showNotification('Error inicializando wallet', 'error');
+        }
+    }
+
+    // ===== WALLET MANAGEMENT =====
+    
+    async checkExistingWallet() {
+        try {
+            // Verificar si hay wallet en localStorage
+            const storedWallet = localStorage.getItem('rsc_wallet');
+            
+            if (storedWallet) {
+                const walletData = JSON.parse(storedWallet);
+                
+                // Verificar que sea una wallet válida de blockchain
+                if (walletData.blockchainCreated && walletData.address) {
+                    this.config.walletAddress = walletData.address;
+                    console.log('✅ Wallet existente encontrada:', walletData.address);
+                } else {
+                    // Wallet inválida, limpiar
+                    console.warn('⚠️ Wallet inválida encontrada, limpiando...');
+                    localStorage.removeItem('rsc_wallet');
+                    this.showCreateWalletPrompt();
+                }
+            } else {
+                // No hay wallet, mostrar prompt de creación
+                this.showCreateWalletPrompt();
+            }
+        } catch (error) {
+            console.error('Error verificando wallet existente:', error);
+            localStorage.removeItem('rsc_wallet');
+            this.showCreateWalletPrompt();
+        }
+    }
+
+    showCreateWalletPrompt() {
+        // Mostrar modal para crear wallet
+        const modal = document.createElement('div');
+        modal.className = 'wallet-modal';
+        modal.innerHTML = `
+            <div class="wallet-modal-content">
+                <h2>🚀 Crear Nueva Wallet</h2>
+                <p>Para usar RSC Chain, necesitas crear una wallet en la blockchain.</p>
+                <button id="createWalletBtn" class="btn btn-primary">Crear Wallet</button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Event listener para crear wallet
+        document.getElementById('createWalletBtn').addEventListener('click', () => {
+            this.createNewWallet();
+            modal.remove();
+        });
+    }
+
+    async createNewWallet() {
+        try {
+            this.showNotification('🔄 Creando wallet en la blockchain...', 'info');
+            
+            // Llamar al backend para crear wallet en blockchain
+            const response = await fetch('/api/wallet/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const walletData = await response.json();
+            
+            if (walletData.blockchainCreated && walletData.address) {
+                // Guardar wallet real
+                this.config.walletAddress = walletData.address;
+                localStorage.setItem('rsc_wallet', JSON.stringify({
+                    address: walletData.address,
+                    privateKey: walletData.privateKey,
+                    created: Date.now(),
+                    blockchainCreated: true
+                }));
+                
+                this.showNotification('✅ Wallet creada exitosamente en la blockchain', 'success');
+                
+                // Cargar datos iniciales
+                await this.loadInitialData();
+                
+            } else {
+                throw new Error('No se pudo crear la wallet en la blockchain');
+            }
+            
+        } catch (error) {
+            console.error('Error creando wallet:', error);
+            this.showNotification('❌ Error creando wallet: ' + error.message, 'error');
         }
     }
 
@@ -83,8 +183,6 @@ class WalletRSC {
             this.backupWallet();
         });
 
-
-
         // Formularios
         document.getElementById('sendForm')?.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -99,8 +197,6 @@ class WalletRSC {
         document.getElementById('stopMiningBtn')?.addEventListener('click', () => {
             this.stopMining();
         });
-
-
 
         // Botones de utilidad
         document.getElementById('refreshBalanceBtn')?.addEventListener('click', () => {
@@ -158,19 +254,23 @@ class WalletRSC {
     
     async loadInitialData() {
         try {
-            // Cargar balance
+            // Solo cargar datos si hay wallet
+            if (!this.config.walletAddress) {
+                console.log('No hay wallet para cargar datos');
+                return;
+            }
+            
+            // Cargar balance real desde blockchain
             await this.loadBalance();
             
-            // Cargar transacciones
+            // Cargar transacciones reales desde blockchain
             await this.loadTransactions();
             
-            // Cargar datos de minería
+            // Cargar datos de minería reales
             await this.loadMiningData();
             
             // Actualizar transacciones recientes
             this.updateRecentTransactions();
-            
-            
             
         } catch (error) {
             console.error('Error cargando datos iniciales:', error);
@@ -178,44 +278,106 @@ class WalletRSC {
     }
 
     async loadBalance() {
-        // Simular carga de balance desde blockchain
-        const mockBalance = Math.random() * 1000;
-        this.state.balance = mockBalance;
-        
-        this.updateBalanceDisplay();
+        try {
+            if (!this.config.walletAddress) {
+                this.state.balance = 0;
+                this.updateBalanceDisplay();
+                return;
+            }
+            
+            // Obtener balance real desde blockchain
+            const response = await fetch('/api/wallet/balance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    address: this.config.walletAddress
+                })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                this.state.balance = data.balance || 0;
+            } else {
+                this.state.balance = 0;
+            }
+            
+            this.updateBalanceDisplay();
+            
+        } catch (error) {
+            console.error('Error cargando balance:', error);
+            this.state.balance = 0;
+            this.updateBalanceDisplay();
+        }
     }
 
     async loadTransactions() {
-        // Simular transacciones
-        this.state.transactions = [
-            {
-                id: 'tx_001',
-                type: 'received',
-                amount: 100.5,
-                from: '0x1234...5678',
-                timestamp: new Date(Date.now() - 86400000),
-                status: 'confirmed'
-            },
-            {
-                id: 'tx_002',
-                type: 'sent',
-                amount: 25.0,
-                to: '0x8765...4321',
-                timestamp: new Date(Date.now() - 172800000),
-                status: 'confirmed'
+        try {
+            if (!this.config.walletAddress) {
+                this.state.transactions = [];
+                this.updateTransactionsDisplay();
+                return;
             }
-        ];
-        
-        this.updateTransactionsDisplay();
+            
+            // Obtener transacciones reales desde blockchain
+            const response = await fetch('/api/wallet/transactions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    address: this.config.walletAddress
+                })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                this.state.transactions = data.transactions || [];
+            } else {
+                this.state.transactions = [];
+            }
+            
+            this.updateTransactionsDisplay();
+            
+        } catch (error) {
+            console.error('Error cargando transacciones:', error);
+            this.state.transactions = [];
+            this.updateTransactionsDisplay();
+        }
     }
 
     async loadMiningData() {
-        // Simular datos de minería
-        this.state.miningRewards = Math.random() * 50;
-        this.updateMiningDisplay();
+        try {
+            if (!this.config.walletAddress) {
+                this.state.miningRewards = 0;
+                this.updateMiningDisplay();
+                return;
+            }
+            
+            // Obtener datos de minería reales desde blockchain
+            const response = await fetch('/api/mining/status', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                this.state.miningRewards = data.pendingRewards || 0;
+            } else {
+                this.state.miningRewards = 0;
+            }
+            
+            this.updateMiningDisplay();
+            
+        } catch (error) {
+            console.error('Error cargando datos de minería:', error);
+            this.state.miningRewards = 0;
+            this.updateMiningDisplay();
+        }
     }
-
-
 
     loadSectionData(sectionName) {
         switch (sectionName) {
@@ -228,7 +390,6 @@ class WalletRSC {
             case 'mining':
                 this.loadMiningData();
                 break;
-
         }
     }
 
@@ -240,10 +401,18 @@ class WalletRSC {
             balanceElement.textContent = `${this.state.balance.toFixed(6)} RSC`;
         }
 
-        const usdValue = (this.state.balance * this.config.rscPrice).toFixed(2);
-        const usdElement = document.getElementById('balanceUSD');
-        if (usdElement) {
-            usdElement.textContent = `≈ $${usdValue} USD`;
+        // Solo mostrar valor USD si hay precio real
+        if (this.config.rscPrice > 0) {
+            const usdValue = (this.state.balance * this.config.rscPrice).toFixed(2);
+            const usdElement = document.getElementById('balanceUSD');
+            if (usdElement) {
+                usdElement.textContent = `≈ $${usdValue} USD`;
+            }
+        } else {
+            const usdElement = document.getElementById('balanceUSD');
+            if (usdElement) {
+                usdElement.textContent = 'Precio no disponible';
+            }
         }
 
         // Actualizar estadísticas
@@ -386,8 +555,6 @@ class WalletRSC {
         }
     }
 
-
-
     // ===== INTEGRATIONS =====
     
     async initializeIntegrations() {
@@ -411,34 +578,61 @@ class WalletRSC {
         try {
             this.showNotification('Conectando a RSC Chain...', 'info');
             
-            // Simular conexión
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Intentar conexión real a blockchain
+            const response = await fetch('/api/blockchain/status', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             
-            this.state.isBlockchainConnected = true;
-            this.updateIntegrationStatus('blockchainStatus', 'online');
-            this.showNotification('✅ Conectado a RSC Chain', 'success');
+            if (response.ok) {
+                const data = await response.json();
+                this.state.isBlockchainConnected = true;
+                this.updateIntegrationStatus('blockchainStatus', 'online');
+                this.showNotification('✅ Conectado a RSC Chain', 'success');
+                
+                // Obtener precio real de RSC
+                if (data.rscPrice) {
+                    this.config.rscPrice = data.rscPrice;
+                    this.updateBalanceDisplay();
+                }
+            } else {
+                throw new Error('No se pudo conectar a RSC Chain');
+            }
             
         } catch (error) {
             console.error('Error conectando a blockchain:', error);
+            this.state.isBlockchainConnected = false;
+            this.updateIntegrationStatus('blockchainStatus', 'offline');
             this.showNotification('❌ Error conectando a blockchain', 'error');
         }
     }
-
-
 
     async connectToMiningSystem() {
         try {
             this.showNotification('Conectando al sistema de minería...', 'info');
             
-            // Simular conexión
-            await new Promise(resolve => setTimeout(resolve, 800));
+            // Intentar conexión real al sistema de minería
+            const response = await fetch('/api/mining/status', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             
-            this.state.isMiningConnected = true;
-            this.updateIntegrationStatus('miningIntegrationStatus', 'online');
-            this.showNotification('✅ Conectado al sistema de minería', 'success');
+            if (response.ok) {
+                this.state.isMiningConnected = true;
+                this.updateIntegrationStatus('miningIntegrationStatus', 'online');
+                this.showNotification('✅ Conectado al sistema de minería', 'success');
+            } else {
+                throw new Error('No se pudo conectar al sistema de minería');
+            }
             
         } catch (error) {
             console.error('Error conectando al sistema de minería:', error);
+            this.state.isMiningConnected = false;
+            this.updateIntegrationStatus('miningIntegrationStatus', 'offline');
             this.showNotification('❌ Error conectando al sistema de minería', 'error');
         }
     }
@@ -455,6 +649,11 @@ class WalletRSC {
     
     async claimMiningRewards() {
         try {
+            if (!this.config.walletAddress) {
+                this.showNotification('Primero debes crear una wallet', 'warning');
+                return;
+            }
+            
             if (this.state.miningRewards <= 0) {
                 this.showNotification('No hay recompensas para reclamar', 'warning');
                 return;
@@ -462,25 +661,39 @@ class WalletRSC {
 
             this.showNotification('Reclamando recompensas de minería...', 'info');
             
-            // Simular reclamación
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            // Llamar al backend para reclamar recompensas reales
+            const response = await fetch('/api/mining/reward', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    address: this.config.walletAddress
+                })
+            });
             
-            const claimedAmount = this.state.miningRewards;
-            this.state.balance += claimedAmount;
-            this.state.miningRewards = 0;
-            
-            // Agregar transacción de mining
-            this.addTransaction('mining', claimedAmount, 'Recompensas de Minería');
-            
-            this.updateBalanceDisplay();
-            this.updateMiningDisplay();
-            this.updateRecentTransactions();
-            
-            this.showNotification(`✅ Recompensas reclamadas: ${claimedAmount.toFixed(6)} RSC`, 'success');
+            if (response.ok) {
+                const data = await response.json();
+                const claimedAmount = data.claimedAmount || this.state.miningRewards;
+                
+                this.state.balance += claimedAmount;
+                this.state.miningRewards = 0;
+                
+                // Agregar transacción de mining
+                this.addTransaction('mining', claimedAmount, 'Recompensas de Minería');
+                
+                this.updateBalanceDisplay();
+                this.updateMiningDisplay();
+                this.updateRecentTransactions();
+                
+                this.showNotification(`✅ Recompensas reclamadas: ${claimedAmount.toFixed(6)} RSC`, 'success');
+            } else {
+                throw new Error('No se pudieron reclamar las recompensas');
+            }
             
         } catch (error) {
             console.error('Error reclamando recompensas:', error);
-            this.showNotification('❌ Error reclamando recompensas', 'error');
+            this.showNotification('❌ Error reclamando recompensas: ' + error.message, 'error');
         }
     }
 
@@ -509,6 +722,10 @@ class WalletRSC {
     }
 
     startMining() {
+        if (!this.config.walletAddress) {
+            this.showNotification('Primero debes crear una wallet', 'warning');
+            return;
+        }
         this.showNotification('⛏️ Minería iniciada', 'success');
     }
 
@@ -516,12 +733,15 @@ class WalletRSC {
         this.showNotification('⏹️ Minería detenida', 'info');
     }
 
-
-
     // ===== TRANSACTION FUNCTIONS =====
     
     async handleSendTransaction() {
         try {
+            if (!this.config.walletAddress) {
+                this.showNotification('Primero debes crear una wallet', 'warning');
+                return;
+            }
+            
             const recipientAddress = document.getElementById('recipientAddress').value;
             const amount = parseFloat(document.getElementById('sendAmount').value);
             const gasFee = document.getElementById('gasFee').value;
@@ -538,45 +758,72 @@ class WalletRSC {
 
             this.showNotification('Procesando transacción...', 'info');
             
-            // Simular procesamiento
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            
-            // Actualizar balance
-            this.state.balance -= amount;
-            
-            // Agregar transacción
-            this.state.transactions.unshift({
-                id: `tx_${Date.now()}`,
-                type: 'sent',
-                amount: amount,
-                to: recipientAddress,
-                timestamp: new Date(),
-                status: 'confirmed'
+            // Enviar transacción real a la blockchain
+            const response = await fetch('/api/wallet/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    from: this.config.walletAddress,
+                    to: recipientAddress,
+                    amount: amount,
+                    gasFee: gasFee
+                })
             });
             
-            this.updateBalanceDisplay();
-            this.updateTransactionsDisplay();
-            
-            this.showNotification('✅ Transacción enviada exitosamente', 'success');
-            
-            // Limpiar formulario
-            document.getElementById('sendForm').reset();
+            if (response.ok) {
+                const data = await response.json();
+                
+                // Actualizar balance
+                this.state.balance -= amount;
+                
+                // Agregar transacción
+                this.state.transactions.unshift({
+                    id: data.transactionId || `tx_${Date.now()}`,
+                    type: 'sent',
+                    amount: amount,
+                    to: recipientAddress,
+                    timestamp: new Date(),
+                    status: 'confirmed'
+                });
+                
+                this.updateBalanceDisplay();
+                this.updateTransactionsDisplay();
+                
+                this.showNotification('✅ Transacción enviada exitosamente', 'success');
+                
+                // Limpiar formulario
+                document.getElementById('sendForm').reset();
+            } else {
+                throw new Error('No se pudo procesar la transacción');
+            }
             
         } catch (error) {
             console.error('Error enviando transacción:', error);
-            this.showNotification('❌ Error enviando transacción', 'error');
+            this.showNotification('❌ Error enviando transacción: ' + error.message, 'error');
         }
     }
 
     // ===== UTILITY FUNCTIONS =====
     
     refreshBalance() {
+        if (!this.config.walletAddress) {
+            this.showNotification('Primero debes crear una wallet', 'warning');
+            return;
+        }
+        
         this.showNotification('Actualizando balance...', 'info');
         this.loadBalance();
         this.showNotification('✅ Balance actualizado', 'success');
     }
 
     copyWalletAddress() {
+        if (!this.config.walletAddress) {
+            this.showNotification('Primero debes crear una wallet', 'warning');
+            return;
+        }
+        
         navigator.clipboard.writeText(this.config.walletAddress).then(() => {
             this.showNotification('✅ Dirección copiada al portapapeles', 'success');
         }).catch(() => {
@@ -585,19 +832,29 @@ class WalletRSC {
     }
 
     downloadQRCode() {
+        if (!this.config.walletAddress) {
+            this.showNotification('Primero debes crear una wallet', 'warning');
+            return;
+        }
         this.showNotification('Función de descarga QR próximamente', 'info');
     }
 
     showQRCode() {
+        if (!this.config.walletAddress) {
+            this.showNotification('Primero debes crear una wallet', 'warning');
+            return;
+        }
         this.showNotification('Mostrando código QR...', 'info');
         // Aquí se implementaría la generación del QR
     }
 
     backupWallet() {
+        if (!this.config.walletAddress) {
+            this.showNotification('Primero debes crear una wallet', 'warning');
+            return;
+        }
         this.showNotification('Función de backup próximamente', 'info');
     }
-
-
 
     // ===== NOTIFICATIONS =====
     

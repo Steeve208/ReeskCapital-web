@@ -822,3 +822,241 @@ body.has-active-mining {
         font-size: 0.8rem;
     }
 }
+
+/* ===== NOTIFICACIONES DEL SISTEMA DE MINERÍA ===== */
+.mining-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 500;
+    z-index: 10001;
+    max-width: 350px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mining-notification.success {
+    background: linear-gradient(135deg, rgba(46, 213, 115, 0.9), rgba(34, 197, 94, 0.9));
+    border-color: rgba(46, 213, 115, 0.3);
+}
+
+.mining-notification.error {
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.9), rgba(239, 68, 68, 0.9));
+    border-color: rgba(255, 71, 87, 0.3);
+}
+
+.mining-notification.warning {
+    background: linear-gradient(135deg, rgba(255, 165, 2, 0.9), rgba(245, 158, 11, 0.9));
+    border-color: rgba(255, 165, 2, 0.3);
+}
+
+.mining-notification.info {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.9), rgba(59, 130, 246, 0.9));
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.notification-text {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.notification-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Animaciones para notificaciones */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Responsive para notificaciones */
+@media (max-width: 768px) {
+    .mining-notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        font-size: 13px;
+    }
+    
+    .notification-content {
+        gap: 10px;
+    }
+    
+    .notification-text {
+        font-size: 13px;
+    }
+}
+
+/* ===== INDICADORES DE ESTADO DE MINERÍA ===== */
+.mining-status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mining-status-indicator.active {
+    background: rgba(46, 213, 115, 0.2);
+    color: #2ed573;
+    border: 1px solid rgba(46, 213, 115, 0.3);
+}
+
+.mining-status-indicator.inactive {
+    background: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
+    border: 1px solid rgba(255, 71, 87, 0.3);
+}
+
+.mining-status-indicator.pending {
+    background: rgba(255, 165, 2, 0.2);
+    color: #ffa502;
+    border: 1px solid rgba(255, 165, 2, 0.3);
+}
+
+/* ===== BADGES DE RECOMPENSA ===== */
+.reward-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 212, 255, 0.1));
+    color: #00d4ff;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.reward-badge .reward-icon {
+    font-size: 12px;
+}
+
+.reward-badge .reward-amount {
+    font-weight: 700;
+}
+
+/* ===== TOOLTIPS PARA ELEMENTOS DE MINERÍA ===== */
+.mining-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.mining-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 8px;
+    position: absolute;
+    z-index: 10002;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mining-tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ===== PROGRESS BARS PARA MINERÍA ===== */
+.mining-progress {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.mining-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00d4ff, #2ed573);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.mining-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
