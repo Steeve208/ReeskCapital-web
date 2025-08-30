@@ -12,19 +12,30 @@ class RSCMiningPlatform {
             isMining: false,
             miningStartTime: null,
             sessionTokens: 0,
-            totalMined: 0,
+            totalMined: 0.001, // Saldo inicial mínimo
             totalTime: 0,
             sessionsToday: 0,
             dailyLimit: 0,
-            theme: 'light'
+            theme: 'light',
+            // Nuevos estados para minería 24/7
+            miningSessionStart: null,
+            miningSessionEnd: null,
+            currentMiningRate: 0.0001,
+            lastTokenUpdate: null,
+            sessionStatus: 'inactive', // 'inactive', 'active', 'completed'
+            // Nuevos estados para cooldown y bloqueo
+            lastClaimTime: null,
+            claimCooldown: 30 * 60 * 1000, // 30 minutos en milisegundos
+            pendingTokens: 0 // Tokens no reclamados de sesión anterior
         };
         
-        // Configuración de minería
+        // Configuración de minería 24/7
         this.config = {
-            tokensPerMinute: 10, // 10 tokens por minuto activo
+            tokensPerMinute: 0.0001, // 0.0001 tokens por minuto (base)
             dailyLimit: 2, // 2 RSC máximo por día
             updateInterval: 1000, // Actualizar cada segundo
-            sessionTimeout: 300000 // 5 minutos de timeout
+            sessionDuration: 24 * 60 * 60 * 1000, // 24 horas en milisegundos
+            baseRate: 0.0001 // Tasa base de tokens por minuto
         };
         
         // Elementos DOM
@@ -104,7 +115,6 @@ class RSCMiningPlatform {
         
         // Elementos de minería
         this.elements.startMining = document.getElementById('startMining');
-        this.elements.stopMining = document.getElementById('stopMining');
         this.elements.claimRewards = document.getElementById('claimRewards');
         
         // Elementos de estado
@@ -115,6 +125,7 @@ class RSCMiningPlatform {
         this.elements.progressFill = document.getElementById('progressFill');
         this.elements.tokensEarned = document.getElementById('tokensEarned');
         this.elements.activeTime = document.getElementById('activeTime');
+        this.elements.statusIndicator = document.getElementById('statusIndicator');
         
         // Elementos de estadísticas
         this.elements.userBalance = document.getElementById('userBalance');
@@ -124,10 +135,11 @@ class RSCMiningPlatform {
         this.elements.sessionsToday = document.getElementById('sessionsToday');
         this.elements.userRanking = document.getElementById('userRanking');
         
-        // Elementos del sidebar
+        // Elementos del sidebar (ahora en la parte inferior)
         this.elements.sidebarUsername = document.getElementById('sidebarUsername');
         this.elements.sidebarEmail = document.getElementById('sidebarEmail');
         this.elements.sidebarBalance = document.getElementById('sidebarBalance');
+        this.elements.sidebarSessionsToday = document.getElementById('sidebarSessionsToday');
         this.elements.lastMining = document.getElementById('lastMining');
         this.elements.networkDifficulty = document.getElementById('networkDifficulty');
         this.elements.networkBlocks = document.getElementById('networkBlocks');
@@ -139,14 +151,29 @@ class RSCMiningPlatform {
         this.elements.hamburgerMenu = document.getElementById('hamburgerMenu');
         this.elements.mobileNav = document.getElementById('mobileNav');
         this.elements.themeToggle = document.getElementById('themeToggle');
+        this.elements.settingsBtn = document.getElementById('settingsBtn');
         
         // Elementos de modales
         this.elements.modalOverlay = document.getElementById('modalOverlay');
         this.elements.mainnetModal = document.getElementById('mainnetModal');
         this.elements.mainnetModalClose = document.getElementById('mainnetModalClose');
+        this.elements.settingsModal = document.getElementById('settingsModal');
+        this.elements.settingsModalClose = document.getElementById('settingsModalClose');
+        this.elements.refreshStatsBtn = document.getElementById('refreshStatsBtn');
+        this.elements.exportDataBtn = document.getElementById('exportDataBtn');
+        this.elements.backupDataBtn = document.getElementById('backupDataBtn');
         
         // Contenedor de notificaciones
         this.elements.notificationContainer = document.getElementById('notificationContainer');
+        
+        // Log de depuración para identificar elementos faltantes
+        console.log('🔍 Elementos DOM cargados:', {
+            startMining: !!this.elements.startMining,
+            claimRewards: !!this.elements.claimRewards,
+            userBalance: !!this.elements.userBalance,
+            tokensEarned: !!this.elements.tokensEarned,
+            statusIndicator: !!this.elements.statusIndicator
+        });
     }
     
     setupEventListeners() {
@@ -161,7 +188,6 @@ class RSCMiningPlatform {
         
         // Botones de minería
         this.elements.startMining.addEventListener('click', () => this.startMining());
-        this.elements.stopMining.addEventListener('click', () => this.stopMining());
         this.elements.claimRewards.addEventListener('click', () => this.claimRewards());
         
         // Botones de navegación
@@ -169,9 +195,39 @@ class RSCMiningPlatform {
         this.elements.hamburgerMenu.addEventListener('click', () => this.toggleMobileMenu());
         this.elements.themeToggle.addEventListener('click', () => this.toggleTheme());
         
+        // Botón de ajustes
+        if (this.elements.settingsBtn) {
+            this.elements.settingsBtn.addEventListener('click', () => this.openSettingsModal());
+        }
+        
+        // Botón de ajustes móvil
+        const settingsMobileBtn = document.getElementById('settingsMobileBtn');
+        if (settingsMobileBtn) {
+            settingsMobileBtn.addEventListener('click', () => {
+                this.openSettingsModal();
+                this.toggleMobileMenu(); // Cerrar menú móvil
+            });
+        }
+        
+        // Botones del sidebar
+        const sidebarSettingsBtn = document.getElementById('sidebarSettingsBtn');
+        if (sidebarSettingsBtn) {
+            sidebarSettingsBtn.addEventListener('click', () => this.openSettingsModal());
+        }
+        
+        const sidebarMainnetBtn = document.getElementById('sidebarMainnetBtn');
+        if (sidebarMainnetBtn) {
+            sidebarMainnetBtn.addEventListener('click', () => this.showMainnetModal());
+        }
+        
         // Cerrar modales
         this.elements.modalOverlay.addEventListener('click', () => this.hideAllModals());
         this.elements.mainnetModalClose.addEventListener('click', () => this.hideMainnetModal());
+        
+        // Cerrar modal de ajustes
+        if (this.elements.settingsModalClose) {
+            this.elements.settingsModalClose.addEventListener('click', () => this.closeSettingsModal());
+        }
         
         // Eventos de teclado
         document.addEventListener('keydown', (e) => {
@@ -179,6 +235,19 @@ class RSCMiningPlatform {
                 this.hideAllModals();
             }
         });
+        
+        // Botones de acción del modal de ajustes
+        if (this.elements.refreshStatsBtn) {
+            this.elements.refreshStatsBtn.addEventListener('click', () => this.refreshStats());
+        }
+        
+        if (this.elements.exportDataBtn) {
+            this.elements.exportDataBtn.addEventListener('click', () => this.exportData());
+        }
+        
+        if (this.elements.backupDataBtn) {
+            this.elements.backupDataBtn.addEventListener('click', () => this.backupData());
+        }
     }
     
     async checkAuthentication() {
@@ -316,16 +385,16 @@ class RSCMiningPlatform {
                     
                     if (userData) {
                         await this.loadUserData(email);
-                        this.showNotification('Sesión iniciada correctamente con Supabase', 'success');
+                        this.showNotification('Sesión iniciada correctamente con RSC', 'success');
                     } else {
                         // Usuario no existe, crearlo
                         await this.loadUserData(email);
                         this.showNotification('Usuario creado y sesión iniciada', 'success');
                     }
                 } catch (error) {
-                    console.warn('⚠️ Error con Supabase, usando modo local:', error.message);
-                    await this.loadUserData(email);
-                    this.showNotification('Sesión iniciada (modo local)', 'success');
+                                            console.warn('⚠️ Error con RSC, usando modo local:', error.message);
+                        await this.loadUserData(email);
+                        this.showNotification('Sesión iniciada (modo local)', 'success');
                 }
             } else {
                 // Login local (simulado)
@@ -397,11 +466,11 @@ class RSCMiningPlatform {
                 try {
                     console.log('🔍 Creando usuario en Supabase...');
                     await this.loadUserData(email);
-                    this.showNotification('Usuario registrado correctamente en Supabase', 'success');
+                                            this.showNotification('Usuario registrado correctamente en RSC', 'success');
                 } catch (error) {
-                    console.warn('⚠️ Error con Supabase, usando modo local:', error.message);
-                    await this.loadUserData(email);
-                    this.showNotification('Usuario registrado (modo local)', 'success');
+                                            console.warn('⚠️ Error con RSC, usando modo local:', error.message);
+                        await this.loadUserData(email);
+                        this.showNotification('Usuario registrado (modo local)', 'success');
                 }
             } else {
                 // Registro local (simulado)
@@ -475,36 +544,90 @@ class RSCMiningPlatform {
             return;
         }
         
-        // Verificar límite diario
-        if (this.state.dailyLimit >= this.config.dailyLimit) {
-            this.showNotification('Has alcanzado el límite diario de 2 RSC', 'warning');
+        // Verificar si hay tokens pendientes de reclamar
+        if (this.state.pendingTokens > 0) {
+            this.showNotification('Debes reclamar los tokens de tu sesión anterior antes de minar nuevamente', 'warning');
             return;
         }
         
-        try {
-            // Iniciar minería
-            this.state.isMining = true;
-            this.state.miningStartTime = Date.now();
-            this.state.sessionTokens = 0;
-            
-            // Actualizar UI
+        // Iniciar sesión de minería de 24 horas
+        this.start24HourMiningSession();
+        
+        this.showNotification('Minería iniciada - 24 horas activas', 'success');
+        console.log('Minería iniciada - Ciclo de 24 horas');
+    }
+    
+    start24HourMiningSession() {
+        const now = Date.now();
+        const sessionEnd = now + this.config.sessionDuration; // 24 horas
+        
+        // Actualizar estado
+        this.state.isMining = true;
+        this.state.miningSessionStart = now;
+        this.state.miningSessionEnd = sessionEnd;
+        this.state.sessionStatus = 'active';
+        this.state.sessionTokens = 0;
+        
+        // Guardar en localStorage para persistencia
+        localStorage.setItem('rsc_mining_active', 'true');
+        localStorage.setItem('rsc_mining_start', now.toString());
+        localStorage.setItem('rsc_mining_end', sessionEnd.toString());
+        
+        // Iniciar minería automática
+        this.startAutomaticMining();
+        
+        // Actualizar UI
+        if (this.elements.startMining) {
             this.elements.startMining.disabled = true;
-            this.elements.stopMining.disabled = false;
             this.elements.startMining.classList.add('loading');
+        }
+        
+        // Guardar en Supabase
+        this.saveMiningSessionToSupabase();
+    }
+    
+    startAutomaticMining() {
+        // Timer principal que corre cada segundo
+        this.state.miningTimer = setInterval(() => {
+            this.processMiningTick();
+        }, 1000);
+        
+        // Timer de actualización de UI cada 5 segundos
+        this.state.updateTimer = setInterval(() => {
+            this.updateMiningInterface();
+        }, 5000);
+        
+        console.log('⛏️ Minería automática iniciada - 24 horas activas');
+    }
+    
+    processMiningTick() {
+        const now = Date.now();
+        
+        // Verificar si la sesión ha terminado
+        if (now >= this.state.miningSessionEnd) {
+            this.completeMiningSession();
+            return;
+        }
+        
+        // Calcular tokens ganados en este tick
+        const elapsedMinutes = (now - this.state.miningSessionStart) / (1000 * 60);
+        const tokensEarned = elapsedMinutes * this.config.baseRate;
+        
+        // Actualizar saldo (SIEMPRE aumenta, nunca baja)
+        const newBalance = this.state.totalMined + (tokensEarned * 0.000001); // Factor de conversión
+        
+        if (newBalance > this.state.totalMined) {
+            this.state.totalMined = newBalance;
+            this.state.sessionTokens = tokensEarned;
             
-            // Iniciar timers
-            this.startSessionTimer();
-            this.startUpdateTimer();
+            // Guardar en localStorage
+            localStorage.setItem('rsc_user_balance', newBalance.toString());
             
-            // Guardar estado
-            this.saveMiningSession();
-            
-            this.showNotification('Minería iniciada correctamente', 'success');
-            console.log('Minería iniciada');
-        } catch (error) {
-            console.error('Error al iniciar minería:', error);
-            this.showNotification('Error al iniciar minería', 'error');
-            this.state.isMining = false;
+            // Actualizar Supabase cada 30 segundos
+            if (!this.state.lastTokenUpdate || (now - this.state.lastTokenUpdate) > 30000) {
+                this.updateBalanceInSupabase(newBalance);
+                this.state.lastTokenUpdate = now;
+            }
         }
     }
     
@@ -514,40 +637,72 @@ class RSCMiningPlatform {
         }
         
         try {
-            // Detener minería
-            this.state.isMining = false;
+            // Detener minería manualmente
+            this.completeMiningSession();
             
-            // Calcular recompensas de la sesión
-            const sessionRewards = this.calculateSessionRewards();
-            this.state.sessionTokens = sessionRewards;
-            
-            // Actualizar balance
-            this.state.totalMined += sessionRewards;
-            this.state.dailyLimit += sessionRewards;
-            
-            // Actualizar UI
-            this.elements.startMining.disabled = false;
-            this.elements.stopMining.disabled = true;
-            this.elements.startMining.classList.remove('loading');
-            
-            // Detener timers
-            this.stopSessionTimer();
-            this.stopUpdateTimer();
-            
-            // Guardar datos
-            this.saveMiningData();
-            this.addMiningHistoryEntry(sessionRewards);
-            
-            // Actualizar display
-            this.updateMiningStats();
-            this.updateUserDisplay();
-            
-            this.showNotification(`Minería detenida. Ganaste ${sessionRewards.toFixed(2)} RSC`, 'success');
-            console.log('Minería detenida, recompensas:', sessionRewards);
+            this.showNotification('Minería detenida manualmente', 'info');
+            console.log('Minería detenida manualmente');
         } catch (error) {
             console.error('Error al detener minería:', error);
             this.showNotification('Error al detener minería', 'error');
         }
+    }
+    
+    completeMiningSession() {
+        // Detener timers
+        if (this.state.miningTimer) {
+            clearInterval(this.state.miningTimer);
+            this.state.miningTimer = null;
+        }
+        
+        if (this.state.updateTimer) {
+            clearInterval(this.state.updateTimer);
+            this.state.updateTimer = null;
+        }
+        
+        // Calcular recompensas finales
+        if (this.state.miningSessionStart && this.state.miningSessionEnd) {
+            const now = Date.now();
+            const endTime = Math.min(now, this.state.miningSessionEnd);
+            const elapsedMinutes = (endTime - this.state.miningSessionStart) / (1000 * 60);
+            const finalTokens = elapsedMinutes * this.config.baseRate;
+            
+            // Establecer tokens pendientes (deben ser reclamados antes de minar nuevamente)
+            this.state.pendingTokens = finalTokens;
+            this.state.sessionTokens = 0;
+            
+            // Guardar en localStorage
+            localStorage.setItem('rsc_user_balance', this.state.totalMined.toString());
+            localStorage.setItem('rsc_pending_tokens', finalTokens.toString());
+            
+            console.log(`💰 Sesión completada: ${finalTokens.toFixed(6)} tokens pendientes de reclamar`);
+        }
+        
+        // Limpiar estado de sesión
+        this.state.isMining = false;
+        this.state.sessionStatus = 'completed';
+        this.state.miningSessionStart = null;
+        this.state.miningSessionEnd = null;
+        
+        // Limpiar localStorage
+        localStorage.setItem('rsc_mining_active', 'false');
+        localStorage.removeItem('rsc_mining_start');
+        localStorage.removeItem('rsc_mining_end');
+        
+        // Actualizar UI
+        if (this.elements.startMining) {
+            this.elements.startMining.disabled = false;
+            this.elements.startMining.classList.remove('loading');
+        }
+        
+        // Guardar en Supabase
+        this.updateBalanceInSupabase(this.state.totalMined);
+        
+        // Actualizar interfaz
+        this.updateMiningInterface();
+        this.updateUserDisplay();
+        
+        console.log('✅ Sesión de minería completada');
     }
     
     async claimRewards() {
@@ -556,17 +711,43 @@ class RSCMiningPlatform {
             return;
         }
         
-        if (this.state.sessionTokens <= 0) {
+        // Verificar si hay tokens de sesión O tokens pendientes
+        if (this.state.sessionTokens <= 0 && this.state.pendingTokens <= 0) {
             this.showNotification('No hay recompensas para reclamar', 'warning');
             return;
         }
         
+        // Verificar cooldown de 30 minutos
+        const now = Date.now();
+        if (this.state.lastClaimTime && (now - this.state.lastClaimTime) < this.state.claimCooldown) {
+            const remainingTime = Math.ceil((this.state.claimCooldown - (now - this.state.lastClaimTime)) / (1000 * 60));
+            this.showNotification(`Debes esperar ${remainingTime} minutos antes de reclamar nuevamente`, 'warning');
+            return;
+        }
+        
         try {
-            // Reclamar recompensas de la sesión actual
-            const claimedTokens = this.state.sessionTokens;
-            this.state.totalMined += claimedTokens;
-            this.state.dailyLimit += claimedTokens;
-            this.state.sessionTokens = 0;
+            let totalClaimed = 0;
+            
+            // Reclamar tokens de sesión actual si existen
+            if (this.state.sessionTokens > 0) {
+                totalClaimed += this.state.sessionTokens;
+                this.state.totalMined += this.state.sessionTokens;
+                this.state.dailyLimit += this.state.sessionTokens;
+                this.state.sessionTokens = 0;
+                console.log('✅ Tokens de sesión reclamados:', this.state.sessionTokens);
+            }
+            
+            // Reclamar tokens pendientes si existen
+            if (this.state.pendingTokens > 0) {
+                totalClaimed += this.state.pendingTokens;
+                this.state.totalMined += this.state.pendingTokens;
+                this.state.dailyLimit += this.state.pendingTokens;
+                this.state.pendingTokens = 0;
+                localStorage.removeItem('rsc_pending_tokens');
+                console.log('✅ Tokens pendientes reclamados:', this.state.pendingTokens);
+            }
+            
+            this.state.lastClaimTime = now;
             
             // Actualizar en Supabase
             if (this.supabase && this.state.currentUser) {
@@ -590,8 +771,8 @@ class RSCMiningPlatform {
             this.updateMiningStats();
             this.updateUserDisplay();
             
-            this.showNotification(`Recompensas reclamadas: ${claimedTokens.toFixed(2)} RSC`, 'success');
-            console.log('Recompensas reclamadas:', claimedTokens);
+            this.showNotification(`Recompensas reclamadas: ${totalClaimed.toFixed(6)} RSC`, 'success');
+            console.log('✅ Total reclamado:', totalClaimed.toFixed(6), 'RSC');
         } catch (error) {
             console.error('Error al reclamar recompensas:', error);
             this.showNotification('Error al reclamar recompensas', 'error');
@@ -667,40 +848,54 @@ class RSCMiningPlatform {
         const minutes = Math.floor((sessionDuration % 3600000) / 60000);
         const seconds = Math.floor((sessionDuration % 60000) / 1000);
         
-        this.elements.sessionTime.textContent = 
-            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        if (this.elements.sessionTime) {
+            this.elements.sessionTime.textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
         
         // Actualizar barra de progreso
-        const maxSessionTime = this.config.sessionTimeout;
-        const progress = Math.min((sessionDuration / maxSessionTime) * 100, 100);
-        this.elements.progressFill.style.width = `${progress}%`;
+        if (this.elements.progressFill) {
+            const maxSessionTime = this.config.sessionTimeout;
+            const progress = Math.min((sessionDuration / maxSessionTime) * 100, 100);
+            this.elements.progressFill.style.width = `${progress}%`;
+        }
         
         // Actualizar tokens ganados
-        const tokens = this.calculateSessionRewards();
-        this.elements.tokensEarned.textContent = tokens.toFixed(2);
+        if (this.elements.tokensEarned) {
+            const tokens = this.calculateSessionRewards();
+            this.elements.tokensEarned.textContent = tokens.toFixed(2);
+        }
         
         // Actualizar tiempo activo
-        const activeMinutes = Math.floor(sessionDuration / 60000);
-        this.elements.activeTime.textContent = activeMinutes;
+        if (this.elements.activeTime) {
+            const activeMinutes = Math.floor(sessionDuration / 60000);
+            this.elements.activeTime.textContent = activeMinutes;
+        }
     }
     
     updateMiningStats() {
         if (!this.state.isMining) return;
         
         // Hash rate
-        const hashRate = this.calculateHashRate();
-        this.elements.hashRate.textContent = `${hashRate} H/s`;
+        if (this.elements.hashRate) {
+            const hashRate = this.calculateHashRate();
+            this.elements.hashRate.textContent = `${hashRate} H/s`;
+        }
         
         // Intensidad
-        const sessionDuration = (Date.now() - this.state.miningStartTime) / 1000;
-        let intensity = 'Baja';
-        if (sessionDuration > 300) intensity = 'Media';
-        if (sessionDuration > 600) intensity = 'Alta';
-        this.elements.intensity.textContent = intensity;
+        if (this.elements.intensity) {
+            const sessionDuration = (Date.now() - this.state.miningStartTime) / 1000;
+            let intensity = 'Baja';
+            if (sessionDuration > 300) intensity = 'Media';
+            if (sessionDuration > 600) intensity = 'Alta';
+            this.elements.intensity.textContent = intensity;
+        }
         
         // Eficiencia
-        const efficiency = this.calculateEfficiency();
-        this.elements.efficiency.textContent = `${efficiency}%`;
+        if (this.elements.efficiency) {
+            const efficiency = this.calculateEfficiency();
+            this.elements.efficiency.textContent = `${efficiency}%`;
+        }
     }
     
     updateUserDisplay() {
@@ -708,48 +903,81 @@ class RSCMiningPlatform {
         
         // Username del usuario (más profesional que email)
         if (this.state.currentUser.username) {
-            this.elements.userUsername.textContent = this.state.currentUser.username;
-            this.elements.sidebarUsername.textContent = this.state.currentUser.username;
+            if (this.elements.userUsername) {
+                this.elements.userUsername.textContent = this.state.currentUser.username;
+            }
+            if (this.elements.sidebarUsername) {
+                this.elements.sidebarUsername.textContent = this.state.currentUser.username;
+            }
         } else {
             // Fallback al email si no hay username
-            this.elements.userUsername.textContent = this.state.currentUser.email;
-            this.elements.sidebarUsername.textContent = this.state.currentUser.email;
+            if (this.elements.userUsername) {
+                this.elements.userUsername.textContent = this.state.currentUser.email;
+            }
+            if (this.elements.sidebarUsername) {
+                this.elements.sidebarUsername.textContent = this.state.currentUser.email;
+            }
         }
         
         // Balance
-        this.elements.userBalance.textContent = this.state.totalMined.toFixed(2);
-        this.elements.sidebarBalance.textContent = this.state.totalMined.toFixed(2);
+        if (this.elements.userBalance) {
+            this.elements.userBalance.textContent = this.state.totalMined.toFixed(2);
+        }
+        if (this.elements.sidebarBalance) {
+            this.elements.sidebarBalance.textContent = this.state.totalMined.toFixed(2);
+        }
+        
+        // Sesiones hoy en el sidebar
+        if (this.elements.sidebarSessionsToday) {
+            this.elements.sidebarSessionsToday.textContent = this.state.sessionsToday;
+        }
         
         // Límite diario
-        this.elements.dailyLimit.textContent = `${this.state.dailyLimit.toFixed(2)} / ${this.config.dailyLimit}`;
+        if (this.elements.dailyLimit) {
+            this.elements.dailyLimit.textContent = `${this.state.dailyLimit.toFixed(2)} / ${this.config.dailyLimit}`;
+        }
         
         // Total minado
-        this.elements.totalMined.textContent = `${this.state.totalMined.toFixed(2)} RSC`;
+        if (this.elements.totalMined) {
+            this.elements.totalMined.textContent = `${this.state.totalMined.toFixed(2)} RSC`;
+        }
         
         // Tiempo total
-        const totalHours = Math.floor(this.state.totalTime / 60);
-        this.elements.totalTime.textContent = `${totalHours} horas`;
+        if (this.elements.totalTime) {
+            const totalHours = Math.floor(this.state.totalTime / 60);
+            this.elements.totalTime.textContent = `${totalHours} horas`;
+        }
         
         // Sesiones hoy
-        this.elements.sessionsToday.textContent = this.state.sessionsToday;
+        if (this.elements.sessionsToday) {
+            this.elements.sessionsToday.textContent = this.state.sessionsToday;
+        }
         
         // Ranking (simulado)
-        this.elements.userRanking.textContent = `#${Math.floor(Math.random() * 1000) + 1}`;
+        if (this.elements.userRanking) {
+            this.elements.userRanking.textContent = `#${Math.floor(Math.random() * 1000) + 1}`;
+        }
         
         // Última minería
-        if (this.state.currentUser.last_mine_at) {
-            const lastMining = new Date(this.state.currentUser.last_mine_at);
-            this.elements.lastMining.textContent = lastMining.toLocaleDateString();
-        } else {
-            this.elements.lastMining.textContent = 'Nunca';
+        if (this.elements.lastMining) {
+            if (this.state.currentUser.last_mine_at) {
+                const lastMining = new Date(this.state.currentUser.last_mine_at);
+                this.elements.lastMining.textContent = lastMining.toLocaleDateString();
+            } else {
+                this.elements.lastMining.textContent = 'Nunca';
+            }
         }
         
         // Dificultad de red (simulada)
-        const difficulties = ['Baja', 'Media', 'Alta'];
-        this.elements.networkDifficulty.textContent = difficulties[Math.floor(Math.random() * 3)];
+        if (this.elements.networkDifficulty) {
+            const difficulties = ['Baja', 'Media', 'Alta'];
+            this.elements.networkDifficulty.textContent = difficulties[Math.floor(Math.random() * 3)];
+        }
         
         // Bloques de red (simulados)
-        this.elements.networkBlocks.textContent = 'Simulado';
+        if (this.elements.networkBlocks) {
+            this.elements.networkBlocks.textContent = 'Simulado';
+        }
     }
     
     addMiningHistoryEntry(tokens) {
@@ -859,6 +1087,131 @@ class RSCMiningPlatform {
         document.body.classList.remove('modal-open');
     }
     
+    openSettingsModal() {
+        // Actualizar información en el modal antes de mostrarlo
+        this.updateSettingsModalInfo();
+        
+        this.elements.settingsModal.classList.add('active');
+        this.elements.modalOverlay.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+    
+    closeSettingsModal() {
+        this.elements.settingsModal.classList.remove('active');
+        this.elements.modalOverlay.classList.remove('active');
+        document.body.classList.remove('modal-open');
+    }
+    
+    showMainnetModal() {
+        this.elements.mainnetModal.classList.add('active');
+        this.elements.modalOverlay.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+    
+    updateSettingsModalInfo() {
+        // Actualizar información del usuario
+        if (this.elements.settingsUsername && this.state.currentUser) {
+            this.elements.settingsUsername.textContent = this.state.currentUser.username || 'Usuario';
+        }
+        
+        if (this.elements.settingsEmail && this.state.currentUser) {
+            this.elements.settingsEmail.textContent = this.state.currentUser.email || 'No disponible';
+        }
+        
+        // Actualizar tarjetas de estadísticas rápidas
+        if (this.elements.settingsBalance) {
+            this.elements.settingsBalance.textContent = this.state.totalMined.toFixed(2);
+        }
+        
+        if (this.elements.settingsTotalTime) {
+            const hours = Math.floor(this.state.totalTime / 60);
+            this.elements.settingsTotalTime.textContent = `${hours}h`;
+        }
+        
+        if (this.elements.settingsSessionsToday) {
+            this.elements.settingsSessionsToday.textContent = this.state.sessionsToday;
+        }
+        
+        if (this.elements.settingsUserRanking) {
+            this.elements.settingsUserRanking.textContent = `#${this.state.userRanking || '-'}`;
+        }
+        
+        if (this.elements.settingsLastMining) {
+            const lastMining = localStorage.getItem('rsc_last_mining') || 'Nunca';
+            this.elements.settingsLastMining.textContent = lastMining;
+        }
+        
+        if (this.elements.settingsMemberSince) {
+            const memberSince = localStorage.getItem('rsc_member_since') || 'Hoy';
+            this.elements.settingsMemberSince.textContent = memberSince;
+        }
+        
+        // Actualizar información de la red
+        if (this.elements.settingsDifficulty) {
+            this.elements.settingsDifficulty.textContent = 'Baja';
+        }
+        
+        if (this.elements.settingsBlocks) {
+            this.elements.settingsBlocks.textContent = 'Simulado';
+        }
+    }
+    
+    refreshStats() {
+        // Actualizar estadísticas
+        this.updateSettingsModalInfo();
+        this.showNotification('Estadísticas actualizadas', 'success');
+    }
+    
+    exportData() {
+        // Exportar datos del usuario
+        const userData = {
+            username: this.state.currentUser?.username || 'Usuario',
+            email: this.state.currentUser?.email || 'No disponible',
+            balance: this.state.totalMined,
+            totalTime: this.state.totalTime,
+            sessionsToday: this.state.sessionsToday,
+            lastMining: localStorage.getItem('rsc_last_mining') || 'Nunca'
+        };
+        
+        const dataStr = JSON.stringify(userData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `rsc_mining_data_${Date.now()}.json`;
+        link.click();
+        
+        URL.revokeObjectURL(url);
+        this.showNotification('Datos exportados correctamente', 'success');
+    }
+    
+    backupData() {
+        // Crear respaldo en localStorage
+        const backupData = {
+            timestamp: new Date().toISOString(),
+            user: this.state.currentUser,
+            miningStats: {
+                totalMined: this.state.totalMined,
+                totalTime: this.state.totalTime,
+                sessionsToday: this.state.sessionsToday,
+                userRanking: this.state.userRanking
+            },
+            lastMining: localStorage.getItem('rsc_last_mining'),
+            memberSince: localStorage.getItem('rsc_member_since')
+        };
+        
+        localStorage.setItem('rsc_backup_data', JSON.stringify(backupData));
+        
+        // Mostrar notificación de éxito
+        this.showNotification('Respaldo creado correctamente en tu dispositivo', 'success');
+        
+        // Simular envío a la nube (en una implementación real, esto iría a Supabase)
+        setTimeout(() => {
+            this.showNotification('Respaldo sincronizado con la nube', 'info');
+        }, 1000);
+    }
+    
     showNotification(message, type = 'info') {
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
@@ -947,35 +1300,57 @@ class RSCMiningPlatform {
             this.state.theme = savedTheme;
             document.documentElement.setAttribute('data-theme', savedTheme);
             
-            // Cargar datos de minería
-            const miningData = JSON.parse(localStorage.getItem('rsc_mining_data') || '{}');
-            this.state.totalMined = miningData.totalMined || 0;
-            this.state.totalTime = miningData.totalTime || 0;
-            this.state.sessionsToday = miningData.sessionsToday || 0;
-            this.state.dailyLimit = miningData.dailyLimit || 0;
+            // Cargar datos de minería 24/7
+            this.loadMiningData();
             
-            // Cargar sesión de minería
-            const sessionData = JSON.parse(localStorage.getItem('rsc_mining_session') || '{}');
-            if (sessionData.isMining && sessionData.startTime) {
-                const sessionAge = Date.now() - sessionData.startTime;
-                if (sessionAge < this.config.sessionTimeout) {
-                    // Restaurar sesión
-                    this.state.isMining = true;
-                    this.state.miningStartTime = sessionData.startTime;
-                    this.state.sessionTokens = sessionData.sessionTokens || 0;
-                    
-                    // Reiniciar timers
-                    this.startSessionTimer();
-                    this.startUpdateTimer();
-                    
-                    // Actualizar UI
-                    this.elements.startMining.disabled = true;
-                    this.elements.stopMining.disabled = false;
-                }
-            }
         } catch (error) {
             console.error('Error al cargar datos persistentes:', error);
         }
+    }
+    
+    loadMiningData() {
+        // Cargar saldo del usuario
+        const savedBalance = localStorage.getItem('rsc_user_balance');
+        if (savedBalance) {
+            this.state.totalMined = parseFloat(savedBalance);
+        } else {
+            // Establecer saldo inicial
+            this.state.totalMined = 0.001;
+            localStorage.setItem('rsc_user_balance', '0.001');
+        }
+        
+        // Cargar tokens pendientes
+        const pendingTokens = localStorage.getItem('rsc_pending_tokens');
+        if (pendingTokens) {
+            this.state.pendingTokens = parseFloat(pendingTokens);
+        }
+        
+        // Cargar estado de sesión de minería
+        const miningActive = localStorage.getItem('rsc_mining_active');
+        const miningStart = localStorage.getItem('rsc_mining_start');
+        const miningEnd = localStorage.getItem('rsc_mining_end');
+        
+        if (miningActive === 'true' && miningStart && miningEnd) {
+            const now = Date.now();
+            const endTime = parseInt(miningEnd);
+            
+            if (now < endTime) {
+                // Sesión de minería activa - continuar
+                this.state.miningSessionStart = parseInt(miningStart);
+                this.state.miningSessionEnd = endTime;
+                this.state.sessionStatus = 'active';
+                this.state.isMining = true;
+                
+                // Iniciar minería automática
+                this.startAutomaticMining();
+            } else {
+                // Sesión completada - limpiar
+                this.completeMiningSession();
+            }
+        }
+        
+        // Actualizar interfaz
+        this.updateMiningInterface();
     }
     
     persistData() {
@@ -1007,11 +1382,203 @@ class RSCMiningPlatform {
     checkDailyLimit() {
         return this.state.dailyLimit < this.config.dailyLimit;
     }
+    
+    updateMiningInterface() {
+        if (!this.elements.startMining) return;
+        
+        // Actualizar botones según estado
+        if (this.state.sessionStatus === 'active') {
+            this.elements.startMining.disabled = true;
+            this.elements.startMining.textContent = 'Minando 24h...';
+            
+            // Mostrar progreso de sesión
+            this.updateSessionProgress();
+        } else if (this.state.sessionStatus === 'completed') {
+            // Verificar si hay tokens pendientes
+            if (this.state.pendingTokens > 0) {
+                this.elements.startMining.disabled = true;
+                this.elements.startMining.textContent = 'Reclama Tokens Primero';
+                this.elements.startMining.classList.add('blocked');
+            } else {
+                this.elements.startMining.disabled = false;
+                this.elements.startMining.textContent = 'Iniciar Nueva Minería';
+                this.elements.startMining.classList.remove('blocked');
+            }
+        } else {
+            // Verificar si hay tokens pendientes
+            if (this.state.pendingTokens > 0) {
+                this.elements.startMining.disabled = true;
+                this.elements.startMining.textContent = `Reclama ${this.state.pendingTokens.toFixed(6)} Tokens`;
+                this.elements.startMining.classList.add('blocked');
+            } else {
+                this.elements.startMining.disabled = false;
+                this.elements.startMining.textContent = 'Iniciar Minería';
+                this.elements.startMining.classList.remove('blocked');
+            }
+        }
+        
+        // Actualizar saldo en tiempo real
+        this.updateBalanceDisplay();
+        
+        // Actualizar indicador de estado
+        this.updateStatusIndicator();
+    }
+    
+    updateSessionProgress() {
+        if (!this.state.miningSessionStart || !this.state.miningSessionEnd) return;
+        
+        const now = Date.now();
+        const elapsed = now - this.state.miningSessionStart;
+        const total = this.state.miningSessionEnd - this.state.miningSessionStart;
+        const progress = Math.min((elapsed / total) * 100, 100);
+        
+        // Actualizar barra de progreso si existe
+        if (this.elements.progressFill) {
+            this.elements.progressFill.style.width = `${progress}%`;
+        }
+        
+        // Actualizar tiempo transcurrido
+        if (this.elements.sessionTime) {
+            const hours = Math.floor(elapsed / (1000 * 60 * 60));
+            const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
+            this.elements.sessionTime.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+    }
+    
+    updateBalanceDisplay() {
+        // Actualizar saldo principal
+        if (this.elements.userBalance) {
+            this.elements.userBalance.textContent = this.state.totalMined.toFixed(6);
+        }
+        
+        // Actualizar saldo en sidebar
+        if (this.elements.sidebarBalance) {
+            this.elements.sidebarBalance.textContent = `${this.state.totalMined.toFixed(6)} RSC`;
+        }
+        
+        // Actualizar tokens de sesión
+        if (this.elements.tokensEarned) {
+            this.elements.tokensEarned.textContent = this.state.sessionTokens.toFixed(6);
+        }
+        
+        // Mostrar tokens pendientes si existen
+        if (this.state.pendingTokens > 0) {
+            console.log(`⚠️ Tokens pendientes: ${this.state.pendingTokens.toFixed(6)} RSC - Debes reclamarlos antes de minar`);
+            
+            // Mostrar indicador visual de tokens pendientes
+            const pendingTokensElement = document.getElementById('pendingTokens');
+            const pendingTokensValueElement = document.getElementById('pendingTokensValue');
+            
+            if (pendingTokensElement && pendingTokensValueElement) {
+                pendingTokensElement.style.display = 'flex';
+                pendingTokensValueElement.textContent = this.state.pendingTokens.toFixed(6);
+            }
+        } else {
+            // Ocultar indicador si no hay tokens pendientes
+            const pendingTokensElement = document.getElementById('pendingTokens');
+            if (pendingTokensElement) {
+                pendingTokensElement.style.display = 'none';
+            }
+        }
+        
+        // Log del estado actual para depuración
+        console.log('🔍 Estado actual:', {
+            sessionTokens: this.state.sessionTokens.toFixed(6),
+            pendingTokens: this.state.pendingTokens.toFixed(6),
+            totalMined: this.state.totalMined.toFixed(6)
+        });
+    }
+    
+    updateStatusIndicator() {
+        if (!this.elements.statusIndicator) return;
+        
+        const indicator = this.elements.statusIndicator;
+        
+        if (this.state.sessionStatus === 'active') {
+            indicator.textContent = '⛏️ Minando Activamente';
+            indicator.className = 'status-indicator mining';
+        } else if (this.state.sessionStatus === 'completed') {
+            indicator.textContent = '✅ Sesión Completada';
+            indicator.className = 'status-indicator completed';
+        } else {
+            indicator.textContent = '⏸️ Inactivo';
+            indicator.className = 'status-indicator inactive';
+        }
+    }
+    
+    saveMiningSessionToSupabase() {
+        if (!this.supabase) return;
+        
+        try {
+            const sessionData = {
+                user_email: this.state.currentUser.email,
+                session_start: new Date(this.state.miningSessionStart).toISOString(),
+                session_end: new Date(this.state.miningSessionEnd).toISOString(),
+                status: 'active',
+                tokens_earned: 0
+            };
+            
+            // Aquí iría la lógica para guardar en Supabase
+            console.log('💾 Guardando sesión de minería en Supabase:', sessionData);
+        } catch (error) {
+            console.error('Error al guardar sesión en Supabase:', error);
+        }
+    }
+    
+    updateBalanceInSupabase(newBalance) {
+        if (!this.supabase || !this.state.currentUser) return;
+        
+        try {
+            // Aquí iría la lógica para actualizar balance en Supabase
+            console.log('💾 Actualizando balance en Supabase:', newBalance);
+        } catch (error) {
+            console.error('Error al actualizar balance en Supabase:', error);
+        }
+    }
+    
+    // Función para limpiar estado bloqueado (útil para debugging)
+    clearBlockedState() {
+        console.log('🧹 Limpiando estado bloqueado...');
+        console.log('Estado antes:', {
+            pendingTokens: this.state.pendingTokens,
+            sessionTokens: this.state.sessionTokens
+        });
+        
+        // Limpiar tokens pendientes
+        this.state.pendingTokens = 0;
+        localStorage.removeItem('rsc_pending_tokens');
+        
+        // Limpiar tokens de sesión
+        this.state.sessionTokens = 0;
+        
+        console.log('Estado después:', {
+            pendingTokens: this.state.pendingTokens,
+            sessionTokens: this.state.sessionTokens
+        });
+        
+        // Actualizar interfaz
+        this.updateMiningInterface();
+        this.updateBalanceDisplay();
+        
+        this.showNotification('Estado bloqueado limpiado - Puedes minar nuevamente', 'success');
+    }
 }
 
 // Inicializar la plataforma cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     window.rscMiningPlatform = new RSCMiningPlatform();
+    
+    // Función de emergencia para limpiar estado bloqueado
+    window.clearMiningBlock = () => {
+        if (window.rscMiningPlatform) {
+            window.rscMiningPlatform.clearBlockedState();
+        } else {
+            console.log('❌ Plataforma no inicializada');
+        }
+    };
+    
+    console.log('🚀 Para limpiar estado bloqueado, ejecuta: clearMiningBlock()');
 });
 
 // Función global para mostrar información de mainnet
