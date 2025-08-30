@@ -4,6 +4,9 @@ const router = express.Router();
 
 const BLOCKCHAIN_API = 'https://rsc-chain-production.up.railway.app/';
 
+// Importar rutas de minería mainnet-ready
+const miningMainnetRoutes = require('./routes-mining-mainnet');
+
 // --- SESIONES DE MINERÍA EN MEMORIA ---
 const miningSessions = {};
 
@@ -704,5 +707,12 @@ router.get('/health', (req, res) => {
     blockchain_api: BLOCKCHAIN_API
   });
 });
+
+// ========================================
+// INTEGRAR RUTAS DE MINERÍA MAINNET-READY
+// ========================================
+
+// Usar las rutas de minería mainnet-ready
+router.use('/', miningMainnetRoutes);
 
 module.exports = router; 

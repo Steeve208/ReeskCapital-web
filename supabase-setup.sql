@@ -1,169 +1,187 @@
--- ========================================
--- SUPABASE DATABASE SETUP FOR RSC MINING
--- ========================================
+-- RSC Chain Mining Platform - Setup de Base de Datos
+-- Ejecuta este script en el SQL Editor de Supabase
 
--- Tabla de mineros
-CREATE TABLE IF NOT EXISTS miners (
-    id SERIAL PRIMARY KEY,
+-- 1. Crear tabla de usuarios y balances
+CREATE TABLE IF NOT EXISTS users_balances (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    wallet_address VARCHAR(255),
-    hash_power DECIMAL(20,2) DEFAULT 0,
-    balance DECIMAL(20,2) DEFAULT 0,
-    blocks_mined INTEGER DEFAULT 0,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    last_active TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    balance DECIMAL(20, 8) DEFAULT 0.0 NOT NULL,
+    last_mine_at TIMESTAMP WITH TIME ZONE,
+    total_mined DECIMAL(20, 8) DEFAULT 0.0 NOT NULL,
+    total_mining_time INTEGER DEFAULT 0 NOT NULL, -- en minutos
+    sessions_today INTEGER DEFAULT 0 NOT NULL,
+    daily_limit_used DECIMAL(20, 8) DEFAULT 0.0 NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 
--- Tabla de transacciones de minería
-CREATE TABLE IF NOT EXISTS mining_transactions (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    hash_power DECIMAL(20,2) NOT NULL,
-    reward DECIMAL(20,2) NOT NULL,
-    block_hash VARCHAR(255) NOT NULL,
-    timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+-- 2. Crear tabla de historial de minería
+CREATE TABLE IF NOT EXISTS mining_history (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_email VARCHAR(255) NOT NULL,
+    session_start TIMESTAMP WITH TIME ZONE NOT NULL,
+    session_end TIMESTAMP WITH TIME ZONE NOT NULL,
+    tokens_earned DECIMAL(20, 8) NOT NULL,
+    session_duration INTEGER NOT NULL, -- en minutos
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 
--- Índices para mejorar el rendimiento
-CREATE INDEX IF NOT EXISTS idx_miners_email ON miners(email);
-CREATE INDEX IF NOT EXISTS idx_miners_hash_power ON miners(hash_power DESC);
-CREATE INDEX IF NOT EXISTS idx_miners_balance ON miners(balance DESC);
-CREATE INDEX IF NOT EXISTS idx_miners_last_active ON miners(last_active DESC);
+-- 3. Crear tabla de estadísticas del sistema
+CREATE TABLE IF NOT EXISTS system_stats (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    total_users INTEGER DEFAULT 0 NOT NULL,
+    total_tokens_mined DECIMAL(20, 8) DEFAULT 0.0 NOT NULL,
+    active_miners INTEGER DEFAULT 0 NOT NULL,
+    daily_total_mined DECIMAL(20, 8) DEFAULT 0.0 NOT NULL,
+    last_updated TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+);
 
-CREATE INDEX IF NOT EXISTS idx_mining_transactions_email ON mining_transactions(email);
-CREATE INDEX IF NOT EXISTS idx_mining_transactions_timestamp ON mining_transactions(timestamp DESC);
+-- 4. Crear índices para mejor rendimiento
+CREATE INDEX IF NOT EXISTS idx_users_balances_email ON users_balances(email);
+CREATE INDEX IF NOT EXISTS idx_mining_history_user_email ON mining_history(user_email);
+CREATE INDEX IF NOT EXISTS idx_mining_history_created_at ON mining_history(created_at);
 
--- Políticas de seguridad para acceso anónimo (para demo)
--- NOTA: En producción, considera usar autenticación real
-
--- Permitir inserción para todos (registro de mineros)
-CREATE POLICY IF NOT EXISTS "Allow anonymous insert on miners" ON miners
-    FOR INSERT WITH CHECK (true);
-
--- Permitir actualización para todos (actualización de progreso)
-CREATE POLICY IF NOT EXISTS "Allow anonymous update on miners" ON miners
-    FOR UPDATE USING (true);
-
--- Permitir lectura para todos (leaderboard público)
-CREATE POLICY IF NOT EXISTS "Allow anonymous select on miners" ON miners
-    FOR SELECT USING (true);
-
--- Permitir inserción para todos (transacciones de minería)
-CREATE POLICY IF NOT EXISTS "Allow anonymous insert on mining_transactions" ON mining_transactions
-    FOR INSERT WITH CHECK (true);
-
--- Permitir lectura para todos (historial de transacciones)
-CREATE POLICY IF NOT EXISTS "Allow anonymous select on mining_transactions" ON mining_transactions
-    FOR SELECT USING (true);
-
--- Habilitar RLS (Row Level Security)
-ALTER TABLE miners ENABLE ROW LEVEL SECURITY;
-ALTER TABLE mining_transactions ENABLE ROW LEVEL SECURITY;
-
--- Datos de ejemplo (opcional)
-INSERT INTO miners (email, name, wallet_address, hash_power, balance, blocks_mined) VALUES
-    ('demo1@example.com', 'Minero Demo 1', '0x1234567890abcdef', 150.50, 1250.75, 25),
-    ('demo2@example.com', 'Minero Demo 2', '0xabcdef1234567890', 89.25, 567.30, 15),
-    ('demo3@example.com', 'Minero Demo 3', NULL, 45.80, 234.60, 8)
-ON CONFLICT (email) DO NOTHING;
-
--- Función para actualizar last_active automáticamente
-CREATE OR REPLACE FUNCTION update_last_active()
-RETURNS TRIGGER AS $$
+-- 5. Crear función para procesar recompensas de minería
+CREATE OR REPLACE FUNCTION process_mining_reward(
+    user_email_param VARCHAR(255),
+    tokens_earned_param DECIMAL(20, 8),
+    session_duration_param INTEGER
+)
+RETURNS DECIMAL(20, 8)
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+    current_balance DECIMAL(20, 8);
+    daily_limit_used DECIMAL(20, 8);
+    max_daily_limit DECIMAL(20, 8) := 2.0; -- Límite diario de 2 RSC
+    actual_tokens DECIMAL(20, 8);
 BEGIN
-    NEW.last_active = NOW();
-    RETURN NEW;
+    -- Obtener balance actual y límite diario usado
+    SELECT balance, daily_limit_used INTO current_balance, daily_limit_used
+    FROM users_balances 
+    WHERE email = user_email_param;
+    
+    -- Verificar límite diario
+    IF daily_limit_used >= max_daily_limit THEN
+        RAISE EXCEPTION 'Límite diario alcanzado';
+    END IF;
+    
+    -- Calcular tokens reales (respetando límite diario)
+    actual_tokens := LEAST(tokens_earned_param, max_daily_limit - daily_limit_used);
+    
+    -- Actualizar balance del usuario
+    UPDATE users_balances 
+    SET 
+        balance = balance + actual_tokens,
+        total_mined = total_mined + actual_tokens,
+        total_mining_time = total_mining_time + session_duration_param,
+        daily_limit_used = daily_limit_used + actual_tokens,
+        sessions_today = sessions_today + 1,
+        last_mine_at = NOW(),
+        updated_at = NOW()
+    WHERE email = user_email_param;
+    
+    RETURN actual_tokens;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
--- Trigger para actualizar last_active en cada update
-CREATE TRIGGER update_miners_last_active
-    BEFORE UPDATE ON miners
-    FOR EACH ROW
-    EXECUTE FUNCTION update_last_active();
-
--- Función para obtener estadísticas generales
-CREATE OR REPLACE FUNCTION get_mining_stats()
-RETURNS TABLE(
-    total_miners BIGINT,
-    total_hash_power DECIMAL,
-    total_balance DECIMAL,
-    total_blocks_mined BIGINT,
-    avg_hash_power DECIMAL,
-    avg_balance DECIMAL
-) AS $$
+-- 6. Crear función para obtener ranking de usuarios
+CREATE OR REPLACE FUNCTION get_user_ranking(limit_count INTEGER DEFAULT 10)
+RETURNS TABLE (
+    email VARCHAR(255),
+    total_mined DECIMAL(20, 8),
+    total_mining_time INTEGER,
+    rank_position BIGINT
+)
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
 BEGIN
     RETURN QUERY
     SELECT 
-        COUNT(*)::BIGINT as total_miners,
-        COALESCE(SUM(hash_power), 0) as total_hash_power,
-        COALESCE(SUM(balance), 0) as total_balance,
-        COALESCE(SUM(blocks_mined), 0)::BIGINT as total_blocks_mined,
-        COALESCE(AVG(hash_power), 0) as avg_hash_power,
-        COALESCE(AVG(balance), 0) as avg_balance
-    FROM miners;
-END;
-$$ LANGUAGE plpgsql;
-
--- Función para obtener top mineros
-CREATE OR REPLACE FUNCTION get_top_miners(limit_count INTEGER DEFAULT 10)
-RETURNS TABLE(
-    rank INTEGER,
-    email VARCHAR,
-    name VARCHAR,
-    hash_power DECIMAL,
-    balance DECIMAL,
-    blocks_mined INTEGER,
-    last_active TIMESTAMP WITH TIME ZONE
-) AS $$
-BEGIN
-    RETURN QUERY
-    SELECT 
-        ROW_NUMBER() OVER (ORDER BY hash_power DESC, balance DESC) as rank,
-        m.email,
-        m.name,
-        m.hash_power,
-        m.balance,
-        m.blocks_mined,
-        m.last_active
-    FROM miners m
-    ORDER BY m.hash_power DESC, m.balance DESC
+        ub.email,
+        ub.total_mined,
+        ub.total_mining_time,
+        ROW_NUMBER() OVER (ORDER BY ub.total_mined DESC) as rank_position
+    FROM users_balances ub
+    ORDER BY ub.total_mined DESC
     LIMIT limit_count;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
--- Vista para estadísticas en tiempo real
-CREATE OR REPLACE VIEW mining_dashboard AS
+-- 7. Crear función para resetear límites diarios
+CREATE OR REPLACE FUNCTION reset_daily_limits()
+RETURNS VOID
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+    UPDATE users_balances 
+    SET 
+        sessions_today = 0,
+        daily_limit_used = 0.0,
+        updated_at = NOW();
+END;
+$$;
+
+-- 8. Crear trigger para actualizar updated_at automáticamente
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_users_balances_updated_at 
+    BEFORE UPDATE ON users_balances 
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- 9. Insertar estadísticas iniciales del sistema
+INSERT INTO system_stats (total_users, total_tokens_mined, active_miners, daily_total_mined)
+VALUES (0, 0.0, 0, 0.0)
+ON CONFLICT DO NOTHING;
+
+-- 10. Configurar RLS (Row Level Security)
+ALTER TABLE users_balances ENABLE ROW LEVEL SECURITY;
+ALTER TABLE mining_history ENABLE ROW LEVEL SECURITY;
+ALTER TABLE system_stats ENABLE RLS;
+
+-- 11. Crear políticas RLS para users_balances
+CREATE POLICY "Users can view their own data" ON users_balances
+    FOR SELECT USING (email = current_setting('request.jwt.claims', true)::json->>'email');
+
+CREATE POLICY "Users can update their own data" ON users_balances
+    FOR UPDATE USING (email = current_setting('request.jwt.claims', true)::json->>'email');
+
+CREATE POLICY "Allow insert for new users" ON users_balances
+    FOR INSERT WITH CHECK (true);
+
+-- 12. Crear políticas RLS para mining_history
+CREATE POLICY "Users can view their own mining history" ON mining_history
+    FOR SELECT USING (user_email = current_setting('request.jwt.claims', true)::json->>'email');
+
+CREATE POLICY "Users can insert their own mining sessions" ON mining_history
+    FOR INSERT WITH CHECK (user_email = current_setting('request.jwt.claims', true)::json->>'email');
+
+-- 13. Crear políticas RLS para system_stats
+CREATE POLICY "Allow read access to system stats" ON system_stats
+    FOR SELECT USING (true);
+
+-- 14. Crear job para resetear límites diarios (ejecutar cada día a las 00:00)
+-- Nota: Esto requiere pg_cron extension que puede no estar disponible en el plan gratuito
+-- Como alternativa, puedes crear un cron job en tu servidor o usar la función manualmente
+
+-- 15. Verificar que las tablas se crearon correctamente
 SELECT 
-    COUNT(*) as total_miners,
-    COALESCE(SUM(hash_power), 0) as total_hash_power,
-    COALESCE(SUM(balance), 0) as total_balance,
-    COALESCE(SUM(blocks_mined), 0) as total_blocks_mined,
-    COALESCE(AVG(hash_power), 0) as avg_hash_power,
-    COALESCE(AVG(balance), 0) as avg_balance,
-    COUNT(CASE WHEN last_active > NOW() - INTERVAL '1 hour' THEN 1 END) as active_last_hour,
-    COUNT(CASE WHEN last_active > NOW() - INTERVAL '24 hours' THEN 1 END) as active_last_day
-FROM miners;
+    table_name, 
+    column_name, 
+    data_type, 
+    is_nullable
+FROM information_schema.columns 
+WHERE table_schema = 'public' 
+AND table_name IN ('users_balances', 'mining_history', 'system_stats')
+ORDER BY table_name, ordinal_position;
 
--- Comentarios en las tablas
-COMMENT ON TABLE miners IS 'Tabla principal de mineros del sistema RSC';
-COMMENT ON TABLE mining_transactions IS 'Historial de transacciones de minería';
-COMMENT ON COLUMN miners.email IS 'Email único del minero';
-COMMENT ON COLUMN miners.hash_power IS 'Poder de hash actual del minero';
-COMMENT ON COLUMN miners.balance IS 'Balance actual en RSC';
-COMMENT ON COLUMN miners.blocks_mined IS 'Número total de bloques minados';
-
--- Verificar la configuración
-SELECT 
-    'miners' as table_name,
-    COUNT(*) as row_count
-FROM miners
-UNION ALL
-SELECT 
-    'mining_transactions' as table_name,
-    COUNT(*) as row_count
-FROM mining_transactions;
-
--- Mostrar estadísticas del dashboard
-SELECT * FROM mining_dashboard;
+-- ¡Listo! Tu base de datos está configurada para la plataforma de minería RSC
