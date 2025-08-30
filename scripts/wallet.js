@@ -77,16 +77,18 @@ class WalletRSC {
                     // Wallet inválida, limpiar
                     console.warn('⚠️ Wallet inválida encontrada, limpiando...');
                     localStorage.removeItem('rsc_wallet');
-                    this.showCreateWalletPrompt();
+                    // No mostrar modal automáticamente cuando la blockchain no esté lista
+                    console.log('ℹ️ Blockchain no disponible - modal de wallet no mostrado');
                 }
             } else {
-                // No hay wallet, mostrar prompt de creación
-                this.showCreateWalletPrompt();
+                // No hay wallet, pero no mostrar prompt automáticamente
+                console.log('ℹ️ No hay wallet existente - modal de wallet no mostrado');
             }
         } catch (error) {
             console.error('Error verificando wallet existente:', error);
             localStorage.removeItem('rsc_wallet');
-            this.showCreateWalletPrompt();
+            // No mostrar modal automáticamente en caso de error
+            console.log('ℹ️ Error verificando wallet - modal de wallet no mostrado');
         }
     }
 
@@ -899,10 +901,11 @@ class WalletRSC {
 // ===== INITIALIZATION =====
 
 // Esperar a que el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-    // Crear instancia global de la wallet
-    window.wallet = new WalletRSC();
-});
+// COMENTADO: No inicializar automáticamente hasta que la blockchain esté lista
+// document.addEventListener('DOMContentLoaded', () => {
+//     // Crear instancia global de la wallet
+//     window.wallet = new WalletRSC();
+// });
 
 // Exportar para uso global
 window.WalletRSC = WalletRSC;
