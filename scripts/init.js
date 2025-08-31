@@ -2,6 +2,87 @@
    INIT.JS — INICIALIZACIÓN ROBUSTA
 ================================ */
 
+// ===== INITIALIZATION SCRIPT - RSC CHAIN =====
+
+// ===== IMMEDIATE MOBILE MENU FIX =====
+(function() {
+    'use strict';
+    
+    // Función para ocultar inmediatamente el menú móvil
+    function hideMobileMenuImmediately() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu) {
+            // Aplicar estilos críticos inmediatamente
+            mobileMenu.style.cssText = `
+                position: fixed !important;
+                top: 0 !important;
+                right: -100% !important;
+                width: 100% !important;
+                max-width: 400px !important;
+                height: 100vh !important;
+                background: linear-gradient(135deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 20, 40, 0.98) 100%) !important;
+                backdrop-filter: blur(20px) !important;
+                -webkit-backdrop-filter: blur(20px) !important;
+                z-index: 1001 !important;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                overflow-y: auto !important;
+                border-left: 1px solid rgba(0, 255, 136, 0.3) !important;
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5) !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                transform: translateX(100%) !important;
+                pointer-events: none !important;
+            `;
+            
+            // Remover clases activas
+            mobileMenu.classList.remove('active', 'show', 'open');
+            
+            // Asegurar que el body no tenga scroll bloqueado
+            document.body.style.overflow = '';
+            document.body.classList.remove('mobile-menu-open');
+        }
+        
+        // Ocultar overlay si existe
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.style.display = 'none';
+            mobileMenuOverlay.classList.remove('active');
+        }
+        
+        // Resetear botón hamburguesa
+        const hamburgerMenu = document.getElementById('eliteHamburger');
+        if (hamburgerMenu) {
+            hamburgerMenu.classList.remove('active');
+            hamburgerMenu.setAttribute('aria-expanded', 'false');
+        }
+    }
+    
+    // Ejecutar inmediatamente
+    hideMobileMenuImmediately();
+    
+    // Ejecutar después de que el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', hideMobileMenuImmediately);
+    }
+    
+    // Ejecutar después de que la página esté completamente cargada
+    window.addEventListener('load', hideMobileMenuImmediately);
+    
+    // Ejecutar en cada frame por seguridad
+    let frameCount = 0;
+    const maxFrames = 10;
+    
+    function checkAndHideMenu() {
+        if (frameCount < maxFrames) {
+            hideMobileMenuImmediately();
+            frameCount++;
+            requestAnimationFrame(checkAndHideMenu);
+        }
+    }
+    
+    requestAnimationFrame(checkAndHideMenu);
+})();
+
 // Función de inicialización principal
 async function initializeRSCApp() {
   try {
