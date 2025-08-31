@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initMobileMenu();
     initSmoothScrolling();
     initNewsletterForm();
+    initUtilityButtons();
 });
 
 // ===== NAVIGATION =====
@@ -45,6 +46,89 @@ function initNavigation() {
             }
         });
     });
+}
+
+// ===== UTILITY BUTTONS =====
+function initUtilityButtons() {
+    // Search button
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+            showNotification('Función de búsqueda próximamente disponible', 'info');
+        });
+    }
+    
+    // Wallet button
+    const walletBtn = document.getElementById('walletBtn');
+    if (walletBtn) {
+        walletBtn.addEventListener('click', () => {
+            showNotification('Conectando wallet...', 'info');
+            // Simulate wallet connection
+            setTimeout(() => {
+                showNotification('Wallet conectado exitosamente', 'success');
+                walletBtn.innerHTML = `
+                    <i class="fas fa-wallet"></i>
+                    <div class="wallet-text">
+                        <span>Wallet Conectado</span>
+                        <span>RSC Mainnet</span>
+                    </div>
+                `;
+                walletBtn.style.background = '#0a2e0a';
+                walletBtn.style.color = '#00ff88';
+            }, 2000);
+        });
+    }
+    
+    // Code button
+    const codeBtn = document.getElementById('codeBtn');
+    if (codeBtn) {
+        codeBtn.addEventListener('click', () => {
+            showNotification('Modo desarrollador activado', 'info');
+        });
+    }
+    
+    // Palette button
+    const paletteBtn = document.getElementById('paletteBtn');
+    if (paletteBtn) {
+        paletteBtn.addEventListener('click', () => {
+            toggleTheme();
+        });
+    }
+    
+    // Settings button
+    const settingsBtn = document.getElementById('settingsBtn');
+    if (settingsBtn) {
+        settingsBtn.addEventListener('click', () => {
+            showNotification('Panel de configuración próximamente disponible', 'info');
+        });
+    }
+}
+
+// ===== THEME TOGGLE =====
+function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.getAttribute('data-theme') || 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    body.setAttribute('data-theme', newTheme);
+    
+    if (newTheme === 'light') {
+        document.documentElement.style.setProperty('--bg-primary', '#ffffff');
+        document.documentElement.style.setProperty('--bg-secondary', '#f5f5f5');
+        document.documentElement.style.setProperty('--bg-card', '#ffffff');
+        document.documentElement.style.setProperty('--text-primary', '#000000');
+        document.documentElement.style.setProperty('--text-secondary', '#4a4a4a');
+        document.documentElement.style.setProperty('--border', '#e5e5e5');
+        showNotification('Tema claro activado', 'success');
+    } else {
+        document.documentElement.style.setProperty('--bg-primary', '#000000');
+        document.documentElement.style.setProperty('--bg-secondary', '#0a0a0a');
+        document.documentElement.style.setProperty('--bg-card', '#111111');
+        document.documentElement.style.setProperty('--text-primary', '#ffffff');
+        document.documentElement.style.setProperty('--text-secondary', '#a3a3a3');
+        document.documentElement.style.setProperty('--border', '#262626');
+        showNotification('Tema oscuro activado', 'success');
+    }
 }
 
 // ===== ANIMATIONS =====
@@ -167,7 +251,7 @@ function initPerformanceMetrics() {
 function initMobileMenu() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navMenu = document.querySelector('.nav-menu');
-    const navActions = document.querySelector('.nav-actions');
+    const navUtility = document.querySelector('.nav-utility');
     
     if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', () => {
@@ -175,11 +259,11 @@ function initMobileMenu() {
             
             if (isOpen) {
                 navMenu.classList.remove('mobile-open');
-                navActions.classList.remove('mobile-open');
+                navUtility.classList.remove('mobile-open');
                 mobileMenuBtn.classList.remove('active');
             } else {
                 navMenu.classList.add('mobile-open');
-                navActions.classList.add('mobile-open');
+                navUtility.classList.add('mobile-open');
                 mobileMenuBtn.classList.add('active');
             }
         });
@@ -190,7 +274,7 @@ function initMobileMenu() {
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             navMenu.classList.remove('mobile-open');
-            navActions.classList.remove('mobile-open');
+            navUtility.classList.remove('mobile-open');
             mobileMenuBtn.classList.remove('active');
         });
     });
@@ -404,7 +488,7 @@ function addMobileMenuStyles() {
     const style = document.createElement('style');
     style.textContent = `
         @media (max-width: 768px) {
-            .nav-menu, .nav-actions {
+            .nav-menu, .nav-utility {
                 position: fixed;
                 top: 70px;
                 left: 0;
@@ -421,7 +505,7 @@ function addMobileMenuStyles() {
             }
             
             .nav-menu.mobile-open,
-            .nav-actions.mobile-open {
+            .nav-utility.mobile-open {
                 transform: translateY(0);
                 opacity: 1;
                 visibility: visible;
