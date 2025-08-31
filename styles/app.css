@@ -456,9 +456,16 @@ a {
 }
 
 .hero-content {
-  text-align: center;
-  max-width: 800px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: center;
+  max-width: 1200px;
   margin: 0 auto;
+}
+
+.hero-text {
+  text-align: left;
 }
 
 .hero-badge {
@@ -494,19 +501,18 @@ a {
 .hero-description {
   font-size: 1rem;
   max-width: 600px;
-  margin: 0 auto 2rem;
+  margin: 0 0 2rem 0;
   line-height: 1.5;
 }
 
 .hero-stats {
   display: flex;
-  justify-content: center;
   gap: 2rem;
   margin-bottom: 2rem;
 }
 
 .stat {
-  text-align: center;
+  text-align: left;
 }
 
 .stat-value {
@@ -525,17 +531,17 @@ a {
 
 .hero-actions {
   display: flex;
-  justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
 
 .hero-visual {
-  margin-top: 2rem;
   display: flex;
-  justify-content: flex-end;
-  padding-right: 2rem;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-self: flex-start;
+  margin-top: 0;
 }
 
 .blockchain-animation {
@@ -656,9 +662,41 @@ section {
   border-color: var(--primary);
 }
 
+/* Feature Icons */
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--primary);
+  border-radius: 50%;
+  color: white;
+  font-size: 0.875rem;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.feature-icon i {
+  font-size: 0.875rem;
+}
+
+/* Tech Icons */
 .tech-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-lg);
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-icon i {
+  font-size: 1.5rem;
 }
 
 .tech-card h3 {
@@ -741,9 +779,22 @@ section {
   margin-bottom: 1rem;
 }
 
+/* Card Icons */
 .card-icon {
-  font-size: 1.5rem;
-  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background: var(--gradient-primary);
+  border-radius: var(--radius);
+  color: white;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.card-icon i {
+  font-size: 1.25rem;
 }
 
 .card-header h3 {
@@ -967,9 +1018,23 @@ section {
   border-color: var(--primary);
 }
 
+/* Channel Icons */
 .channel-icon {
-  font-size: 3rem;
-  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background: var(--gradient-primary);
+  border-radius: var(--radius);
+  color: white;
+  font-size: 1.25rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.channel-icon i {
+  font-size: 1.25rem;
 }
 
 .channel-info h3 {
@@ -1368,6 +1433,16 @@ section {
     padding: 3.5rem 0 2rem;
   }
   
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .hero-text {
+    text-align: center;
+  }
+  
   .hero-title {
     font-size: clamp(1.75rem, 4.5vw, 2.5rem);
   }
@@ -1381,16 +1456,23 @@ section {
     flex-direction: column;
     gap: 1.75rem;
     margin-bottom: 1.75rem;
+    justify-content: center;
+  }
+  
+  .stat {
+    text-align: center;
   }
   
   .hero-actions {
     flex-direction: column;
     align-items: center;
     margin-bottom: 0.75rem;
+    justify-content: center;
   }
   
   .hero-visual {
     margin-top: 1.75rem;
+    align-self: center;
   }
   
   .performance-card.large {
@@ -1433,6 +1515,54 @@ section {
   
   .hero {
     padding: 6rem 0 3rem;
+  }
+  
+  .hero-content {
+    gap: 1.5rem;
+  }
+  
+  .hero-badge {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.625rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 0.75rem;
+  }
+  
+  .hero-description {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-stats {
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1.25rem;
+    margin-bottom: 0.125rem;
+  }
+  
+  .stat-label {
+    font-size: 0.625rem;
+  }
+  
+  .hero-actions {
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .hero-visual {
+    margin-top: 1.5rem;
+  }
+  
+  .block {
+    width: 260px;
+    padding: 0.5rem;
   }
   
   section {
@@ -1536,4 +1666,22 @@ html {
 
 .mb-5 {
   margin-bottom: 3rem;
+}
+
+/* Community Stats Icons */
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background: var(--gradient-primary);
+  border-radius: 50%;
+  color: white;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.stat-icon i {
+  font-size: 1.25rem;
 }
