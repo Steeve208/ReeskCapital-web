@@ -1,601 +1,455 @@
-// ===== MAIN.JS - FUNCIONALIDAD PRINCIPAL MEJORADA =====
+// ===== RSC CHAIN - MAIN JAVASCRIPT =====
 
-// 🚫 BACKEND DISCONNECTED - OFFLINE MODE
-// La aplicación funciona completamente offline sin conexión a backend
-
-// Configuración global
-const CONFIG = {
-  API_BASE_URL: null, // Backend desconectado
-  UPDATE_INTERVAL: 0, // No actualizar en modo offline
-  SUPPORT_EMAIL: 'support@reeskcapital.co'
-};
-
-// Estado de la aplicación
-let appState = {
-  isInitialized: false,
-  currentTheme: 'dark',
-  currentLanguage: 'es',
-  walletConnected: false,
-  scrollY: 0
-};
-
-// Inicialización de la aplicación
-function initApp() {
-  try {
-    console.log('🚀 Inicializando ReeskCapital.co...');
-    
-    // Inicializar componentes
-    initHeader();
-    initTheme();
-    initLanguage();
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all components
     initNavigation();
-    initHeroAnimations();
-    initFeaturesAnimations();
-    initMobileCarousel();
-    initStats();
-    initChat();
-    initScrollEffects();
-    initRoadmap();
-    initFooter();
-    
-    appState.isInitialized = true;
-    console.log('✅ Aplicación inicializada correctamente');
-    
-    // Mostrar notificación de modo offline
-    showOfflineNotification();
-    
-    // Ocultar mensaje de error si existe
-    hideError();
-    
-  } catch (error) {
-    console.error('❌ Error al inicializar:', error);
-    showError('Error al inicializar la aplicación');
-  }
-}
+    initAnimations();
+    initPerformanceMetrics();
+    initMobileMenu();
+    initSmoothScrolling();
+    initNewsletterForm();
+});
 
-// Mostrar notificación de modo offline
-function showOfflineNotification() {
-  try {
-    // Crear banner de notificación offline
-    const offlineBanner = document.createElement('div');
-    offlineBanner.className = 'offline-banner';
-    offlineBanner.innerHTML = `
-      <div class="offline-content">
-        <span class="offline-icon">🚫</span>
-        <span class="offline-text">
-          <strong>Modo Offline Activado</strong><br>
-          El backend ha sido desconectado. La aplicación funciona completamente offline.
-        </span>
-        <button class="offline-close" onclick="this.parentElement.parentElement.remove()">×</button>
-      </div>
-    `;
-    
-    // Agregar estilos inline para el banner
-    offlineBanner.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-      color: white;
-      padding: 12px 20px;
-      z-index: 9999;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      font-family: 'Inter', sans-serif;
-    `;
-    
-    // Estilos para el contenido
-    const offlineContent = offlineBanner.querySelector('.offline-content');
-    offlineContent.style.cssText = `
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      max-width: 1200px;
-      margin: 0 auto;
-      font-size: 14px;
-    `;
-    
-    // Estilos para el icono
-    const offlineIcon = offlineBanner.querySelector('.offline-icon');
-    offlineIcon.style.cssText = `
-      font-size: 20px;
-      flex-shrink: 0;
-    `;
-    
-    // Estilos para el texto
-    const offlineText = offlineBanner.querySelector('.offline-text');
-    offlineText.style.cssText = `
-      flex: 1;
-      line-height: 1.4;
-    `;
-    
-    // Estilos para el botón de cerrar
-    const offlineClose = offlineBanner.querySelector('.offline-close');
-    offlineClose.style.cssText = `
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: white;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: background 0.3s;
-    `;
-    
-    offlineClose.addEventListener('mouseenter', () => {
-      offlineClose.style.background = 'rgba(255,255,255,0.3)';
-    });
-    
-    offlineClose.addEventListener('mouseleave', () => {
-      offlineClose.style.background = 'rgba(255,255,255,0.2)';
-    });
-    
-    // Insertar al inicio del body
-    document.body.insertBefore(offlineBanner, document.body.firstChild);
-    
-    console.log('🚫 Banner de modo offline mostrado');
-    
-  } catch (error) {
-    console.error('❌ Error al mostrar notificación offline:', error);
-  }
-}
-
-// Inicializar header sticky
-function initHeader() {
-  const navbar = document.querySelector('.navbar');
-  
-  if (navbar) {
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      appState.scrollY = scrollY;
-      
-      if (scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
-  }
-}
-
-// Inicializar animaciones del hero
-function initHeroAnimations() {
-  // Animación de typing effect para el título
-  const heroTitle = document.querySelector('.hero-title');
-  if (heroTitle) {
-    const lines = heroTitle.querySelectorAll('.title-line');
-    lines.forEach((line, index) => {
-      line.style.animationDelay = `${0.2 + index * 0.2}s`;
-    });
-  }
-  
-  // Animación de countUp para las métricas
-  const statValues = document.querySelectorAll('.stat-value');
-  statValues.forEach((stat, index) => {
-    stat.style.animationDelay = `${1.2 + index * 0.1}s`;
-  });
-}
-
-// Inicializar animaciones de características
-function initFeaturesAnimations() {
-  const featureCards = document.querySelectorAll('.feature-card');
-  
-  // Observer para animaciones de entrada
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-  
-  featureCards.forEach(card => {
-    observer.observe(card);
-  });
-  
-  // Efectos hover mejorados
-  featureCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.style.transform = 'scale(1.05) translateY(-8px)';
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'scale(1) translateY(0)';
-    });
-  });
-}
-
-// Inicializar carousel mobile para características
-function initMobileCarousel() {
-  const featuresGrid = document.querySelector('.features-grid');
-  
-  if (!featuresGrid || window.innerWidth > 768) return;
-  
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-  
-  featuresGrid.addEventListener('mousedown', (e) => {
-    isDown = true;
-    featuresGrid.style.cursor = 'grabbing';
-    startX = e.pageX - featuresGrid.offsetLeft;
-    scrollLeft = featuresGrid.scrollLeft;
-  });
-  
-  featuresGrid.addEventListener('mouseleave', () => {
-    isDown = false;
-    featuresGrid.style.cursor = 'grab';
-  });
-  
-  featuresGrid.addEventListener('mouseup', () => {
-    isDown = false;
-    featuresGrid.style.cursor = 'grab';
-  });
-  
-  featuresGrid.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - featuresGrid.offsetLeft;
-    const walk = (x - startX) * 2;
-    featuresGrid.scrollLeft = scrollLeft - walk;
-  });
-  
-  // Touch events para dispositivos móviles
-  featuresGrid.addEventListener('touchstart', (e) => {
-    isDown = true;
-    startX = e.touches[0].pageX - featuresGrid.offsetLeft;
-    scrollLeft = featuresGrid.scrollLeft;
-  });
-  
-  featuresGrid.addEventListener('touchend', () => {
-    isDown = false;
-  });
-  
-  featuresGrid.addEventListener('touchmove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.touches[0].pageX - featuresGrid.offsetLeft;
-    const walk = (x - startX) * 2;
-    featuresGrid.scrollLeft = scrollLeft - walk;
-  });
-}
-
-// Inicializar efectos de scroll
-function initScrollEffects() {
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, observerOptions);
-  
-  // Observar elementos para animación
-  const animatedElements = document.querySelectorAll('.roadmap-item');
-  animatedElements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'all 0.6s ease';
-    observer.observe(el);
-  });
-}
-
-// Inicializar tema
-function initTheme() {
-  const themeToggle = document.getElementById('themeToggle');
-  const body = document.body;
-  
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        body.classList.remove('dark-mode');
-        appState.currentTheme = 'light';
-        localStorage.setItem('theme', 'light');
-        themeToggle.querySelector('.theme-icon').textContent = '☀️';
-      } else {
-        body.classList.add('dark-mode');
-        appState.currentTheme = 'dark';
-        localStorage.setItem('theme', 'dark');
-        themeToggle.querySelector('.theme-icon').textContent = '🌙';
-      }
-    });
-  }
-  
-  // Cargar tema guardado
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  if (savedTheme === 'dark') {
-    body.classList.add('dark-mode');
-    if (themeToggle) {
-      themeToggle.querySelector('.theme-icon').textContent = '🌙';
-    }
-  } else {
-    body.classList.remove('dark-mode');
-    if (themeToggle) {
-      themeToggle.querySelector('.theme-icon').textContent = '☀️';
-    }
-  }
-}
-
-// Inicializar idioma
-function initLanguage() {
-  const languageSelector = document.getElementById('languageSelector');
-  const languageOptions = document.querySelectorAll('.language-option');
-  
-  if (languageSelector) {
-    languageSelector.addEventListener('click', () => {
-      const dropdown = languageSelector.querySelector('.language-dropdown');
-      dropdown.classList.toggle('show');
-    });
-  }
-  
-  languageOptions.forEach(option => {
-    option.addEventListener('click', () => {
-      const lang = option.dataset.lang;
-      appState.currentLanguage = lang;
-      localStorage.setItem('language', lang);
-      
-      // Actualizar texto del selector
-      const selectorText = document.querySelector('#languageSelector span');
-      if (selectorText) {
-        selectorText.textContent = lang.toUpperCase();
-      }
-      
-      // Cerrar dropdown
-      const dropdown = document.querySelector('.language-dropdown');
-      if (dropdown) {
-        dropdown.classList.remove('show');
-      }
-    });
-  });
-  
-  // Cargar idioma guardado
-  const savedLanguage = localStorage.getItem('language') || 'es';
-  appState.currentLanguage = savedLanguage;
-  const selectorText = document.querySelector('#languageSelector span');
-  if (selectorText) {
-    selectorText.textContent = savedLanguage.toUpperCase();
-  }
-}
-
-// Inicializar navegación
+// ===== NAVIGATION =====
 function initNavigation() {
-  const navbarToggle = document.getElementById('navbarToggle');
-  const navbarLinks = document.querySelector('.navbar-links');
-  
-  if (navbarToggle && navbarLinks) {
-    navbarToggle.addEventListener('click', () => {
-      navbarLinks.classList.toggle('show');
-      navbarToggle.setAttribute('aria-expanded', 
-        navbarLinks.classList.contains('show').toString());
-    });
-  }
-  
-  // Marcar enlace activo
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  const navLinks = document.querySelectorAll('.navbar-links a');
-  
-  navLinks.forEach(link => {
-    if (link.getAttribute('href') === currentPage) {
-      link.classList.add('active');
-    }
-  });
-  
-  // Efectos hover en enlaces
-  navLinks.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-      link.style.transform = 'translateY(-2px)';
+    const header = document.querySelector('.header');
+    const navbar = document.querySelector('.navbar');
+    
+    // Sticky navigation effect
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
     });
     
-    link.addEventListener('mouseleave', () => {
-      link.style.transform = 'translateY(0)';
-    });
-  });
-}
-
-// Inicializar estadísticas con animación
-function initStats() {
-  // Simular datos en tiempo real
-  updateStats();
-  
-  // Actualizar cada 5 segundos
-  setInterval(updateStats, CONFIG.UPDATE_INTERVAL);
-}
-
-function updateStats() {
-  // Obtener datos reales de la blockchain
-          // fetch('/api/blockchain/stats') // Backend desconectado
-    .then(response => response.json())
-    .then(data => {
-      if (data.success && data.stats) {
-        const stats = data.stats;
+    // Active navigation link highlighting
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
         
-        // Actualizar elementos con animación
-        const elements = {
-          'rscPrice': `$${stats.price || 0}`,
-          'rscSupply': (stats.circulatingSupply || 0).toLocaleString(),
-          'tpsValue': stats.tps || 0,
-          'nodesValue': stats.activeValidators || 0,
-          'marketCap': `$${(stats.marketCap || 0).toLocaleString()}`,
-          'volume24h': `$${(stats.volume24h || 0).toLocaleString()}`,
-          'totalBlocks': (stats.totalBlocks || 0).toLocaleString(),
-          'activeUsers': (stats.activeUsers || 0).toLocaleString(),
-          'dashboardPrice': `$${stats.price || 0}`,
-          'dashboardSupply': (stats.circulatingSupply || 0).toLocaleString()
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+
+// ===== ANIMATIONS =====
+function initAnimations() {
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in-up');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all cards and sections
+    const animatedElements = document.querySelectorAll('.tech-card, .ecosystem-card, .performance-card, .stat-card, .channel-card');
+    animatedElements.forEach(el => {
+        observer.observe(el);
+    });
+    
+    // Hero title animation
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+        heroTitle.classList.add('fade-in');
+    }
+}
+
+// ===== PERFORMANCE METRICS =====
+function initPerformanceMetrics() {
+    // Simulate live data updates
+    const metrics = {
+        tps: { current: 84567, min: 80000, max: 100000 },
+        blockHeight: { current: 2847392, increment: 1 },
+        price: { current: 15.47, volatility: 0.1 },
+        marketCap: { current: 4.2, volatility: 0.05 },
+        nodes: { current: 1247, min: 1200, max: 1300 },
+        staked: { current: 67.8, min: 65, max: 70 }
+    };
+    
+    // Update TPS with realistic fluctuations
+    setInterval(() => {
+        const tpsElement = document.getElementById('liveTPS');
+        if (tpsElement) {
+            const change = (Math.random() - 0.5) * 2000;
+            metrics.tps.current = Math.max(metrics.tps.min, Math.min(metrics.tps.max, metrics.tps.current + change));
+            tpsElement.textContent = Math.round(metrics.tps.current).toLocaleString();
+        }
+    }, 3000);
+    
+    // Update block height
+    setInterval(() => {
+        const blockElement = document.getElementById('liveBlockHeight');
+        if (blockElement) {
+            metrics.blockHeight.current += metrics.blockHeight.increment;
+            blockElement.textContent = metrics.blockHeight.current.toLocaleString();
+        }
+    }, 2000);
+    
+    // Update price with realistic volatility
+    setInterval(() => {
+        const priceElement = document.getElementById('livePrice');
+        if (priceElement) {
+            const change = (Math.random() - 0.5) * metrics.price.volatility;
+            metrics.price.current = Math.max(0.01, metrics.price.current + change);
+            priceElement.textContent = `$${metrics.price.current.toFixed(2)}`;
+            
+            // Update price change indicator
+            const priceChangeElement = priceElement.parentElement.querySelector('.card-change');
+            if (priceChangeElement) {
+                const changePercent = (change / (metrics.price.current - change)) * 100;
+                priceChangeElement.textContent = `${changePercent > 0 ? '+' : ''}${changePercent.toFixed(2)}%`;
+                priceChangeElement.className = `card-change ${changePercent > 0 ? 'positive' : 'negative'}`;
+            }
+        }
+    }, 5000);
+    
+    // Update market cap
+    setInterval(() => {
+        const marketCapElement = document.getElementById('liveMarketCap');
+        if (marketCapElement) {
+            const change = (Math.random() - 0.5) * metrics.marketCap.volatility;
+            metrics.marketCap.current = Math.max(0.1, metrics.marketCap.current + change);
+            marketCapElement.textContent = `$${metrics.marketCap.current.toFixed(1)}B`;
+        }
+    }, 8000);
+    
+    // Update nodes count
+    setInterval(() => {
+        const nodesElement = document.getElementById('liveNodes');
+        if (nodesElement) {
+            const change = Math.random() > 0.5 ? 1 : -1;
+            metrics.nodes.current = Math.max(metrics.nodes.min, Math.min(metrics.nodes.max, metrics.nodes.current + change));
+            nodesElement.textContent = metrics.nodes.current.toLocaleString();
+        }
+    }, 10000);
+    
+    // Update staked percentage
+    setInterval(() => {
+        const stakedElement = document.getElementById('liveStaked');
+        if (stakedElement) {
+            const change = (Math.random() - 0.5) * 0.5;
+            metrics.staked.current = Math.max(metrics.staked.min, Math.min(metrics.staked.max, metrics.staked.current + change));
+            stakedElement.textContent = `${metrics.staked.current.toFixed(1)}%`;
+            
+            // Update progress bar
+            const progressFill = stakedElement.parentElement.querySelector('.progress-fill');
+            if (progressFill) {
+                progressFill.style.width = `${metrics.staked.current}%`;
+            }
+        }
+    }, 12000);
+}
+
+// ===== MOBILE MENU =====
+function initMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.querySelector('.nav-menu');
+    const navActions = document.querySelector('.nav-actions');
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = navMenu.classList.contains('mobile-open');
+            
+            if (isOpen) {
+                navMenu.classList.remove('mobile-open');
+                navActions.classList.remove('mobile-open');
+                mobileMenuBtn.classList.remove('active');
+            } else {
+                navMenu.classList.add('mobile-open');
+                navActions.classList.add('mobile-open');
+                mobileMenuBtn.classList.add('active');
+            }
+        });
+    }
+    
+    // Close mobile menu when clicking on a link
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('mobile-open');
+            navActions.classList.remove('mobile-open');
+            mobileMenuBtn.classList.remove('active');
+        });
+    });
+}
+
+// ===== SMOOTH SCROLLING =====
+function initSmoothScrolling() {
+    const links = document.querySelectorAll('a[href^="#"]');
+    
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const targetPosition = targetSection.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// ===== NEWSLETTER FORM =====
+function initNewsletterForm() {
+    const newsletterForm = document.querySelector('.newsletter-form');
+    
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const emailInput = newsletterForm.querySelector('input[type="email"]');
+            const email = emailInput.value.trim();
+            
+            if (email && isValidEmail(email)) {
+                // Simulate form submission
+                showNotification('¡Gracias por suscribirte! Te mantendremos informado sobre las últimas novedades de RSC Chain.', 'success');
+                emailInput.value = '';
+            } else {
+                showNotification('Por favor, introduce un email válido.', 'error');
+            }
+        });
+    }
+}
+
+// ===== UTILITY FUNCTIONS =====
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-message">${message}</span>
+            <button class="notification-close">&times;</button>
+        </div>
+    `;
+    
+    // Add styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        z-index: 10000;
+        max-width: 400px;
+        animation: slideInRight 0.3s ease-out;
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Close button functionality
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.remove();
+    });
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 5000);
+}
+
+// ===== BLOCKCHAIN ANIMATION =====
+function initBlockchainAnimation() {
+    const blocks = document.querySelectorAll('.block');
+    
+    blocks.forEach((block, index) => {
+        // Add staggered animation
+        block.style.animationDelay = `${index * 0.2}s`;
+        block.classList.add('fade-in-up');
+        
+        // Add hover effects
+        block.addEventListener('mouseenter', () => {
+            block.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        
+        block.addEventListener('mouseleave', () => {
+            block.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+}
+
+// ===== PERFORMANCE CHART =====
+function initPerformanceChart() {
+    const tpsChart = document.getElementById('tpsChart');
+    if (tpsChart) {
+        const ctx = tpsChart.getContext('2d');
+        
+        // Simple line chart for TPS
+        const data = {
+            labels: ['', '', '', '', '', '', '', '', '', ''],
+            datasets: [{
+                label: 'TPS',
+                data: [80000, 82000, 85000, 83000, 87000, 89000, 86000, 88000, 92000, 90000],
+                borderColor: '#00ff88',
+                backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
         };
         
-        Object.keys(elements).forEach(id => {
-          const element = document.getElementById(id);
-          if (element) {
-            // Animación de cambio de valor
-            const oldValue = element.textContent;
-            const newValue = elements[id];
-            
-            if (oldValue !== newValue) {
-              element.style.transform = 'scale(1.1)';
-              element.style.color = '#00ff88';
-              
-              setTimeout(() => {
-                element.textContent = newValue;
-                element.style.transform = 'scale(1)';
-                element.style.color = '';
-              }, 150);
-            }
-          }
-        });
-      }
-    })
-    .catch(error => {
-      console.warn('Error obteniendo estadísticas de la blockchain:', error);
-      // Si no hay datos, mostrar 0
-      const elements = {
-        'rscPrice': '$0',
-        'rscSupply': '0',
-        'tpsValue': '0',
-        'nodesValue': '0',
-        'marketCap': '$0',
-        'volume24h': '$0',
-        'totalBlocks': '0',
-        'activeUsers': '0',
-        'dashboardPrice': '$0',
-        'dashboardSupply': '0'
-      };
-      
-      Object.keys(elements).forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.textContent = elements[id];
+        // Create simple chart using canvas
+        drawLineChart(ctx, data);
+    }
+}
+
+function drawLineChart(ctx, data) {
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+    const padding = 20;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+    
+    // Draw grid
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.lineWidth = 1;
+    
+    // Vertical lines
+    for (let i = 0; i <= 10; i++) {
+        const x = padding + (i * (width - 2 * padding)) / 10;
+        ctx.beginPath();
+        ctx.moveTo(x, padding);
+        ctx.lineTo(x, height - padding);
+        ctx.stroke();
+    }
+    
+    // Horizontal lines
+    for (let i = 0; i <= 5; i++) {
+        const y = padding + (i * (height - 2 * padding)) / 5;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+    }
+    
+    // Draw data line
+    const maxValue = Math.max(...data.datasets[0].data);
+    const minValue = Math.min(...data.datasets[0].data);
+    const range = maxValue - minValue;
+    
+    ctx.strokeStyle = data.datasets[0].borderColor;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    
+    data.datasets[0].data.forEach((value, index) => {
+        const x = padding + (index * (width - 2 * padding)) / (data.datasets[0].data.length - 1);
+        const y = height - padding - ((value - minValue) / range) * (height - 2 * padding);
+        
+        if (index === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
         }
-      });
     });
-}
-
-// Inicializar chat
-function initChat() {
-  const chatToggle = document.getElementById('supportChat');
-  const chatModal = document.querySelector('.support-chat');
-  const chatClose = document.getElementById('chatClose');
-  const chatSend = document.getElementById('chatSend');
-  const chatInput = document.getElementById('chatInput');
-  
-  if (chatToggle && chatModal) {
-    chatToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      chatModal.classList.add('active');
-    });
-  }
-  
-  if (chatClose) {
-    chatClose.addEventListener('click', () => {
-      chatModal.classList.remove('active');
-    });
-  }
-  
-  if (chatSend && chatInput) {
-    chatSend.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        sendMessage();
-      }
-    });
-  }
-}
-
-function sendMessage() {
-  const chatInput = document.getElementById('chatInput');
-  const chatMessages = document.getElementById('chatMessages');
-  
-  if (chatInput && chatInput.value.trim()) {
-    const message = chatInput.value.trim();
     
-    // Agregar mensaje del usuario
-    const userMessage = document.createElement('div');
-    userMessage.className = 'message user';
-    userMessage.innerHTML = `<p>${message}</p>`;
-    chatMessages.appendChild(userMessage);
-    
-    // Limpiar input
-    chatInput.value = '';
-    
-    // Simular respuesta del bot
-    setTimeout(() => {
-      const botMessage = document.createElement('div');
-      botMessage.className = 'message bot';
-      botMessage.innerHTML = `<p>Gracias por tu mensaje. Un agente te responderá pronto.</p>`;
-      chatMessages.appendChild(botMessage);
-      
-      // Scroll al final
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }, 1000);
-    
-    // Scroll al final
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
+    ctx.stroke();
 }
 
-// Inicializar roadmap
-function initRoadmap() {
-  // Las animaciones del roadmap se manejan en roadmap.js
-  console.log('🗺️ Roadmap inicializado');
-}
+// ===== INITIALIZE ADDITIONAL FEATURES =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize blockchain animation
+    initBlockchainAnimation();
+    
+    // Initialize performance chart
+    initPerformanceChart();
+    
+    // Add CSS for mobile menu
+    addMobileMenuStyles();
+});
 
-// Inicializar footer
-function initFooter() {
-  // Las funcionalidades del footer se manejan en footer.js
-  console.log('🦶 Footer inicializado');
-}
-
-// Mostrar error
-function showError(message) {
-  const notificationsContainer = document.getElementById('notificationsContainer');
-  if (notificationsContainer) {
-    const notification = document.createElement('div');
-    notification.className = 'notification error';
-    notification.innerHTML = `
-      <div class="notification-content">
-        <span class="notification-icon">❌</span>
-        <div class="notification-text">
-          <h4>Error</h4>
-          <p>${message}</p>
-        </div>
-        <button class="notification-close">&times;</button>
-      </div>
+function addMobileMenuStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @media (max-width: 768px) {
+            .nav-menu, .nav-actions {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--bg-primary);
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu.mobile-open,
+            .nav-actions.mobile-open {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .mobile-menu-btn.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .mobile-menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .mobile-menu-btn.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
     `;
-    
-    notificationsContainer.appendChild(notification);
-    
-    // Auto-remover después de 5 segundos
-    setTimeout(() => {
-      notification.remove();
-    }, 5000);
-  }
+    document.head.appendChild(style);
 }
-
-// Ocultar error
-function hideError() {
-  const errorNotifications = document.querySelectorAll('.notification.error');
-  errorNotifications.forEach(notification => {
-    notification.remove();
-  });
-}
-
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', initApp);
-
-// Exportar para uso global
-window.appState = appState;
-window.CONFIG = CONFIG;
