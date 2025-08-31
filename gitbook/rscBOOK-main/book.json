@@ -1,0 +1,53 @@
+{
+  "title": "RSC Chain - Ultra Advanced Blockchain",
+  "description": "Documentación completa de la blockchain más avanzada del mundo",
+  "author": "RSC Chain Team",
+  "language": "es",
+  "structure": {
+    "readme": "README.md",
+    "summary": "SUMMARY.md"
+  },
+  "plugins": [
+    "theme-default",
+    "highlight",
+    "search",
+    "sharing",
+    "fontsettings",
+    "livereload",
+    "copy-code-button",
+    "expandable-chapters",
+    "back-to-top-button",
+    "github",
+    "splitter",
+    "toc",
+    "anchor-navigation-ex",
+    "code",
+    "prism",
+    "prism-themes",
+    "theme-api",
+    "theme-default-extend"
+  ],
+  "pluginsConfig": {
+    "theme-default": {
+      "showLevel": true
+    },
+    "github": {
+      "url": "https://github.com/rsc-chain/rsc-chain"
+    },
+    "prism": {
+      "css": [
+        "prismjs/themes/prism-tomorrow.css"
+      ]
+    },
+    "theme-api": {
+      "theme": "dark"
+    },
+    "copy-code-button": {
+      "title": "Copiar código"
+    }
+  },
+  "variables": {
+    "version": "2.0.0",
+    "releaseDate": "2024-12-19"
+  }
+}

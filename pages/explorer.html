@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RSC Blockchain Explorer - RSC CHAIN</title>
-  <meta name="description" content="Explora la blockchain RSC en tiempo real. Bloques, transacciones, direcciones y estadísticas en vivo.">
+  <meta name="description" content="Explore the RSC blockchain in real-time. Blocks, transactions, addresses and live statistics.">
   <link rel="icon" href="../assets/img/logo.png" type="image/png">
   <link rel="stylesheet" href="../styles/global.css">
   <link rel="stylesheet" href="../styles/layout.css">
@@ -21,13 +21,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body class="dark-mode">
-  <!-- Fondo 4D animado -->
+  <!-- Animated 4D Background -->
   <div class="background-4d"></div>
   
-  <!-- Contenedor de notificaciones -->
+  <!-- Notifications Container -->
   <div class="notifications-container" id="notificationsContainer"></div>
 
-      <!-- Navbar -->
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-container">
       <!-- Logo Section (Left) -->
@@ -53,7 +53,7 @@
     </div>
   </nav>
   
-    <!-- Modern Mobile Menu -->
+  <!-- Modern Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
       <div class="mobile-menu-logo">
@@ -109,209 +109,176 @@
         </ul>
       </div>
       
-      <!-- Account Section -->
+      <!-- Actions Section -->
       <div class="menu-section">
-        <h3 class="menu-section-title">Account</h3>
+        <h3 class="menu-section-title">Actions</h3>
         <div class="menu-actions">
           <a href="login.html" class="menu-action login-btn">
-            <span class="action-icon">🔐</span>
+            <span class="menu-icon">🔐</span>
             <span>Login</span>
           </a>
-          <a href="#" id="mobileWalletConnectBtn" class="menu-action wallet-btn">
-            <span class="action-icon">🔒</span>
-            <span>Connect Wallet</span>
-          </a>
-        </div>
-      </div>
-      
-      <!-- Settings Section -->
-      <div class="menu-section">
-        <h3 class="menu-section-title">Settings</h3>
-        <div class="menu-actions">
-          <button class="menu-action theme-toggle" id="themeToggle">
-            <span class="action-icon">🌙</span>
-            <span>Dark Mode</span>
-          </button>
-          <button class="menu-action language-toggle" id="languageToggle">
-            <span class="action-icon">🌐</span>
-            <span>English</span>
-          </button>
         </div>
       </div>
     </div>
   </div>
-  
+
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
-  <!-- Explorer Épico -->
-  <main class="explorer-epic">
-    <!-- Header Épico -->
-    <header class="explorer-header-epic">
-      <div class="header-content">
-        <div class="header-title">
-          <h1 class="epic-title">
-            <span class="title-word">RSC</span>
-            <span class="title-word">BLOCKCHAIN</span>
-            <span class="title-word">EXPLORER</span>
-          </h1>
-          <p class="epic-subtitle">Explora la blockchain más avanzada del mundo en tiempo real</p>
-      </div>
-      
-        <div class="header-stats">
-          <div class="stat-item">
-            <div class="stat-icon">🔗</div>
-            <div class="stat-content">
-          <div class="stat-value" id="totalBlocks">1,234,567</div>
-          <div class="stat-label">Bloques Totales</div>
+  <!-- Main Content -->
+  <main class="explorer-main">
+    <!-- Epic Explorer -->
+    <section class="explorer-hero">
+      <!-- Epic Header -->
+      <div class="hero-content">
+        <div class="hero-title">
+          <span class="title-word">EPIC</span>
+          <span class="title-word">BLOCKCHAIN</span>
+          <span class="title-word">EXPLORER</span>
         </div>
-            <div class="stat-glow"></div>
+        <p class="epic-subtitle">Explore the world's most advanced blockchain in real-time</p>
+        
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Total Blocks</div>
           </div>
           <div class="stat-item">
-            <div class="stat-icon">⚡</div>
-            <div class="stat-content">
-              <div class="stat-value" id="avgTPS">15.2K</div>
-          <div class="stat-label">TPS Promedio</div>
-        </div>
-            <div class="stat-glow"></div>
+            <div class="stat-value">0</div>
+            <div class="stat-label">Total Transactions</div>
           </div>
           <div class="stat-item">
-            <div class="stat-icon">🌐</div>
-            <div class="stat-content">
-              <div class="stat-value" id="activeNodes">1,247</div>
-              <div class="stat-label">Nodos Activos</div>
-            </div>
-            <div class="stat-glow"></div>
+            <div class="stat-value">0</div>
+            <div class="stat-label">Active Nodes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Total Addresses</div>
           </div>
         </div>
-      </div>
-      
-      <!-- Búsqueda Épica -->
-      <div class="search-epic">
-        <div class="search-container">
-          <div class="search-input-wrapper">
-            <input type="text" id="searchInput" class="search-input-epic" placeholder="Buscar bloque, transacción o dirección...">
-            <div class="search-icon">🔍</div>
-            <div class="search-suggestions" id="searchSuggestions"></div>
-          </div>
-          <button class="search-btn-epic" id="searchBtn">
-            <span class="btn-text">Buscar</span>
-            <div class="btn-glow"></div>
+        
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-large" id="startExploringBtn">
+            <i class="fas fa-search"></i>
+            Start Exploring
+          </button>
+          <button class="btn btn-secondary btn-large" id="viewStatsBtn">
+            <i class="fas fa-chart-bar"></i>
+            View Statistics
           </button>
         </div>
-        
-        <div class="search-examples-epic">
-          <span class="example-tag" data-example="1234567">Bloque #1234567</span>
-          <span class="example-tag" data-example="0x1234...5678">TX: 0x1234...5678</span>
-          <span class="example-tag" data-example="RSC1abc...def">Dirección: RSC1abc...def</span>
-        </div>
       </div>
-    </header>
-
-    <!-- Dashboard Principal -->
-    <div class="explorer-dashboard">
-      <!-- Sidebar Épico -->
-      <aside class="explorer-sidebar-epic">
-        <div class="sidebar-header">
-          <h3>Navegación</h3>
-          <div class="sidebar-status">
-            <div class="status-dot online"></div>
-            <span>Conectado</span>
+      
+      <div class="hero-visual">
+        <div class="explorer-animation">
+          <div class="search-particles"></div>
+          <div class="search-examples">
+            <span class="example-tag" data-example="1234567">Block #1234567</span>
+            <span class="example-tag" data-example="0x1234...5678">TX: 0x1234...5678</span>
+            <span class="example-tag" data-example="RSC1abc...def">Address: RSC1abc...def</span>
           </div>
         </div>
-        
-        <nav class="sidebar-nav">
-          <a href="#dashboard" class="nav-item active" data-section="dashboard">
-            <div class="nav-icon">📊</div>
-            <span>Dashboard</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#blocks" class="nav-item" data-section="blocks">
-            <div class="nav-icon">🔗</div>
-            <span>Bloques</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#transactions" class="nav-item" data-section="transactions">
-            <div class="nav-icon">💱</div>
-            <span>Transacciones</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#addresses" class="nav-item" data-section="addresses">
-            <div class="nav-icon">👛</div>
-            <span>Direcciones</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#network" class="nav-item" data-section="network">
-            <div class="nav-icon">🌐</div>
-            <span>Red</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#analytics" class="nav-item" data-section="analytics">
-            <div class="nav-icon">📈</div>
-            <span>Analytics</span>
-            <div class="nav-glow"></div>
-          </a>
-        </nav>
+      </div>
+    </section>
+
+    <!-- Explorer Dashboard -->
+    <div class="explorer-dashboard">
+      <!-- Epic Sidebar -->
+      <aside class="explorer-sidebar-epic">
+        <div class="sidebar-content">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Network Status</h3>
+            <div class="sidebar-status">
+              <div class="status-dot online"></div>
+              <span>Online</span>
+            </div>
+          </div>
+          
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Navigation</h3>
+            <nav class="sidebar-nav">
+              <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                <div class="nav-icon">📊</div>
+                <span>Dashboard</span>
+              </a>
+              <a href="#blocks" class="nav-item" data-section="blocks">
+                <div class="nav-icon">🧱</div>
+                <span>Blocks</span>
+              </a>
+              <a href="#transactions" class="nav-item" data-section="transactions">
+                <div class="nav-icon">💱</div>
+                <span>Transactions</span>
+              </a>
+              <a href="#addresses" class="nav-item" data-section="addresses">
+                <div class="nav-icon">📍</div>
+                <span>Addresses</span>
+              </a>
+              <a href="#network" class="nav-item" data-section="network">
+                <div class="nav-icon">🌐</div>
+                <span>Network</span>
+              </a>
+              <a href="#analytics" class="nav-item" data-section="analytics">
+                <div class="nav-icon">📈</div>
+                <span>Analytics</span>
+              </a>
+            </nav>
+          </div>
+          
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Quick Search</h3>
+            <div class="search-box">
+              <input type="text" id="quickSearch" placeholder="Search blocks, TXs, addresses...">
+              <button id="searchBtn">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </aside>
 
-      <!-- Contenido Principal -->
+      <!-- Main Explorer Interface -->
       <main class="explorer-main-epic">
         <!-- Dashboard Section -->
         <section id="dashboard" class="explorer-section active">
           <div class="section-header">
-            <h2>Dashboard en Tiempo Real</h2>
+            <h2>Network Overview</h2>
             <div class="section-actions">
               <button class="refresh-btn" id="refreshBtn">
                 <span class="btn-icon">🔄</span>
-                <span>Actualizar</span>
+                <span>Refresh</span>
               </button>
             </div>
           </div>
-
-          <!-- Estadísticas en Tiempo Real -->
+          
+          <!-- Real-time Statistics -->
           <div class="realtime-stats">
             <div class="stat-card-epic">
               <div class="stat-header">
-                <div class="stat-icon">💰</div>
+                <div class="stat-icon">🧱</div>
                 <div class="stat-status online"></div>
               </div>
               <div class="stat-content">
-                <div class="stat-value" id="rscPrice">$4.85</div>
-                <div class="stat-label">Precio RSC</div>
-                <div class="stat-change positive" id="priceChange">+2.34%</div>
+                <div class="stat-value" id="latestBlock">0</div>
+                <div class="stat-label">Latest Block</div>
+                <div class="stat-change positive" id="blockChange">+0</div>
               </div>
               <div class="stat-chart">
-                <canvas id="priceChart" width="200" height="60"></canvas>
+                <canvas id="blockChart" width="200" height="60"></canvas>
               </div>
             </div>
 
             <div class="stat-card-epic">
               <div class="stat-header">
-                <div class="stat-icon">🪙</div>
+                <div class="stat-icon">💱</div>
                 <div class="stat-status online"></div>
               </div>
               <div class="stat-content">
-                <div class="stat-value" id="rscSupply">450.975M</div>
-                <div class="stat-label">RSC en Circulación</div>
-                <div class="stat-progress">
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%"></div>
-                  </div>
-                </div>
+                <div class="stat-value" id="totalTransactions">0</div>
+                <div class="stat-label">Total Transactions</div>
+                <div class="stat-change positive" id="txChange">+0</div>
               </div>
-            </div>
-
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">⚡</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="currentTPS">714</div>
-                <div class="stat-label">TPS Actual</div>
-                <div class="stat-graph">
-                  <canvas id="tpsGraph" width="200" height="60"></canvas>
-                </div>
+              <div class="stat-chart">
+                <canvas id="txChart" width="200" height="60"></canvas>
               </div>
             </div>
 
@@ -321,28 +288,38 @@
                 <div class="stat-status online"></div>
               </div>
               <div class="stat-content">
-                <div class="stat-value" id="activeNodes">69</div>
-                <div class="stat-label">Nodos Activos</div>
-                <div class="nodes-map">
-                  <div class="node-dots">
-                    <span class="node-dot"></span>
-                    <span class="node-dot"></span>
-                    <span class="node-dot"></span>
-                    <span class="node-dot"></span>
-                    <span class="node-dot"></span>
-                  </div>
-                </div>
+                <div class="stat-value" id="activeNodes">0</div>
+                <div class="stat-label">Active Nodes</div>
+                <div class="stat-change positive" id="nodesChange">+0</div>
+              </div>
+              <div class="stat-chart">
+                <canvas id="nodesChart" width="200" height="60"></canvas>
+              </div>
+            </div>
+
+            <div class="stat-card-epic">
+              <div class="stat-header">
+                <div class="stat-icon">⛏️</div>
+                <div class="stat-status online"></div>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="activeMiners">0</div>
+                <div class="stat-label">Active Miners</div>
+                <div class="stat-change positive" id="minersChange">+0</div>
+              </div>
+              <div class="stat-chart">
+                <canvas id="minersChart" width="200" height="60"></canvas>
               </div>
             </div>
           </div>
 
-          <!-- Visualización 3D de la Blockchain -->
+          <!-- 3D Blockchain Visualization -->
           <div class="blockchain-3d">
             <div class="visualization-header">
-              <h3>Visualización de la Red</h3>
+              <h3>Network Visualization</h3>
               <div class="visualization-controls">
-                <button class="control-btn" data-view="network">Red</button>
-                <button class="control-btn active" data-view="blocks">Bloques</button>
+                <button class="control-btn" data-view="network">Network</button>
+                <button class="control-btn active" data-view="blocks">Blocks</button>
                 <button class="control-btn" data-view="transactions">TXs</button>
               </div>
             </div>
@@ -351,27 +328,27 @@
               <div class="visualization-overlay">
                 <div class="overlay-stats">
                   <div class="overlay-stat">
-                    <span class="stat-label">Bloques</span>
-                    <span class="stat-value" id="overlayBlocks">1,234,567</span>
+                    <span class="stat-label">Blocks</span>
+                    <span class="stat-value" id="overlayBlocks">0</span>
                   </div>
                   <div class="overlay-stat">
-                    <span class="stat-label">TXs</span>
-                    <span class="stat-value" id="overlayTXs">45,678</span>
+                    <span class="stat-label">Transactions</span>
+                    <span class="stat-value" id="overlayTransactions">0</span>
                   </div>
                   <div class="overlay-stat">
-                    <span class="stat-label">Nodos</span>
-                    <span class="stat-value" id="overlayNodes">1,247</span>
+                    <span class="stat-label">Nodes</span>
+                    <span class="stat-value" id="overlayNodes">0</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Gráficos Interactivos -->
+          <!-- Interactive Charts -->
           <div class="charts-section">
             <div class="chart-container">
               <div class="chart-header">
-                <h3>Actividad de la Red</h3>
+                <h3>Network Activity</h3>
                 <div class="chart-controls">
                   <button class="time-btn active" data-period="24h">24H</button>
                   <button class="time-btn" data-period="7d">7D</button>
@@ -385,142 +362,132 @@
 
             <div class="chart-container">
               <div class="chart-header">
-                <h3>Distribución de Transacciones</h3>
+                <h3>Transaction Distribution</h3>
               </div>
               <div class="chart-wrapper">
-                <canvas id="transactionTypesChart"></canvas>
+                <canvas id="transactionDistributionChart"></canvas>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Bloques Section -->
+        <!-- Blocks Section -->
         <section id="blocks" class="explorer-section">
           <div class="section-header">
-        <h2>Últimos Bloques</h2>
+            <h2>Latest Blocks</h2>
             <div class="section-actions">
-              <button class="auto-refresh-btn" id="autoRefreshBtn">
+              <button class="refresh-btn" id="refreshBlocksBtn">
                 <span class="btn-icon">🔄</span>
-                <span>Auto-refresh</span>
+                <span>Refresh</span>
               </button>
             </div>
           </div>
-
+          
           <div class="blocks-table-container">
             <table class="blocks-table-epic">
               <thead>
                 <tr>
-                  <th>Bloque</th>
+                  <th>Block</th>
+                  <th>Age</th>
                   <th>Hash</th>
-                  <th>Minero</th>
-                  <th>Transacciones</th>
-                  <th>Tamaño</th>
-                  <th>Tiempo</th>
-                  <th>Estado</th>
+                  <th>Size</th>
+                  <th>Transactions</th>
+                  <th>Gas Used</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody id="blocksTableBody">
-                <!-- Los bloques se cargarán dinámicamente -->
+                <!-- Blocks will be loaded dynamically -->
               </tbody>
             </table>
-          </div>
-
-          <div class="pagination-epic">
-            <button class="pagination-btn" data-page="prev">← Anterior</button>
-            <div class="page-numbers">
-              <span class="page-number active">1</span>
-              <span class="page-number">2</span>
-              <span class="page-number">3</span>
-              <span class="page-number">...</span>
-              <span class="page-number">10</span>
+            
+            <div class="pagination">
+              <button class="pagination-btn" data-page="prev">← Previous</button>
+              <span class="page-info">Page 1 of 1</span>
+              <button class="pagination-btn" data-page="next">Next →</button>
             </div>
-            <button class="pagination-btn" data-page="next">Siguiente →</button>
           </div>
         </section>
 
-        <!-- Transacciones Section -->
+        <!-- Transactions Section -->
         <section id="transactions" class="explorer-section">
           <div class="section-header">
-            <h2>Transacciones Recientes</h2>
-            <div class="section-actions">
-              <div class="filter-controls">
-                <select class="filter-select" id="txTypeFilter">
-                  <option value="all">Todos los tipos</option>
-                  <option value="transfer">Transferencias</option>
-                  <option value="contract">Contratos</option>
-                  <option value="stake">Staking</option>
-                </select>
-              </div>
+            <h2>Recent Transactions</h2>
+            <div class="filter-controls">
+              <select class="filter-select" id="txTypeFilter">
+                <option value="all">All Types</option>
+                <option value="transfer">Transfer</option>
+                <option value="contract">Contract</option>
+                <option value="mining">Mining</option>
+              </select>
+              <select class="filter-select" id="txStatusFilter">
+                <option value="all">All Status</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="pending">Pending</option>
+                <option value="failed">Failed</option>
+              </select>
             </div>
           </div>
-
+          
           <div class="transactions-table-container">
             <table class="transactions-table-epic">
               <thead>
                 <tr>
                   <th>Hash</th>
-                  <th>Tipo</th>
-                  <th>De</th>
-                  <th>Para</th>
-                  <th>Cantidad</th>
-                  <th>Fee</th>
-                  <th>Estado</th>
-                  <th>Tiempo</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Value</th>
+                  <th>Gas</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody id="transactionsTableBody">
-                <!-- Las transacciones se cargarán dinámicamente -->
+                <!-- Transactions will be loaded dynamically -->
               </tbody>
             </table>
           </div>
         </section>
 
-        <!-- Direcciones Section -->
+        <!-- Addresses Section -->
         <section id="addresses" class="explorer-section">
           <div class="section-header">
-            <h2>Direcciones Principales</h2>
+            <h2>Top Addresses</h2>
           </div>
-
-          <div class="addresses-grid">
-            <!-- Las direcciones se cargarán dinámicamente -->
+          
+          <div class="addresses-grid" id="addressesGrid">
+            <!-- Addresses will be loaded dynamically -->
           </div>
         </section>
 
-        <!-- Red Section -->
+        <!-- Network Section -->
         <section id="network" class="explorer-section">
           <div class="section-header">
-            <h2>Estado de la Red</h2>
+            <h2>Network Status</h2>
           </div>
-
+          
           <div class="network-overview">
             <div class="network-map">
-              <h3>Mapa de Nodos</h3>
-              <div class="map-container">
-                <div id="nodesMap" class="nodes-visualization"></div>
+              <h3>Node Map</h3>
+              <div id="nodeMap" class="node-map-container">
+                <!-- Node map will be rendered here -->
               </div>
             </div>
-
-            <div class="network-stats-epic">
-              <div class="network-stat-card">
-                <div class="stat-icon">🌍</div>
-                <div class="stat-content">
-                  <div class="stat-value">1,247</div>
-                  <div class="stat-label">Nodos Activos</div>
-                </div>
+            
+            <div class="network-stats">
+              <div class="stat-card">
+                <div class="stat-icon">🌐</div>
+                <div class="stat-value" id="totalNodes">0</div>
+                <div class="stat-label">Active Nodes</div>
               </div>
-              <div class="network-stat-card">
-                <div class="stat-icon">⚡</div>
-                <div class="stat-content">
-                  <div class="stat-value">15.2K</div>
-                  <div class="stat-label">TPS Promedio</div>
-                </div>
+              <div class="stat-card">
+                <div class="stat-icon">📡</div>
+                <div class="stat-value" id="networkLatency">0ms</div>
+                <div class="stat-label">Avg Latency</div>
               </div>
-              <div class="network-stat-card">
-                <div class="stat-icon">🔒</div>
-                <div class="stat-content">
-                  <div class="stat-value">99.9%</div>
-                  <div class="stat-label">Uptime</div>
-                </div>
+              <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="networkThroughput">0 TPS</div>
+                <div class="stat-label">Throughput</div>
               </div>
             </div>
           </div>
@@ -529,66 +496,35 @@
         <!-- Analytics Section -->
         <section id="analytics" class="explorer-section">
           <div class="section-header">
-            <h2>Analytics Avanzados</h2>
+            <h2>Advanced Analytics</h2>
           </div>
-
+          
           <div class="analytics-grid">
             <div class="analytics-chart-container">
-              <h3>Volumen de Transacciones</h3>
-              <canvas id="volumeChart"></canvas>
+              <h3>Transaction Volume</h3>
+              <canvas id="transactionVolumeChart"></canvas>
             </div>
             <div class="analytics-chart-container">
-              <h3>Distribución de Direcciones</h3>
-              <canvas id="addressesChart"></canvas>
+              <h3>Address Distribution</h3>
+              <canvas id="addressDistributionChart"></canvas>
             </div>
             <div class="analytics-chart-container">
-              <h3>Actividad de Mineros</h3>
-              <canvas id="minersChart"></canvas>
+              <h3>Miner Activity</h3>
+              <canvas id="minerActivityChart"></canvas>
             </div>
             <div class="analytics-chart-container">
-              <h3>Estadísticas de Red</h3>
+              <h3>Network Statistics</h3>
               <canvas id="networkStatsChart"></canvas>
             </div>
           </div>
         </section>
       </main>
     </div>
-
-    <!-- Modal de Detalles -->
-    <div class="details-modal" id="detailsModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="modalTitle">Detalles</h3>
-          <button class="modal-close" id="modalClose">×</button>
-        </div>
-        <div class="modal-body" id="modalBody">
-          <!-- El contenido se cargará dinámicamente -->
-        </div>
-      </div>
-    </div>
   </main>
 
   <!-- Scripts -->
-  <script src="../scripts/feature-flags.js"></script>
-  <script src="../scripts/admin-panel.js"></script>
-  <script src="../scripts/ai-assistant.js"></script>
-  <script src="../scripts/chat-component.js"></script>
-  <script src="../scripts/config.js"></script>
-  <script src="../scripts/blockchain-connection.js"></script>
-  <script src="../scripts/cleanup.js"></script>
-  <script src="../scripts/main.js"></script>
   <script src="../scripts/explorer.js"></script>
-  <script src="../scripts/explorer-epic.js"></script>
-  <script src="../scripts/notifications.js"></script>
-  <script src="../scripts/animations.js"></script>
+  <script src="../scripts/blockchain-connection.js"></script>
   <script src="../scripts/blockchain-data.js"></script>
-  <script src="../scripts/charts.js"></script>
-  <script src="../scripts/init.js"></script>
-  <script src="../scripts/debug.js"></script>
-  <script src="../scripts/chat.js"></script>
-  <script src="../scripts/error-fix.js"></script>
-  
-  <!-- ===== NAVBAR RESPONSIVE ===== -->
-  <script src="../scripts/navbar.js"></script>
 </body>
 </html> 

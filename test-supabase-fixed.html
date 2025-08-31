@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,35 +67,35 @@
     <h1>🔧 Test Supabase Fixed - RSC Mining</h1>
     
     <div class="test-section">
-        <h2>📡 Estado de Conexión</h2>
-        <div id="connection-status" class="status connecting">🔄 Conectando...</div>
-        <button onclick="testConnection()">Test Conexión</button>
-        <button onclick="initializeSupabase()">Reinicializar</button>
+        <h2>📡 Connection Status</h2>
+        <div id="connection-status" class="status connecting">🔄 Connecting...</div>
+        <button onclick="testConnection()">Test Connection</button>
+        <button onclick="initializeSupabase()">Reinitialize</button>
     </div>
 
     <div class="test-section">
-        <h2>🔐 Test de Autenticación</h2>
-        <input type="email" id="test-email" placeholder="Email para test" value="test@example.com">
-        <button onclick="testAuth()">Test Autenticación</button>
+        <h2>🔐 Authentication Test</h2>
+        <input type="email" id="test-email" placeholder="Email for test" value="test@example.com">
+        <button onclick="testAuth()">Test Authentication</button>
         <div id="auth-result"></div>
     </div>
 
     <div class="test-section">
-        <h2>⛏️ Test de Sistema de Minería</h2>
-        <button onclick="testMiningSystem()">Test Sistema de Minería</button>
+        <h2>⛏️ Mining System Test</h2>
+        <button onclick="testMiningSystem()">Test Mining System</button>
         <div id="mining-result"></div>
     </div>
 
     <div class="test-section">
-        <h2>📊 Test de Base de Datos</h2>
-        <button onclick="testDatabase()">Test Base de Datos</button>
+        <h2>📊 Database Test</h2>
+        <button onclick="testDatabase()">Test Database</button>
         <div id="database-result"></div>
     </div>
 
     <div class="test-section">
-        <h2>📝 Log de Eventos</h2>
+        <h2>📝 Event Log</h2>
         <div id="event-log" class="log"></div>
-        <button onclick="clearLog()">Limpiar Log</button>
+        <button onclick="clearLog()">Clear Log</button>
     </div>
 
     <!-- Supabase CDN - Versión más confiable -->

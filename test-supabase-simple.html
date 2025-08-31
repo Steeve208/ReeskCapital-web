@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,19 +58,19 @@
     <h1>🔧 Test Supabase Simple - RSC Mining</h1>
     
     <div class="test-section">
-        <h2>📡 Estado de Conexión</h2>
-        <div id="connection-status" class="status connecting">🔄 Conectando...</div>
-        <button onclick="testConnection()">Test Conexión</button>
-        <button onclick="manualInit()">Inicialización Manual</button>
+        <h2>📡 Connection Status</h2>
+        <div id="connection-status" class="status connecting">🔄 Connecting...</div>
+        <button onclick="testConnection()">Test Connection</button>
+        <button onclick="manualInit()">Manual Initialization</button>
     </div>
 
     <div class="test-section">
-        <h2>📝 Log de Eventos</h2>
+        <h2>📝 Event Log</h2>
         <div id="event-log" class="log"></div>
-        <button onclick="clearLog()">Limpiar Log</button>
+        <button onclick="clearLog()">Clear Log</button>
     </div>
 
-    <!-- CDN alternativo de Supabase -->
+    <!-- Alternative Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
     
     <script>
@@ -101,40 +101,40 @@
 
         function initializeSupabase() {
             try {
-                log('🔄 Intentando inicializar Supabase...', 'info');
+                log('🔄 Attempting to initialize Supabase...', 'info');
                 
-                // Verificar si Supabase está disponible
+                // Check if Supabase is available
                 if (typeof window.supabase === 'undefined') {
-                    throw new Error('Supabase no está disponible en window.supabase');
+                    throw new Error('Supabase is not available in window.supabase');
                 }
                 
-                log('✅ Supabase detectado en window.supabase', 'success');
+                log('✅ Supabase detected in window.supabase', 'success');
                 
-                // Crear cliente
+                // Create client
                 supabaseClient = window.supabase.createClient(
                     'https://unevdceponbnmhvpzlzf.supabase.co',
                     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVuZXZkY2Vwb25ibm1odnB6bHpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5MTIyMTksImV4cCI6MjA3MTQ4ODIxOX0.OLHbZrezgBiXWQplN1jrGD_xkARqG2uD8ECqzo05jE4'
                 );
                 
-                log('✅ Cliente Supabase creado exitosamente', 'success');
+                log('✅ Supabase client created successfully', 'success');
                 return true;
                 
             } catch (error) {
-                log(`❌ Error inicializando Supabase: ${error.message}`, 'error');
+                log(`❌ Error initializing Supabase: ${error.message}`, 'error');
                 return false;
             }
         }
 
         async function testConnection() {
             if (!supabaseClient) {
-                log('⚠️ Primero inicializa Supabase', 'warning');
+                log('⚠️ First initialize Supabase', 'warning');
                 return;
             }
 
-            log('🔄 Probando conexión...', 'info');
+            log('🔄 Testing connection...', 'info');
             
             try {
-                // Test simple de conexión
+                // Simple connection test
                 const { data, error } = await supabaseClient
                     .from('miners')
                     .select('count')
@@ -142,55 +142,55 @@
                 
                 if (error) {
                     if (error.code === 'PGRST116') {
-                        log('ℹ️ Tabla "miners" no existe, pero la conexión funciona', 'warning');
-                        updateConnectionStatus('connected', '✅ Conectado (tabla no existe)');
+                        log('ℹ️ Table "miners" does not exist, but connection works', 'warning');
+                        updateConnectionStatus('connected', '✅ Connected (table does not exist)');
                     } else {
-                        log(`❌ Error de conexión: ${error.message}`, 'error');
-                        updateConnectionStatus('disconnected', '❌ Error de conexión');
+                        log(`❌ Connection error: ${error.message}`, 'error');
+                        updateConnectionStatus('disconnected', '❌ Connection error');
                     }
                 } else {
-                    log('✅ Conexión exitosa a Supabase', 'success');
-                    updateConnectionStatus('connected', '✅ Conectado a Supabase');
+                    log('✅ Successful connection to Supabase', 'success');
+                    updateConnectionStatus('connected', '✅ Connected to Supabase');
                 }
             } catch (error) {
-                log(`❌ Excepción en test: ${error.message}`, 'error');
-                updateConnectionStatus('disconnected', '❌ Error de conexión');
+                log(`❌ Exception in test: ${error.message}`, 'error');
+                updateConnectionStatus('disconnected', '❌ Connection error');
             }
         }
 
         function manualInit() {
-            log('🔧 Inicialización manual solicitada', 'info');
+            log('🔧 Manual initialization requested', 'info');
             if (initializeSupabase()) {
-                updateConnectionStatus('connecting', '🔄 Inicializado, probando conexión...');
+                updateConnectionStatus('connecting', '🔄 Initialized, testing connection...');
                 setTimeout(() => {
                     testConnection();
                 }, 1000);
             } else {
-                updateConnectionStatus('disconnected', '❌ Falló la inicialización');
+                updateConnectionStatus('disconnected', '❌ Initialization failed');
             }
         }
 
-        // Función para verificar Supabase periódicamente
+        // Function to periodically check Supabase availability
         function checkSupabaseAvailability() {
             if (typeof window.supabase !== 'undefined') {
-                log('🎉 Supabase detectado automáticamente', 'success');
+                log('🎉 Supabase detected automatically', 'success');
                 manualInit();
             } else {
-                log('⏳ Esperando a que Supabase esté disponible...', 'info');
+                log('⏳ Waiting for Supabase to be available...', 'info');
                 setTimeout(checkSupabaseAvailability, 1000);
             }
         }
 
-        // Auto-inicialización al cargar
+        // Auto-initialization on load
         window.addEventListener('load', () => {
-            log('🚀 Página cargada, verificando Supabase...', 'info');
+            log('🚀 Page loaded, checking Supabase...', 'info');
             setTimeout(checkSupabaseAvailability, 1000);
         });
 
-        // También verificar cuando el DOM esté listo
+        // Also check when the DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
-                log('📄 DOM cargado, verificando Supabase...', 'info');
+                log('📄 DOM loaded, checking Supabase...', 'info');
             });
         }
     </script>

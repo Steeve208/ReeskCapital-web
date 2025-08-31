@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,39 +65,39 @@
     <h1>🔧 Test Supabase Working - RSC Mining</h1>
     
     <div class="test-section">
-        <h2>📡 Estado de Conexión</h2>
-        <div id="connection-status" class="status connecting">🔄 Inicializando...</div>
-        <button onclick="testConnection()" id="test-btn" disabled>Test Conexión</button>
-        <button onclick="manualInit()" id="manual-btn">Inicialización Manual</button>
+        <h2>📡 Connection Status</h2>
+        <div id="connection-status" class="status connecting">🔄 Initializing...</div>
+        <button onclick="testConnection()" id="test-btn" disabled>Test Connection</button>
+        <button onclick="manualInit()" id="manual-btn">Manual Initialization</button>
     </div>
 
     <div class="test-section">
-        <h2>⛏️ Test de Sistema de Minería</h2>
-        <button onclick="testMiningSystem()" id="mining-btn" disabled>Test Sistema de Minería</button>
+        <h2>⛏️ Mining System Test</h2>
+        <button onclick="testMiningSystem()" id="mining-btn" disabled>Test Mining System</button>
         <div id="mining-result"></div>
     </div>
 
     <div class="test-section">
-        <h2>📊 Test de Base de Datos</h2>
-        <button onclick="testDatabase()" id="db-btn" disabled>Test Base de Datos</button>
+        <h2>📊 Database Test</h2>
+        <button onclick="testDatabase()" id="db-btn" disabled>Test Database</button>
         <div id="database-result"></div>
     </div>
 
     <div class="test-section">
-        <h2>📝 Log de Eventos</h2>
+        <h2>📝 Event Log</h2>
         <div id="event-log" class="log"></div>
-        <button onclick="clearLog()">Limpiar Log</button>
+        <button onclick="clearLog()">Clear Log</button>
     </div>
 
-    <!-- CDN de Supabase que SÍ funciona -->
+    <!-- Supabase CDN that DOES work -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
     
     <script>
-        // Variables del sistema
+        // System variables
         let supabaseClient = null;
         let isConnected = false;
 
-        // Elementos del DOM
+        // DOM elements
         const elements = {
             status: document.getElementById('connection-status'),
             testBtn: document.getElementById('test-btn'),
@@ -134,14 +134,14 @@
 
         function initializeSupabase() {
             try {
-                log('🔄 Intentando inicializar Supabase...', 'info');
+                log('🔄 Attempting to initialize Supabase...', 'info');
                 
                 // Verificar si Supabase está disponible
                 if (typeof window.supabase === 'undefined') {
-                    throw new Error('Supabase no está disponible en window.supabase');
+                    throw new Error('Supabase is not available in window.supabase');
                 }
                 
-                log('✅ Supabase detectado en window.supabase', 'success');
+                log('✅ Supabase detected in window.supabase', 'success');
                 
                 // Crear cliente
                 supabaseClient = window.supabase.createClient(
@@ -149,22 +149,22 @@
                     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVuZXZkY2Vwb25ibm1odnB6bHpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5MTIyMTksImV4cCI6MjA3MTQ4ODIxOX0.OLHbZrezgBiXWQplN1jrGD_xkARqG2uD8ECqzo05jE4'
                 );
                 
-                log('✅ Cliente Supabase creado exitosamente', 'success');
+                log('✅ Supabase client created successfully', 'success');
                 return true;
                 
             } catch (error) {
-                log(`❌ Error inicializando Supabase: ${error.message}`, 'error');
+                log(`❌ Error initializing Supabase: ${error.message}`, 'error');
                 return false;
             }
         }
 
         async function testConnection() {
             if (!supabaseClient) {
-                log('⚠️ Primero inicializa Supabase', 'warning');
+                log('⚠️ First initialize Supabase', 'warning');
                 return;
             }
 
-            log('🔄 Probando conexión...', 'info');
+            log('🔄 Testing connection...', 'info');
             
             try {
                 // Test simple de conexión
@@ -175,31 +175,31 @@
                 
                 if (error) {
                     if (error.code === 'PGRST116') {
-                        log('ℹ️ Tabla "miners" no existe, pero la conexión funciona', 'warning');
-                        updateConnectionStatus('connected', '✅ Conectado (tabla no existe)');
+                        log('ℹ️ Table "miners" does not exist, but connection works', 'warning');
+                        updateConnectionStatus('connected', '✅ Connected (table does not exist)');
                     } else {
-                        log(`❌ Error de conexión: ${error.message}`, 'error');
-                        updateConnectionStatus('error', '❌ Error de conexión');
+                        log(`❌ Connection error: ${error.message}`, 'error');
+                        updateConnectionStatus('error', '❌ Connection error');
                     }
                 } else {
-                    log('✅ Conexión exitosa a Supabase', 'success');
-                    updateConnectionStatus('connected', '✅ Conectado a Supabase');
+                    log('✅ Connection successful to Supabase', 'success');
+                    updateConnectionStatus('connected', '✅ Connected to Supabase');
                 }
             } catch (error) {
-                log(`❌ Excepción en test: ${error.message}`, 'error');
-                updateConnectionStatus('error', '❌ Error de conexión');
+                log(`❌ Exception in test: ${error.message}`, 'error');
+                updateConnectionStatus('error', '❌ Connection error');
             }
         }
 
         async function testMiningSystem() {
             if (!isConnected) {
-                log('⚠️ Primero inicializa Supabase', 'warning');
+                log('⚠️ First initialize Supabase', 'warning');
                 return;
             }
 
             const resultDiv = document.getElementById('mining-result');
-            resultDiv.innerHTML = '<p>🔄 Probando sistema de minería...</p>';
-            log('🔄 Probando sistema de minería...', 'info');
+            resultDiv.innerHTML = '<p>🔄 Testing mining system...</p>';
+            log('🔄 Testing mining system...', 'info');
             
             try {
                 // Test de inserción de minero
@@ -218,31 +218,31 @@
                     .select();
                 
                 if (error) {
-                    resultDiv.innerHTML = `<p class="error">❌ Error en sistema de minería: ${error.message}</p>`;
-                    log(`❌ Error en minería: ${error.message}`, 'error');
+                    resultDiv.innerHTML = `<p class="error">❌ Mining system error: ${error.message}</p>`;
+                    log(`❌ Mining error: ${error.message}`, 'error');
                 } else {
-                    resultDiv.innerHTML = '<p class="success">✅ Sistema de minería funcionando</p>';
-                    log('✅ Sistema de minería funcionando correctamente', 'success');
+                    resultDiv.innerHTML = '<p class="success">✅ Mining system working</p>';
+                    log('✅ Mining system working correctly', 'success');
                     
                     // Limpiar el test
                     await supabaseClient.from('miners').delete().eq('email', 'test@mining.com');
-                    log('🧹 Test cleanup completado', 'info');
+                    log('🧹 Test cleanup completed', 'info');
                 }
             } catch (error) {
-                resultDiv.innerHTML = `<p class="error">❌ Excepción en minería: ${error.message}</p>`;
-                log(`❌ Excepción en minería: ${error.message}`, 'error');
+                resultDiv.innerHTML = `<p class="error">❌ Exception in mining: ${error.message}</p>`;
+                log(`❌ Exception in mining: ${error.message}`, 'error');
             }
         }
 
         async function testDatabase() {
             if (!isConnected) {
-                log('⚠️ Primero inicializa Supabase', 'warning');
+                log('⚠️ First initialize Supabase', 'warning');
                 return;
             }
 
             const resultDiv = document.getElementById('database-result');
-            resultDiv.innerHTML = '<p>🔄 Probando base de datos...</p>';
-            log('🔄 Probando base de datos...', 'info');
+            resultDiv.innerHTML = '<p>🔄 Testing database...</p>';
+            log('🔄 Testing database...', 'info');
             
             try {
                 // Test de estructura de tablas
@@ -253,54 +253,54 @@
                     try {
                         const { data, error } = await supabaseClient.from(table).select('*').limit(1);
                         if (error) {
-                            log(`❌ Tabla ${table} no existe o no es accesible: ${error.message}`, 'error');
+                            log(`❌ Table ${table} does not exist or is inaccessible: ${error.message}`, 'error');
                             allTablesExist = false;
                         } else {
-                            log(`✅ Tabla ${table} accesible`, 'success');
+                            log(`✅ Table ${table} accessible`, 'success');
                         }
                     } catch (e) {
-                        log(`❌ Error accediendo a tabla ${table}: ${e.message}`, 'error');
+                        log(`❌ Error accessing table ${table}: ${e.message}`, 'error');
                         allTablesExist = false;
                     }
                 }
                 
                 if (allTablesExist) {
-                    resultDiv.innerHTML = '<p class="success">✅ Todas las tablas son accesibles</p>';
+                    resultDiv.innerHTML = '<p class="success">✅ All tables are accessible</p>';
                 } else {
-                    resultDiv.innerHTML = '<p class="warning">⚠️ Algunas tablas no son accesibles</p>';
+                    resultDiv.innerHTML = '<p class="warning">⚠️ Some tables are inaccessible</p>';
                 }
             } catch (error) {
-                resultDiv.innerHTML = `<p class="error">❌ Error en test de BD: ${error.message}</p>`;
-                log(`❌ Error en test de BD: ${error.message}`, 'error');
+                resultDiv.innerHTML = `<p class="error">❌ Database test error: ${error.message}</p>`;
+                log(`❌ Database test error: ${error.message}`, 'error');
             }
         }
 
         function manualInit() {
-            log('🔧 Inicialización manual solicitada', 'info');
+            log('🔧 Manual initialization requested', 'info');
             if (initializeSupabase()) {
-                updateConnectionStatus('connecting', '🔄 Inicializado, probando conexión...');
+                updateConnectionStatus('connecting', '🔄 Initialized, testing connection...');
                 setTimeout(() => {
                     testConnection();
                 }, 1000);
             } else {
-                updateConnectionStatus('disconnected', '❌ Falló la inicialización');
+                updateConnectionStatus('disconnected', '❌ Initialization failed');
             }
         }
 
         // Función para verificar Supabase periódicamente
         function checkSupabaseAvailability() {
             if (typeof window.supabase !== 'undefined' && !supabaseClient) {
-                log('🎉 Supabase detectado automáticamente', 'success');
+                log('🎉 Supabase detected automatically', 'success');
                 manualInit();
             } else {
-                log('⏳ Esperando a que Supabase esté disponible...', 'info');
+                log('⏳ Waiting for Supabase to be available...', 'info');
                 setTimeout(checkSupabaseAvailability, 2000);
             }
         }
 
         // Auto-inicialización al cargar
         window.addEventListener('load', () => {
-            log('🚀 Página cargada, verificando Supabase...', 'info');
+            log('🚀 Page loaded, checking Supabase...', 'info');
             setTimeout(checkSupabaseAvailability, 1000);
         });
     </script>

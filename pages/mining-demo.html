@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSC Mining Demo - Backend Integrado</title>
-  <meta name="description" content="Demostración del sistema de minería RSC con backend integrado">
+  <title>RSC Mining Demo - Integrated Backend</title>
+  <meta name="description" content="RSC mining system demonstration with integrated backend">
   
-  <!-- Estilos base -->
+  <!-- Base styles -->
   <link rel="stylesheet" href="../styles/global.css">
   <link rel="stylesheet" href="../styles/layout.css">
   <link rel="stylesheet" href="../styles/app.css">
@@ -14,16 +14,16 @@
   <link rel="stylesheet" href="../styles/animations.css">
   <link rel="stylesheet" href="../styles/notifications.css">
   
-  <!-- Fuentes -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body class="dark-mode">
-  <!-- Fondo 4D animado -->
+  <!-- Animated 4D Background -->
   <div class="background-4d"></div>
   
-  <!-- Contenedor de notificaciones -->
+  <!-- Notifications Container -->
   <div class="notifications-container" id="notificationsContainer"></div>
 
   <!-- Navbar -->
@@ -33,11 +33,11 @@
       <span>RSC CHAIN</span>
     </div>
     <ul class="navbar-links">
-      <li><a href="../index.html">🏠 Inicio</a></li>
+      <li><a href="../index.html">🏠 Home</a></li>
       <li><a href="mining-demo.html" class="active">⛏️ Mining Demo</a></li>
-      <li><a href="about.html">ℹ️ Acerca</a></li>
+      <li><a href="about.html">ℹ️ About</a></li>
       <li><a href="wallet.html">👛 Wallet</a></li>
-      <li><a href="mine.html">⛏️ Minar</a></li>
+      <li><a href="mine.html">⛏️ Mine</a></li>
       <li><a href="p2p.html">🤝 P2P</a></li>
       <li><a href="staking.html">💰 Staking</a></li>
       <li><a href="explorer.html">🔍 Explorer</a></li>
@@ -46,54 +46,54 @@
     </ul>
   </nav>
 
-  <!-- Contenido Principal -->
+  <!-- Main Content -->
   <main class="main-content">
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-content">
         <h1 class="hero-title">
-          🚀 <span class="highlight">RSC Mining Backend</span> Integrado
+          🚀 <span class="highlight">RSC Mining Backend</span> Integrated
         </h1>
         <p class="hero-subtitle">
-          Sistema completo de minería con backend profesional, leaderboard en tiempo real y API pública
+          Complete mining system with professional backend, real-time leaderboard and public API
         </p>
         <div class="hero-features">
-          <div class="feature-item">✅ Backend Node.js + PostgreSQL</div>
-          <div class="feature-item">✅ API pública con caché</div>
-          <div class="feature-item">✅ Leaderboard en tiempo real</div>
-          <div class="feature-item">✅ Sistema anti-abuso</div>
-          <div class="feature-item">✅ Panel administrativo</div>
-          <div class="feature-item">✅ Exportación CSV</div>
+          <div class="feature-item">✅ Node.js + PostgreSQL Backend</div>
+          <div class="feature-item">✅ Public API with cache</div>
+          <div class="feature-item">✅ Real-time leaderboard</div>
+          <div class="feature-item">✅ Anti-abuse system</div>
+          <div class="feature-item">✅ Administrative panel</div>
+          <div class="feature-item">✅ CSV export</div>
         </div>
       </div>
     </section>
 
-    <!-- Sección de Estado del Sistema -->
+    <!-- System Status Section -->
     <section class="system-status-section">
       <div class="container">
-        <h2 class="section-title">🔧 Estado del Sistema</h2>
+        <h2 class="section-title">🔧 System Status</h2>
         <div class="status-grid">
           <div class="status-card" id="backend-status">
             <div class="status-icon">⚡</div>
             <div class="status-content">
-              <h3>Backend RSC Mining</h3>
-              <p class="status-text">Verificando conexión...</p>
+              <h3>RSC Mining Backend</h3>
+              <p class="status-text">Checking connection...</p>
               <div class="status-indicator offline"></div>
             </div>
           </div>
           <div class="status-card" id="database-status">
             <div class="status-icon">🗄️</div>
             <div class="status-content">
-              <h3>Base de Datos</h3>
-              <p class="status-text">Verificando...</p>
+              <h3>Database</h3>
+              <p class="status-text">Checking...</p>
               <div class="status-indicator offline"></div>
             </div>
           </div>
           <div class="status-card" id="cache-status">
             <div class="status-icon">💾</div>
             <div class="status-content">
-              <h3>Sistema de Caché</h3>
-              <p class="status-text">Verificando...</p>
+              <h3>Cache System</h3>
+              <p class="status-text">Checking...</p>
               <div class="status-indicator offline"></div>
             </div>
           </div>
@@ -101,147 +101,147 @@
       </div>
     </section>
 
-    <!-- Sección de Minería Integrada -->
+    <!-- Integrated Mining Section -->
     <section class="mining-section">
       <div class="container">
-        <h2 class="section-title">⛏️ Sistema de Minería Integrado</h2>
+        <h2 class="section-title">⛏️ Integrated Mining System</h2>
         <p class="section-description">
-          Sistema completo de minería conectado al backend con autenticación, balance y estadísticas en tiempo real
+          Complete mining system connected to backend with authentication, balance and real-time statistics
         </p>
         
-        <!-- Contenedor del componente de minería -->
+        <!-- Mining component container -->
         <div id="mining-integrated-container"></div>
       </div>
     </section>
 
-    <!-- Sección de Leaderboard -->
+    <!-- Leaderboard Section -->
     <section class="leaderboard-section">
       <div class="container">
-        <h2 class="section-title">🏆 Leaderboard en Tiempo Real</h2>
+        <h2 class="section-title">🏆 Real-Time Leaderboard</h2>
         <p class="section-description">
-          Ranking público de mineros con filtros por período y estadísticas del sistema
+          Public miner ranking with period filters and system statistics
         </p>
         
-        <!-- Contenedor del componente de leaderboard -->
+        <!-- Leaderboard component container -->
         <div id="leaderboard-container"></div>
       </div>
     </section>
 
-    <!-- Sección de API Pública -->
+    <!-- Public API Section -->
     <section class="api-section">
       <div class="container">
-        <h2 class="section-title">🌐 API Pública</h2>
+        <h2 class="section-title">🌐 Public API</h2>
         <p class="section-description">
-          Endpoints públicos para acceder a datos del sistema sin autenticación
+          Public endpoints to access system data without authentication
         </p>
         
         <div class="api-endpoints">
           <div class="endpoint-card">
             <div class="endpoint-method">GET</div>
             <div class="endpoint-path">/public/leaderboard</div>
-            <div class="endpoint-description">Leaderboard público con paginación</div>
+            <div class="endpoint-description">Public leaderboard with pagination</div>
             <div class="endpoint-params">
-              <strong>Parámetros:</strong> period, page, pageSize
+              <strong>Parameters:</strong> period, page, pageSize
             </div>
           </div>
           
           <div class="endpoint-card">
             <div class="endpoint-method">GET</div>
             <div class="endpoint-path">/public/stats</div>
-            <div class="endpoint-description">Estadísticas generales del sistema</div>
+            <div class="endpoint-description">General system statistics</div>
             <div class="endpoint-params">
-              <strong>Sin parámetros</strong>
+              <strong>No parameters</strong>
             </div>
           </div>
           
           <div class="endpoint-card">
             <div class="endpoint-method">GET</div>
             <div class="endpoint-path">/public/leaderboard/top10</div>
-            <div class="endpoint-description">Top 10 mineros por período</div>
+            <div class="endpoint-description">Top 10 miners by period</div>
             <div class="endpoint-params">
-              <strong>Parámetros:</strong> period
+              <strong>Parameters:</strong> period
             </div>
           </div>
           
           <div class="endpoint-card">
             <div class="endpoint-method">GET</div>
             <div class="endpoint-path">/health</div>
-            <div class="endpoint-description">Health check del sistema</div>
+            <div class="endpoint-description">System health check</div>
             <div class="endpoint-params">
-              <strong>Sin parámetros</strong>
+              <strong>No parameters</strong>
             </div>
           </div>
         </div>
         
         <div class="api-test">
-          <h3>🧪 Probar API</h3>
+          <h3>🧪 Test API</h3>
           <div class="test-controls">
             <select id="test-endpoint" class="test-select">
               <option value="/public/stats">/public/stats</option>
               <option value="/public/leaderboard">/public/leaderboard</option>
               <option value="/health">/health</option>
             </select>
-            <button onclick="testAPI()" class="test-btn">Probar Endpoint</button>
+            <button onclick="testAPI()" class="test-btn">Test Endpoint</button>
           </div>
           <div class="test-result" id="test-result">
-            <p>Selecciona un endpoint y haz clic en "Probar"</p>
+            <p>Select an endpoint and click "Test"</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Sección de Administración -->
+    <!-- Administration Section -->
     <section class="admin-section">
       <div class="container">
-        <h2 class="section-title">👑 Panel de Administración</h2>
+        <h2 class="section-title">👑 Administration Panel</h2>
         <p class="section-description">
-          Funcionalidades administrativas para gestión de usuarios y exportación de datos
+          Administrative functions for user management and data export
         </p>
         
         <div class="admin-features">
           <div class="admin-feature">
             <div class="feature-icon">📊</div>
-            <h3>Dashboard Administrativo</h3>
-            <p>Métricas en tiempo real del sistema</p>
+            <h3>Administrative Dashboard</h3>
+            <p>Real-time system metrics</p>
           </div>
           
           <div class="admin-feature">
             <div class="feature-icon">👥</div>
-            <h3>Gestión de Usuarios</h3>
-            <p>Lista, filtros y paginación de usuarios</p>
+            <h3>User Management</h3>
+            <p>User list, filters and pagination</p>
           </div>
           
           <div class="admin-feature">
             <div class="feature-icon">📥</div>
-            <h3>Exportación CSV</h3>
-            <p>Exportar usuarios y eventos de minería</p>
+            <h3>CSV Export</h3>
+            <p>Export users and mining events</p>
           </div>
           
           <div class="admin-feature">
             <div class="feature-icon">🗑️</div>
-            <h3>Gestión de Caché</h3>
-            <p>Limpieza y monitoreo del sistema de caché</p>
+            <h3>Cache Management</h3>
+            <p>Cache system cleanup and monitoring</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Sección de Configuración -->
+    <!-- Configuration Section -->
     <section class="config-section">
       <div class="container">
-        <h2 class="section-title">⚙️ Configuración del Sistema</h2>
+        <h2 class="section-title">⚙️ System Configuration</h2>
         <p class="section-description">
-          Configuración y personalización del backend de minería
+          Backend mining configuration and customization
         </p>
         
         <div class="config-grid">
           <div class="config-card">
-            <h3>🔗 URL del Backend</h3>
+            <h3>🔗 Backend URL</h3>
             <div class="config-input-group">
-              <input type="text" id="backend-url" value="BACKEND DISCONNECTED" placeholder="URL del backend" disabled>
-              <button onclick="updateBackendUrl()" class="config-btn" disabled>Desconectado</button>
+              <input type="text" id="backend-url" value="BACKEND DISCONNECTED" placeholder="Backend URL" disabled>
+              <button onclick="updateBackendUrl()" class="config-btn" disabled>Disconnected</button>
             </div>
-            <p class="config-note">🚫 Backend desconectado - Modo offline activado</p>
+            <p class="config-note">🚫 Backend disconnected - Offline mode active</p>
           </div>
           
           <div class="config-card">
@@ -251,21 +251,21 @@
                 <input type="checkbox" id="auto-refresh-toggle" checked>
                 <span class="toggle-slider"></span>
               </label>
-              <span class="toggle-label">Actualización automática</span>
+              <span class="toggle-label">Enable auto-refresh</span>
             </div>
-            <p class="config-note">Habilita/deshabilita la actualización automática de datos</p>
+            <p class="config-note">Enable/disable automatic data updates</p>
           </div>
           
           <div class="config-card">
-            <h3>📊 Modo Debug</h3>
+            <h3>📊 Debug Mode</h3>
             <div class="config-toggle">
               <label class="toggle-switch">
                 <input type="checkbox" id="debug-toggle">
                 <span class="toggle-slider"></span>
               </label>
-              <span class="toggle-label">Modo debug</span>
+              <span class="toggle-label">Debug mode</span>
             </div>
-            <p class="config-note">Muestra información detallada en la consola</p>
+            <p class="config-note">Shows detailed information in the console</p>
           </div>
         </div>
       </div>
@@ -277,23 +277,23 @@
     <div class="footer-content">
       <div class="footer-section">
         <h3>RSC Mining Frontend</h3>
-        <p>Sistema de minería en modo offline (backend desconectado)</p>
+        <p>Mining system in offline mode (backend disconnected)</p>
       </div>
       <div class="footer-section">
-        <h3>Características</h3>
+        <h3>Features</h3>
         <ul>
-          <li>🚫 Backend desconectado</li>
-          <li>✅ Interfaz frontend completa</li>
-          <li>✅ Modo offline activado</li>
-          <li>✅ Simulación local de minería</li>
+          <li>🚫 Backend disconnected</li>
+          <li>✅ Complete frontend interface</li>
+          <li>✅ Offline mode active</li>
+          <li>✅ Local mining simulation</li>
         </ul>
       </div>
       <div class="footer-section">
-        <h3>Enlaces</h3>
+        <h3>Links</h3>
         <ul>
-          <li><a href="../index.html">🏠 Inicio</a></li>
-          <li><a href="docs.html">📚 Documentación</a></li>
-          <li><a href="about.html">ℹ️ Acerca</a></li>
+          <li><a href="../index.html">🏠 Home</a></li>
+          <li><a href="docs.html">📚 Documentation</a></li>
+          <li><a href="about.html">ℹ️ About</a></li>
         </ul>
       </div>
     </div>
@@ -306,22 +306,22 @@
   <script src="../scripts/config.js"></script>
   <script src="../scripts/notifications.js"></script>
   
-  <!-- ===== INTEGRACIÓN CON BACKEND RSC MINING ===== -->
+  <!-- ===== INTEGRATION WITH RSC MINING BACKEND ===== -->
   <!-- BACKEND DISCONNECTED - FRONTEND ONLY MODE -->
   <!-- <script src="../scripts/backend-integration.js"></script> -->
   <!-- <script src="../scripts/leaderboard-component.js"></script> -->
   <!-- <script src="../scripts/mining-integrated.js"></script> -->
   
-  <!-- Script de la página -->
+  <!-- Page Script -->
   <script>
-    // ===== FUNCIONES DE LA PÁGINA =====
+    // ===== PAGE FUNCTIONS =====
     
-    // Verificar estado del sistema
+    // Check system status
     async function checkSystemStatus() {
-      console.log('🔧 Verificando estado del sistema...');
+      console.log('🔧 Checking system status...');
       
       try {
-        // Verificar backend
+        // Check backend
         if (window.rscBackend) {
           const backendStatus = document.getElementById('backend-status');
           const backendText = backendStatus.querySelector('.status-text');
@@ -329,59 +329,59 @@
           
           try {
             await window.rscBackend.checkBackendHealth();
-            backendText.textContent = 'Conectado y funcionando';
+            backendText.textContent = 'Connected and running';
             backendIndicator.className = 'status-indicator online';
           } catch (error) {
-            backendText.textContent = 'No disponible';
+            backendText.textContent = 'Not available';
             backendIndicator.className = 'status-indicator offline';
           }
         }
         
-        // Verificar base de datos (simulado)
+        // Check database (simulated)
         const dbStatus = document.getElementById('database-status');
         const dbText = dbStatus.querySelector('.status-text');
         const dbIndicator = dbStatus.querySelector('.status-indicator');
         
-        // Simular verificación de BD
+        // Simulate database check
         setTimeout(() => {
-          dbText.textContent = 'PostgreSQL funcionando';
+          dbText.textContent = 'PostgreSQL running';
           dbIndicator.className = 'status-indicator online';
         }, 1000);
         
-        // Verificar caché
+        // Check cache
         const cacheStatus = document.getElementById('cache-status');
         const cacheText = cacheStatus.querySelector('.status-text');
         const cacheIndicator = cacheStatus.querySelector('.status-indicator');
         
         setTimeout(() => {
-          cacheText.textContent = 'NodeCache activo';
+          cacheText.textContent = 'NodeCache active';
           cacheIndicator.className = 'status-indicator online';
         }, 2000);
         
       } catch (error) {
-        console.error('Error verificando estado del sistema:', error);
+        console.error('Error checking system status:', error);
       }
     }
     
-    // Probar API
+    // Test API
     async function testAPI() {
       const endpoint = document.getElementById('test-endpoint').value;
       const resultDiv = document.getElementById('test-result');
       
       if (!window.rscBackend) {
-        resultDiv.innerHTML = '<p class="error">❌ Backend no disponible</p>';
+        resultDiv.innerHTML = '<p class="error">❌ Backend not available</p>';
         return;
       }
       
       try {
-        resultDiv.innerHTML = '<p>🔄 Probando endpoint...</p>';
+        resultDiv.innerHTML = '<p>🔄 Testing endpoint...</p>';
         
         const response = await window.rscBackend.makeRequest('GET', endpoint);
         const data = await response.json();
         
         resultDiv.innerHTML = `
           <div class="success">
-            <p>✅ Endpoint probado exitosamente</p>
+            <p>✅ Endpoint tested successfully</p>
             <pre class="api-response">${JSON.stringify(data, null, 2)}</pre>
           </div>
         `;
@@ -389,58 +389,58 @@
       } catch (error) {
         resultDiv.innerHTML = `
           <div class="error">
-            <p>❌ Error probando endpoint: ${error.message}</p>
+            <p>❌ Error testing endpoint: ${error.message}</p>
           </div>
         `;
       }
     }
     
-    // Actualizar URL del backend
+    // Update backend URL
     function updateBackendUrl() {
       const urlInput = document.getElementById('backend-url');
       const newUrl = urlInput.value.trim();
       
       if (newUrl && window.rscBackend) {
         window.rscBackend.setBackendUrl(newUrl);
-        showNotification('success', 'URL del backend actualizada', `Nueva URL: ${newUrl}`);
+        showNotification('success', 'Backend URL updated', `New URL: ${newUrl}`);
       }
     }
     
-    // Configurar toggles
+    // Setup toggles
     function setupToggles() {
       const autoRefreshToggle = document.getElementById('auto-refresh-toggle');
       const debugToggle = document.getElementById('debug-toggle');
       
       autoRefreshToggle.addEventListener('change', (e) => {
         if (e.target.checked) {
-          showNotification('info', 'Auto-refresh habilitado', 'Los datos se actualizarán automáticamente');
+          showNotification('info', 'Auto-refresh enabled', 'Data will be updated automatically');
         } else {
-          showNotification('info', 'Auto-refresh deshabilitado', 'Los datos se actualizarán manualmente');
+          showNotification('info', 'Auto-refresh disabled', 'Data will be updated manually');
         }
       });
       
       debugToggle.addEventListener('change', (e) => {
         if (e.target.checked) {
-          console.log('🐛 Modo debug habilitado');
-          showNotification('info', 'Modo debug habilitado', 'Revisa la consola para más información');
+          console.log('🐛 Debug mode enabled');
+          showNotification('info', 'Debug mode enabled', 'Check the console for more information');
         } else {
-          console.log('🐛 Modo debug deshabilitado');
-          showNotification('info', 'Modo debug deshabilitado', 'Información reducida en consola');
+          console.log('🐛 Debug mode disabled');
+          showNotification('info', 'Debug mode disabled', 'Reduced console information');
         }
       });
     }
     
-    // Inicializar página
+    // Initialize page
     document.addEventListener('DOMContentLoaded', () => {
-      console.log('🚀 Página de demostración RSC Mining cargada');
+      console.log('🚀 RSC Mining Demo page loaded');
       
-      // Verificar estado del sistema
+      // Check system status
       setTimeout(checkSystemStatus, 1000);
       
-      // Configurar toggles
+      // Setup toggles
       setupToggles();
       
-      // Verificar estado de autenticación
+      // Check authentication status
       setTimeout(() => {
         if (window.miningIntegrated) {
           window.miningIntegrated.checkAuthStatus();
@@ -449,7 +449,7 @@
     });
   </script>
   
-  <!-- Estilos específicos de la página -->
+  <!-- Specific page styles -->
   <style>
     /* Hero Section */
     .hero-section {

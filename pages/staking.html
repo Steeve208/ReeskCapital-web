@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSC Staking Épico - RSC CHAIN</title>
-  <meta name="description" content="Stakear RSC y ganar recompensas épicas. Participa en la validación de la red RSC Chain con el sistema de staking más avanzado.">
+  <title>RSC Epic Staking - RSC CHAIN</title>
+  <meta name="description" content="Stake RSC and earn epic rewards. Participate in RSC Chain network validation with the most advanced staking system.">
   <link rel="icon" href="../assets/img/logo.png" type="image/png">
   <link rel="stylesheet" href="../styles/global.css">
   <link rel="stylesheet" href="../styles/layout.css">
@@ -21,10 +21,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body class="dark-mode">
-  <!-- Fondo 4D animado -->
+  <!-- Animated 4D Background -->
   <div class="background-4d"></div>
   
-  <!-- Contenedor de notificaciones -->
+  <!-- Notifications Container -->
   <div class="notifications-container" id="notificationsContainer"></div>
 
       <!-- Navbar -->
@@ -109,497 +109,338 @@
         </ul>
       </div>
       
-      <!-- Account Section -->
+      <!-- Actions Section -->
       <div class="menu-section">
-        <h3 class="menu-section-title">Account</h3>
+        <h3 class="menu-section-title">Actions</h3>
         <div class="menu-actions">
           <a href="login.html" class="menu-action login-btn">
             <span class="action-icon">🔐</span>
             <span>Login</span>
           </a>
-          <a href="#" id="mobileWalletConnectBtn" class="menu-action wallet-btn">
-            <span class="action-icon">🔒</span>
-            <span>Connect Wallet</span>
-          </a>
-        </div>
-      </div>
-      
-      <!-- Settings Section -->
-      <div class="menu-section">
-        <h3 class="menu-section-title">Settings</h3>
-        <div class="menu-actions">
-          <button class="menu-action theme-toggle" id="themeToggle">
-            <span class="action-icon">🌙</span>
-            <span>Dark Mode</span>
-          </button>
-          <button class="menu-action language-toggle" id="languageToggle">
-            <span class="action-icon">🌐</span>
-            <span>English</span>
-          </button>
         </div>
       </div>
     </div>
   </div>
-  
+
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
-  <!-- Staking Épico -->
-  <main class="staking-epic">
-    <!-- Header Épico -->
-    <header class="staking-header-epic">
-      <div class="header-content">
-        <div class="header-title">
-          <h1 class="epic-title">
-            <span class="title-word">RSC</span>
-            <span class="title-word">STAKING</span>
-            <span class="title-word">ÉPICO</span>
-          </h1>
-          <p class="epic-subtitle">Gana recompensas épicas participando en la validación de la red</p>
+  <!-- Main Content -->
+  <main class="staking-main">
+    <!-- Epic Staking -->
+    <section class="staking-hero">
+      <!-- Epic Header -->
+      <div class="hero-content">
+        <div class="hero-title">
+          <span class="title-word">EPIC</span>
+          <span class="title-word">STAKING</span>
+        </div>
+        <p class="epic-subtitle">Earn epic rewards by participating in network validation</p>
+        
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-value">15%</div>
+            <div class="stat-label">APY</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">2.5s</div>
+            <div class="stat-label">Block Time</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">99.9%</div>
+            <div class="stat-label">Uptime</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">∞</div>
+            <div class="stat-label">Rewards</div>
+          </div>
         </div>
         
-        <div class="header-stats">
-          <div class="stat-item">
-            <div class="stat-icon">💰</div>
-            <div class="stat-content">
-              <div class="stat-value" id="totalStaked">0 RSC</div>
-              <div class="stat-label">Total Stakeado</div>
-            </div>
-            <div class="stat-glow"></div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon">🎁</div>
-            <div class="stat-content">
-              <div class="stat-value" id="totalRewards">0 RSC</div>
-              <div class="stat-label">Recompensas</div>
-            </div>
-            <div class="stat-glow"></div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon">📈</div>
-            <div class="stat-content">
-              <div class="stat-value" id="avgAPY">12.5%</div>
-              <div class="stat-label">APY Promedio</div>
-            </div>
-            <div class="stat-glow"></div>
-          </div>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-large" id="startStakingBtn">
+            <i class="fas fa-rocket"></i>
+            Start Staking
+          </button>
+          <button class="btn btn-secondary btn-large" id="viewRewardsBtn">
+            <i class="fas fa-gift"></i>
+            View Rewards
+          </button>
         </div>
       </div>
       
-      <!-- Nivel de Usuario -->
-      <div class="user-level-epic">
-        <div class="level-container">
-          <div class="level-badge">
-            <div class="level-icon">👑</div>
-            <div class="level-info">
-              <div class="level-title">Nivel Épico</div>
-              <div class="level-number">5</div>
-            </div>
+      <div class="hero-visual">
+        <div class="staking-animation">
+          <div class="stake-circle">
+            <div class="stake-particles"></div>
+            <div class="stake-core"></div>
           </div>
-          <div class="level-progress">
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 75%"></div>
+          <div class="level-indicator">
+            <div class="level-title">Epic Level</div>
+            <div class="level-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%"></div>
+              </div>
+              <span class="progress-text">Level 3 of 4</span>
             </div>
-            <div class="progress-text">75% al siguiente nivel</div>
           </div>
         </div>
       </div>
-    </header>
+    </section>
 
-    <!-- Dashboard Principal -->
-    <div class="staking-dashboard">
-      <!-- Sidebar Épico -->
-      <aside class="staking-sidebar-epic">
-        <div class="sidebar-header">
-          <h3>Navegación</h3>
-          <div class="sidebar-status">
-            <div class="status-dot online"></div>
-            <span>Conectado</span>
+    <!-- Epic Sidebar -->
+    <aside class="staking-sidebar">
+      <div class="sidebar-content">
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Wallet Status</h3>
+          <div class="wallet-status">
+            <div class="status-indicator">
+              <div class="status-dot connected"></div>
+              <span>Connected</span>
+            </div>
+            <div class="wallet-address" id="walletAddressShort">
+              0x742d...4d8b6
+            </div>
           </div>
         </div>
         
-        <nav class="sidebar-nav">
-          <a href="#dashboard" class="nav-item active" data-section="dashboard">
-            <div class="nav-icon">📊</div>
-            <span>Dashboard</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#pools" class="nav-item" data-section="pools">
-            <div class="nav-icon">🏊</div>
-            <span>Pools</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#my-stakes" class="nav-item" data-section="my-stakes">
-            <div class="nav-icon">💎</div>
-            <span>Mis Stakes</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#validators" class="nav-item" data-section="validators">
-            <div class="nav-icon">🔐</div>
-            <span>Validadores</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#rewards" class="nav-item" data-section="rewards">
-            <div class="nav-icon">🎁</div>
-            <span>Recompensas</span>
-            <div class="nav-glow"></div>
-          </a>
-          <a href="#analytics" class="nav-item" data-section="analytics">
-            <div class="nav-icon">📈</div>
-            <span>Analytics</span>
-            <div class="nav-glow"></div>
-          </a>
-        </nav>
-
-        <!-- Logros del Usuario -->
-        <div class="achievements-section">
-          <h4>Logros</h4>
-          <div class="achievements-list">
-            <div class="achievement-item unlocked">
-              <div class="achievement-icon">🥇</div>
-              <div class="achievement-info">
-                <div class="achievement-title">Primer Stake</div>
-                <div class="achievement-desc">Completa tu primer stake</div>
-              </div>
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Quick Stats</h3>
+          <div class="quick-stats">
+            <div class="stat-item">
+              <i class="fas fa-coins"></i>
+              <span>Balance: <strong id="sidebarBalance">0.00 RSC</strong></span>
             </div>
-            <div class="achievement-item unlocked">
-              <div class="achievement-icon">💰</div>
-              <div class="achievement-info">
-                <div class="achievement-title">Staker Activo</div>
-                <div class="achievement-desc">Stakea por 7 días</div>
-              </div>
+            <div class="stat-item">
+              <i class="fas fa-chart-line"></i>
+              <span>APY: <strong id="sidebarAPY">15%</strong></span>
             </div>
-            <div class="achievement-item locked">
-              <div class="achievement-icon">👑</div>
-              <div class="achievement-info">
-                <div class="achievement-title">Staker Épico</div>
-                <div class="achievement-desc">Stakea 1000 RSC</div>
-              </div>
+            <div class="stat-item">
+              <i class="fas fa-gift"></i>
+              <span>Rewards: <strong id="sidebarRewards">0.00 RSC</strong></span>
             </div>
           </div>
         </div>
-      </aside>
-
-      <!-- Contenido Principal -->
-      <main class="staking-main-epic">
-        <!-- Dashboard Section -->
-        <section id="dashboard" class="staking-section active">
-          <div class="section-header">
-            <h2>Dashboard de Staking</h2>
-            <div class="section-actions">
-              <button class="refresh-btn" id="refreshBtn">
-                <span class="btn-icon">🔄</span>
-                <span>Actualizar</span>
-              </button>
+        
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Achievements</h3>
+          <div class="achievements">
+            <div class="achievement unlocked">
+              <div class="achievement-icon">🥉</div>
+              <div class="achievement-title">Epic Staker</div>
+              <div class="achievement-desc">Stake 100+ RSC</div>
+            </div>
+            <div class="achievement locked">
+              <div class="achievement-icon">🥈</div>
+              <div class="achievement-title">Legendary Staker</div>
+              <div class="achievement-desc">Stake 1000+ RSC</div>
             </div>
           </div>
+        </div>
+        
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Quick Actions</h3>
+          <div class="quick-actions">
+            <button class="action-btn" id="refreshBtn">
+              <span>🔄</span>
+              <span>Update</span>
+            </button>
+            <button class="action-btn" id="claimBtn">
+              <span>🎁</span>
+              <span>Claim</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
 
-          <!-- Estadísticas en Tiempo Real -->
-          <div class="realtime-stats">
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">💎</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="myStaked">0 RSC</div>
-                <div class="stat-label">Mi Stake</div>
-                <div class="stat-change positive" id="stakeChange">+5.2%</div>
-              </div>
-              <div class="stat-chart">
-                <canvas id="stakeChart" width="200" height="60"></canvas>
-              </div>
+    <!-- Main Staking Interface -->
+    <div class="staking-interface">
+      <!-- Staking Overview -->
+      <section class="staking-overview">
+        <div class="overview-header">
+          <h2>Staking Overview</h2>
+          <div class="overview-stats">
+            <div class="stat-card">
+              <div class="stat-icon">💰</div>
+              <div class="stat-value" id="totalStaked">0.000000</div>
+              <div class="stat-label">Total Staked</div>
             </div>
-
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">🎁</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="myRewards">0 RSC</div>
-                <div class="stat-label">Mis Recompensas</div>
-                <div class="stat-progress">
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 45%"></div>
-                  </div>
-                </div>
-              </div>
+            <div class="stat-card">
+              <div class="stat-icon">🎁</div>
+              <div class="stat-value" id="totalRewards">0.000000</div>
+              <div class="stat-label">My Rewards</div>
             </div>
-
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">📈</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="myAPY">0%</div>
-                <div class="stat-label">Mi APY</div>
-                <div class="stat-graph">
-                  <canvas id="apyGraph" width="200" height="60"></canvas>
-                </div>
-              </div>
+            <div class="stat-card">
+              <div class="stat-icon">📈</div>
+              <div class="stat-value" id="stakingAPY">15.00%</div>
+              <div class="stat-label">Current APY</div>
             </div>
-
-            <div class="stat-card-epic">
-              <div class="stat-header">
-                <div class="stat-icon">🏆</div>
-                <div class="stat-status online"></div>
-              </div>
-              <div class="stat-content">
-                <div class="stat-value" id="myRank">#1,247</div>
-                <div class="stat-label">Mi Ranking</div>
-                <div class="rank-progress">
-                  <div class="rank-bar">
-                    <div class="rank-fill" style="width: 85%"></div>
-                  </div>
-                </div>
-              </div>
+            <div class="stat-card">
+              <div class="stat-icon">⏱️</div>
+              <div class="stat-value" id="stakingTime">0 days</div>
+              <div class="stat-label">Staking Time</div>
             </div>
           </div>
-
-          <!-- Visualización 3D de Staking -->
-          <div class="staking-3d">
-            <div class="visualization-header">
-              <h3>Visualización de Staking</h3>
-              <div class="visualization-controls">
-                <button class="control-btn" data-view="pools">Pools</button>
-                <button class="control-btn active" data-view="stakes">Stakes</button>
-                <button class="control-btn" data-view="rewards">Recompensas</button>
-              </div>
-            </div>
-            <div class="visualization-container">
-              <div id="staking3d" class="staking-canvas"></div>
-              <div class="visualization-overlay">
-                <div class="overlay-stats">
-                  <div class="overlay-stat">
-                    <span class="stat-label">Pools Activos</span>
-                    <span class="stat-value" id="overlayPools">12</span>
-                  </div>
-                  <div class="overlay-stat">
-                    <span class="stat-label">Stakes Activos</span>
-                    <span class="stat-value" id="overlayStakes">1,247</span>
-                  </div>
-                  <div class="overlay-stat">
-                    <span class="stat-label">Recompensas</span>
-                    <span class="stat-value" id="overlayRewards">45.6K RSC</span>
-                  </div>
+        </div>
+        
+        <div class="staking-controls">
+          <div class="control-tabs">
+            <button class="control-btn active" data-view="stake">Stake</button>
+            <button class="control-btn" data-view="unstake">Unstake</button>
+            <button class="control-btn" data-view="rewards">Rewards</button>
+          </div>
+          
+          <div class="control-content">
+            <div class="stake-form" id="stakeForm">
+              <div class="form-group">
+                <label for="stakeAmount">Amount to Stake (RSC)</label>
+                <input type="number" id="stakeAmount" min="0.000001" step="0.000001" placeholder="0.000000">
+                <div class="form-helper">
+                  <span>Available: <strong id="availableBalance">0.000000 RSC</strong></span>
+                  <button type="button" class="max-btn" id="maxStakeBtn">Max</button>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Gráficos Interactivos -->
-          <div class="charts-section">
-            <div class="chart-container">
-              <div class="chart-header">
-                <h3>Rendimiento de Staking</h3>
-                <div class="chart-controls">
-                  <button class="time-btn active" data-period="7d">7D</button>
-                  <button class="time-btn" data-period="30d">30D</button>
-                  <button class="time-btn" data-period="1y">1A</button>
-                </div>
-              </div>
-              <div class="chart-wrapper">
-                <canvas id="stakingPerformanceChart"></canvas>
-              </div>
-            </div>
-
-            <div class="chart-container">
-              <div class="chart-header">
-                <h3>Distribución de Pools</h3>
-              </div>
-              <div class="chart-wrapper">
-                <canvas id="poolsDistributionChart"></canvas>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Pools Section -->
-        <section id="pools" class="staking-section">
-          <div class="section-header">
-            <h2>Pools de Staking</h2>
-            <div class="section-actions">
-              <div class="filter-controls">
-                <select class="filter-select" id="poolTypeFilter">
-                  <option value="all">Todos los tipos</option>
-                  <option value="liquid">Líquido</option>
-                  <option value="locked">Bloqueado</option>
-                  <option value="flexible">Flexible</option>
+              
+              <div class="form-group">
+                <label for="stakingPeriod">Staking Period</label>
+                <select id="stakingPeriod">
+                  <option value="30">30 days (10% APY)</option>
+                  <option value="90" selected>90 days (15% APY)</option>
+                  <option value="365">365 days (20% APY)</option>
                 </select>
               </div>
-            </div>
-          </div>
-
-          <div class="pools-grid-epic">
-            <!-- Los pools se cargarán dinámicamente -->
-          </div>
-        </section>
-
-        <!-- Mis Stakes Section -->
-        <section id="my-stakes" class="staking-section">
-          <div class="section-header">
-            <h2>Mis Stakes</h2>
-            <div class="section-actions">
-              <button class="claim-all-btn" id="claimAllBtn">
-                <span class="btn-icon">🎁</span>
-                <span>Reclamar Todo</span>
+              
+              <button type="submit" class="btn btn-primary btn-large" id="stakeSubmitBtn">
+                <i class="fas fa-lock"></i>
+                Stake RSC
               </button>
             </div>
           </div>
-
-          <div class="stakes-table-container">
-            <table class="stakes-table-epic">
-              <thead>
-                <tr>
-                  <th>Pool</th>
-                  <th>Cantidad</th>
-                  <th>APY</th>
-                  <th>Recompensas</th>
-                  <th>Tiempo</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="stakesTableBody">
-                <!-- Los stakes se cargarán dinámicamente -->
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- Validadores Section -->
-        <section id="validators" class="staking-section">
-          <div class="section-header">
-            <h2>Validadores</h2>
-          </div>
-
-          <div class="validators-grid-epic">
-            <!-- Los validadores se cargarán dinámicamente -->
-          </div>
-        </section>
-
-        <!-- Recompensas Section -->
-        <section id="rewards" class="staking-section">
-          <div class="section-header">
-            <h2>Recompensas</h2>
-          </div>
-
-          <div class="rewards-overview">
-            <div class="rewards-summary">
-              <div class="summary-card">
-                <div class="summary-icon">💰</div>
-                <div class="summary-content">
-                  <div class="summary-value" id="totalRewardsValue">0 RSC</div>
-                  <div class="summary-label">Total Disponible</div>
-                </div>
-              </div>
-              <div class="summary-card">
-                <div class="summary-icon">📈</div>
-                <div class="summary-content">
-                  <div class="summary-value" id="rewardsGrowth">+12.5%</div>
-                  <div class="summary-label">Crecimiento</div>
-                </div>
-              </div>
-              <div class="summary-card">
-                <div class="summary-icon">🎯</div>
-                <div class="summary-content">
-                  <div class="summary-value" id="nextReward">2.5 RSC</div>
-                  <div class="summary-label">Próxima Recompensa</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="rewards-history">
-              <h3>Historial de Recompensas</h3>
-              <div class="rewards-list">
-                <!-- El historial se cargará dinámicamente -->
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Analytics Section -->
-        <section id="analytics" class="staking-section">
-          <div class="section-header">
-            <h2>Analytics Avanzados</h2>
-          </div>
-
-          <div class="analytics-grid">
-            <div class="analytics-chart-container">
-              <h3>Rendimiento Histórico</h3>
-              <canvas id="historicalPerformanceChart"></canvas>
-            </div>
-            <div class="analytics-chart-container">
-              <h3>Comparación de Pools</h3>
-              <canvas id="poolsComparisonChart"></canvas>
-            </div>
-            <div class="analytics-chart-container">
-              <h3>Optimización de Staking</h3>
-              <canvas id="stakingOptimizationChart"></canvas>
-            </div>
-            <div class="analytics-chart-container">
-              <h3>Predicciones</h3>
-              <canvas id="stakingPredictionsChart"></canvas>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-
-    <!-- Modal de Stake -->
-    <div class="stake-modal" id="stakeModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="modalTitle">Stakear RSC</h3>
-          <button class="modal-close" id="modalClose">×</button>
         </div>
-        <div class="modal-body" id="modalBody">
-          <!-- El contenido se cargará dinámicamente -->
-        </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- Modal de Recompensas -->
-    <div class="rewards-modal" id="rewardsModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>¡Recompensas Épicas!</h3>
-          <button class="modal-close" id="rewardsModalClose">×</button>
-        </div>
-        <div class="modal-body">
-          <div class="rewards-animation">
-            <div class="rewards-particles"></div>
-            <div class="rewards-amount" id="rewardsAmount">0 RSC</div>
-            <div class="rewards-message">¡Has ganado recompensas épicas!</div>
+      <!-- Staking History -->
+      <section class="staking-history">
+        <div class="history-header">
+          <h2>Staking History</h2>
+          <div class="history-filters">
+            <select id="historyFilter">
+              <option value="all">All</option>
+              <option value="staked">Staked</option>
+              <option value="unstaked">Unstaked</option>
+              <option value="rewards">Rewards</option>
+            </select>
           </div>
         </div>
-      </div>
+        
+        <div class="history-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Rewards</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="stakingHistoryTable">
+              <tr class="no-data">
+                <td colspan="5">No staking history yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Rewards Section -->
+      <section class="rewards-section">
+        <div class="rewards-header">
+          <h2>Rewards</h2>
+          <div class="rewards-summary">
+            <div class="reward-item">
+              <span class="reward-label">Available:</span>
+              <span class="reward-value" id="availableRewards">0.000000 RSC</span>
+            </div>
+            <div class="reward-item">
+              <span class="reward-label">Total Earned:</span>
+              <span class="reward-value" id="totalEarnedRewards">0.000000 RSC</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rewards-content">
+          <div class="rewards-chart">
+            <h3>Rewards History</h3>
+            <canvas id="rewardsChart"></canvas>
+          </div>
+          
+          <div class="rewards-actions">
+            <button class="btn btn-primary" id="claimRewardsBtn">
+              <i class="fas fa-gift"></i>
+              Claim All Rewards
+            </button>
+            <button class="btn btn-secondary" id="compoundRewardsBtn">
+              <i class="fas fa-plus"></i>
+              Compound Rewards
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Advanced Analytics -->
+      <section class="analytics-section">
+        <div class="analytics-header">
+          <h2>Advanced Analytics</h2>
+          <p>Track your staking performance and optimize your strategy</p>
+        </div>
+        
+        <div class="analytics-grid">
+          <div class="analytics-card">
+            <h3>Performance</h3>
+            <canvas id="stakingPerformanceChart"></canvas>
+          </div>
+          
+          <div class="analytics-card">
+            <h3>Predictions</h3>
+            <canvas id="stakingPredictionsChart"></canvas>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 
+  <!-- Staking Modal -->
+  <div class="modal" id="stakingModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Stake RSC</h3>
+        <button class="close-modal" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Modal content will be dynamically generated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Rewards Modal -->
+  <div class="modal" id="rewardsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Epic Rewards!</h3>
+        <button class="close-modal" id="closeRewardsModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="rewards-celebration">
+          <div class="celebration-icon">🎉</div>
+          <div class="rewards-message">You've earned epic rewards!</div>
+          <div class="rewards-amount" id="modalRewardsAmount">0.000000 RSC</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
-  <script src="../scripts/feature-flags.js"></script>
-  <script src="../scripts/admin-panel.js"></script>
-  <script src="../scripts/ai-assistant.js"></script>
-  <script src="../scripts/chat-component.js"></script>
-  <script src="../scripts/config.js"></script>
-  <script src="../scripts/blockchain-connection.js"></script>
-  <script src="../scripts/cleanup.js"></script>
-  <script src="../scripts/main.js"></script>
   <script src="../scripts/staking.js"></script>
-  <script src="../scripts/staking-epic.js"></script>
-  <script src="../scripts/notifications.js"></script>
-  <script src="../scripts/animations.js"></script>
-  <script src="../scripts/blockchain-data.js"></script>
-  <script src="../scripts/charts.js"></script>
-  <script src="../scripts/init.js"></script>
-  <script src="../scripts/debug.js"></script>
-  <script src="../scripts/chat.js"></script>
-  <script src="../scripts/error-fix.js"></script>
-  
-  <!-- ===== NAVBAR RESPONSIVE ===== -->
-  <script src="../scripts/navbar.js"></script>
 </body>
 </html>

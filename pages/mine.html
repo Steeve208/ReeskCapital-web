@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>RSC Chain - Plataforma de Minería</title>
+   <title>RSC Chain - Mining Platform</title>
     <link rel="stylesheet" href="../styles/mine.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -16,20 +16,20 @@
                 <span>RSC Chain</span>
             </div>
             <div class="nav-links">
-                <a href="../index.html" class="nav-link">Inicio</a>
-                <a href="../pages/about.html" class="nav-link">Acerca de</a>
-                <a href="../pages/mine.html" class="nav-link active">Minar</a>
-                <a href="../pages/mine.html" class="nav-link">Iniciar Sesión</a>
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../pages/about.html" class="nav-link">About</a>
+                <a href="../pages/mine.html" class="nav-link active">Mine</a>
+                <a href="../pages/mine.html" class="nav-link">Login</a>
             </div>
             <div class="nav-actions">
                 <button class="theme-toggle" id="themeToggle">
                     <i class="fas fa-moon"></i>
                 </button>
-                <button class="settings-btn" id="settingsBtn" title="Ajustes">
+                <button class="settings-btn" id="settingsBtn" title="Settings">
                     <i class="fas fa-cog"></i>
                 </button>
                 <div class="user-info" id="userInfo" style="display: none;">
-                    <span class="user-username" id="userUsername">Usuario</span>
+                    <span class="user-username" id="userUsername">User</span>
                     <button class="logout-btn" id="logoutBtn">
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
@@ -42,12 +42,12 @@
             </div>
         </div>
         <div class="mobile-nav" id="mobileNav">
-            <a href="../index.html" class="mobile-nav-link">Inicio</a>
-            <a href="../pages/about.html" class="mobile-nav-link">Acerca de</a>
-            <a href="../pages/mine.html" class="mobile-nav-link active">Minar</a>
-            <a href="../pages/mine.html" class="mobile-nav-link">Iniciar Sesión</a>
+            <a href="../index.html" class="mobile-nav-link">Home</a>
+            <a href="../pages/about.html" class="mobile-nav-link">About</a>
+            <a href="../pages/mine.html" class="mobile-nav-link active">Mine</a>
+            <a href="../pages/mine.html" class="mobile-nav-link">Login</a>
             <button class="mobile-nav-link settings-mobile-btn" id="settingsMobileBtn">
-                <i class="fas fa-cog"></i> Ajustes
+                <i class="fas fa-cog"></i> Settings
             </button>
         </div>
     </nav>
@@ -56,54 +56,54 @@
     <section class="auth-section" id="authSection">
         <div class="auth-container">
             <div class="auth-tabs">
-                <button class="auth-tab active" data-tab="login">Iniciar Sesión</button>
-                <button class="auth-tab" data-tab="register">Registrarse</button>
+                <button class="auth-tab active" data-tab="login">Login</button>
+                <button class="auth-tab" data-tab="register">Register</button>
             </div>
             
             <!-- Login Form -->
             <form class="auth-form active" id="loginForm">
                 <div class="form-group">
                     <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" required placeholder="tu@email.com">
+                    <input type="email" id="loginEmail" required placeholder="your@email.com">
                 </div>
                 <div class="form-group">
-                    <label for="loginPassword">Contraseña</label>
+                    <label for="loginPassword">Password</label>
                     <input type="password" id="loginPassword" required placeholder="••••••••">
                 </div>
                 <button type="submit" class="auth-btn">
                     <i class="fas fa-sign-in-alt"></i>
-                    Iniciar Sesión
+                    Login
                 </button>
             </form>
 
             <!-- Register Form -->
             <form class="auth-form" id="registerForm">
                 <div class="form-group">
-                    <label for="registerUsername">Nombre de Usuario</label>
-                    <input type="text" id="registerUsername" required placeholder="minero123" minlength="3" maxlength="20">
+                    <label for="registerUsername">Username</label>
+                    <input type="text" id="registerUsername" required placeholder="miner123" minlength="3" maxlength="20">
                 </div>
                 <div class="form-group">
                     <label for="registerEmail">Email</label>
-                    <input type="email" id="registerEmail" required placeholder="tu@email.com">
+                    <input type="email" id="registerEmail" required placeholder="your@email.com">
                 </div>
                 <div class="form-group">
-                    <label for="registerPassword">Contraseña</label>
+                    <label for="registerPassword">Password</label>
                     <input type="password" id="registerPassword" required placeholder="••••••••" minlength="6">
                 </div>
                 <div class="form-group">
-                    <label for="confirmPassword">Confirmar Contraseña</label>
+                    <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" required placeholder="••••••••" minlength="6">
                 </div>
                 <button type="submit" class="auth-btn">
                     <i class="fas fa-user-plus"></i>
-                    Registrarse
+                    Register
                 </button>
             </form>
 
             <div class="auth-info">
                 <p><i class="fas fa-info-circle"></i> 
-                    <strong>Minería Simulada Off-Chain:</strong> 
-                    Acumula tokens de prueba ahora y reclámalos en la mainnet de RSC Chain.
+                    <strong>Off-Chain Simulated Mining:</strong> 
+                    Accumulate test tokens now and claim them on the RSC Chain mainnet.
                 </p>
             </div>
         </div>
@@ -116,10 +116,10 @@
             <div class="hero-content">
                 <h1 class="hero-title">
                     <i class="fas fa-hammer"></i>
-                    Plataforma de Minería RSC Chain
+                    RSC Chain Mining Platform
                 </h1>
                 <p class="hero-subtitle">
-                    Minera tokens de prueba ahora y reclámalos en la mainnet
+                    Mine test tokens now and claim them on mainnet
                 </p>
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -128,7 +128,7 @@
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-clock"></i>
-                        <span>Límite Diario: <strong id="dailyLimit">0</strong> / 2 RSC</span>
+                        <span>Daily Limit: <strong id="dailyLimit">0</strong> / 2 RSC</span>
                     </div>
                 </div>
             </div>
@@ -149,14 +149,14 @@
                     <div class="status-bar">
                         <div class="status-label">
                             <i class="fas fa-thermometer-half"></i>
-                            <span>Intensidad</span>
+                            <span>Intensity</span>
                         </div>
-                        <div class="status-value" id="intensity">Baja</div>
+                        <div class="status-value" id="intensity">Low</div>
                     </div>
                     <div class="status-bar">
                         <div class="status-label">
                             <i class="fas fa-bolt"></i>
-                            <span>Eficiencia</span>
+                            <span>Efficiency</span>
                         </div>
                         <div class="status-value" id="efficiency">0%</div>
                     </div>
@@ -167,11 +167,11 @@
                     <div class="mining-controls">
                         <button class="mining-btn start" id="startMining">
                             <i class="fas fa-play"></i>
-                            <span>Iniciar Minería</span>
+                            <span>Start Mining</span>
                         </button>
                         <button class="mining-btn claim" id="claimRewards">
                             <i class="fas fa-gift"></i>
-                            <span>Reclamar Recompensas</span>
+                            <span>Claim Rewards</span>
                         </button>
                     </div>
                 </div>
@@ -179,22 +179,22 @@
                 <!-- Session Progress -->
                 <div class="session-progress">
                     <div class="progress-header">
-                        <h3>Sesión de Minería 24h</h3>
+                        <h3>24h Mining Session</h3>
                         <span class="session-time" id="sessionTime">00:00:00</span>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
                     </div>
                     <div class="progress-stats">
-                        <span>Tokens Ganados: <strong id="tokensEarned">0.000000</strong></span>
+                        <span>Tokens Earned: <strong id="tokensEarned">0.000000</strong></span>
                         <span class="pending-tokens" id="pendingTokens" style="display: none;">
                             <i class="fas fa-exclamation-triangle"></i>
-                            Tokens Pendientes: <strong id="pendingTokensValue">0</strong>
+                            Pending Tokens: <strong id="pendingTokensValue">0</strong>
                         </span>
-                        <span>Tiempo Activo: <strong id="activeTime">0</strong> min</span>
+                        <span>Active Time: <strong id="activeTime">0</strong> min</span>
                     </div>
                     <div class="mining-status" id="miningStatus">
-                        <span class="status-indicator" id="statusIndicator">⏸️ Inactivo</span>
+                        <span class="status-indicator" id="statusIndicator">⏸️ Inactive</span>
                     </div>
                 </div>
             </div>
@@ -203,14 +203,14 @@
         <!-- Real-time Statistics -->
         <section class="stats-section">
             <div class="stats-container">
-                <h2>Estadísticas en Tiempo Real</h2>
+                <h2>Real-time Statistics</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon">
                             <i class="fas fa-coins"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>Total Minado</h3>
+                            <h3>Total Mined</h3>
                             <p id="totalMined">0 RSC</p>
                         </div>
                     </div>
@@ -219,8 +219,8 @@
                             <i class="fas fa-clock"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>Tiempo Total</h3>
-                            <p id="totalTime">0 horas</p>
+                            <h3>Total Time</h3>
+                            <p id="totalTime">0 hours</p>
                         </div>
                     </div>
                     <div class="stat-card">
@@ -228,7 +228,7 @@
                             <i class="fas fa-calendar-day"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>Sesiones Hoy</h3>
+                            <h3>Sessions Today</h3>
                             <p id="sessionsToday">0</p>
                         </div>
                     </div>
@@ -250,17 +250,17 @@
     <aside class="sidebar-bottom">
         <div class="sidebar-content">
             <div class="sidebar-section">
-                <h3><i class="fas fa-lightbulb"></i> Consejos de Optimización</h3>
+                <h3><i class="fas fa-lightbulb"></i> Optimization Tips</h3>
                 <ul class="optimization-tips">
-                    <li>Mantén la minería activa por períodos largos</li>
-                    <li>La intensidad afecta la eficiencia</li>
-                    <li>Reclama recompensas regularmente</li>
-                    <li>Respeta el límite diario de 2 RSC</li>
+                    <li>Keep mining active for long periods</li>
+                    <li>Intensity affects efficiency</li>
+                    <li>Claim rewards regularly</li>
+                    <li>Respect the daily limit of 2 RSC</li>
                 </ul>
             </div>
             
             <div class="sidebar-section">
-                <h3><i class="fas fa-chart-line"></i> Estadísticas Rápidas</h3>
+                <h3><i class="fas fa-chart-line"></i> Quick Statistics</h3>
                 <div class="quick-stats-sidebar">
                     <div class="stat-item-sidebar">
                         <i class="fas fa-coins"></i>
@@ -268,27 +268,27 @@
                     </div>
                     <div class="stat-item-sidebar">
                         <i class="fas fa-clock"></i>
-                        <span>Sesiones Hoy: <strong id="sidebarSessionsToday">0</strong></span>
+                        <span>Sessions Today: <strong id="sidebarSessionsToday">0</strong></span>
                     </div>
                 </div>
             </div>
             
             <div class="sidebar-section">
-                <h3><i class="fas fa-info-circle"></i> Acceso Rápido</h3>
+                <h3><i class="fas fa-info-circle"></i> Quick Access</h3>
                 <button class="sidebar-action-btn" id="sidebarSettingsBtn">
                     <i class="fas fa-cog"></i>
-                    Panel de Control
+                    Control Panel
                 </button>
                 <button class="sidebar-mainnet-btn" id="sidebarMainnetBtn">
                     <i class="fas fa-info-circle"></i>
-                    Info Mainnet
+                    Mainnet Info
                 </button>
             </div>
             
             <div class="sidebar-section">
-                <h3><i class="fas fa-history"></i> Historial de Minería</h3>
+                <h3><i class="fas fa-history"></i> Mining History</h3>
                 <div class="mining-history" id="miningHistory">
-                    <p class="no-history">No hay historial aún</p>
+                    <p class="no-history">No history yet</p>
                 </div>
             </div>
         </div>
@@ -298,284 +298,18 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>RSC Chain</h4>
-                <p>Plataforma de minería simulada para construir comunidad</p>
+                <h3>RSC Chain</h3>
+                <p>The Future of Blockchain</p>
             </div>
             <div class="footer-section">
-                <h4>Enlaces</h4>
-                <a href="../index.html">Inicio</a>
-                <a href="../pages/about.html">Acerca de</a>
-                <a href="../pages/mine.html">Minar</a>
+                <h3>Quick Links</h3>
+                <a href="../pages/about.html">About</a>
+                <a href="../pages/mine.html">Mine</a>
             </div>
-            <div class="footer-section">
-                <h4>Información</h4>
-                <p>Minería off-chain hasta la mainnet</p>
-                <p>Consenso: PoW + PoS + IA (futuro)</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 RSC Chain. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- Modals -->
-    <div class="modal-overlay" id="modalOverlay"></div>
-    
-    <!-- Settings Modal -->
-    <div class="modal settings-modal" id="settingsModal">
-        <div class="settings-header">
-            <div class="settings-header-content">
-                <div class="settings-icon">
-                    <i class="fas fa-cog fa-spin"></i>
-                </div>
-                <div class="settings-title">
-                    <h2>Panel de Control</h2>
-                    <p>Gestión completa de tu cuenta y configuración</p>
-                </div>
-            </div>
-            <button class="settings-close" id="settingsModalClose">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="settings-body">
-            <!-- Quick Stats Cards -->
-            <div class="quick-stats">
-                <div class="stat-card primary">
-                    <div class="stat-icon">
-                        <i class="fas fa-coins"></i>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-value" id="settingsBalance">0.00</span>
-                        <span class="stat-label">RSC Balance</span>
-                    </div>
-                </div>
-                
-                <div class="stat-card success">
-                    <div class="stat-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-value" id="settingsTotalTime">0h</span>
-                        <span class="stat-label">Tiempo Total</span>
-                    </div>
-                </div>
-                
-                <div class="stat-card warning">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-day"></i>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-value" id="settingsSessionsToday">0</span>
-                        <span class="stat-label">Sesiones Hoy</span>
-                    </div>
-                </div>
-                
-                <div class="stat-card info">
-                    <div class="stat-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-value" id="settingsUserRanking">#-</span>
-                        <span class="stat-label">Ranking</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- User Profile Section -->
-            <div class="profile-section">
-                <div class="profile-header">
-                    <div class="profile-avatar">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <div class="profile-info">
-                        <h3 id="settingsUsername">Usuario</h3>
-                        <span class="profile-email" id="settingsEmail">usuario@email.com</span>
-                        <div class="profile-status">
-                            <span class="status-badge online">
-                                <i class="fas fa-circle"></i> Activo
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="profile-details">
-                    <div class="detail-row">
-                        <div class="detail-col">
-                            <span class="detail-label">Última Actividad</span>
-                            <span class="detail-value" id="settingsLastMining">Nunca</span>
-                        </div>
-                        <div class="detail-col">
-                            <span class="detail-label">Miembro Desde</span>
-                            <span class="detail-value" id="settingsMemberSince">Hoy</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Network Status Section -->
-            <div class="network-section">
-                <div class="section-header">
-                    <h4><i class="fas fa-network-wired"></i> Estado de la Red</h4>
-                    <div class="network-indicator">
-                        <span class="indicator-dot online"></span>
-                        <span class="indicator-text">Conectado</span>
-                    </div>
-                </div>
-                
-                <div class="network-grid">
-                    <div class="network-item">
-                        <div class="network-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <div class="network-info">
-                            <span class="network-label">Estado</span>
-                            <span class="network-value status-online">Testnet Activo</span>
-                        </div>
-                    </div>
-                    
-                    <div class="network-item">
-                        <div class="network-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="network-info">
-                            <span class="network-label">Dificultad</span>
-                            <span class="network-value" id="settingsDifficulty">Baja</span>
-                        </div>
-                    </div>
-                    
-                    <div class="network-item">
-                        <div class="network-icon">
-                            <i class="fas fa-cubes"></i>
-                        </div>
-                        <div class="network-info">
-                            <span class="network-label">Bloques</span>
-                            <span class="network-value" id="settingsBlocks">Simulado</span>
-                        </div>
-                    </div>
-                    
-                    <div class="network-item">
-                        <div class="network-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <div class="network-info">
-                            <span class="network-label">Latencia</span>
-                            <span class="network-value">~45ms</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mining Configuration -->
-            <div class="mining-config-section">
-                <div class="section-header">
-                    <h4><i class="fas fa-hammer"></i> Configuración de Minería</h4>
-                    <span class="config-badge">Optimizado</span>
-                </div>
-                
-                <div class="config-grid">
-                    <div class="config-item">
-                        <div class="config-icon">
-                            <i class="fas fa-tachometer-alt"></i>
-                        </div>
-                        <div class="config-info">
-                            <span class="config-label">Tasa Base</span>
-                            <span class="config-value">10 tokens/min</span>
-                        </div>
-                    </div>
-                    
-                    <div class="config-item">
-                        <div class="config-icon">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <div class="config-info">
-                            <span class="config-label">Límite Diario</span>
-                            <span class="config-value">2.00 RSC</span>
-                        </div>
-                    </div>
-                    
-                    <div class="config-item">
-                        <div class="config-icon">
-                            <i class="fas fa-layer-group"></i>
-                        </div>
-                        <div class="config-info">
-                            <span class="config-label">Modo</span>
-                            <span class="config-value">Off-Chain</span>
-                        </div>
-                    </div>
-                    
-                    <div class="config-item">
-                        <div class="config-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="config-info">
-                            <span class="config-label">Seguridad</span>
-                            <span class="config-value">Alta</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="settings-actions">
-                <button class="action-btn primary" id="refreshStatsBtn">
-                    <i class="fas fa-sync-alt"></i>
-                    <span>Actualizar</span>
-                </button>
-                
-                <button class="action-btn secondary" id="exportDataBtn">
-                    <i class="fas fa-download"></i>
-                    <span>Exportar</span>
-                </button>
-                
-                <button class="action-btn success" id="backupDataBtn">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <span>Respaldo</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mainnet Info Modal -->
-    <div class="modal" id="mainnetModal">
-        <div class="modal-header">
-            <h3><i class="fas fa-info-circle"></i> Información de Mainnet</h3>
-            <button class="modal-close" id="mainnetModalClose">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="mainnet-info">
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <h4>Fase Actual: Testnet Simulado</h4>
-                        <p>La minería actual es off-chain para construir comunidad</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-rocket"></i>
-                    <div>
-                        <h4>Fase Futura: Mainnet RSC</h4>
-                        <p>Consenso híbrido PoW + PoS + IA con tokens reales</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-exchange-alt"></i>
-                    <div>
-                        <h4>Migración Automática</h4>
-                        <p>Tus tokens de prueba se convertirán en RSC reales</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification Container -->
-    <div class="notification-container" id="notificationContainer"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../scripts/supabase-config-simple.js"></script>
+    <!-- Scripts -->
     <script src="../scripts/mine.js"></script>
 </body>
 </html>
