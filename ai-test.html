@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSC Chain AI Assistant - Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <link rel="stylesheet" href="styles/advanced-components.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: white;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            box-shadow: var(--glass-shadow);
+        }
+        
+        h1 {
+            color: var(--primary-500);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-500), var(--accent-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .test-info {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .test-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .test-button {
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+        }
+        
+        .test-button.secondary {
+            background: linear-gradient(135deg, var(--secondary-500), var(--secondary-600));
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .test-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .test-results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 200px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-online {
+            background: #00ff88;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-offline {
+            background: #ff4757;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-item h3 {
+            color: var(--primary-500);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+        
+        .feature-item p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🤖 RSC Chain AI Assistant</h1>
+        
+        <div class="test-info">
+            <p>¡Bienvenido al asistente de IA más avanzado de RSC Chain!</p>
+            <p>Este sistema puede ayudarte con cualquier consulta sobre nuestra plataforma blockchain.</p>
+        </div>
+        
+        <div class="test-buttons">
+            <button class="test-button" onclick="testAI()">🧪 Probar IA</button>
+            <button class="test-button secondary" onclick="showFeatures()">✨ Ver Características</button>
+            <button class="test-button" onclick="openAI()">💬 Abrir Chat</button>
+            <button class="test-button secondary" onclick="testVoice()">🎤 Probar Voz</button>
+        </div>
+        
+        <div class="test-results" id="test-results">
+            <p><span class="status-indicator status-offline" id="status-indicator"></span>Esperando pruebas...</p>
+        </div>
+        
+        <div class="feature-list" id="feature-list" style="display: none;">
+            <div class="feature-item">
+                <h3>🧠 Inteligencia Avanzada</h3>
+                <p>Análisis inteligente de consultas con respuestas contextuales y precisas</p>
+            </div>
+            <div class="feature-item">
+                <h3>🎤 Reconocimiento de Voz</h3>
+                <p>Interacción por voz usando Web Speech API para una experiencia natural</p>
+            </div>
+            <div class="feature-item">
+                <h3>📊 Análisis de Portfolio</h3>
+                <p>Análisis completo de tu portfolio con recomendaciones personalizadas</p>
+            </div>
+            <div class="feature-item">
+                <h3>⛏️ Optimización de Minería</h3>
+                <p>Consejos y análisis para maximizar tu eficiencia de minería</p>
+            </div>
+            <div class="feature-item">
+                <h3>🌾 Estrategias DeFi</h3>
+                <p>Recomendaciones de staking y yield farming para maximizar ganancias</p>
+            </div>
+            <div class="feature-item">
+                <h3>🖼️ NFT Marketplace</h3>
+                <p>Información sobre colecciones, precios y tendencias del mercado NFT</p>
+            </div>
+            <div class="feature-item">
+                <h3>🧭 Navegación Inteligente</h3>
+                <p>Te guía a cualquier sección de la plataforma con comandos de voz</p>
+            </div>
+            <div class="feature-item">
+                <h3>📞 Soporte 24/7</h3>
+                <p>Acceso directo a canales de soporte y documentación</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateResults(message, type = 'info') {
+            const results = document.getElementById('test-results');
+            const indicator = document.getElementById('status-indicator');
+            
+            if (type === 'success') {
+                indicator.className = 'status-indicator status-online';
+            } else if (type === 'error') {
+                indicator.className = 'status-indicator status-offline';
+            }
+            
+            results.innerHTML = `<p><span class="status-indicator ${type === 'success' ? 'status-online' : 'status-offline'}"></span>${message}</p>`;
+        }
+        
+        function addResult(message) {
+            const results = document.getElementById('test-results');
+            results.innerHTML += `<p>• ${message}</p>`;
+        }
+        
+        function testAI() {
+            updateResults('Probando AI Assistant...', 'info');
+            
+            setTimeout(() => {
+                if (window.rscAI) {
+                    updateResults('✅ AI Assistant cargado correctamente!', 'success');
+                    addResult('Sistema inicializado: ' + window.rscAI.isInitialized);
+                    addResult('Estado activo: ' + window.rscAI.isActive);
+                    addResult('Historial de conversación: ' + window.rscAI.conversationHistory.length + ' mensajes');
+                    addResult('Preferencias de usuario cargadas');
+                    addResult('Base de conocimiento inicializada');
+                } else {
+                    updateResults('❌ AI Assistant no encontrado', 'error');
+                    addResult('Verifica que el script se haya cargado correctamente');
+                }
+            }, 1000);
+        }
+        
+        function showFeatures() {
+            const featureList = document.getElementById('feature-list');
+            if (featureList.style.display === 'none') {
+                featureList.style.display = 'grid';
+                updateResults('✨ Características del AI Assistant mostradas', 'success');
+            } else {
+                featureList.style.display = 'none';
+                updateResults('Características ocultas', 'info');
+            }
+        }
+        
+        function openAI() {
+            if (window.rscAI) {
+                window.rscAI.openAI();
+                updateResults('💬 Chat de IA abierto', 'success');
+            } else {
+                updateResults('❌ AI Assistant no disponible', 'error');
+            }
+        }
+        
+        function testVoice() {
+            if (window.rscAI && window.rscAI.recognition) {
+                updateResults('🎤 Iniciando prueba de voz...', 'info');
+                window.rscAI.toggleVoiceInput();
+            } else {
+                updateResults('❌ Reconocimiento de voz no disponible', 'error');
+                addResult('Tu navegador no soporta Web Speech API');
+                addResult('Prueba con Chrome, Edge o Safari');
+            }
+        }
+        
+        // Auto-test on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testAI();
+            }, 2000);
+        });
+        
+        // Test AI responses
+        function testAIResponse() {
+            if (window.rscAI) {
+                updateResults('🧪 Probando respuestas de IA...', 'info');
+                
+                const testQueries = [
+                    '¿Qué es RSC Chain?',
+                    'Analiza mi portfolio',
+                    '¿Cuál es el precio actual?',
+                    'Optimiza mi minería',
+                    'Estrategias DeFi'
+                ];
+                
+                let currentTest = 0;
+                const runTest = () => {
+                    if (currentTest < testQueries.length) {
+                        const query = testQueries[currentTest];
+                        addResult(`Probando: "${query}"`);
+                        window.rscAI.processMessage(query).then(response => {
+                            addResult(`✅ Respuesta generada: ${response.substring(0, 50)}...`);
+                            currentTest++;
+                            setTimeout(runTest, 1000);
+                        }).catch(error => {
+                            addResult(`❌ Error: ${error.message}`);
+                            currentTest++;
+                            setTimeout(runTest, 1000);
+                        });
+                    } else {
+                        updateResults('🎉 Todas las pruebas completadas!', 'success');
+                    }
+                };
+                
+                runTest();
+            }
+        }
+    </script>
+    
+    <!-- Load the AI Assistant -->
+    <script src="scripts/ai-assistant.js"></script>
+</body>
+</html>

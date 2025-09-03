@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScrolling();
     initNewsletterForm();
     initUtilityButtons();
+    initParticleSystem();
+    initAdvancedEffects();
+    init3DTransforms();
 });
 
 // ===== NAVIGATION =====
@@ -332,46 +335,8 @@ function isValidEmail(email) {
 }
 
 function showNotification(message, type = 'info') {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-message">${message}</span>
-            <button class="notification-close">&times;</button>
-        </div>
-    `;
-    
-    // Add styles
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        max-width: 400px;
-        animation: slideInRight 0.3s ease-out;
-    `;
-    
-    // Add to page
-    document.body.appendChild(notification);
-    
-    // Close button functionality
-    const closeBtn = notification.querySelector('.notification-close');
-    closeBtn.addEventListener('click', () => {
-        notification.remove();
-    });
-    
-    // Auto-remove after 5 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.remove();
-        }
-    }, 5000);
+    // Use the advanced notification system
+    showAdvancedNotification(message, type, 5000);
 }
 
 // ===== BLOCKCHAIN ANIMATION =====
@@ -472,6 +437,262 @@ function drawLineChart(ctx, data) {
     ctx.stroke();
 }
 
+// ===== ADVANCED PARTICLE SYSTEM =====
+function initParticleSystem() {
+    const heroSection = document.querySelector('.hero');
+    if (!heroSection) return;
+    
+    // Create particle container
+    const particleContainer = document.createElement('div');
+    particleContainer.className = 'particles';
+    heroSection.appendChild(particleContainer);
+    
+    // Generate particles
+    for (let i = 0; i < 50; i++) {
+        createParticle(particleContainer);
+    }
+    
+    // Continuously add new particles
+    setInterval(() => {
+        if (particleContainer.children.length < 50) {
+            createParticle(particleContainer);
+        }
+    }, 2000);
+}
+
+function createParticle(container) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    
+    // Random position
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = '100%';
+    
+    // Random size
+    const size = Math.random() * 3 + 1;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    
+    // Random animation duration
+    const duration = Math.random() * 4 + 4;
+    particle.style.animationDuration = duration + 's';
+    
+    container.appendChild(particle);
+    
+    // Remove particle after animation
+    setTimeout(() => {
+        if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+        }
+    }, duration * 1000);
+}
+
+// ===== ADVANCED EFFECTS SYSTEM =====
+function initAdvancedEffects() {
+    // Add shimmer effect to buttons
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            button.classList.add('shimmer');
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            button.classList.remove('shimmer');
+        });
+    });
+    
+    // Add glow effect to cards
+    const cards = document.querySelectorAll('.tech-card, .ecosystem-card, .performance-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.classList.add('glow');
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('glow');
+        });
+    });
+    
+    // Add floating animation to icons
+    const icons = document.querySelectorAll('.tech-icon, .card-icon, .stat-icon');
+    icons.forEach((icon, index) => {
+        icon.style.animationDelay = (index * 0.2) + 's';
+        icon.classList.add('float');
+    });
+}
+
+// ===== 3D TRANSFORMS SYSTEM =====
+function init3DTransforms() {
+    const cards = document.querySelectorAll('.card-3d');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+        });
+    });
+}
+
+// ===== ADVANCED NOTIFICATION SYSTEM =====
+function showAdvancedNotification(message, type = 'info', duration = 5000) {
+    const notification = document.createElement('div');
+    notification.className = `notification-glass ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-message">${message}</span>
+            <button class="notification-close">&times;</button>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    // Close button functionality
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        hideNotification(notification);
+    });
+    
+    // Auto-remove
+    setTimeout(() => {
+        hideNotification(notification);
+    }, duration);
+}
+
+function hideNotification(notification) {
+    notification.classList.remove('show');
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 300);
+}
+
+// ===== ADVANCED MODAL SYSTEM =====
+function showModal(content, title = '') {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content">
+            ${title ? `<h3>${title}</h3>` : ''}
+            <div class="modal-body">${content}</div>
+            <button class="modal-close btn btn-secondary">Close</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Show modal
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 100);
+    
+    // Close functionality
+    const closeBtn = modal.querySelector('.modal-close');
+    closeBtn.addEventListener('click', () => {
+        hideModal(modal);
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            hideModal(modal);
+        }
+    });
+}
+
+function hideModal(modal) {
+    modal.classList.remove('active');
+    setTimeout(() => {
+        if (modal.parentNode) {
+            modal.parentNode.removeChild(modal);
+        }
+    }, 300);
+}
+
+// ===== ADVANCED LOADING SYSTEM =====
+function showLoading(element, text = 'Loading...') {
+    const loading = document.createElement('div');
+    loading.className = 'loading-overlay';
+    loading.innerHTML = `
+        <div class="loading-content">
+            <div class="spinner-glass"></div>
+            <p>${text}</p>
+        </div>
+    `;
+    
+    element.style.position = 'relative';
+    element.appendChild(loading);
+    
+    return loading;
+}
+
+function hideLoading(loading) {
+    if (loading && loading.parentNode) {
+        loading.parentNode.removeChild(loading);
+    }
+}
+
+// ===== ADVANCED TOOLTIP SYSTEM =====
+function initTooltips() {
+    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+    
+    tooltipElements.forEach(element => {
+        element.classList.add('tooltip');
+    });
+}
+
+// ===== ADVANCED PROGRESS BARS =====
+function animateProgressBars() {
+    const progressBars = document.querySelectorAll('.progress-fill');
+    
+    progressBars.forEach(bar => {
+        const targetWidth = bar.style.width || '0%';
+        bar.style.width = '0%';
+        
+        setTimeout(() => {
+            bar.style.width = targetWidth;
+        }, 500);
+    });
+}
+
+// ===== ADVANCED COUNTERS =====
+function animateCounters() {
+    const counters = document.querySelectorAll('.counter');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            counter.textContent = Math.floor(current).toLocaleString();
+        }, 16);
+    });
+}
+
 // ===== INITIALIZE ADDITIONAL FEATURES =====
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize blockchain animation
@@ -482,6 +703,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add CSS for mobile menu
     addMobileMenuStyles();
+    
+    // Initialize advanced features
+    initTooltips();
+    animateProgressBars();
+    animateCounters();
+    
+    // Add advanced CSS for loading overlay
+    addAdvancedStyles();
 });
 
 function addMobileMenuStyles() {
@@ -533,6 +762,72 @@ function addMobileMenuStyles() {
                 transform: translateX(0);
                 opacity: 1;
             }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function addAdvancedStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-radius: var(--radius-xl);
+        }
+        
+        .loading-content {
+            text-align: center;
+            color: var(--text-primary);
+        }
+        
+        .loading-content p {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .counter {
+            font-weight: 800;
+            color: var(--primary-500);
+        }
+        
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 1rem;
+            transition: var(--transition);
+        }
+        
+        .notification-close:hover {
+            color: var(--error);
+            transform: scale(1.1);
+        }
+        
+        .modal-close {
+            margin-top: 1rem;
+        }
+        
+        .modal-body {
+            margin: 1rem 0;
+        }
+        
+        .modal-body h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-500);
         }
     `;
     document.head.appendChild(style);

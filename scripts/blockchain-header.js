@@ -43,7 +43,7 @@ class BlockchainHeaderManager {
     
     setupEventListeners() {
         // Mobile menu toggle
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const hamburgerMenu = document.getElementById('mobileMenuBtn');
         if (hamburgerMenu) {
             hamburgerMenu.addEventListener('click', () => this.toggleMobileMenu());
         }
@@ -288,7 +288,7 @@ class BlockchainHeaderManager {
     // ===== MOBILE MENU =====
     toggleMobileMenu() {
         const mobileMenu = document.getElementById('mobileMenu');
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const hamburgerMenu = document.getElementById('mobileMenuBtn');
         
         if (!mobileMenu || !hamburgerMenu) return;
         
@@ -309,7 +309,7 @@ class BlockchainHeaderManager {
     
     closeMobileMenu() {
         const mobileMenu = document.getElementById('mobileMenu');
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const hamburgerMenu = document.getElementById('mobileMenuBtn');
         
         if (mobileMenu && hamburgerMenu) {
             mobileMenu.classList.remove('active');

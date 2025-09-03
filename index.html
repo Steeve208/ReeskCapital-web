@@ -28,6 +28,7 @@
   
   <!-- Styles -->
   <link rel="stylesheet" href="styles/app.css">
+  <link rel="stylesheet" href="styles/mobile-navbar.css">
   
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
@@ -84,10 +85,10 @@
           </a>
           
           <a href="pages/p2p.html" class="nav-link">
-            <span class="nav-text">P2P</span>
             <div class="nav-icon">
               <i class="fas fa-university"></i>
             </div>
+            <span class="nav-text">P2P</span>
           </a>
           
           <a href="pages/about.html" class="nav-link">
@@ -136,6 +137,111 @@
     </nav>
   </header>
 
+  <!-- Mobile Navbar -->
+  <nav class="mobile-navbar">
+    <div class="mobile-nav-container">
+      <!-- Logo Section -->
+      <div class="mobile-logo">
+        <div class="mobile-logo-circle">
+          <div class="mobile-chain-links">
+            <div class="mobile-chain-link mobile-chain-link-1"></div>
+            <div class="mobile-chain-link mobile-chain-link-2"></div>
+          </div>
+          <div class="mobile-logo-text">RSC</div>
+        </div>
+        <div class="mobile-logo-title">RSC CHAIN</div>
+      </div>
+      
+      <!-- Hamburger Button -->
+      <button class="mobile-hamburger" id="mobileHamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="mobile-menu-logo">
+        <div class="mobile-menu-logo-circle">
+          <div class="mobile-menu-chain-links">
+            <div class="mobile-menu-chain-link mobile-menu-chain-link-1"></div>
+            <div class="mobile-menu-chain-link mobile-menu-chain-link-2"></div>
+          </div>
+          <div class="mobile-menu-logo-text">RSC</div>
+        </div>
+        <div class="mobile-menu-logo-title">RSC CHAIN</div>
+      </div>
+      <button class="mobile-close" id="mobileClose">×</button>
+    </div>
+    
+    <div class="mobile-menu-content">
+      <!-- Navigation Section -->
+      <div class="mobile-menu-section">
+        <h3 class="mobile-menu-title">Navigation</h3>
+        <div class="mobile-menu-links">
+          <a href="index.html" class="mobile-menu-link active">
+            <span class="mobile-menu-icon">🏠</span>
+            <span>Home</span>
+          </a>
+          <a href="pages/about.html" class="mobile-menu-link">
+            <span class="mobile-menu-icon">ℹ️</span>
+            <span>About</span>
+          </a>
+          <a href="pages/wallet.html" class="mobile-menu-link">
+            <span class="mobile-menu-icon">👛</span>
+            <span>Wallet</span>
+          </a>
+          <a href="pages/mine.html" class="mobile-menu-link">
+            <span class="mobile-menu-icon">⛏️</span>
+            <span>Mine</span>
+          </a>
+          <a href="pages/p2p.html" class="mobile-menu-link">
+            <span class="mobile-menu-icon">🤝</span>
+            <span>P2P</span>
+          </a>
+          <a href="pages/staking.html" class="mobile-menu-link">
+            <span class="mobile-menu-icon">💰</span>
+            <span>Staking</span>
+          </a>
+          <a href="pages/explorer.html" class="mobile-menu-link">
+            <span class="mobile-menu-icon">🔍</span>
+            <span>Explorer</span>
+          </a>
+          <a href="pages/bank.html" class="mobile-menu-link">
+            <span class="mobile-menu-icon">🏦</span>
+            <span>Bank</span>
+          </a>
+          <a href="pages/docs.html" class="mobile-menu-link">
+            <span class="mobile-menu-icon">📚</span>
+            <span>Docs</span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Actions Section -->
+      <div class="mobile-menu-section">
+        <h3 class="mobile-menu-title">Actions</h3>
+        <div class="mobile-menu-actions">
+          <a href="pages/login.html" class="mobile-menu-action">
+            <span class="mobile-menu-icon">🔐</span>
+            <span>Login</span>
+          </a>
+          <a href="pages/wallet.html" class="mobile-menu-action">
+            <span class="mobile-menu-icon">👛</span>
+            <span>Connect Wallet</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+
   <!-- Main Content -->
   <main>
     <!-- Hero Section -->
@@ -178,11 +284,11 @@
             </div>
             
             <div class="hero-actions">
-              <a href="#mining" class="btn btn-primary btn-large">
+              <a href="pages/mine.html" class="btn btn-primary btn-large">
                 <i class="fas fa-pickaxe"></i>
                 Start Mining
               </a>
-              <a href="#wallet" class="btn btn-secondary btn-large">
+              <a href="pages/wallet.html" class="btn btn-secondary btn-large">
                 <i class="fas fa-wallet"></i>
                 Create Wallet
               </a>
@@ -438,7 +544,7 @@
                 <span>Real-time rewards</span>
               </div>
             </div>
-            <a href="#mining" class="card-action">
+            <a href="pages/mine.html" class="card-action">
               <span>Start Mining</span>
               <i class="fas fa-arrow-right"></i>
             </a>
@@ -472,7 +578,7 @@
                 <span>Slashing protection</span>
               </div>
             </div>
-            <a href="#staking" class="card-action">
+            <a href="pages/staking.html" class="card-action">
               <span>Start Staking</span>
               <i class="fas fa-arrow-right"></i>
             </a>
@@ -506,7 +612,7 @@
                 <span>Smart escrow</span>
               </div>
             </div>
-            <a href="#p2p" class="card-action">
+            <a href="pages/p2p.html" class="card-action">
               <span>Start Trading</span>
               <i class="fas fa-arrow-right"></i>
             </a>
@@ -540,7 +646,7 @@
                 <span>Automatic liquidity</span>
               </div>
             </div>
-            <a href="#defi" class="card-action">
+            <a href="pages/bank.html" class="card-action">
               <span>Access DeFi</span>
               <i class="fas fa-arrow-right"></i>
             </a>
@@ -574,7 +680,7 @@
                 <span>Integrated staking</span>
               </div>
             </div>
-            <a href="#wallet" class="card-action">
+            <a href="pages/wallet.html" class="card-action">
               <span>Create Wallet</span>
               <i class="fas fa-arrow-right"></i>
             </a>
@@ -608,7 +714,7 @@
                 <span>Live metrics</span>
               </div>
             </div>
-            <a href="#explorer" class="card-action">
+            <a href="pages/explorer.html" class="card-action">
               <span>Explore Blockchain</span>
               <i class="fas fa-arrow-right"></i>
             </a>
@@ -725,11 +831,11 @@
           <p>Join thousands of users who are already experiencing the future of decentralized finance</p>
           
           <div class="cta-actions">
-            <a href="#mining" class="btn btn-primary btn-large">
+            <a href="pages/mine.html" class="btn btn-primary btn-large">
               <i class="fas fa-rocket"></i>
               Start Now
             </a>
-            <a href="#docs" class="btn btn-secondary btn-large">
+            <a href="pages/docs.html" class="btn btn-secondary btn-large">
               <i class="fas fa-book"></i>
               Read Documentation
             </a>
@@ -828,5 +934,7 @@
 
   <!-- Scripts -->
   <script src="scripts/main.js"></script>
+  <script src="scripts/mobile-navbar.js"></script>
+  <script src="scripts/navbar-enhancements.js"></script>
 </body>
 </html>

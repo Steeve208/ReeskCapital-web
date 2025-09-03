@@ -42,25 +42,41 @@ async function createUserInSupabase(email, username) {
         
         console.log('📝 Datos a insertar:', userData);
         
-        const { data, error } = await supabase
-            .from('users_balances')
-            .insert([userData])
-            .select()
-            .single();
+        // Intentar crear en diferentes tablas posibles
+        const possibleTables = ['users_balances', 'miners', 'users', 'user_balances'];
+        let createdUser = null;
         
-        if (error) {
-            console.error('❌ Error al crear usuario:', error);
-            console.error('🔍 Detalles del error:', {
-                message: error.message,
-                code: error.code,
-                details: error.details,
-                hint: error.hint
-            });
-            throw error;
+        for (const tableName of possibleTables) {
+            try {
+                console.log(`🔍 Intentando crear en tabla: ${tableName}`);
+                
+                const { data, error } = await supabase
+                    .from(tableName)
+                    .insert([userData])
+                    .select()
+                    .single();
+                
+                if (error) {
+                    console.warn(`⚠️ Error creando en tabla ${tableName}:`, error.message);
+                    continue; // Intentar siguiente tabla
+                }
+                
+                if (data) {
+                    console.log(`✅ Usuario creado exitosamente en tabla: ${tableName}`, data);
+                    createdUser = data;
+                    break; // Usuario creado, salir del loop
+                }
+            } catch (tableError) {
+                console.warn(`⚠️ Error accediendo tabla ${tableName}:`, tableError.message);
+                continue;
+            }
         }
         
-        console.log('✅ Usuario creado en Supabase:', data);
-        return data;
+        if (!createdUser) {
+            throw new Error('No se pudo crear usuario en ninguna tabla disponible');
+        }
+        
+        return createdUser;
         
     } catch (error) {
         console.error('❌ Error al crear usuario:', error);
@@ -76,22 +92,48 @@ async function getUserByEmailFromSupabase(email) {
     }
     
     try {
-        const { data, error } = await supabase
-            .from('users_balances')
-            .select('*')
-            .eq('email', email)
-            .single();
+        console.log('🔍 Buscando usuario con email:', email);
         
-        if (error) {
-            if (error.code === 'PGRST116') {
-                // Usuario no encontrado
-                return null;
+        // Intentar buscar en diferentes tablas posibles
+        const possibleTables = ['users_balances', 'miners', 'users', 'user_balances'];
+        let userData = null;
+        
+        for (const tableName of possibleTables) {
+            try {
+                console.log(`🔍 Buscando en tabla: ${tableName}`);
+                
+                const { data, error } = await supabase
+                    .from(tableName)
+                    .select('*')
+                    .eq('email', email)
+                    .single();
+                
+                if (error) {
+                    if (error.code === 'PGRST116') {
+                        console.log(`⚠️ Usuario no encontrado en tabla: ${tableName}`);
+                        continue; // Intentar siguiente tabla
+                    }
+                    console.warn(`⚠️ Error en tabla ${tableName}:`, error.message);
+                    continue;
+                }
+                
+                if (data) {
+                    console.log(`✅ Usuario encontrado en tabla: ${tableName}`, data);
+                    userData = data;
+                    break; // Usuario encontrado, salir del loop
+                }
+            } catch (tableError) {
+                console.warn(`⚠️ Error accediendo tabla ${tableName}:`, tableError.message);
+                continue;
             }
-            throw error;
         }
         
-        console.log('✅ Usuario encontrado en Supabase:', data);
-        return data;
+        if (!userData) {
+            console.log('❌ Usuario no encontrado en ninguna tabla');
+            return null;
+        }
+        
+        return userData;
         
     } catch (error) {
         console.error('❌ Error al obtener usuario:', error);

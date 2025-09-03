@@ -1,0 +1,119 @@
+{
+  "name": "RSC Chain - Advanced Blockchain Platform",
+  "short_name": "RSC Chain",
+  "description": "The most advanced blockchain platform with AI integration, DeFi protocols, and social ecosystem",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00ff88",
+  "orientation": "portrait-primary",
+  "categories": ["finance", "productivity", "business"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/00ff88/000000?text=RSC",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/00ff88/000000?text=RSC",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://via.placeholder.com/144x144/00ff88/000000?text=RSC",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://via.placeholder.com/72x72/00ff88/000000?text=RSC",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://via.placeholder.com/1280x720/000000/00ff88?text=RSC+Chain+Desktop",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide"
+    },
+    {
+      "src": "https://via.placeholder.com/390x844/000000/00ff88?text=RSC+Chain+Mobile",
+      "sizes": "390x844",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mining Dashboard",
+      "short_name": "Mining",
+      "description": "Access mining interface and statistics",
+      "url": "/?shortcut=mining",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/96x96/00ff88/000000?text=⛏️",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "DeFi Protocols",
+      "short_name": "DeFi",
+      "description": "Access staking and yield farming",
+      "url": "/?shortcut=defi",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/96x96/00ff88/000000?text=🌾",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "NFT Marketplace",
+      "short_name": "NFTs",
+      "description": "Browse and trade NFTs",
+      "url": "/?shortcut=nft",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/96x96/00ff88/000000?text=🖼️",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "AI Assistant",
+      "short_name": "AI",
+      "description": "Chat with RSC Chain AI Assistant",
+      "url": "/?shortcut=ai",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/96x96/00ff88/000000?text=🤖",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-new"
+  },
+  "handle_links": "preferred",
+  "capture_links": "new-client",
+  "protocol_handlers": [
+    {
+      "protocol": "web+rscchain",
+      "url": "/?handler=%s"
+    }
+  ]
+}

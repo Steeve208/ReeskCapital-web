@@ -278,6 +278,8 @@ class RSCMiningPlatform {
     
     async loadUserData(email) {
         try {
+            console.log('🚀 Iniciando carga de datos para usuario:', email);
+            
             // Validar que el email sea válido
             if (!email || !email.includes('@')) {
                 throw new Error('Email inválido');
@@ -288,11 +290,21 @@ class RSCMiningPlatform {
             // Intentar cargar desde Supabase
             if (this.supabase && typeof getUserByEmailFromSupabase === 'function') {
                 try {
+                    console.log('🔍 Intentando cargar desde Supabase...');
                     userData = await getUserByEmailFromSupabase(email);
-                    console.log('📊 Usuario encontrado en Supabase:', userData);
+                    
+                    if (userData) {
+                        console.log('📊 Usuario encontrado en Supabase:', userData);
+                        console.log('💰 Balance del usuario:', userData.balance);
+                        console.log('👤 Username del usuario:', userData.username);
+                    } else {
+                        console.log('⚠️ Usuario no encontrado en Supabase');
+                    }
                 } catch (error) {
                     console.warn('⚠️ Error al cargar desde Supabase:', error.message);
                 }
+            } else {
+                console.warn('⚠️ Supabase no disponible o función getUserByEmailFromSupabase no encontrada');
             }
             
             // Si no hay datos en Supabase, crear usuario nuevo
@@ -306,6 +318,7 @@ class RSCMiningPlatform {
                         const usernameInput = document.getElementById('registerUsername');
                         const username = usernameInput ? usernameInput.value.trim() : `user_${Date.now()}`;
                         
+                        console.log('🔧 Creando usuario en Supabase con username:', username);
                         userData = await createUserInSupabase(email, username);
                         console.log('✅ Usuario creado en Supabase:', email);
                     } catch (error) {
@@ -321,6 +334,7 @@ class RSCMiningPlatform {
                         };
                     }
                 } else {
+                    console.log('📱 Modo local: creando usuario local');
                     // Crear usuario local
                     userData = {
                         email: email,
@@ -333,14 +347,23 @@ class RSCMiningPlatform {
                 // Guardar en localStorage como respaldo
                 localStorage.setItem('rsc_user_email', email);
                 localStorage.setItem('rsc_user_data', JSON.stringify(userData));
+                console.log('💾 Usuario guardado en localStorage');
             }
             
             // Actualizar estado
+            console.log('🔄 Actualizando estado de la aplicación...');
             this.state.currentUser = userData;
             this.state.isAuthenticated = true;
             this.state.totalMined = userData.balance || 0;
             
+            console.log('📊 Estado actualizado:', {
+                isAuthenticated: this.state.isAuthenticated,
+                currentUser: this.state.currentUser,
+                totalMined: this.state.totalMined
+            });
+            
             // Actualizar UI
+            console.log('🎨 Actualizando interfaz de usuario...');
             this.showMiningInterface();
             this.updateUserDisplay();
             this.loadMiningHistory();
@@ -377,30 +400,51 @@ class RSCMiningPlatform {
             loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando...';
             loginBtn.disabled = true;
             
-            // Login simplificado - solo verificar que el usuario existe
-            if (this.supabase && typeof getUserByEmailFromSupabase === 'function') {
+            // Login seguro con verificación de contraseña
+            if (window.SecureAuth && typeof window.SecureAuth.authenticateUser === 'function') {
                 try {
-                    console.log('🔍 Verificando usuario en Supabase...');
+                    console.log('🔐 Autenticando usuario con contraseña...');
+                    const authResult = await window.SecureAuth.authenticateUser(email, password);
+                    
+                    if (authResult.success) {
+                        console.log('✅ Autenticación exitosa:', authResult.user);
+                        
+                        // Cargar datos del usuario autenticado
+                        await this.loadUserData(email);
+                        this.showNotification('Sesión iniciada correctamente', 'success');
+                    } else {
+                        console.log('❌ Autenticación fallida:', authResult.error);
+                        this.showNotification(authResult.error, 'error');
+                        return;
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Error con autenticación segura:', error.message);
+                    this.showNotification('Error de autenticación: ' + error.message, 'error');
+                    return;
+                }
+            } else if (this.supabase && typeof getUserByEmailFromSupabase === 'function') {
+                // Fallback al sistema anterior (solo para compatibilidad)
+                console.log('⚠️ Sistema seguro no disponible, usando fallback...');
+                try {
                     const userData = await getUserByEmailFromSupabase(email);
                     
                     if (userData) {
                         await this.loadUserData(email);
-                        this.showNotification('Sesión iniciada correctamente con RSC', 'success');
+                        this.showNotification('Sesión iniciada (modo compatibilidad)', 'warning');
                     } else {
-                        // Usuario no existe, crearlo
-                        await this.loadUserData(email);
-                        this.showNotification('Usuario creado y sesión iniciada', 'success');
+                        this.showNotification('Usuario no encontrado. Regístrate primero.', 'error');
+                        return;
                     }
                 } catch (error) {
-                                            console.warn('⚠️ Error con RSC, usando modo local:', error.message);
-                        await this.loadUserData(email);
-                        this.showNotification('Sesión iniciada (modo local)', 'success');
+                    console.warn('⚠️ Error con fallback:', error.message);
+                    this.showNotification('Error al iniciar sesión: ' + error.message, 'error');
+                    return;
                 }
             } else {
-                // Login local (simulado)
+                // Modo local (simulado)
                 console.log('📱 Modo local: iniciando sesión con email:', email);
                 await this.loadUserData(email);
-                this.showNotification('Sesión iniciada correctamente (modo local)', 'success');
+                this.showNotification('Sesión iniciada (modo local)', 'success');
             }
             
             // Limpiar formulario
@@ -461,22 +505,47 @@ class RSCMiningPlatform {
             registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrando...';
             registerBtn.disabled = true;
             
-            // Registro simplificado - crear usuario directamente en la tabla
-            if (this.supabase && typeof createUserInSupabase === 'function') {
+            // Registro seguro con contraseña hasheada
+            if (window.SecureAuth && typeof window.SecureAuth.createSecureUser === 'function') {
                 try {
-                    console.log('🔍 Creando usuario en Supabase...');
+                    console.log('🔐 Registrando usuario seguro...');
+                    
+                    // Verificar si el email ya existe
+                    const emailExists = await window.SecureAuth.checkEmailExists(email);
+                    if (emailExists) {
+                        this.showNotification('Este email ya está registrado. Usa otro email o inicia sesión.', 'error');
+                        return;
+                    }
+                    
+                    // Crear usuario seguro
+                    const userData = await window.SecureAuth.createSecureUser(email, username, password);
+                    console.log('✅ Usuario creado exitosamente:', userData);
+                    
+                    // Cargar datos del usuario
                     await this.loadUserData(email);
-                                            this.showNotification('Usuario registrado correctamente en RSC', 'success');
+                    this.showNotification('Usuario registrado correctamente', 'success');
+                    
                 } catch (error) {
-                                            console.warn('⚠️ Error con RSC, usando modo local:', error.message);
-                        await this.loadUserData(email);
-                        this.showNotification('Usuario registrado (modo local)', 'success');
+                    console.warn('⚠️ Error con registro seguro:', error.message);
+                    this.showNotification('Error al registrar: ' + error.message, 'error');
+                    return;
+                }
+            } else if (this.supabase && typeof createUserInSupabase === 'function') {
+                // Fallback al sistema anterior
+                console.log('⚠️ Sistema seguro no disponible, usando fallback...');
+                try {
+                    await this.loadUserData(email);
+                    this.showNotification('Usuario registrado (modo compatibilidad)', 'warning');
+                } catch (error) {
+                    console.warn('⚠️ Error con fallback:', error.message);
+                    this.showNotification('Error al registrar: ' + error.message, 'error');
+                    return;
                 }
             } else {
-                // Registro local (simulado)
+                // Modo local (simulado)
                 console.log('📱 Modo local: registrando usuario con email:', email);
                 await this.loadUserData(email);
-                this.showNotification('Usuario registrado correctamente (modo local)', 'success');
+                this.showNotification('Usuario registrado (modo local)', 'success');
             }
             
             // Limpiar formulario
