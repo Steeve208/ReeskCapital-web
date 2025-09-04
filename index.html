@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>RSC Chain - The Blockchain of the Future</title>
   <meta name="description" content="RSC Chain - The most advanced blockchain in the world with post-quantum cryptography, artificial intelligence and revolutionary hybrid consensus">
   
@@ -27,8 +30,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Styles -->
-  <link rel="stylesheet" href="styles/app.css">
-  <link rel="stylesheet" href="styles/mobile-navbar.css">
+  <link rel="stylesheet" href="styles/app.css?v=3.0">
+  <link rel="stylesheet" href="styles/mobile-navbar.css?v=3.0">
   
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
@@ -37,6 +40,19 @@
   <!-- Header -->
   <header class="header">
     <nav class="navbar">
+      <!-- Particle System -->
+      <div class="navbar-particles">
+        <div class="navbar-particle"></div>
+        <div class="navbar-particle"></div>
+        <div class="navbar-particle"></div>
+        <div class="navbar-particle"></div>
+        <div class="navbar-particle"></div>
+        <div class="navbar-particle"></div>
+        <div class="navbar-particle"></div>
+        <div class="navbar-particle"></div>
+        <div class="navbar-particle"></div>
+      </div>
+      
       <div class="nav-container">
         <!-- Logo Section -->
         <div class="nav-logo">
@@ -84,13 +100,6 @@
             <span class="nav-text">Staking</span>
           </a>
           
-          <a href="pages/p2p.html" class="nav-link">
-            <div class="nav-icon">
-              <i class="fas fa-university"></i>
-            </div>
-            <span class="nav-text">P2P</span>
-          </a>
-          
           <a href="pages/about.html" class="nav-link">
             <div class="nav-icon">
               <i class="fas fa-info-circle"></i>
@@ -104,15 +113,6 @@
           <button class="utility-btn" id="searchBtn">
             <i class="fas fa-search"></i>
           </button>
-          
-          <a href="pages/wallet.html" class="utility-btn wallet-btn" id="walletBtn">
-            <div class="notification-dot"></div>
-            <i class="fas fa-wallet"></i>
-            <div class="wallet-text">
-              <span>Connect Wallet</span>
-              <span>Select Network</span>
-            </div>
-          </a>
           
           <button class="utility-btn" id="codeBtn">
             <i class="fas fa-code"></i>
@@ -190,17 +190,9 @@
             <span class="mobile-menu-icon">ℹ️</span>
             <span>About</span>
           </a>
-          <a href="pages/wallet.html" class="mobile-menu-link">
-            <span class="mobile-menu-icon">👛</span>
-            <span>Wallet</span>
-          </a>
           <a href="pages/mine.html" class="mobile-menu-link">
             <span class="mobile-menu-icon">⛏️</span>
             <span>Mine</span>
-          </a>
-          <a href="pages/p2p.html" class="mobile-menu-link">
-            <span class="mobile-menu-icon">🤝</span>
-            <span>P2P</span>
           </a>
           <a href="pages/staking.html" class="mobile-menu-link">
             <span class="mobile-menu-icon">💰</span>
@@ -229,10 +221,6 @@
             <span class="mobile-menu-icon">🔐</span>
             <span>Login</span>
           </a>
-          <a href="pages/wallet.html" class="mobile-menu-action">
-            <span class="mobile-menu-icon">👛</span>
-            <span>Connect Wallet</span>
-          </a>
         </div>
       </div>
     </div>
@@ -244,96 +232,170 @@
 
   <!-- Main Content -->
   <main>
-    <!-- Hero Section -->
+        <!-- Hero Section -->
     <section id="home" class="hero">
       <div class="hero-background">
-        <div class="particles"></div>
-        <div class="grid-pattern"></div>
+        <div class="hero-particles"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
       </div>
       
       <div class="container">
         <div class="hero-content">
           <div class="hero-text">
             <div class="hero-badge">
-              <i class="fas fa-rocket"></i>
-              <span>REVOLUTIONARY TECHNOLOGY</span>
+              <div class="badge-icon">
+                <i class="fas fa-crown"></i>
+              </div>
+              <span>NEXT-GENERATION BLOCKCHAIN</span>
             </div>
             
             <h1 class="hero-title">
-              The Future of <span class="highlight">Blockchain</span> is Here
+              The Future of <span class="highlight">Blockchain</span> Technology
             </h1>
             
             <p class="hero-description">
-              RSC Chain combines <strong>post-quantum cryptography</strong>, <strong>advanced artificial intelligence</strong> and 
-              <strong>revolutionary hybrid consensus</strong> to create the most secure, scalable and intelligent blockchain in the world.
+              RSC Chain represents the pinnacle of blockchain innovation, combining <strong>post-quantum cryptography</strong>, 
+              <strong>artificial intelligence</strong>, and <strong>revolutionary consensus mechanisms</strong> to create 
+              the most advanced, secure, and scalable blockchain ecosystem in the world.
             </p>
             
             <div class="hero-stats">
-              <div class="stat">
-                <div class="stat-value">High</div>
-                <div class="stat-label">Performance</div>
+              <div class="stat-item">
+                <div class="stat-value" data-target="10000">0</div>
+                <div class="stat-label">Transactions/sec</div>
               </div>
-              <div class="stat">
-                <div class="stat-value">Fast</div>
-                <div class="stat-label">Finality</div>
+              <div class="stat-item">
+                <div class="stat-value" data-target="99.99">0</div>
+                <div class="stat-label">% Uptime</div>
               </div>
-              <div class="stat">
-                <div class="stat-value">Secure</div>
-                <div class="stat-label">Network</div>
+              <div class="stat-item">
+                <div class="stat-value" data-target="50000">0</div>
+                <div class="stat-label">Active Nodes</div>
               </div>
             </div>
             
             <div class="hero-actions">
               <a href="pages/mine.html" class="btn btn-primary btn-large">
-                <i class="fas fa-pickaxe"></i>
+                <i class="fas fa-rocket"></i>
                 Start Mining
               </a>
-              <a href="pages/wallet.html" class="btn btn-secondary btn-large">
-                <i class="fas fa-wallet"></i>
-                Create Wallet
+              <a href="pages/explorer.html" class="btn btn-secondary btn-large">
+                <i class="fas fa-search"></i>
+                Explore Network
               </a>
             </div>
           </div>
         
           <div class="hero-visual">
-            <div class="blockchain-animation">
-              <div class="block block-1">
-                <div class="block-header">
-                  <span class="block-hash">0x7f3a...</span>
-                  <span class="block-number">#2,847,392</span>
+            <div class="blockchain-visualization">
+              <div class="network-core">
+                <div class="core-glow"></div>
+                <div class="core-icon">
+                  <i class="fas fa-cube"></i>
                 </div>
-                <div class="block-content">
-                  <div class="transaction">Tx: 0x9f2b...</div>
-                  <div class="transaction">Tx: 0x4e7d...</div>
-                  <div class="transaction">Tx: 0x1a8c...</div>
+                </div>
+              
+              <div class="network-nodes">
+                <div class="node node-1">
+                  <div class="node-pulse"></div>
+                  <div class="node-icon">
+                    <i class="fas fa-server"></i>
+              </div>
+                </div>
+                <div class="node node-2">
+                  <div class="node-pulse"></div>
+                  <div class="node-icon">
+                    <i class="fas fa-database"></i>
                 </div>
               </div>
-              <div class="block block-2">
-                <div class="block-header">
-                  <span class="block-hash">0x3e9f...</span>
-                  <span class="block-number">#2,847,393</span>
+                <div class="node node-3">
+                  <div class="node-pulse"></div>
+                  <div class="node-icon">
+                    <i class="fas fa-shield-alt"></i>
                 </div>
-                <div class="block-content">
-                  <div class="transaction">Tx: 0x8d4e...</div>
-                  <div class="transaction">Tx: 0x2f7a...</div>
                 </div>
+                <div class="node node-4">
+                  <div class="node-pulse"></div>
+                  <div class="node-icon">
+                    <i class="fas fa-brain"></i>
               </div>
-              <div class="block block-3">
-                <div class="block-header">
-                  <span class="block-hash">0x5c1d...</span>
-                  <span class="block-number">#2,847,394</span>
-                </div>
-                <div class="block-content">
-                  <div class="transaction">Tx: 0x6b9e...</div>
-                  <div class="transaction">Tx: 0x3a2f...</div>
-                </div>
               </div>
-              <div class="connections">
-                <div class="connection-line"></div>
-                <div class="connection-line"></div>
+            </div>
+              
+              <div class="connection-lines">
+                <div class="line line-1"></div>
+                <div class="line line-2"></div>
+                <div class="line line-3"></div>
+                <div class="line line-4"></div>
+              </div>
+              
+              <div class="data-flow">
+                <div class="data-particle particle-1"></div>
+                <div class="data-particle particle-2"></div>
+                <div class="data-particle particle-3"></div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== REVOLUTIONARY AD BANNER ===== -->
+    <section class="ad-banner-section" style="display: block !important; background: #ff0000 !important; color: white !important; padding: 20px !important; text-align: center !important; font-size: 24px !important; font-weight: bold !important;">
+      <div class="ad-banner-container">
+        <!-- Ad Banner Content -->
+        <div class="ad-banner-content">
+          <div class="ad-banner-left">
+            <div class="ad-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <div class="ad-text">
+              <h3>🚀 Únete a la Revolución Blockchain</h3>
+              <p>Descubre las últimas innovaciones en tecnología blockchain</p>
+            </div>
+          </div>
+          
+          <div class="ad-banner-center">
+            <div class="ad-rotator">
+              <div class="ad-slide active">
+                <span class="ad-highlight">🔥 NUEVO:</span>
+                <span class="ad-message">Mining Pool Premium - 15% más recompensas</span>
+              </div>
+              <div class="ad-slide">
+                <span class="ad-highlight">⚡ OFERTA:</span>
+                <span class="ad-message">Staking Elite - Hasta 25% APY garantizado</span>
+              </div>
+              <div class="ad-slide">
+                <span class="ad-highlight">🎯 EVENTO:</span>
+                <span class="ad-message">Conferencia Blockchain 2024 - Registro abierto</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="ad-banner-right">
+            <button class="ad-cta-btn">
+              <span>Explorar</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="ad-close-btn" id="adCloseBtn">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Ad Banner Progress Bar -->
+        <div class="ad-progress-bar">
+          <div class="ad-progress-fill"></div>
+        </div>
+        
+        <!-- Ad Banner Particles -->
+        <div class="ad-particles">
+          <div class="ad-particle"></div>
+          <div class="ad-particle"></div>
+          <div class="ad-particle"></div>
+          <div class="ad-particle"></div>
+          <div class="ad-particle"></div>
         </div>
       </div>
     </section>
@@ -342,8 +404,8 @@
     <section id="technology" class="technology">
       <div class="container">
         <div class="section-header">
-          <h2>Revolutionary Technologies</h2>
-          <p>Discover the innovations that make RSC Chain the blockchain of the future</p>
+          <h2>Cutting-Edge Technologies</h2>
+          <p>Experience the next generation of blockchain innovation with RSC Chain's revolutionary technology stack</p>
         </div>
         
         <div class="tech-grid">
@@ -587,33 +649,33 @@
           <div class="ecosystem-card">
             <div class="card-header">
               <div class="card-icon">
-                <i class="fas fa-exchange-alt"></i>
+                <i class="fas fa-chart-line"></i>
               </div>
-              <h3>P2P Trading</h3>
-              <p>Decentralized exchanges without limits</p>
+              <h3>Analytics Dashboard</h3>
+              <p>Real-time blockchain insights and metrics</p>
             </div>
             <div class="card-features">
               <div class="feature">
                 <span class="feature-icon">
-                  <i class="fas fa-globe"></i>
+                  <i class="fas fa-chart-bar"></i>
                 </span>
-                <span>Global no-KYC</span>
+                <span>Live metrics</span>
               </div>
               <div class="feature">
                 <span class="feature-icon">
                   <i class="fas fa-bolt"></i>
                 </span>
-                <span>Instant settlement</span>
+                <span>Real-time data</span>
               </div>
               <div class="feature">
                 <span class="feature-icon">
-                  <i class="fas fa-lock"></i>
+                  <i class="fas fa-cog"></i>
                 </span>
-                <span>Smart escrow</span>
+                <span>Customizable views</span>
               </div>
             </div>
-            <a href="pages/p2p.html" class="card-action">
-              <span>Start Trading</span>
+            <a href="pages/explorer.html" class="card-action">
+              <span>View Analytics</span>
               <i class="fas fa-arrow-right"></i>
             </a>
           </div>
@@ -655,33 +717,33 @@
           <div class="ecosystem-card">
             <div class="card-header">
               <div class="card-icon">
-                <i class="fas fa-briefcase"></i>
+                <i class="fas fa-code"></i>
               </div>
-              <h3>Elite Wallet</h3>
-              <p>Secure digital asset management</p>
+              <h3>Developer Tools</h3>
+              <p>Comprehensive SDK and API for developers</p>
             </div>
             <div class="card-features">
               <div class="feature">
                 <span class="feature-icon">
-                  <i class="fas fa-shield-alt"></i>
+                  <i class="fas fa-code-branch"></i>
                 </span>
-                <span>Advanced multi-sig</span>
+                <span>RESTful API</span>
               </div>
               <div class="feature">
                 <span class="feature-icon">
-                  <i class="fas fa-mobile-alt"></i>
+                  <i class="fas fa-book"></i>
                 </span>
-                <span>Multi-device</span>
+                <span>Documentation</span>
               </div>
               <div class="feature">
                 <span class="feature-icon">
-                  <i class="fas fa-sync-alt"></i>
+                  <i class="fas fa-tools"></i>
                 </span>
-                <span>Integrated staking</span>
+                <span>SDK & Libraries</span>
               </div>
             </div>
-            <a href="pages/wallet.html" class="card-action">
-              <span>Create Wallet</span>
+            <a href="pages/docs.html" class="card-action">
+              <span>View Docs</span>
               <i class="fas fa-arrow-right"></i>
             </a>
           </div>
@@ -883,7 +945,6 @@
         <div class="footer-links">
                       <div class="link-group">
               <h4>Products</h4>
-              <a href="pages/wallet.html">Wallet</a>
               <a href="pages/mine.html">Mining</a>
               <a href="pages/staking.html">Staking</a>
               <a href="pages/explorer.html">Explorer</a>
@@ -933,8 +994,301 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="scripts/main.js"></script>
-  <script src="scripts/mobile-navbar.js"></script>
-  <script src="scripts/navbar-enhancements.js"></script>
+  <script>
+    // Forzar recarga de CSS para evitar problemas de cache
+    function forceReloadCSS() {
+      const links = document.querySelectorAll('link[rel="stylesheet"]');
+      links.forEach(link => {
+        const href = link.href.split('?')[0];
+        link.href = href + '?v=' + Date.now();
+      });
+    }
+    
+    // Forzar recarga completa de la página si es necesario
+    function checkForUpdates() {
+      const lastUpdate = localStorage.getItem('rsc_last_update');
+      const currentUpdate = '2024-01-15-v3';
+      
+      if (lastUpdate !== currentUpdate) {
+        localStorage.setItem('rsc_last_update', currentUpdate);
+        // Forzar recarga solo si es necesario
+        if (performance.navigation.type === 1) {
+          // Solo recargar si es una navegación normal
+          window.location.reload(true);
+        }
+      }
+    }
+    
+    // Ejecutar cuando la página esté cargada
+    window.addEventListener('load', () => {
+      forceReloadCSS();
+      checkForUpdates();
+    });
+    
+    // ===== REVOLUTIONARY AD BANNER SYSTEM =====
+    class RSCAdBanner {
+      constructor() {
+        this.slides = document.querySelectorAll('.ad-slide');
+        this.currentSlide = 0;
+        this.slideInterval = null;
+        this.slideDuration = 4000; // 4 segundos por slide
+        this.isPaused = false;
+        
+        this.init();
+      }
+      
+      init() {
+        this.startRotation();
+        this.setupEventListeners();
+        this.setupProgressBar();
+        console.log('🚀 RSC Ad Banner System initialized');
+      }
+      
+      startRotation() {
+        if (this.slides.length === 0) return;
+        
+        this.slideInterval = setInterval(() => {
+          if (!this.isPaused) {
+            this.nextSlide();
+          }
+        }, this.slideDuration);
+      }
+      
+      nextSlide() {
+        // Remover clase active del slide actual
+        this.slides[this.currentSlide].classList.remove('active');
+        
+        // Avanzar al siguiente slide
+        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        
+        // Añadir clase active al nuevo slide
+        this.slides[this.currentSlide].classList.add('active');
+        
+        // Resetear progress bar
+        this.resetProgressBar();
+      }
+      
+      setupEventListeners() {
+        // Botón de cerrar
+        const closeBtn = document.getElementById('adCloseBtn');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => {
+            this.closeBanner();
+          });
+        }
+        
+        // Botón CTA
+        const ctaBtn = document.querySelector('.ad-cta-btn');
+        if (ctaBtn) {
+          ctaBtn.addEventListener('click', () => {
+            this.handleCTAClick();
+          });
+        }
+        
+        // Pausar al hacer hover
+        const bannerSection = document.querySelector('.ad-banner-section');
+        if (bannerSection) {
+          bannerSection.addEventListener('mouseenter', () => {
+            this.isPaused = true;
+          });
+          
+          bannerSection.addEventListener('mouseleave', () => {
+            this.isPaused = false;
+          });
+        }
+      }
+      
+      setupProgressBar() {
+        const progressFill = document.querySelector('.ad-progress-fill');
+        if (progressFill) {
+          this.progressFill = progressFill;
+          this.resetProgressBar();
+        }
+      }
+      
+      resetProgressBar() {
+        if (this.progressFill) {
+          this.progressFill.style.animation = 'none';
+          this.progressFill.offsetHeight; // Trigger reflow
+          this.progressFill.style.animation = `adProgressFill ${this.slideDuration}ms linear`;
+        }
+      }
+      
+      closeBanner() {
+        const bannerSection = document.querySelector('.ad-banner-section');
+        if (bannerSection) {
+          bannerSection.style.transform = 'translateY(-100%)';
+          bannerSection.style.opacity = '0';
+          
+          setTimeout(() => {
+            bannerSection.style.display = 'none';
+            this.stopRotation();
+          }, 500);
+          
+          // Guardar preferencia en localStorage
+          localStorage.setItem('rsc_ad_banner_closed', 'true');
+        }
+      }
+      
+      handleCTAClick() {
+        // Aquí puedes personalizar la acción del CTA
+        console.log('🎯 Ad CTA clicked - Redirecting to explore...');
+        
+        // Ejemplo: redirigir a la página de minería
+        window.location.href = 'pages/mine.html';
+      }
+      
+      stopRotation() {
+        if (this.slideInterval) {
+          clearInterval(this.slideInterval);
+          this.slideInterval = null;
+        }
+      }
+      
+      // Método para añadir nuevos anuncios dinámicamente
+      addAd(highlight, message) {
+        const rotator = document.querySelector('.ad-rotator');
+        if (rotator) {
+          const newSlide = document.createElement('div');
+          newSlide.className = 'ad-slide';
+          newSlide.innerHTML = `
+            <span class="ad-highlight">${highlight}</span>
+            <span class="ad-message">${message}</span>
+          `;
+          rotator.appendChild(newSlide);
+          
+          // Actualizar slides
+          this.slides = document.querySelectorAll('.ad-slide');
+        }
+      }
+      
+      // Método para actualizar el contenido del banner
+      updateBannerContent(title, description) {
+        const titleEl = document.querySelector('.ad-text h3');
+        const descEl = document.querySelector('.ad-text p');
+        
+        if (titleEl) titleEl.textContent = title;
+        if (descEl) descEl.textContent = description;
+      }
+    }
+    
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', () => {
+      // FORZAR MOSTRAR BANNER PARA DEBUG
+      const bannerSection = document.querySelector('.ad-banner-section');
+      if (bannerSection) {
+        bannerSection.style.display = 'block !important';
+        bannerSection.style.visibility = 'visible !important';
+        bannerSection.style.opacity = '1 !important';
+        bannerSection.style.height = 'auto !important';
+        bannerSection.style.minHeight = '80px !important';
+        console.log('🚀 Ad Banner Section found and forced to show');
+      } else {
+        console.error('❌ Ad Banner Section NOT FOUND!');
+      }
+      
+      // Verificar si el banner fue cerrado previamente
+      const wasClosed = localStorage.getItem('rsc_ad_banner_closed');
+      if (!wasClosed) {
+        new RSCAdBanner();
+      } else {
+        console.log('⚠️ Banner was previously closed, but showing for debug');
+        // Mostrar banner de todas formas para debug
+        new RSCAdBanner();
+      }
+    });
+    
+    // Hacer disponible globalmente para administración
+    window.RSCAdBanner = RSCAdBanner;
+  </script>
+  <!-- Scripts temporariamente deshabilitados para aplicar cambios -->
+  <!-- <script src="scripts/main.js"></script> -->
+  <!-- <script src="scripts/mobile-navbar.js"></script> -->
+  <!-- <script src="scripts/navbar-enhancements.js"></script> -->
+  
+  <!-- Script básico para funcionalidad esencial -->
+  <script>
+    // Funcionalidad básica sin interferir con los cambios
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu básico
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileClose = document.getElementById('mobileClose');
+      const mobileOverlay = document.getElementById('mobileMenuOverlay');
+      
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('active');
+          mobileOverlay.classList.toggle('active');
+        });
+      }
+      
+      if (mobileClose) {
+        mobileClose.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          mobileOverlay.classList.remove('active');
+        });
+      }
+      
+      if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          mobileOverlay.classList.remove('active');
+        });
+      }
+      
+      // Smooth scrolling básico
+      const navLinks = document.querySelectorAll('a[href^="#"]');
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          
+          if (targetSection) {
+            const headerHeight = document.querySelector('.header').offsetHeight;
+            const targetPosition = targetSection.offsetTop - headerHeight;
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+      
+      // Animación de contadores en hero stats
+      const statValues = document.querySelectorAll('.stat-value');
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = parseInt(entry.target.getAttribute('data-target'));
+            animateCounter(entry.target, target);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+      
+      statValues.forEach(stat => observer.observe(stat));
+      
+      function animateCounter(element, target) {
+        let current = 0;
+        const increment = target / 100;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          element.textContent = Math.floor(current).toLocaleString();
+        }, 20);
+      }
+    });
+  </script>
 </body>
 </html>

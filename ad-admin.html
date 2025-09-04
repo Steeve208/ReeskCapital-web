@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSC Ad Banner Admin - Panel de Administración</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 255, 0.05));
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+        
+        .admin-header h1 {
+            color: #00ff88;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-header p {
+            color: #b3b3b3;
+            font-size: 1.1rem;
+        }
+        
+        .admin-content {
+            padding: 2rem;
+        }
+        
+        .admin-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .admin-section h2 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.2);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #00ff88, #00ffff);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff4444, #ff6b6b);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #666, #888);
+        }
+        
+        .ads-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .ad-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ad-content {
+            flex: 1;
+        }
+        
+        .ad-highlight {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #000;
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+        
+        .ad-message {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .ad-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .preview-section {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .preview-banner {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(0, 20, 40, 0.98));
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .preview-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 255, 0.1));
+            border: 2px solid rgba(0, 255, 136, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00ff88;
+        }
+        
+        .preview-text h3 {
+            color: #00ff88;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .preview-text p {
+            color: #b3b3b3;
+            font-size: 0.85rem;
+        }
+        
+        .preview-rotator {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .preview-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .preview-highlight {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #000;
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        
+        .preview-message {
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #b3b3b3;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-content {
+                padding: 1rem;
+            }
+            
+            .preview-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .ad-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .ad-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-bullhorn"></i> RSC Ad Banner Admin</h1>
+            <p>Panel de administración para la barra de anuncios revolucionaria</p>
+        </div>
+        
+        <div class="admin-content">
+            <!-- Estadísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalAds">3</div>
+                    <div class="stat-label">Anuncios Activos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalViews">1,247</div>
+                    <div class="stat-label">Visualizaciones</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalClicks">89</div>
+                    <div class="stat-label">Clics</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="ctrRate">7.1%</div>
+                    <div class="stat-label">CTR</div>
+                </div>
+            </div>
+            
+            <!-- Configuración del Banner -->
+            <div class="admin-section">
+                <h2><i class="fas fa-cog"></i> Configuración del Banner</h2>
+                
+                <div class="form-group">
+                    <label for="bannerTitle">Título del Banner</label>
+                    <input type="text" id="bannerTitle" value="🚀 Únete a la Revolución Blockchain" placeholder="Ingresa el título del banner">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bannerDescription">Descripción</label>
+                    <input type="text" id="bannerDescription" value="Descubre las últimas innovaciones en tecnología blockchain" placeholder="Ingresa la descripción">
+                </div>
+                
+                <div class="form-group">
+                    <label for="slideDuration">Duración por Slide (ms)</label>
+                    <input type="number" id="slideDuration" value="4000" min="1000" max="10000" step="500">
+                </div>
+                
+                <button class="btn" onclick="updateBannerConfig()">
+                    <i class="fas fa-save"></i> Guardar Configuración
+                </button>
+                
+                <button class="btn btn-secondary" onclick="resetBannerConfig()">
+                    <i class="fas fa-undo"></i> Restablecer
+                </button>
+            </div>
+            
+            <!-- Gestión de Anuncios -->
+            <div class="admin-section">
+                <h2><i class="fas fa-ad"></i> Gestión de Anuncios</h2>
+                
+                <div class="form-group">
+                    <label for="newHighlight">Destacado (ej: 🔥 NUEVO)</label>
+                    <input type="text" id="newHighlight" placeholder="Ingresa el texto destacado">
+                </div>
+                
+                <div class="form-group">
+                    <label for="newMessage">Mensaje del Anuncio</label>
+                    <input type="text" id="newMessage" placeholder="Ingresa el mensaje del anuncio">
+                </div>
+                
+                <button class="btn" onclick="addNewAd()">
+                    <i class="fas fa-plus"></i> Añadir Anuncio
+                </button>
+                
+                <div class="ads-list" id="adsList">
+                    <!-- Los anuncios se cargarán aquí dinámicamente -->
+                </div>
+            </div>
+            
+            <!-- Vista Previa -->
+            <div class="admin-section">
+                <h2><i class="fas fa-eye"></i> Vista Previa</h2>
+                
+                <div class="preview-section">
+                    <div class="preview-banner">
+                        <div class="preview-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="preview-text">
+                            <h3 id="previewTitle">🚀 Únete a la Revolución Blockchain</h3>
+                            <p id="previewDescription">Descubre las últimas innovaciones en tecnología blockchain</p>
+                        </div>
+                        <div class="preview-rotator">
+                            <div class="preview-slide">
+                                <span class="preview-highlight" id="previewHighlight">🔥 NUEVO:</span>
+                                <span class="preview-message" id="previewMessage">Mining Pool Premium - 15% más recompensas</span>
+                            </div>
+                        </div>
+                        <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+                            <i class="fas fa-arrow-right"></i> Explorar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Controles del Sistema -->
+            <div class="admin-section">
+                <h2><i class="fas fa-tools"></i> Controles del Sistema</h2>
+                
+                <button class="btn" onclick="showBanner()">
+                    <i class="fas fa-eye"></i> Mostrar Banner
+                </button>
+                
+                <button class="btn btn-secondary" onclick="hideBanner()">
+                    <i class="fas fa-eye-slash"></i> Ocultar Banner
+                </button>
+                
+                <button class="btn btn-danger" onclick="clearAllAds()">
+                    <i class="fas fa-trash"></i> Limpiar Todos los Anuncios
+                </button>
+                
+                <button class="btn" onclick="exportAds()">
+                    <i class="fas fa-download"></i> Exportar Configuración
+                </button>
+                
+                <button class="btn btn-secondary" onclick="importAds()">
+                    <i class="fas fa-upload"></i> Importar Configuración
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== RSC AD BANNER ADMIN SYSTEM =====
+        class RSCAdBannerAdmin {
+            constructor() {
+                this.ads = [
+                    { highlight: '🔥 NUEVO:', message: 'Mining Pool Premium - 15% más recompensas' },
+                    { highlight: '⚡ OFERTA:', message: 'Staking Elite - Hasta 25% APY garantizado' },
+                    { highlight: '🎯 EVENTO:', message: 'Conferencia Blockchain 2024 - Registro abierto' }
+                ];
+                this.bannerConfig = {
+                    title: '🚀 Únete a la Revolución Blockchain',
+                    description: 'Descubre las últimas innovaciones en tecnología blockchain',
+                    slideDuration: 4000
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.loadAds();
+                this.updatePreview();
+                this.loadStats();
+                console.log('🚀 RSC Ad Banner Admin initialized');
+            }
+            
+            loadAds() {
+                const adsList = document.getElementById('adsList');
+                adsList.innerHTML = '';
+                
+                this.ads.forEach((ad, index) => {
+                    const adItem = document.createElement('div');
+                    adItem.className = 'ad-item';
+                    adItem.innerHTML = `
+                        <div class="ad-content">
+                            <span class="ad-highlight">${ad.highlight}</span>
+                            <span class="ad-message">${ad.message}</span>
+                        </div>
+                        <div class="ad-actions">
+                            <button class="btn" onclick="admin.editAd(${index})">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-danger" onclick="admin.deleteAd(${index})">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    `;
+                    adsList.appendChild(adItem);
+                });
+            }
+            
+            addNewAd() {
+                const highlight = document.getElementById('newHighlight').value;
+                const message = document.getElementById('newMessage').value;
+                
+                if (!highlight || !message) {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
+                
+                this.ads.push({ highlight, message });
+                this.loadAds();
+                this.updatePreview();
+                this.clearForm();
+                
+                // Actualizar estadísticas
+                this.updateStats();
+            }
+            
+            editAd(index) {
+                const ad = this.ads[index];
+                const newHighlight = prompt('Nuevo destacado:', ad.highlight);
+                const newMessage = prompt('Nuevo mensaje:', ad.message);
+                
+                if (newHighlight && newMessage) {
+                    this.ads[index] = { highlight: newHighlight, message: newMessage };
+                    this.loadAds();
+                    this.updatePreview();
+                }
+            }
+            
+            deleteAd(index) {
+                if (confirm('¿Estás seguro de que quieres eliminar este anuncio?')) {
+                    this.ads.splice(index, 1);
+                    this.loadAds();
+                    this.updatePreview();
+                    this.updateStats();
+                }
+            }
+            
+            clearForm() {
+                document.getElementById('newHighlight').value = '';
+                document.getElementById('newMessage').value = '';
+            }
+            
+            updatePreview() {
+                document.getElementById('previewTitle').textContent = this.bannerConfig.title;
+                document.getElementById('previewDescription').textContent = this.bannerConfig.description;
+                
+                if (this.ads.length > 0) {
+                    const firstAd = this.ads[0];
+                    document.getElementById('previewHighlight').textContent = firstAd.highlight;
+                    document.getElementById('previewMessage').textContent = firstAd.message;
+                }
+            }
+            
+            updateBannerConfig() {
+                this.bannerConfig.title = document.getElementById('bannerTitle').value;
+                this.bannerConfig.description = document.getElementById('bannerDescription').value;
+                this.bannerConfig.slideDuration = parseInt(document.getElementById('slideDuration').value);
+                
+                this.updatePreview();
+                this.saveToLocalStorage();
+                
+                alert('Configuración guardada exitosamente');
+            }
+            
+            resetBannerConfig() {
+                this.bannerConfig = {
+                    title: '🚀 Únete a la Revolución Blockchain',
+                    description: 'Descubre las últimas innovaciones en tecnología blockchain',
+                    slideDuration: 4000
+                };
+                
+                document.getElementById('bannerTitle').value = this.bannerConfig.title;
+                document.getElementById('bannerDescription').value = this.bannerConfig.description;
+                document.getElementById('slideDuration').value = this.bannerConfig.slideDuration;
+                
+                this.updatePreview();
+            }
+            
+            showBanner() {
+                localStorage.removeItem('rsc_ad_banner_closed');
+                alert('Banner habilitado. Recarga la página principal para verlo.');
+            }
+            
+            hideBanner() {
+                localStorage.setItem('rsc_ad_banner_closed', 'true');
+                alert('Banner ocultado. Recarga la página principal para ver el cambio.');
+            }
+            
+            clearAllAds() {
+                if (confirm('¿Estás seguro de que quieres eliminar todos los anuncios?')) {
+                    this.ads = [];
+                    this.loadAds();
+                    this.updatePreview();
+                    this.updateStats();
+                }
+            }
+            
+            exportAds() {
+                const data = {
+                    ads: this.ads,
+                    config: this.bannerConfig
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'rsc-ad-banner-config.json';
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+            
+            importAds() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                input.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            try {
+                                const data = JSON.parse(e.target.result);
+                                this.ads = data.ads || [];
+                                this.bannerConfig = data.config || this.bannerConfig;
+                                
+                                this.loadAds();
+                                this.updatePreview();
+                                this.updateStats();
+                                this.saveToLocalStorage();
+                                
+                                alert('Configuración importada exitosamente');
+                            } catch (error) {
+                                alert('Error al importar el archivo');
+                            }
+                        };
+                        reader.readAsText(file);
+                    }
+                };
+                input.click();
+            }
+            
+            updateStats() {
+                document.getElementById('totalAds').textContent = this.ads.length;
+                // Aquí podrías integrar con analytics reales
+            }
+            
+            loadStats() {
+                // Cargar estadísticas desde localStorage o API
+                this.updateStats();
+            }
+            
+            saveToLocalStorage() {
+                localStorage.setItem('rsc_ad_banner_ads', JSON.stringify(this.ads));
+                localStorage.setItem('rsc_ad_banner_config', JSON.stringify(this.bannerConfig));
+            }
+        }
+        
+        // Inicializar admin
+        const admin = new RSCAdBannerAdmin();
+        
+        // Funciones globales para los botones
+        function addNewAd() { admin.addNewAd(); }
+        function updateBannerConfig() { admin.updateBannerConfig(); }
+        function resetBannerConfig() { admin.resetBannerConfig(); }
+        function showBanner() { admin.showBanner(); }
+        function hideBanner() { admin.hideBanner(); }
+        function clearAllAds() { admin.clearAllAds(); }
+        function exportAds() { admin.exportAds(); }
+        function importAds() { admin.importAds(); }
+    </script>
+</body>
+</html>

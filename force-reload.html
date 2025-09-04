@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Force Reload - RSC Chain</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            backdrop-filter: blur(20px);
+        }
+        h1 {
+            color: #00ff88;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #00ff88, #00ffff);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+        .info {
+            margin-top: 20px;
+            color: #b3b3b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 RSC Chain - Force Reload</h1>
+        <p>Herramienta para forzar la recarga de archivos CSS y evitar problemas de cache</p>
+        
+        <button class="btn" onclick="forceReload()">🔄 Forzar Recarga CSS</button>
+        <button class="btn" onclick="clearCache()">🗑️ Limpiar Cache</button>
+        <button class="btn" onclick="goToMain()">🏠 Ir a Página Principal</button>
+        
+        <div class="info">
+            <p><strong>Instrucciones:</strong></p>
+            <p>1. Haz clic en "Forzar Recarga CSS" para recargar los estilos</p>
+            <p>2. Si persiste el problema, usa "Limpiar Cache"</p>
+            <p>3. Luego ve a la página principal</p>
+        </div>
+    </div>
+
+    <script>
+        function forceReload() {
+            // Recargar la página principal con timestamp
+            const timestamp = Date.now();
+            window.location.href = `index.html?reload=${timestamp}`;
+        }
+        
+        function clearCache() {
+            // Limpiar localStorage y sessionStorage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            // Forzar recarga sin cache
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    for (let name of names) {
+                        caches.delete(name);
+                    }
+                });
+            }
+            
+            alert('Cache limpiado. La página se recargará...');
+            forceReload();
+        }
+        
+        function goToMain() {
+            window.location.href = 'index.html';
+        }
+        
+        // Auto-reload si hay parámetro de reload
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('reload')) {
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

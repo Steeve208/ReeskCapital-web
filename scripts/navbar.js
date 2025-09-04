@@ -1,499 +1,456 @@
-/* ===== PROFESSIONAL NAVBAR FUNCTIONALITY - PRODUCTION READY ===== */
+/* ===== RSC CHAIN ULTRA NAVBAR MANAGER - NEXT LEVEL ===== */
 
-class ProfessionalNavbarManager {
+class RSCNavbarManager {
     constructor() {
         this.isMobileMenuOpen = false;
-        this.isAnimating = false;
-        this.touchStartX = 0;
-        this.touchStartY = 0;
+        this.currentLanguage = 'en';
+        this.mouseX = 0;
+        this.mouseY = 0;
+        this.priceData = {
+            value: 0.00,
+            change: 0.00,
+            changePercent: 0.00
+        };
+        this.networkData = {
+            tps: 0,
+            nodes: 0,
+            blocks: 0
+        };
+        this.isWalletConnected = false;
+        this.updateInterval = null;
         this.init();
     }
     
     init() {
-        // Asegurar que el menú móvil esté oculto al inicializar
-        this.forceHideMobileMenu();
-        
         this.setupEventListeners();
+        this.setupMouseTracking();
+        this.setupLiveData();
+        this.setupLanguageSystem();
+        this.setupWalletIntegration();
         this.setupMobileMenu();
-        this.setupSearch();
-        this.setupThemeToggle();
-        this.setupWallet();
-        this.setupNetworkSwitch();
-        this.setupPerformanceMetrics();
-        this.setupPriceTicker();
-        this.setupEliteSearch();
-        this.setupSystemControls();
-        this.setupResponsiveHandling();
-        this.setupAccessibility();
-        this.setupAnimations();
-        this.setupNotifications();
-    }
-
-    // ===== FORCE HIDE MOBILE MENU =====
-    forceHideMobileMenu() {
-        const mobileMenu = document.getElementById('mobileMenu');
-        if (mobileMenu) {
-            // Remover todas las clases que puedan estar activas
-            mobileMenu.classList.remove('active', 'show', 'open');
-            
-            // Aplicar estilos inline para asegurar que esté oculto
-            mobileMenu.style.right = '-100%';
-            mobileMenu.style.visibility = 'hidden';
-            mobileMenu.style.opacity = '0';
-            mobileMenu.style.transform = 'translateX(100%)';
-            mobileMenu.style.pointerEvents = 'none';
-            
-            // Asegurar que el body no tenga scroll bloqueado
-            document.body.style.overflow = '';
-            document.body.classList.remove('mobile-menu-open');
-            
-            // Resetear el estado
-            this.isMobileMenuOpen = false;
-        }
+        this.startDataUpdates();
+        this.setupScrollEffects();
+        this.setupKeyboardNavigation();
         
-        // También ocultar el overlay si existe
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        if (mobileMenuOverlay) {
-            mobileMenuOverlay.classList.remove('active');
-            mobileMenuOverlay.style.display = 'none';
-        }
-        
-        // Resetear el botón hamburguesa
-        const hamburgerMenu = document.getElementById('eliteHamburger');
-        if (hamburgerMenu) {
-            hamburgerMenu.classList.remove('active');
-            hamburgerMenu.setAttribute('aria-expanded', 'false');
-        }
+        console.log('🚀 RSC Ultra Navbar Manager initialized');
     }
     
-    setupEventListeners() {
-        // Hamburger menu toggle with debouncing
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
-        if (hamburgerMenu) {
-            hamburgerMenu.addEventListener('click', this.debounce(() => this.toggleMobileMenu(), 300));
-        }
-        
-        // Close menu button
-        const closeMenu = document.getElementById('closeMenu');
-        if (closeMenu) {
-            closeMenu.addEventListener('click', () => this.closeMobileMenu());
-        }
-        
-        // Mobile menu overlay
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        if (mobileMenuOverlay) {
-            mobileMenuOverlay.addEventListener('click', () => this.closeMobileMenu());
-        }
-        
-        // Handle window resize with throttling
-        window.addEventListener('resize', this.throttle(() => this.handleResize(), 250));
-        
-        // Close mobile menu when clicking on links
-        const menuLinks = document.querySelectorAll('.menu-link');
-        menuLinks.forEach(link => {
-            link.addEventListener('click', () => this.closeMobileMenu());
-        });
-        
-        // Close mobile menu when clicking on action buttons
-        const menuActions = document.querySelectorAll('.menu-action');
-        menuActions.forEach(action => {
-            if (!action.classList.contains('theme-toggle') && !action.classList.contains('language-toggle')) {
-                action.addEventListener('click', () => this.closeMobileMenu());
-            }
-        });
-        
-        // Handle escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isMobileMenuOpen) {
-                this.closeMobileMenu();
-            }
-        });
-        
-        // Handle focus management
-        document.addEventListener('focusin', (e) => this.handleFocusManagement(e));
-    }
-    
-    setupMobileMenu() {
-        try {
-        // Sync mobile wallet button with main wallet button
-        const mainWalletBtn = document.getElementById('walletConnectBtn');
-        const mobileWalletBtn = document.getElementById('mobileWalletConnectBtn');
-        
-        if (mainWalletBtn && mobileWalletBtn) {
-            // Clone the main wallet button functionality
-            mobileWalletBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Trigger the same action as the main wallet button
-                if (window.walletAuthManager) {
-                    window.walletAuthManager.showAuthModal();
-                    } else if (window.wallet) {
-                        // Fallback to wallet instance
-                        console.log('Wallet instance found, triggering connection');
-                    }
-                });
-            }
-            
-            // Add loading states to menu items
-            this.setupMenuLoadingStates();
-            
-        } catch (error) {
-            console.error('Error setting up mobile menu:', error);
-        }
-    }
-    
-    setupTouchGestures() {
-        // Swipe to close mobile menu
-        let touchStartX = 0;
-        let touchStartY = 0;
-        
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        });
-        
-        document.addEventListener('touchend', (e) => {
-            if (!this.isMobileMenuOpen) return;
-            
-            const touchEndX = e.changedTouches[0].clientX;
-            const touchEndY = e.changedTouches[0].clientY;
-            const deltaX = touchStartX - touchEndX;
-            const deltaY = Math.abs(touchStartY - touchEndY);
-            
-            // Swipe right to close (minimum 50px, maximum 100px vertical movement)
-            if (deltaX > 50 && deltaY < 100) {
-                this.closeMobileMenu();
-            }
-        });
-    }
-    
-    setupAccessibility() {
-        // ARIA labels and roles
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
-        if (hamburgerMenu) {
-            hamburgerMenu.setAttribute('aria-expanded', 'false');
-            hamburgerMenu.setAttribute('aria-controls', 'mobileMenu');
-            hamburgerMenu.setAttribute('aria-label', 'Toggle navigation menu');
-        }
-        
-        const mobileMenu = document.getElementById('mobileMenu');
-        if (mobileMenu) {
-            mobileMenu.setAttribute('role', 'navigation');
-            mobileMenu.setAttribute('aria-label', 'Main navigation');
-        }
-        
-        // Focus trap for mobile menu
-        this.setupFocusTrap();
-    }
-    
-    setupFocusTrap() {
-        const mobileMenu = document.getElementById('mobileMenu');
-        if (!mobileMenu) return;
-        
-        const focusableElements = mobileMenu.querySelectorAll(
-            'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-        
-        mobileMenu.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                if (e.shiftKey) {
-                    if (document.activeElement === firstElement) {
-                        e.preventDefault();
-                        lastElement.focus();
-                    }
-                } else {
-                    if (document.activeElement === lastElement) {
-                        e.preventDefault();
-                        firstElement.focus();
-                    }
-                }
-                }
-            });
-        }
-    
-    setupPerformanceOptimizations() {
-        // Use Intersection Observer for navbar effects
-        if ('IntersectionObserver' in window) {
-            this.setupIntersectionObserver();
-        }
-        
-        // Preload critical resources
-        this.preloadCriticalResources();
-    }
-    
-    setupIntersectionObserver() {
+    // ===== MOUSE TRACKING FOR LIGHT EFFECTS =====
+    setupMouseTracking() {
         const navbar = document.querySelector('.navbar');
         if (!navbar) return;
         
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        navbar.classList.add('navbar-visible');
-                    } else {
-                        navbar.classList.remove('navbar-visible');
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
-        
-        // Observe the hero section
-        const heroSection = document.querySelector('.hero-professional');
-        if (heroSection) {
-            observer.observe(heroSection);
-        }
-    }
-    
-    preloadCriticalResources() {
-        // Preload logo image
-        const logoImg = new Image();
-        logoImg.src = 'assets/img/logo.png';
-        
-        // Preload critical fonts
-        if ('fonts' in document) {
-            document.fonts.load('1em Poppins');
-        }
-    }
-    
-    setupMenuLoadingStates() {
-        const menuLinks = document.querySelectorAll('.menu-link');
-        const menuActions = document.querySelectorAll('.menu-action');
-        
-        // Add loading state to external links
-        menuLinks.forEach(link => {
-            if (link.href && !link.href.includes(window.location.origin)) {
-                link.addEventListener('click', () => {
-                    link.classList.add('loading');
-                    setTimeout(() => {
-                        link.classList.remove('loading');
-                    }, 2000);
-                });
-            }
+        navbar.addEventListener('mousemove', (e) => {
+            const rect = navbar.getBoundingClientRect();
+            this.mouseX = ((e.clientX - rect.left) / rect.width) * 100;
+            this.mouseY = ((e.clientY - rect.top) / rect.height) * 100;
+            
+            navbar.style.setProperty('--mouse-x', `${this.mouseX}%`);
+            navbar.style.setProperty('--mouse-y', `${this.mouseY}%`);
         });
         
-        // Add loading state to action buttons
-        menuActions.forEach(action => {
-            if (action.classList.contains('wallet-btn')) {
-                action.addEventListener('click', () => {
-                    action.classList.add('loading');
-                    setTimeout(() => {
-                        action.classList.remove('loading');
-                    }, 1500);
-                });
-            }
+        navbar.addEventListener('mouseleave', () => {
+            navbar.style.setProperty('--mouse-x', '50%');
+            navbar.style.setProperty('--mouse-y', '50%');
         });
     }
     
-    setupThemeToggle() {
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => this.toggleTheme());
-            
-            // Set initial state
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            this.setTheme(savedTheme);
+    // ===== LIVE DATA SYSTEM =====
+    setupLiveData() {
+        this.updateLiveData();
+    }
+    
+    async updateLiveData() {
+        try {
+            // Simulate API calls for real data
+            await this.fetchPriceData();
+            await this.fetchNetworkData();
+            this.renderLiveData();
+        } catch (error) {
+            console.warn('Failed to fetch live data:', error);
+            this.updateLiveDataFallback();
         }
     }
     
-    setupLanguageToggle() {
-        const languageToggle = document.getElementById('languageToggle');
-        if (languageToggle) {
-            languageToggle.addEventListener('click', () => this.toggleLanguage());
-            
-            // Set initial state
-            const savedLanguage = localStorage.getItem('language') || 'en';
-            this.setLanguage(savedLanguage);
+    async fetchPriceData() {
+        // Simulate price API call
+        const mockPrice = 0.00 + (Math.random() - 0.5) * 0.1;
+        const mockChange = (Math.random() - 0.5) * 0.05;
+        
+        this.priceData = {
+            value: Math.max(0, mockPrice),
+            change: mockChange,
+            changePercent: mockPrice > 0 ? (mockChange / mockPrice) * 100 : 0
+        };
+    }
+    
+    async fetchNetworkData() {
+        // Simulate network metrics API call
+        this.networkData = {
+            tps: Math.floor(Math.random() * 1000) + 500,
+            nodes: Math.floor(Math.random() * 100) + 50,
+            blocks: Math.floor(Math.random() * 10000) + 100000
+        };
+    }
+    
+    updateLiveDataFallback() {
+        // Fallback data when APIs fail
+        this.priceData = {
+            value: 0.00,
+            change: 0.00,
+            changePercent: 0.00
+        };
+        this.networkData = {
+            tps: 0,
+            nodes: 0,
+            blocks: 0
+        };
+    }
+    
+    renderLiveData() {
+        // Update price ticker
+        const priceValue = document.querySelector('.price-value');
+        const priceChange = document.querySelector('.price-change');
+        
+        if (priceValue) {
+            priceValue.textContent = `RSC $${this.priceData.value.toFixed(4)}`;
+        }
+        
+        if (priceChange) {
+            const isPositive = this.priceData.change >= 0;
+            priceChange.textContent = `${isPositive ? '+' : ''}${this.priceData.changePercent.toFixed(2)}%`;
+            priceChange.className = `price-change ${isPositive ? 'positive' : 'negative'}`;
+        }
+        
+        // Update network metrics
+        const metricValues = document.querySelectorAll('.metric-value');
+        if (metricValues.length >= 3) {
+            metricValues[0].textContent = this.networkData.tps.toLocaleString();
+            metricValues[1].textContent = this.networkData.nodes.toLocaleString();
+            metricValues[2].textContent = this.networkData.blocks.toLocaleString();
         }
     }
     
-    setTheme(theme) {
-        const body = document.body;
-        const themeToggle = document.getElementById('themeToggle');
-        
-        if (theme === 'light') {
-            body.classList.remove('dark-theme');
-            body.classList.add('light-theme');
-            if (themeToggle) {
-                themeToggle.innerHTML = `
-                    <span class="action-icon">☀️</span>
-                    <span>Light Mode</span>
-                `;
-            }
-        } else {
-            body.classList.remove('light-theme');
-            body.classList.add('dark-theme');
-            if (themeToggle) {
-                themeToggle.innerHTML = `
-                    <span class="action-icon">🌙</span>
-                    <span>Dark Mode</span>
-                `;
-            }
-        }
-        
-        localStorage.setItem('theme', theme);
-        
-        // Dispatch custom event
-        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+    startDataUpdates() {
+        // Update data every 3 seconds
+        this.updateInterval = setInterval(() => {
+            this.updateLiveData();
+        }, 3000);
     }
     
-    setLanguage(language) {
-        const languageToggle = document.getElementById('languageToggle');
+    // ===== LANGUAGE SYSTEM =====
+    setupLanguageSystem() {
+        this.loadLanguage();
+    }
+    
+    setLanguage(lang) {
+        this.currentLanguage = lang;
+        localStorage.setItem('rsc-language', lang);
         
-        if (language === 'es') {
-            languageToggle.innerHTML = `
-                <span class="action-icon">🇪🇸</span>
-                <span>Español</span>
+        const toggle = document.getElementById('languageToggle');
+        const options = document.querySelectorAll('.language-option');
+        
+        // Update toggle text
+        const selectedOption = Array.from(options).find(opt => opt.dataset.lang === lang);
+        if (selectedOption) {
+            const flag = selectedOption.querySelector('.language-flag').textContent;
+            const text = selectedOption.querySelector('span:last-child').textContent;
+            toggle.innerHTML = `
+                <span class="language-flag">${flag}</span>
+                <span class="language-text">${text}</span>
+                <i class="fas fa-chevron-down"></i>
             `;
-        } else {
-            languageToggle.innerHTML = `
-                <span class="action-icon">🌐</span>
-                <span>English</span>
-            `;
         }
         
-        localStorage.setItem('language', language);
+        // Update active option
+        options.forEach(opt => {
+            opt.classList.toggle('active', opt.dataset.lang === lang);
+        });
         
-        // Dispatch custom event
-        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language } }));
+        // Dispatch language change event
+        window.dispatchEvent(new CustomEvent('languageChanged', { 
+            detail: { language: lang } 
+        }));
+        
+        console.log(`🌐 Language changed to: ${lang}`);
     }
     
-    toggleTheme() {
-        const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        this.setTheme(newTheme);
+    loadLanguage() {
+        const savedLang = localStorage.getItem('rsc-language') || 'en';
+        this.setLanguage(savedLang);
     }
     
-    toggleLanguage() {
-        const currentLang = localStorage.getItem('language') || 'en';
-        const newLang = currentLang === 'en' ? 'es' : 'en';
-        this.setLanguage(newLang);
+    // ===== WALLET INTEGRATION =====
+    setupWalletIntegration() {
+        const walletBtn = document.getElementById('walletConnect3D');
+        if (walletBtn) {
+            walletBtn.addEventListener('click', () => {
+                this.handleWalletConnect();
+            });
+        }
+    }
+    
+    async handleWalletConnect() {
+        const walletBtn = document.getElementById('walletConnect3D');
+        if (!walletBtn) return;
+        
+        if (this.isWalletConnected) {
+            this.handleWalletDisconnect();
+            return;
+        }
+        
+        // Add loading state
+        walletBtn.classList.add('loading');
+        walletBtn.innerHTML = `
+            <i class="fas fa-spinner fa-spin wallet-icon"></i>
+            <span>Connecting...</span>
+        `;
+        
+        try {
+            // Check if MetaMask is available
+            if (typeof window.ethereum !== 'undefined') {
+                await this.connectMetaMask();
+            } else {
+                await this.connectWalletConnect();
+            }
+            
+            this.isWalletConnected = true;
+            walletBtn.innerHTML = `
+                <i class="fas fa-check-circle wallet-icon"></i>
+                <span>Connected</span>
+            `;
+            
+            // Show success animation
+            walletBtn.style.animation = 'wallet-glow 0.6s ease-in-out';
+            setTimeout(() => {
+                walletBtn.style.animation = '';
+            }, 600);
+            
+            console.log('🔗 Wallet connected successfully');
+        } catch (error) {
+            console.error('Wallet connection failed:', error);
+            walletBtn.innerHTML = `
+                <i class="fas fa-exclamation-triangle wallet-icon"></i>
+                <span>Failed</span>
+            `;
+            
+            setTimeout(() => {
+                walletBtn.innerHTML = `
+                    <i class="fas fa-wallet wallet-icon"></i>
+                    <span>Connect Wallet</span>
+                `;
+                walletBtn.classList.remove('loading');
+            }, 2000);
+        }
+    }
+    
+    async connectMetaMask() {
+        const accounts = await window.ethereum.request({
+            method: 'eth_requestAccounts'
+        });
+        return accounts[0];
+    }
+    
+    async connectWalletConnect() {
+        // Simulate WalletConnect connection
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        return '0x1234...5678';
+    }
+    
+    handleWalletDisconnect() {
+        this.isWalletConnected = false;
+        const walletBtn = document.getElementById('walletConnect3D');
+        if (walletBtn) {
+            walletBtn.innerHTML = `
+                <i class="fas fa-wallet wallet-icon"></i>
+                <span>Connect Wallet</span>
+            `;
+            walletBtn.classList.remove('loading');
+        }
+        console.log('🔗 Wallet disconnected');
+    }
+    
+    // ===== MOBILE MENU =====
+    setupMobileMenu() {
+        const mobileToggle = document.getElementById('mobileMenuBtn');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => this.toggleMobileMenu());
+        }
     }
     
     toggleMobileMenu() {
-        if (this.isAnimating) return;
+        this.isMobileMenuOpen = !this.isMobileMenuOpen;
+        const toggle = document.getElementById('mobileMenuBtn');
         
-        if (this.isMobileMenuOpen) {
-            this.closeMobileMenu();
-        } else {
-            this.openMobileMenu();
+        if (toggle) {
+            toggle.classList.toggle('active', this.isMobileMenuOpen);
         }
+        
+        // Trigger mobile menu toggle event
+        window.dispatchEvent(new CustomEvent('mobileMenuToggle', { 
+            detail: { isOpen: this.isMobileMenuOpen } 
+        }));
+        
+        console.log(`📱 Mobile menu ${this.isMobileMenuOpen ? 'opened' : 'closed'}`);
     }
     
-    openMobileMenu() {
-        if (this.isAnimating) return;
+    // ===== SCROLL EFFECTS =====
+    setupScrollEffects() {
+        let lastScrollY = window.scrollY;
+        let ticking = false;
         
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
-        
-        if (mobileMenu && mobileMenuOverlay && hamburgerMenu) {
-            this.isAnimating = true;
-            this.isMobileMenuOpen = true;
+        const updateNavbar = () => {
+            const navbar = document.querySelector('.navbar');
+            const indicatorsBar = document.querySelector('.live-indicators-bar');
+            const scrollY = window.scrollY;
             
-            // Update ARIA attributes
-            hamburgerMenu.setAttribute('aria-expanded', 'true');
-            
-            // Show mobile menu
-            mobileMenu.classList.add('active');
-            mobileMenuOverlay.classList.add('active');
-            
-            // Update hamburger menu
-            hamburgerMenu.classList.add('active');
-            
-            // Prevent body scroll
-            document.body.style.overflow = 'hidden';
-            
-            // Add active class to navbar
-            document.querySelector('.navbar')?.classList.add('mobile-menu-open');
-            
-            // Focus first focusable element
-            setTimeout(() => {
-                const firstFocusable = mobileMenu.querySelector('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                if (firstFocusable) {
-                    firstFocusable.focus();
+            if (navbar) {
+                if (scrollY > 100) {
+                    navbar.style.background = 'rgba(0, 0, 0, 0.98)';
+                    navbar.style.backdropFilter = 'blur(30px)';
+                    navbar.style.borderRadius = '0';
+                } else {
+                    navbar.style.background = 'linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 20, 0.9) 50%, rgba(0, 0, 0, 0.95) 100%)';
+                    navbar.style.backdropFilter = 'blur(32px)';
+                    navbar.style.borderRadius = '0 0 1.5rem 1.5rem';
                 }
-                this.isAnimating = false;
-            }, 400);
+            }
             
-            console.log('✅ Mobile menu opened successfully');
-        } else {
-            console.error('❌ Some elements not found for mobile menu');
-            this.isAnimating = false;
+            if (indicatorsBar) {
+                if (scrollY > 50) {
+                    indicatorsBar.style.transform = 'translateY(-100%)';
+                } else {
+                    indicatorsBar.style.transform = 'translateY(0)';
+                }
+            }
+            
+            lastScrollY = scrollY;
+            ticking = false;
+        };
+        
+        const requestTick = () => {
+            if (!ticking) {
+                requestAnimationFrame(updateNavbar);
+                ticking = true;
+            }
+        };
+        
+        window.addEventListener('scroll', requestTick);
+    }
+    
+    // ===== KEYBOARD NAVIGATION =====
+    setupKeyboardNavigation() {
+        document.addEventListener('keydown', (e) => {
+            // ESC key closes dropdowns
+            if (e.key === 'Escape') {
+                this.closeAllDropdowns();
+            }
+            
+            // Alt + L opens language selector
+            if (e.altKey && e.key === 'l') {
+                e.preventDefault();
+                this.toggleLanguageDropdown();
+            }
+            
+            // Alt + W opens wallet connection
+            if (e.altKey && e.key === 'w') {
+                e.preventDefault();
+                this.handleWalletConnect();
+            }
+        });
+    }
+    
+    closeAllDropdowns() {
+        const dropdowns = document.querySelectorAll('.language-dropdown, .dropdown-menu');
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    }
+    
+    toggleLanguageDropdown() {
+        const dropdown = document.getElementById('languageDropdown');
+        if (dropdown) {
+            dropdown.classList.toggle('active');
         }
     }
     
-    closeMobileMenu() {
-        if (this.isAnimating) return;
+    // ===== EVENT LISTENERS =====
+    setupEventListeners() {
+        // Language selector
+        const languageToggle = document.getElementById('languageToggle');
+        const languageDropdown = document.getElementById('languageDropdown');
         
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
-        
-        if (mobileMenu && mobileMenuOverlay && hamburgerMenu) {
-            this.isAnimating = true;
-            this.isMobileMenuOpen = false;
+        if (languageToggle && languageDropdown) {
+            languageToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                languageDropdown.classList.toggle('active');
+            });
             
-            // Update ARIA attributes
-            hamburgerMenu.setAttribute('aria-expanded', 'false');
-            
-            // Hide mobile menu
-            mobileMenu.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-            
-            // Update hamburger menu
-            hamburgerMenu.classList.remove('active');
-            
-            // Restore body scroll
-            document.body.style.overflow = 'auto';
-            
-            // Remove active class from navbar
-            document.querySelector('.navbar')?.classList.remove('mobile-menu-open');
-            
-            // Return focus to hamburger button
-            setTimeout(() => {
-                hamburgerMenu.focus();
-                this.isAnimating = false;
-            }, 400);
-            
-            console.log('✅ Mobile menu closed successfully');
-        }
-    }
-    
-    handleResize() {
-        // Close mobile menu on resize if screen becomes larger
-        if (window.innerWidth > 992 && this.isMobileMenuOpen) {
-            this.closeMobileMenu();
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!languageToggle.contains(e.target) && !languageDropdown.contains(e.target)) {
+                    languageDropdown.classList.remove('active');
+                }
+            });
         }
         
-        // Update navbar height for mobile
-        const navbar = document.querySelector('.navbar');
-        if (navbar) {
-            if (window.innerWidth <= 768) {
-                navbar.style.height = '70px';
+        // Language options
+        const languageOptions = document.querySelectorAll('.language-option');
+        languageOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const lang = option.dataset.lang;
+                this.setLanguage(lang);
+                languageDropdown.classList.remove('active');
+            });
+        });
+        
+        // Resize handler
+        window.addEventListener('resize', this.debounce(() => {
+            this.handleResize();
+        }, 250));
+        
+        // Page visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.pauseUpdates();
             } else {
-                navbar.style.height = '80px';
+                this.resumeUpdates();
             }
+        });
+    }
+    
+    // ===== RESIZE HANDLER =====
+    handleResize() {
+        // Close mobile menu on resize to desktop
+        if (window.innerWidth > 768 && this.isMobileMenuOpen) {
+            this.isMobileMenuOpen = false;
+            const toggle = document.getElementById('mobileMenuBtn');
+            if (toggle) {
+                toggle.classList.remove('active');
+            }
+        }
+        
+        // Close dropdowns on mobile
+        if (window.innerWidth <= 768) {
+            this.closeAllDropdowns();
         }
     }
     
-    handleFocusManagement(event) {
-        // Ensure focus stays within mobile menu when open
-        if (this.isMobileMenuOpen) {
-            const mobileMenu = document.getElementById('mobileMenu');
-            if (mobileMenu && !mobileMenu.contains(event.target)) {
-                // Focus first focusable element in mobile menu
-                const firstFocusable = mobileMenu.querySelector('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                if (firstFocusable) {
-                    firstFocusable.focus();
-                }
-            }
+    // ===== UPDATE MANAGEMENT =====
+    pauseUpdates() {
+        if (this.updateInterval) {
+            clearInterval(this.updateInterval);
+            this.updateInterval = null;
         }
     }
     
-    // Utility functions
+    resumeUpdates() {
+        if (!this.updateInterval) {
+            this.startDataUpdates();
+        }
+    }
+    
+    // ===== UTILITY FUNCTIONS =====
     debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
@@ -516,61 +473,48 @@ class ProfessionalNavbarManager {
                 inThrottle = true;
                 setTimeout(() => inThrottle = false, limit);
             }
-        };
+        }
     }
     
-    // Public methods for external use
-    openMenu() {
-        this.openMobileMenu();
-    }
-    
-    closeMenu() {
-        this.closeMobileMenu();
-    }
-    
-    isMenuOpen() {
-        return this.isMobileMenuOpen;
-    }
-    
-    // Cleanup method
+    // ===== DESTROY =====
     destroy() {
         // Remove event listeners
+        window.removeEventListener('scroll', this.handleScroll);
         window.removeEventListener('resize', this.handleResize);
-        document.removeEventListener('keydown', this.handleKeydown);
-        document.removeEventListener('focusin', this.handleFocusManagement);
         
-        // Close menu if open
-        if (this.isMobileMenuOpen) {
-            this.closeMobileMenu();
+        // Clear intervals
+        if (this.updateInterval) {
+            clearInterval(this.updateInterval);
         }
         
-        console.log('✅ Professional Navbar Manager destroyed');
+        console.log('✅ RSC Ultra Navbar Manager destroyed');
     }
 }
 
 // ===== INITIALIZATION =====
-
-// Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', () => {
     // Create global instance
-    window.navbarManager = new ProfessionalNavbarManager();
+    window.rscNavbar = new RSCNavbarManager();
     
     // Expose class for global use
-    window.ProfessionalNavbarManager = ProfessionalNavbarManager;
+    window.RSCNavbarManager = RSCNavbarManager;
     
-    console.log('🚀 Professional Navbar Manager loaded successfully');
+    console.log('🚀 RSC Ultra Navbar Manager loaded successfully');
 });
 
 // Handle page visibility changes for performance
 document.addEventListener('visibilitychange', () => {
-    if (document.hidden && window.navbarManager?.isMobileMenuOpen) {
-        window.navbarManager.closeMobileMenu();
+    if (document.hidden && window.rscNavbar?.isMobileMenuOpen) {
+        window.rscNavbar.isMobileMenuOpen = false;
+        const toggle = document.getElementById('mobileMenuBtn');
+        if (toggle) {
+            toggle.classList.remove('active');
+        }
     }
 });
 
-// Handle beforeunload for cleanup
-window.addEventListener('beforeunload', () => {
-    if (window.navbarManager) {
-        window.navbarManager.destroy();
-    }
-});
+// Export for module systems
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = RSCNavbarManager;
+}
+

@@ -281,4 +281,54 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Exportar para uso global
-window.RSCApp = RSCApp; 
+window.RSCApp = RSCApp;
+
+// ===== HERO COUNTERS ANIMATION =====
+class HeroCounters {
+  constructor() {
+    this.init();
+  }
+  
+  init() {
+    this.animateCounters();
+  }
+  
+  animateCounters() {
+    const statElements = document.querySelectorAll('.stat-value[data-target]');
+    
+    statElements.forEach(element => {
+      const target = parseFloat(element.getAttribute('data-target'));
+      const duration = 2000; // 2 seconds
+      const startTime = Date.now();
+      
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function for smooth animation
+        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+        const currentValue = target * easeOutCubic;
+        
+        if (target < 10) {
+          element.textContent = currentValue.toFixed(1);
+        } else {
+          element.textContent = Math.floor(currentValue).toLocaleString();
+        }
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          element.textContent = target < 10 ? target.toFixed(1) : target.toLocaleString();
+        }
+      };
+      
+      // Start animation after a delay
+      setTimeout(animate, 1000);
+    });
+  }
+}
+
+// Initialize hero counters when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new HeroCounters();
+}); 

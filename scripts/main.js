@@ -178,12 +178,12 @@ function initPerformanceMetrics() {
     
     // Update TPS with realistic fluctuations
     setInterval(() => {
-        const tpsElement = document.getElementById('liveTPS');
-        if (tpsElement) {
+        const tpsElements = document.querySelectorAll('.stat-value[data-target="10000"]');
+        tpsElements.forEach(element => {
             const change = (Math.random() - 0.5) * 2000;
             metrics.tps.current = Math.max(metrics.tps.min, Math.min(metrics.tps.max, metrics.tps.current + change));
-            tpsElement.textContent = Math.round(metrics.tps.current).toLocaleString();
-        }
+            element.textContent = Math.round(metrics.tps.current).toLocaleString();
+        });
     }, 3000);
     
     // Update block height
@@ -225,12 +225,12 @@ function initPerformanceMetrics() {
     
     // Update nodes count
     setInterval(() => {
-        const nodesElement = document.getElementById('liveNodes');
-        if (nodesElement) {
+        const nodesElements = document.querySelectorAll('.stat-value[data-target="50000"]');
+        nodesElements.forEach(element => {
             const change = Math.random() > 0.5 ? 1 : -1;
             metrics.nodes.current = Math.max(metrics.nodes.min, Math.min(metrics.nodes.max, metrics.nodes.current + change));
-            nodesElement.textContent = metrics.nodes.current.toLocaleString();
-        }
+            element.textContent = metrics.nodes.current.toLocaleString();
+        });
     }, 10000);
     
     // Update staked percentage
@@ -341,21 +341,36 @@ function showNotification(message, type = 'info') {
 
 // ===== BLOCKCHAIN ANIMATION =====
 function initBlockchainAnimation() {
-    const blocks = document.querySelectorAll('.block');
+    // Initialize new blockchain visualization
+    const nodes = document.querySelectorAll('.node');
+    const dataParticles = document.querySelectorAll('.data-particle');
+    const connectionLines = document.querySelectorAll('.line');
     
-    blocks.forEach((block, index) => {
-        // Add staggered animation
-        block.style.animationDelay = `${index * 0.2}s`;
-        block.classList.add('fade-in-up');
+    // Add staggered animation to nodes
+    nodes.forEach((node, index) => {
+        node.style.animationDelay = `${index * 0.5}s`;
+        node.classList.add('fade-in-up');
         
         // Add hover effects
-        block.addEventListener('mouseenter', () => {
-            block.style.transform = 'translateY(-8px) scale(1.02)';
+        node.addEventListener('mouseenter', () => {
+            node.style.transform = 'scale(1.1)';
+            node.style.boxShadow = '0 0 25px rgba(0, 255, 136, 0.6)';
         });
         
-        block.addEventListener('mouseleave', () => {
-            block.style.transform = 'translateY(0) scale(1)';
+        node.addEventListener('mouseleave', () => {
+            node.style.transform = 'scale(1)';
+            node.style.boxShadow = 'none';
         });
+    });
+    
+    // Add animation to data particles
+    dataParticles.forEach((particle, index) => {
+        particle.style.animationDelay = `${index * 1.5}s`;
+    });
+    
+    // Add animation to connection lines
+    connectionLines.forEach((line, index) => {
+        line.style.animationDelay = `${index * 0.3}s`;
     });
 }
 

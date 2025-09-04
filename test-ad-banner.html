@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Ad Banner - RSC Chain</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+        }
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .ad-banner-section {
+            background: #ff0000 !important;
+            color: white !important;
+            padding: 20px !important;
+            text-align: center !important;
+            font-size: 24px !important;
+            font-weight: bold !important;
+            display: block !important;
+            min-height: 100px !important;
+        }
+        
+        .ad-banner-content {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 2rem !important;
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+        }
+        
+        .ad-banner-left {
+            display: flex !important;
+            align-items: center !important;
+            gap: 1rem !important;
+        }
+        
+        .ad-icon {
+            width: 50px !important;
+            height: 50px !important;
+            background: #00ff88 !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            color: #000 !important;
+            font-size: 1.5rem !important;
+        }
+        
+        .ad-text h3 {
+            margin: 0 !important;
+            font-size: 1.2rem !important;
+        }
+        
+        .ad-text p {
+            margin: 0 !important;
+            font-size: 0.9rem !important;
+            opacity: 0.8 !important;
+        }
+        
+        .ad-banner-center {
+            flex: 1 !important;
+            text-align: center !important;
+        }
+        
+        .ad-rotator {
+            position: relative !important;
+            height: 40px !important;
+        }
+        
+        .ad-slide {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 1rem !important;
+            opacity: 0 !important;
+            transition: opacity 0.5s ease !important;
+        }
+        
+        .ad-slide.active {
+            opacity: 1 !important;
+        }
+        
+        .ad-highlight {
+            background: #ff6b35 !important;
+            color: #000 !important;
+            padding: 0.25rem 0.75rem !important;
+            border-radius: 20px !important;
+            font-size: 0.8rem !important;
+            font-weight: 700 !important;
+        }
+        
+        .ad-message {
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .ad-banner-right {
+            display: flex !important;
+            align-items: center !important;
+            gap: 1rem !important;
+        }
+        
+        .ad-cta-btn {
+            background: #00ff88 !important;
+            color: #000 !important;
+            border: none !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 25px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+        }
+        
+        .ad-close-btn {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            color: white !important;
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        .content {
+            padding: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Hero Section</h1>
+    </div>
+    
+    <!-- Barra de Anuncios -->
+    <section class="ad-banner-section">
+        <div class="ad-banner-content">
+            <div class="ad-banner-left">
+                <div class="ad-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="ad-text">
+                    <h3>🚀 Únete a la Revolución Blockchain</h3>
+                    <p>Descubre las últimas innovaciones en tecnología blockchain</p>
+                </div>
+            </div>
+            
+            <div class="ad-banner-center">
+                <div class="ad-rotator">
+                    <div class="ad-slide active">
+                        <span class="ad-highlight">🔥 NUEVO:</span>
+                        <span class="ad-message">Mining Pool Premium - 15% más recompensas</span>
+                    </div>
+                    <div class="ad-slide">
+                        <span class="ad-highlight">⚡ OFERTA:</span>
+                        <span class="ad-message">Staking Elite - Hasta 25% APY garantizado</span>
+                    </div>
+                    <div class="ad-slide">
+                        <span class="ad-highlight">🎯 EVENTO:</span>
+                        <span class="ad-message">Conferencia Blockchain 2024 - Registro abierto</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ad-banner-right">
+                <button class="ad-cta-btn">
+                    <span>Explorar</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="ad-close-btn" id="adCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <div class="content">
+        <h2>Contenido Principal</h2>
+        <p>Esta es una página de prueba para verificar que la barra de anuncios funciona correctamente.</p>
+    </div>
+
+    <script>
+        // Sistema de rotación de anuncios
+        class AdBannerTest {
+            constructor() {
+                this.slides = document.querySelectorAll('.ad-slide');
+                this.currentSlide = 0;
+                this.init();
+            }
+            
+            init() {
+                this.startRotation();
+                this.setupEventListeners();
+                console.log('🚀 Ad Banner Test initialized');
+            }
+            
+            startRotation() {
+                setInterval(() => {
+                    this.nextSlide();
+                }, 3000);
+            }
+            
+            nextSlide() {
+                this.slides[this.currentSlide].classList.remove('active');
+                this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+                this.slides[this.currentSlide].classList.add('active');
+            }
+            
+            setupEventListeners() {
+                const closeBtn = document.getElementById('adCloseBtn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        document.querySelector('.ad-banner-section').style.display = 'none';
+                    });
+                }
+            }
+        }
+        
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            new AdBannerTest();
+        });
+    </script>
+</body>
+</html>
+
+

@@ -204,26 +204,30 @@ class I18nManager {
         
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
-            if (href === 'index.html') {
-                link.textContent = this.getTranslation('nav.home');
-            } else if (href === 'pages/about.html') {
-                link.textContent = this.getTranslation('nav.about');
-            } else if (href === 'pages/wallet.html') {
-                link.textContent = this.getTranslation('nav.wallet');
-            } else if (href === 'pages/mine.html') {
-                link.textContent = this.getTranslation('nav.mine');
-            } else if (href === 'pages/p2p.html') {
-                link.textContent = this.getTranslation('nav.p2p');
-            } else if (href === 'pages/staking.html') {
-                link.textContent = this.getTranslation('nav.staking');
-            } else if (href === 'pages/explorer.html') {
-                link.textContent = this.getTranslation('nav.explorer');
-            } else if (href === 'pages/bank.html') {
-                link.textContent = this.getTranslation('nav.bank');
-            } else if (href === 'pages/docs.html') {
-                link.textContent = this.getTranslation('nav.docs');
-            } else if (href === 'pages/login.html') {
-                link.textContent = this.getTranslation('nav.login');
+            const navText = link.querySelector('.nav-text');
+            
+            if (navText) {
+                if (href === 'index.html') {
+                    navText.textContent = this.getTranslation('nav.home');
+                } else if (href === 'pages/about.html') {
+                    navText.textContent = this.getTranslation('nav.about');
+                } else if (href === 'pages/wallet.html') {
+                    navText.textContent = this.getTranslation('nav.wallet');
+                } else if (href === 'pages/mine.html') {
+                    navText.textContent = this.getTranslation('nav.mine');
+                } else if (href === 'pages/p2p.html') {
+                    navText.textContent = this.getTranslation('nav.p2p');
+                } else if (href === 'pages/staking.html') {
+                    navText.textContent = this.getTranslation('nav.staking');
+                } else if (href === 'pages/explorer.html') {
+                    navText.textContent = this.getTranslation('nav.explorer');
+                } else if (href === 'pages/bank.html') {
+                    navText.textContent = this.getTranslation('nav.bank');
+                } else if (href === 'pages/docs.html') {
+                    navText.textContent = this.getTranslation('nav.docs');
+                } else if (href === 'pages/login.html') {
+                    navText.textContent = this.getTranslation('nav.login');
+                }
             }
         });
         
