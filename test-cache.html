@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Test Cache - RSC Chain</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .test-box {
+            background: linear-gradient(45deg, #00ff88, #00cc6a);
+            color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .social-test {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .social-test a {
+            color: #00ff88;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 5px 10px;
+            background: rgba(0, 255, 136, 0.2);
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test de Caché - RSC Chain</h1>
+    
+    <div class="test-box">
+        ✅ Si ves este mensaje, la versión actualizada se está cargando correctamente
+        <br>
+        🕐 Timestamp: <span id="timestamp"></span>
+    </div>
+    
+    <div class="social-test">
+        <h3>🔗 Enlaces de Redes Sociales (Versión Actualizada)</h3>
+        <a href="https://reeskcapital.co" target="_blank">🌐 Website</a>
+        <a href="https://x.com/Reeskcap" target="_blank">🐦 X (Twitter)</a>
+        <a href="https://t.me/RSCchain" target="_blank">📱 Telegram Global</a>
+        <a href="https://t.me/RscCommunity" target="_blank">📢 Telegram Channel</a>
+        <a href="https://t.me/Rscspanish" target="_blank">🇪🇸 Telegram Spanish</a>
+        <a href="https://discord.gg/rscchain" target="_blank">💬 Discord</a>
+        <a href="https://github.com/reeskcapital" target="_blank">💻 GitHub</a>
+    </div>
+    
+    <p>
+        <a href="index.html" style="color: #00ff88; text-decoration: none; font-weight: bold;">
+            ← Volver a la página principal
+        </a>
+    </p>
+
+    <script>
+        // Mostrar timestamp actual
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        
+        // Limpiar caché si es posible
+        if ('caches' in window) {
+            caches.keys().then(function(names) {
+                for (let name of names) {
+                    caches.delete(name);
+                }
+                console.log('🧹 Caché limpiado');
+            });
+        }
+        
+        console.log('🔄 Página de test cargada - Versión actualizada');
+    </script>
+</body>
+</html>

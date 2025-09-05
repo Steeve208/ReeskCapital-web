@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC Chain - Animation Demo</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/global.css?v=4.0">
+  <link rel="stylesheet" href="styles/animations.css?v=4.0">
+  
+  <style>
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    
+    .demo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .demo-section {
+      margin-bottom: 4rem;
+      padding: 2rem;
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .demo-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .demo-item {
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .demo-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
+    }
+    
+    .demo-button {
+      margin: 0.5rem;
+    }
+    
+    .demo-card {
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .demo-input {
+      width: 100%;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: var(--bg-secondary);
+      border: 1px solid var(--text-muted);
+      border-radius: var(--border-radius-md);
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+    
+    .demo-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    }
+    
+    .notification-demo {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10000;
+    }
+    
+    .progress-demo {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-secondary);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    
+    .toggle-demo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .particle-container {
+      position: relative;
+      height: 200px;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1 class="demo-title text-center">RSC Chain - Advanced Animations Demo</h1>
+    
+    <!-- Basic Animations -->
+    <section class="demo-section">
+      <h2 class="demo-title">Basic Animations</h2>
+      <div class="demo-grid">
+        <div class="demo-item fade-in-up">
+          <h3>Fade In Up</h3>
+          <p>Element appears from below</p>
+        </div>
+        <div class="demo-item fade-in-down">
+          <h3>Fade In Down</h3>
+          <p>Element appears from above</p>
+        </div>
+        <div class="demo-item fade-in-left">
+          <h3>Fade In Left</h3>
+          <p>Element appears from left</p>
+        </div>
+        <div class="demo-item fade-in-right">
+          <h3>Fade In Right</h3>
+          <p>Element appears from right</p>
+        </div>
+        <div class="demo-item scale-in">
+          <h3>Scale In</h3>
+          <p>Element scales up</p>
+        </div>
+        <div class="demo-item rotate-in">
+          <h3>Rotate In</h3>
+          <p>Element rotates in</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Button Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Button Effects</h2>
+      <div class="demo-grid">
+        <button class="btn btn-primary ripple-effect demo-button">
+          Ripple Effect
+        </button>
+        <button class="btn btn-secondary wave-effect demo-button">
+          Wave Effect
+        </button>
+        <button class="btn btn-outline glow-effect demo-button">
+          Glow Effect
+        </button>
+        <button class="btn btn-ghost morph-effect demo-button">
+          Morph Effect
+        </button>
+        <button class="btn btn-primary btn-magnetic demo-button">
+          Magnetic Effect
+        </button>
+        <button class="btn btn-secondary btn-liquid demo-button">
+          Liquid Effect
+        </button>
+        <button class="btn btn-outline particle-effect demo-button">
+          Particle Effect
+        </button>
+        <button class="btn btn-ghost tilt-3d demo-button">
+          3D Tilt Effect
+        </button>
+      </div>
+    </section>
+    
+    <!-- Card Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Card Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-card card-floating">
+          <h3>Floating Card</h3>
+          <p>Hover to see floating effect</p>
+        </div>
+        <div class="demo-card card-3d">
+          <h3>3D Card</h3>
+          <p>Hover to see 3D tilt effect</p>
+        </div>
+        <div class="demo-card card-glass">
+          <h3>Glass Card</h3>
+          <p>Glassmorphism effect</p>
+        </div>
+        <div class="demo-card glow-effect">
+          <h3>Glow Card</h3>
+          <p>Hover to see glow effect</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Text Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Text Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h3 class="text-shimmer">Shimmer Text</h3>
+          <p>Gradient shimmer effect</p>
+        </div>
+        <div class="demo-item">
+          <h3 class="text-glitch">Glitch Text</h3>
+          <p>Hover for glitch effect</p>
+        </div>
+        <div class="demo-item">
+          <h3 data-typewriter="Typewriter Effect">Typewriter Effect</h3>
+          <p>Text appears character by character</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Form Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Form Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <label class="form-label-animated">Animated Label</label>
+          <input type="text" class="demo-input form-input-animated" placeholder="Focus to see effect">
+        </div>
+        <div class="demo-item">
+          <input type="text" class="demo-input" placeholder="Regular input">
+        </div>
+      </div>
+    </section>
+    
+    <!-- Progress Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Progress Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h3>Animated Progress</h3>
+          <div class="progress-demo">
+            <div class="progress-bar progress-bar-animated" data-width="75%"></div>
+          </div>
+        </div>
+        <div class="demo-item">
+          <h3>Loading Animation</h3>
+          <div class="loading"></div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Toggle Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Toggle Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <div class="toggle-demo">
+            <span>Toggle Switch</span>
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Particle System -->
+    <section class="demo-section">
+      <h2 class="demo-title">Particle System</h2>
+      <div class="particle-container">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;">
+          <h3>Particle Container</h3>
+          <p>Interactive particles in background</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Scroll Reveal -->
+    <section class="demo-section">
+      <h2 class="demo-title">Scroll Reveal Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item scroll-reveal">
+          <h3>Scroll Reveal</h3>
+          <p>Appears when scrolled into view</p>
+        </div>
+        <div class="demo-item scroll-reveal-left">
+          <h3>Scroll Reveal Left</h3>
+          <p>Slides in from left</p>
+        </div>
+        <div class="demo-item scroll-reveal-right">
+          <h3>Scroll Reveal Right</h3>
+          <p>Slides in from right</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Notification Demo -->
+    <section class="demo-section">
+      <h2 class="demo-title">Notification System</h2>
+      <div class="demo-grid">
+        <button class="btn btn-primary demo-button" onclick="showNotification('Success!', 'success')">
+          Success Notification
+        </button>
+        <button class="btn btn-secondary demo-button" onclick="showNotification('Error!', 'error')">
+          Error Notification
+        </button>
+        <button class="btn btn-outline demo-button" onclick="showNotification('Warning!', 'warning')">
+          Warning Notification
+        </button>
+        <button class="btn btn-ghost demo-button" onclick="showNotification('Info!', 'info')">
+          Info Notification
+        </button>
+      </div>
+    </section>
+    
+    <!-- Special Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Special Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h3 class="bounce">Bounce</h3>
+          <p>Click to trigger bounce</p>
+        </div>
+        <div class="demo-item">
+          <h3 class="shake">Shake</h3>
+          <p>Click to trigger shake</p>
+        </div>
+        <div class="demo-item">
+          <h3 class="wobble">Wobble</h3>
+          <p>Click to trigger wobble</p>
+        </div>
+        <div class="demo-item">
+          <h3 class="pulse">Pulse</h3>
+          <p>Continuous pulse effect</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- Notification Container -->
+  <div class="notification-demo" id="notificationContainer"></div>
+  
+  <!-- Scripts -->
+  <script src="scripts/advanced-animations.js?v=4.0"></script>
+  <script src="scripts/animations.js?v=4.0"></script>
+  
+  <script>
+    // Demo functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize advanced animations
+      if (window.RSCAdvancedAnimations) {
+        window.RSCAdvancedAnimations = new window.RSCAdvancedAnimations();
+      }
+      
+      // Add click effects to special effects
+      document.querySelectorAll('.bounce, .shake, .wobble').forEach(element => {
+        element.addEventListener('click', function() {
+          this.style.animation = 'none';
+          setTimeout(() => {
+            this.style.animation = '';
+          }, 100);
+        });
+      });
+      
+      // Toggle switch functionality
+      document.querySelectorAll('.toggle-switch').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+          this.classList.toggle('active');
+        });
+      });
+    });
+    
+    // Notification demo function
+    function showNotification(message, type) {
+      if (window.RSCAdvancedAnimations) {
+        window.RSCAdvancedAnimations.showNotification(message, type, 3000);
+      } else {
+        // Fallback notification
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+          <div class="notification-content">
+            <span class="notification-text">${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
+          </div>
+        `;
+        
+        document.getElementById('notificationContainer').appendChild(notification);
+        
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Aplicar efecto 3D a cards
-  document.querySelectorAll('.highlight-card, .stat-card, .action-card').forEach(card => {
+  document.querySelectorAll('.highlight-card, .stat-card, .action-card, .card').forEach(card => {
     new Card3DEffect(card);
   });
 
@@ -327,7 +327,73 @@ document.addEventListener('DOMContentLoaded', () => {
     const typewriter = new TypewriterEffect(heroTitle, heroTitle.textContent, 50);
     setTimeout(() => typewriter.start(), 1000);
   }
+
+  // Aplicar clases de animación a elementos existentes
+  applyAnimationClasses();
 });
+
+// Función para aplicar clases de animación a elementos existentes
+function applyAnimationClasses() {
+  // Aplicar efectos de ripple a botones
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.classList.add('ripple-effect');
+  });
+
+  // Aplicar efectos de wave a enlaces
+  document.querySelectorAll('a').forEach(link => {
+    link.classList.add('wave-effect');
+  });
+
+  // Aplicar efectos de glow a elementos destacados
+  document.querySelectorAll('.highlight-card, .stat-card').forEach(card => {
+    card.classList.add('glow-effect');
+  });
+
+  // Aplicar efectos de tilt 3D a cards
+  document.querySelectorAll('.card, .stat-card, .action-card').forEach(card => {
+    card.classList.add('tilt-3d');
+  });
+
+  // Aplicar efectos de morph a botones especiales
+  document.querySelectorAll('.btn-primary').forEach(btn => {
+    btn.classList.add('morph-effect');
+  });
+
+  // Aplicar efectos de partículas a contenedores especiales
+  document.querySelectorAll('.hero-rsc, .section-features').forEach(container => {
+    container.classList.add('particle-effect');
+  });
+
+  // Aplicar scroll reveal a secciones
+  document.querySelectorAll('.section').forEach(section => {
+    section.classList.add('scroll-reveal');
+  });
+
+  // Aplicar efectos de texto shimmer a títulos
+  document.querySelectorAll('h1').forEach(title => {
+    title.classList.add('text-shimmer');
+  });
+
+  // Aplicar efectos de navegación animada
+  document.querySelectorAll('.nav-item, .navbar-link').forEach(navItem => {
+    navItem.classList.add('nav-link-animated');
+  });
+
+  // Aplicar efectos de formulario animado
+  document.querySelectorAll('input, select, textarea').forEach(input => {
+    input.classList.add('form-input-animated');
+  });
+
+  // Aplicar efectos de botón magnético
+  document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+    btn.classList.add('btn-magnetic');
+  });
+
+  // Aplicar efectos de card flotante
+  document.querySelectorAll('.card, .stat-card, .action-card').forEach(card => {
+    card.classList.add('card-floating');
+  });
+}
 
 // Efectos de scroll suave
 const smoothScroll = (target, duration = 1000) => {
