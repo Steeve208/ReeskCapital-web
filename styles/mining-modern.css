@@ -484,7 +484,7 @@ body {
     gap: 1rem;
 }
 
-.btn-help, .btn-settings {
+.btn-home, .btn-help, .btn-settings {
     position: relative;
     display: flex;
     align-items: center;
@@ -501,7 +501,7 @@ body {
     backdrop-filter: blur(20px);
 }
 
-.btn-help:hover, .btn-settings:hover {
+.btn-home:hover, .btn-help:hover, .btn-settings:hover {
     background: rgba(0, 212, 255, 0.1);
     border-color: rgba(0, 212, 255, 0.3);
     transform: translateY(-2px);
@@ -518,8 +518,21 @@ body {
     transition: left 0.5s ease;
 }
 
-.btn-help:hover .btn-glow, .btn-settings:hover .btn-glow {
+.btn-home:hover .btn-glow, .btn-help:hover .btn-glow, .btn-settings:hover .btn-glow {
     left: 100%;
+}
+
+/* Special styling for home button */
+.btn-home {
+    background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+}
+
+.btn-home:hover {
+    background: linear-gradient(135deg, #00b8e6 0%, #6d28d9 100%);
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
 }
 
 .header-bottom {
@@ -1020,6 +1033,51 @@ body {
     color: var(--text-primary);
     font-weight: 600;
     font-size: 1rem;
+}
+
+.info-item.session-timer .value {
+    color: var(--accent-primary);
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.info-item.session-timer {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: var(--border-radius-lg);
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+/* Persistent Mining Indicator */
+.persistent-mining-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 195, 74, 0.1) 100%);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    border-radius: var(--border-radius-lg);
+    color: #4caf50;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+.persistent-mining-indicator i {
+    color: #4caf50;
+    font-size: 1rem;
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
+    }
 }
 
 /* Mining Session */

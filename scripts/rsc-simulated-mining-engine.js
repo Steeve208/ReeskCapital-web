@@ -20,6 +20,9 @@ class RSCSimulatedMiningEngine {
             simulationMode: true
         };
         
+        // Inicializar persistencia
+        this.initializePersistence();
+        
         this.miningState = {
             isMining: false,
             currentDifficulty: 1.0,
@@ -32,7 +35,11 @@ class RSCSimulatedMiningEngine {
             referralEarnings: 0,
             totalReferrals: 0,
             blocksMined: 0,
-            efficiency: 0
+            efficiency: 0,
+            miningSessionStart: null,
+            miningSessionEnd: null,
+            is24HourSession: false,
+            sessionDuration: 0
         };
         
         this.networkStats = {
@@ -191,6 +198,20 @@ class RSCSimulatedMiningEngine {
             if (this.miningState.isMining) {
                 throw new Error('Ya hay una sesión de minería activa');
             }
+
+            // Check if 24-hour session is still active
+            const lastSessionEnd = localStorage.getItem('rsc_last_session_end');
+            const now = Date.now();
+            
+            if (lastSessionEnd) {
+                const timeSinceLastSession = now - parseInt(lastSessionEnd);
+                const hoursSinceLastSession = timeSinceLastSession / (1000 * 60 * 60);
+                
+                if (hoursSinceLastSession < 24) {
+                    const remainingHours = 24 - hoursSinceLastSession;
+                    throw new Error(`Sesión de minería expirada. Espera ${remainingHours.toFixed(1)} horas antes de iniciar una nueva sesión.`);
+                }
+            }
             
             // TEMPORAL: Desactivar verificación de límite diario para pruebas
             // const canMine = await this.checkDailyLimit(user.email);
@@ -218,6 +239,9 @@ class RSCSimulatedMiningEngine {
             this.currentSession = sessionData;
             this.miningState.isMining = true;
             this.miningState.sessionStartTime = Date.now();
+            this.miningState.miningSessionStart = Date.now();
+            this.miningState.miningSessionEnd = Date.now() + (24 * 60 * 60 * 1000); // 24 hours from now
+            this.miningState.is24HourSession = true;
             this.miningState.miningPower = sessionData.mining_power_used;
             this.miningState.sessionTokens = 0;
             this.miningState.totalBlocksFound = 0;
@@ -235,6 +259,12 @@ class RSCSimulatedMiningEngine {
             
             // Iniciar visualización de hash
             this.startHashVisualization();
+            
+            // Iniciar countdown de 24 horas
+            this.start24HourCountdown();
+            
+            // Guardar sesión persistente
+            this.savePersistentSession();
             
             console.log('✅ Minería simulada iniciada');
             
@@ -285,12 +315,24 @@ class RSCSimulatedMiningEngine {
             
             localStorage.setItem('rsc_last_session', JSON.stringify(sessionResult));
             
+            // Guardar tiempo de finalización de sesión para control de 24 horas
+            localStorage.setItem('rsc_last_session_end', Date.now().toString());
+            
             // Limpiar estado
             this.miningState.isMining = false;
             this.currentSession = null;
             this.miningState.sessionStartTime = null;
+            this.miningState.miningSessionStart = null;
+            this.miningState.miningSessionEnd = null;
+            this.miningState.is24HourSession = false;
             this.miningState.sessionTokens = 0;
             this.miningState.totalBlocksFound = 0;
+            
+            // Detener countdown de 24 horas
+            this.stop24HourCountdown();
+            
+            // Limpiar sesión persistente
+            this.clearPersistentSession();
             
             console.log('✅ Minería simulada detenida. Resultado:', sessionResult);
             
@@ -895,6 +937,211 @@ class RSCSimulatedMiningEngine {
         document.dispatchEvent(event);
     }
     
+    // ========================================
+    // SISTEMA DE 24 HORAS
+    // ========================================
+    
+    start24HourCountdown() {
+        if (this.countdownInterval) {
+            clearInterval(this.countdownInterval);
+        }
+        
+        this.countdownInterval = setInterval(() => {
+            const now = Date.now();
+            const timeRemaining = this.miningState.miningSessionEnd - now;
+            
+            if (timeRemaining <= 0) {
+                // Sesión de 24 horas expirada
+                this.handle24HourSessionExpiry();
+                clearInterval(this.countdownInterval);
+            } else {
+                // Actualizar tiempo restante
+                this.miningState.sessionDuration = Math.floor(timeRemaining / 1000);
+                this.dispatchEvent('sessionTimeUpdate', {
+                    timeRemaining: timeRemaining,
+                    hoursRemaining: Math.floor(timeRemaining / (1000 * 60 * 60)),
+                    minutesRemaining: Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60))
+                });
+            }
+        }, 1000); // Actualizar cada segundo
+    }
+    
+    stop24HourCountdown() {
+        if (this.countdownInterval) {
+            clearInterval(this.countdownInterval);
+            this.countdownInterval = null;
+        }
+    }
+    
+    async handle24HourSessionExpiry() {
+        console.log('⏰ Sesión de 24 horas expirada, deteniendo minería automáticamente...');
+        
+        try {
+            // Detener minería automáticamente
+            await this.stopMining();
+            
+            // Mostrar notificación al usuario
+            this.dispatchEvent('sessionExpired', {
+                message: 'Tu sesión de minería de 24 horas ha expirado. Inicia una nueva sesión para continuar minando.',
+                canRestart: true
+            });
+            
+        } catch (error) {
+            console.error('❌ Error al detener minería por expiración:', error);
+        }
+    }
+    
+    getSessionTimeRemaining() {
+        if (!this.miningState.isMining || !this.miningState.miningSessionEnd) {
+            return 0;
+        }
+        
+        const now = Date.now();
+        const timeRemaining = this.miningState.miningSessionEnd - now;
+        return Math.max(0, timeRemaining);
+    }
+    
+    getSessionTimeRemainingFormatted() {
+        const timeRemaining = this.getSessionTimeRemaining();
+        
+        if (timeRemaining <= 0) {
+            return '0h 0m 0s';
+        }
+        
+        const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        
+        return `${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    // ========================================
+    // SISTEMA DE PERSISTENCIA
+    // ========================================
+    
+    initializePersistence() {
+        // Verificar si hay una sesión de minería persistente
+        this.restoreMiningSession();
+        
+        // Configurar eventos de página
+        this.setupPageEvents();
+    }
+    
+    restoreMiningSession() {
+        try {
+            const persistentSession = localStorage.getItem('rsc_persistent_mining');
+            if (!persistentSession) return;
+            
+            const sessionData = JSON.parse(persistentSession);
+            const now = Date.now();
+            
+            // Verificar si la sesión aún es válida (24 horas)
+            if (sessionData.sessionEnd && now < sessionData.sessionEnd) {
+                console.log('🔄 Restaurando sesión de minería persistente...');
+                
+                // Restaurar estado de minería
+                this.miningState.isMining = true;
+                this.miningState.sessionStartTime = sessionData.sessionStartTime;
+                this.miningState.miningSessionStart = sessionData.miningSessionStart;
+                this.miningState.miningSessionEnd = sessionData.sessionEnd;
+                this.miningState.is24HourSession = true;
+                this.miningState.miningPower = sessionData.miningPower || 1.0;
+                this.miningState.sessionTokens = sessionData.sessionTokens || 0;
+                this.miningState.totalBlocksFound = sessionData.totalBlocksFound || 0;
+                this.miningState.efficiency = sessionData.efficiency || 0;
+                
+                // Calcular tokens ganados durante la ausencia
+                const timeElapsed = now - sessionData.lastUpdate;
+                const tokensEarned = this.calculateOfflineRewards(timeElapsed, sessionData.miningPower || 1.0);
+                this.miningState.sessionTokens += tokensEarned;
+                
+                // Actualizar datos persistentes
+                this.savePersistentSession();
+                
+                // Iniciar minería en background
+                this.startBackgroundMining();
+                
+                console.log(`✅ Sesión restaurada. Tokens ganados offline: ${tokensEarned.toFixed(8)} RSC`);
+                
+                // Disparar evento de restauración
+                this.dispatchEvent('miningRestored', {
+                    tokensEarned: tokensEarned,
+                    sessionData: sessionData
+                });
+            } else {
+                // Sesión expirada, limpiar
+                this.clearPersistentSession();
+            }
+        } catch (error) {
+            console.error('❌ Error al restaurar sesión persistente:', error);
+            this.clearPersistentSession();
+        }
+    }
+    
+    savePersistentSession() {
+        if (!this.miningState.isMining) return;
+        
+        const persistentData = {
+            sessionStartTime: this.miningState.sessionStartTime,
+            miningSessionStart: this.miningState.miningSessionStart,
+            sessionEnd: this.miningState.miningSessionEnd,
+            miningPower: this.miningState.miningPower,
+            sessionTokens: this.miningState.sessionTokens,
+            totalBlocksFound: this.miningState.totalBlocksFound,
+            efficiency: this.miningState.efficiency,
+            lastUpdate: Date.now()
+        };
+        
+        localStorage.setItem('rsc_persistent_mining', JSON.stringify(persistentData));
+    }
+    
+    clearPersistentSession() {
+        localStorage.removeItem('rsc_persistent_mining');
+    }
+    
+    setupPageEvents() {
+        // Guardar estado antes de que la página se descargue
+        window.addEventListener('beforeunload', () => {
+            if (this.miningState.isMining) {
+                this.savePersistentSession();
+            }
+        });
+        
+        // Guardar estado cuando la página se oculta
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && this.miningState.isMining) {
+                this.savePersistentSession();
+            }
+        });
+        
+        // Guardar estado periódicamente
+        setInterval(() => {
+            if (this.miningState.isMining) {
+                this.savePersistentSession();
+            }
+        }, 30000); // Cada 30 segundos
+    }
+    
+    calculateOfflineRewards(timeElapsed, miningPower) {
+        const secondsElapsed = timeElapsed / 1000;
+        const baseReward = this.miningConfig.baseRewardRate * secondsElapsed;
+        const powerMultiplier = Math.min(miningPower, this.miningConfig.maxMiningPower);
+        const difficultyFactor = 1 / this.miningState.currentDifficulty;
+        
+        return baseReward * powerMultiplier * difficultyFactor;
+    }
+    
+    startBackgroundMining() {
+        if (!this.miningState.isMining) return;
+        
+        // Iniciar simulación de minería en background
+        this.startSimulatedMining();
+        this.startHashVisualization();
+        this.start24HourCountdown();
+        
+        console.log('⛏️ Minería en background iniciada');
+    }
+
     // ========================================
     // FUNCIONES DE UTILIDAD
     // ========================================

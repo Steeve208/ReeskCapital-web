@@ -164,9 +164,14 @@ class RSCMiningModernUI {
     
     setupModalEventListeners() {
         // Help modal
+        const homeBtn = document.getElementById('homeBtn');
         const helpBtn = document.getElementById('helpBtn');
         const helpModal = document.getElementById('helpModal');
         const closeHelpModal = document.getElementById('closeHelpModal');
+        
+        if (homeBtn) {
+            homeBtn.addEventListener('click', () => this.goToHome());
+        }
         
         if (helpBtn && helpModal) {
             helpBtn.addEventListener('click', () => this.showModal('helpModal'));
@@ -226,6 +231,21 @@ class RSCMiningModernUI {
         document.addEventListener('statsUpdate', (e) => {
             this.updateStatsDisplay(e.detail);
             this.updateMiningUsageStats();
+        });
+        
+        // Session time updates
+        document.addEventListener('sessionTimeUpdate', (e) => {
+            this.updateSessionTimer(e.detail);
+        });
+        
+        // Session expired
+        document.addEventListener('sessionExpired', (e) => {
+            this.handleSessionExpired(e.detail);
+        });
+        
+        // Mining restored
+        document.addEventListener('miningRestored', (e) => {
+            this.handleMiningRestored(e.detail);
         });
     }
     
@@ -459,15 +479,22 @@ class RSCMiningModernUI {
                 };
             }
             
-            this.showLoading('Iniciando minería...');
+            this.showLoading('Starting mining...');
             
             const session = await this.miningEngine.startMining(this.currentUser);
             
             this.updateMiningUI(true);
-            this.showNotification('success', '¡Minería iniciada!', 'La minería simulada ha comenzado');
+            
+            // Resetear texto del botón
+            const startBtn = document.getElementById('startMiningBtn');
+            if (startBtn) {
+                startBtn.textContent = 'Start Mining';
+            }
+            
+            this.showNotification('success', 'Mining started!', '24-hour mining session has begun');
             
         } catch (error) {
-            this.showNotification('error', 'Error al iniciar minería', error.message);
+            this.showNotification('error', 'Error starting mining', error.message);
         } finally {
             this.hideLoading();
         }
@@ -475,15 +502,15 @@ class RSCMiningModernUI {
     
     async stopMining() {
         try {
-            this.showLoading('Deteniendo minería...');
+            this.showLoading('Stopping mining...');
             
             const result = await this.miningEngine.stopMining();
             
             this.updateMiningUI(false);
-            this.showNotification('success', 'Minería detenida', `Ganaste ${result.tokensEarned.toFixed(8)} RSC`);
+            this.showNotification('success', 'Mining stopped', `You earned ${result.tokensEarned.toFixed(8)} RSC`);
             
         } catch (error) {
-            this.showNotification('error', 'Error al detener minería', error.message);
+            this.showNotification('error', 'Error stopping mining', error.message);
         } finally {
             this.hideLoading();
         }
@@ -494,20 +521,27 @@ class RSCMiningModernUI {
         const stopBtn = document.getElementById('stopMiningBtn');
         const miningStatus = document.getElementById('miningStatus');
         const miningSession = document.getElementById('miningSession');
+        const persistentIndicator = document.getElementById('persistentMiningIndicator');
         
         if (isMining) {
             if (startBtn) startBtn.classList.add('hidden');
             if (stopBtn) stopBtn.classList.remove('hidden');
             if (miningSession) miningSession.classList.remove('hidden');
             if (miningStatus) {
-                miningStatus.innerHTML = '<span class="status-dot online"></span><span class="status-text">Minando</span>';
+                miningStatus.innerHTML = '<span class="status-dot online"></span><span class="status-text">Mining</span>';
+            }
+            if (persistentIndicator) {
+                persistentIndicator.classList.remove('hidden');
             }
         } else {
             if (startBtn) startBtn.classList.remove('hidden');
             if (stopBtn) stopBtn.classList.add('hidden');
             if (miningSession) miningSession.classList.add('hidden');
             if (miningStatus) {
-                miningStatus.innerHTML = '<span class="status-dot offline"></span><span class="status-text">Detenido</span>';
+                miningStatus.innerHTML = '<span class="status-dot offline"></span><span class="status-text">Stopped</span>';
+            }
+            if (persistentIndicator) {
+                persistentIndicator.classList.add('hidden');
             }
         }
     }
@@ -833,6 +867,86 @@ class RSCMiningModernUI {
         this.updateElement('blocksMined', miningState.totalBlocksFound.toString());
     }
     
+    updateSessionTimer(data) {
+        const { hoursRemaining, minutesRemaining } = data;
+        const secondsRemaining = Math.floor((data.timeRemaining % (1000 * 60)) / 1000);
+        
+        const timeString = `${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s`;
+        this.updateElement('sessionTimeRemaining', timeString);
+        
+        // Cambiar color según tiempo restante
+        const timerElement = document.getElementById('sessionTimeRemaining');
+        if (timerElement) {
+            if (hoursRemaining < 1) {
+                timerElement.style.color = '#ff6b6b'; // Rojo si queda menos de 1 hora
+            } else if (hoursRemaining < 6) {
+                timerElement.style.color = '#ffa726'; // Naranja si quedan menos de 6 horas
+            } else {
+                timerElement.style.color = '#00d4ff'; // Azul normal
+            }
+        }
+    }
+    
+    handleSessionExpired(data) {
+        this.showNotification('warning', 'Session Expired', data.message);
+        
+        // Actualizar UI para mostrar que la sesión expiró
+        this.updateMiningUI(false);
+        
+        // Mostrar botón para reactivar
+        const startBtn = document.getElementById('startMiningBtn');
+        if (startBtn) {
+            startBtn.textContent = 'Reactivate Mining';
+            startBtn.classList.remove('hidden');
+        }
+        
+        const stopBtn = document.getElementById('stopMiningBtn');
+        if (stopBtn) {
+            stopBtn.classList.add('hidden');
+        }
+        
+        // Limpiar timer
+        this.updateElement('sessionTimeRemaining', '0h 0m 0s');
+    }
+    
+    handleMiningRestored(data) {
+        console.log('🔄 Minería restaurada desde sesión persistente');
+        
+        // Mostrar notificación de restauración
+        this.showNotification('success', 'Mining Restored', 
+            `Mining session restored! You earned ${data.tokensEarned.toFixed(8)} RSC while away.`);
+        
+        // Actualizar UI para mostrar que la minería está activa
+        this.updateMiningUI(true);
+        
+        // Actualizar balance del usuario
+        this.updateUserBalance();
+        
+        // Actualizar estadísticas
+        this.updateMiningUsageStats();
+        
+        console.log(`💰 Tokens ganados offline: ${data.tokensEarned.toFixed(8)} RSC`);
+    }
+    
+    checkPersistentSession() {
+        // Verificar si hay una sesión persistente activa
+        const persistentSession = localStorage.getItem('rsc_persistent_mining');
+        if (persistentSession) {
+            try {
+                const sessionData = JSON.parse(persistentSession);
+                const now = Date.now();
+                
+                if (sessionData.sessionEnd && now < sessionData.sessionEnd) {
+                    // Hay una sesión activa, actualizar UI
+                    this.updateMiningUI(true);
+                    console.log('🔄 Sesión persistente detectada, actualizando UI...');
+                }
+            } catch (error) {
+                console.error('❌ Error al verificar sesión persistente:', error);
+            }
+        }
+    }
+    
     formatTime(seconds) {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
@@ -861,6 +975,11 @@ class RSCMiningModernUI {
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
+    }
+    
+    goToHome() {
+        // Navigate to the main page
+        window.location.href = '../index.html';
     }
     
     showLoading(message = 'Cargando...') {
@@ -1108,6 +1227,9 @@ class RSCMiningModernUI {
         this.updateLeaderboard();
         this.updateMainnetInfo();
         this.updateReferralStats();
+        
+        // Verificar si hay una sesión persistente
+        this.checkPersistentSession();
         
         // Inicializar estadísticas de uso de minería
         this.updateMiningUsageStats();
