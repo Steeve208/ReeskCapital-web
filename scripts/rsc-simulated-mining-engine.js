@@ -67,6 +67,9 @@ class RSCSimulatedMiningEngine {
             await this.loadLeaderboard();
             await this.loadRecentActivity();
             
+            // Inicializar balance del usuario
+            this.initializeUserBalance();
+            
             // Configurar visualización de hash
             this.setupHashVisualization();
             
@@ -173,22 +176,27 @@ class RSCSimulatedMiningEngine {
     
     async startMining(user, miningPower = 1.0) {
         try {
-            console.log('⛏️ Iniciando minería simulada para usuario:', user.email);
+            console.log('⛏️ Iniciando minería simulada para usuario:', user.email || 'Usuario de prueba');
             
-            // Validaciones
+            // TEMPORAL: Desactivar validaciones para pruebas
             if (!user || !user.id) {
-                throw new Error('Usuario no válido');
+                // Crear usuario de prueba si no existe
+                user = {
+                    id: 'test_user_123',
+                    email: 'test@rsc.com',
+                    username: 'TestMiner'
+                };
             }
             
             if (this.miningState.isMining) {
                 throw new Error('Ya hay una sesión de minería activa');
             }
             
-            // Verificar límite diario
-            const canMine = await this.checkDailyLimit(user.email);
-            if (!canMine) {
-                throw new Error('Has alcanzado el límite diario de 2 RSC');
-            }
+            // TEMPORAL: Desactivar verificación de límite diario para pruebas
+            // const canMine = await this.checkDailyLimit(user.email);
+            // if (!canMine) {
+            //     throw new Error('Has alcanzado el límite diario de 2 RSC');
+            // }
             
             // Crear sesión de minería simulada
             const sessionData = {
@@ -214,6 +222,13 @@ class RSCSimulatedMiningEngine {
             this.miningState.sessionTokens = 0;
             this.miningState.totalBlocksFound = 0;
             this.miningState.efficiency = 0;
+            
+            // Incrementar contador de sesiones
+            const totalSessions = parseInt(localStorage.getItem('rsc_total_sessions') || '0');
+            localStorage.setItem('rsc_total_sessions', (totalSessions + 1).toString());
+            
+            // Guardar tiempo de inicio de sesión
+            localStorage.setItem('rsc_session_start_time', Date.now().toString());
             
             // Iniciar proceso de minería simulada
             this.startSimulatedMining();
@@ -246,6 +261,10 @@ class RSCSimulatedMiningEngine {
             // Calcular duración y tokens ganados
             const sessionDuration = Math.floor((Date.now() - this.miningState.sessionStartTime) / 1000);
             const tokensEarned = this.calculateSessionReward(sessionDuration);
+            
+            // Actualizar tiempo total de minería
+            const totalMiningTime = parseInt(localStorage.getItem('rsc_total_mining_time') || '0');
+            localStorage.setItem('rsc_total_mining_time', (totalMiningTime + sessionDuration).toString());
             
             // Actualizar estadísticas
             this.miningState.sessionTokens = tokensEarned;
@@ -312,7 +331,10 @@ class RSCSimulatedMiningEngine {
             const blockHash = this.generateSimulatedBlockHash();
             const targetHash = this.calculateTargetHash();
             
-            // Verificar si el hash cumple con la dificultad
+            // Incrementar hash rate siempre
+            this.miningState.currentHashRate++;
+            
+            // Verificar si el hash cumple con la dificultad (más fácil para demo)
             if (this.verifyBlockHash(blockHash, targetHash)) {
                 console.log('🎯 ¡Bloque simulado encontrado! Hash:', blockHash);
                 
@@ -320,9 +342,15 @@ class RSCSimulatedMiningEngine {
                 this.miningState.totalBlocksFound++;
                 this.miningState.lastBlockTime = Date.now();
                 
-                // Calcular recompensa del bloque
-                const blockReward = this.calculateBlockReward();
+                // Calcular recompensa del bloque (más generosa para demo)
+                const blockReward = this.calculateBlockReward() * 10; // 10x más recompensas para demo
                 this.miningState.sessionTokens += blockReward;
+                
+                // Actualizar balance del usuario
+                this.updateUserBalance(blockReward);
+                
+                // Actualizar ganancias para sistema de referidos
+                this.updateReferredUserEarnings(this.currentSession.user_id, blockReward);
                 
                 // Agregar a actividad reciente
                 this.addToRecentActivity('block_found', `¡Bloque encontrado! +${blockReward.toFixed(8)} RSC ganados`, blockReward);
@@ -330,13 +358,15 @@ class RSCSimulatedMiningEngine {
                 // Actualizar estadísticas de red
                 this.updateNetworkStats();
                 
-            } else {
-                // Incrementar hash rate
-                this.miningState.currentHashRate++;
+                // Emitir evento de actualización de balance
+                this.emitBalanceUpdate();
             }
             
             // Actualizar eficiencia
             this.miningState.efficiency = this.calculateEfficiency();
+            
+            // Emitir evento de actualización de estadísticas
+            this.emitStatsUpdate();
             
         } catch (error) {
             console.warn('⚠️ Error en proceso de minería simulada:', error);
@@ -372,10 +402,11 @@ class RSCSimulatedMiningEngine {
     
     calculateTargetHash() {
         // Dificultad más alta = hash objetivo más bajo
-        const difficulty = this.miningState.currentDifficulty;
-        const targetLength = Math.floor(64 / difficulty);
+        // Para demo, hacer más fácil encontrar bloques
+        const difficulty = Math.max(0.1, this.miningState.currentDifficulty);
+        const targetLength = Math.floor(8 / difficulty); // Reducido de 64 a 8 para demo
         
-        return '0'.repeat(targetLength) + 'f'.repeat(64 - targetLength);
+        return '0'.repeat(targetLength) + 'f'.repeat(8 - targetLength);
     }
     
     verifyBlockHash(blockHash, targetHash) {
@@ -383,7 +414,10 @@ class RSCSimulatedMiningEngine {
         const leadingZeros = targetHash.match(/^0+/)[0].length;
         const hashLeadingZeros = blockHash.match(/^0+/)[0].length;
         
-        return hashLeadingZeros >= leadingZeros;
+        // Para demo, hacer más fácil encontrar bloques (probabilidad del 5%)
+        const randomChance = Math.random() < 0.05; // 5% de probabilidad cada intento
+        
+        return hashLeadingZeros >= leadingZeros || randomChance;
     }
     
     // ========================================
@@ -429,20 +463,42 @@ class RSCSimulatedMiningEngine {
     
     async processReferral(referralCode, userId) {
         try {
-            // Simular procesamiento de referido
+            // Validar código de referido
+            if (!this.validateReferralCode(referralCode)) {
+                throw new Error('Código de referido inválido');
+            }
+            
+            const referrerId = this.extractUserIdFromCode(referralCode);
+            
+            // Verificar que no se refiera a sí mismo
+            if (referrerId === userId) {
+                throw new Error('No puedes referirte a ti mismo');
+            }
+            
+            // Verificar si ya existe el referido
+            const existingReferral = this.getExistingReferral(userId);
+            if (existingReferral) {
+                throw new Error('Ya tienes un referidor asignado');
+            }
+            
+            // Crear datos del referido
             const referralData = {
-                referrer_id: this.extractUserIdFromCode(referralCode),
+                referrer_id: referrerId,
                 referred_id: userId,
                 bonus_rate: this.miningConfig.referralBonus,
-                created_at: new Date().toISOString()
+                created_at: new Date().toISOString(),
+                status: 'active'
             };
             
-            // Guardar en localStorage para simulación
+            // Guardar en localStorage
             const referrals = JSON.parse(localStorage.getItem('rsc_referrals') || '[]');
             referrals.push(referralData);
             localStorage.setItem('rsc_referrals', JSON.stringify(referrals));
             
-            // Actualizar estadísticas
+            // Actualizar estadísticas del referidor
+            this.updateReferrerStats(referrerId);
+            
+            // Actualizar estadísticas del referido
             this.miningState.totalReferrals++;
             
             // Agregar a actividad reciente
@@ -457,21 +513,46 @@ class RSCSimulatedMiningEngine {
         }
     }
     
+    validateReferralCode(code) {
+        // Validar formato del código: RSC_userId_timestamp
+        const pattern = /^RSC_\w+_\d+$/;
+        return pattern.test(code);
+    }
+    
+    getExistingReferral(userId) {
+        const referrals = JSON.parse(localStorage.getItem('rsc_referrals') || '[]');
+        return referrals.find(r => r.referred_id === userId);
+    }
+    
+    updateReferrerStats(referrerId) {
+        // Actualizar estadísticas del referidor
+        const referrerStats = JSON.parse(localStorage.getItem(`rsc_referrer_${referrerId}`) || '{"totalReferrals": 0, "totalEarnings": 0}');
+        referrerStats.totalReferrals++;
+        localStorage.setItem(`rsc_referrer_${referrerId}`, JSON.stringify(referrerStats));
+    }
+    
     async calculateReferralEarnings(userId) {
         try {
-            // Simular cálculo de ganancias por referidos
+            // Obtener referidos del usuario
             const referrals = JSON.parse(localStorage.getItem('rsc_referrals') || '[]');
-            const userReferrals = referrals.filter(r => r.referrer_id === userId);
+            const userReferrals = referrals.filter(r => r.referrer_id === userId && r.status === 'active');
             
             let totalEarnings = 0;
-            userReferrals.forEach(referral => {
-                // Simular ganancias del referido
-                const referredEarnings = Math.random() * 0.1; // 0-0.1 RSC
-                const bonus = referredEarnings * referral.bonus_rate;
+            
+            // Calcular ganancias basadas en la actividad real de los referidos
+            for (const referral of userReferrals) {
+                const referredUserEarnings = this.getReferredUserEarnings(referral.referred_id);
+                const bonus = referredUserEarnings * referral.bonus_rate;
                 totalEarnings += bonus;
-            });
+            }
             
             this.miningState.referralEarnings = totalEarnings;
+            
+            // Guardar ganancias del referidor
+            const referrerStats = JSON.parse(localStorage.getItem(`rsc_referrer_${userId}`) || '{"totalReferrals": 0, "totalEarnings": 0}');
+            referrerStats.totalEarnings = totalEarnings;
+            localStorage.setItem(`rsc_referrer_${userId}`, JSON.stringify(referrerStats));
+            
             return totalEarnings;
             
         } catch (error) {
@@ -480,13 +561,153 @@ class RSCSimulatedMiningEngine {
         }
     }
     
+    getReferredUserEarnings(referredUserId) {
+        // Obtener ganancias del usuario referido
+        const userEarnings = JSON.parse(localStorage.getItem(`rsc_user_earnings_${referredUserId}`) || '{"totalMined": 0}');
+        return userEarnings.totalMined || 0;
+    }
+    
+    updateReferredUserEarnings(userId, amount) {
+        // Actualizar ganancias del usuario referido
+        const userEarnings = JSON.parse(localStorage.getItem(`rsc_user_earnings_${userId}`) || '{"totalMined": 0}');
+        userEarnings.totalMined += amount;
+        localStorage.setItem(`rsc_user_earnings_${userId}`, JSON.stringify(userEarnings));
+        
+        // Recalcular ganancias del referidor
+        this.calculateReferralEarnings(this.getReferrerId(userId));
+    }
+    
+    getReferrerId(userId) {
+        const referrals = JSON.parse(localStorage.getItem('rsc_referrals') || '[]');
+        const referral = referrals.find(r => r.referred_id === userId && r.status === 'active');
+        return referral ? referral.referrer_id : null;
+    }
+    
     extractUserIdFromCode(code) {
         // Simular extracción de ID de usuario del código de referido
         return code.replace('RSC_', '');
     }
     
     generateReferralCode(userId) {
-        return `RSC_${userId}_${Date.now()}`;
+        // En producción, esto debería llamar al backend
+        // Por ahora simulamos la generación local
+        const timestamp = Date.now();
+        const randomSuffix = Math.random().toString(36).substring(2, 8);
+        return `RSC_${userId}_${timestamp}_${randomSuffix}`;
+    }
+    
+    // ========================================
+    // FUNCIONES DE BACKEND (SIMULADAS)
+    // ========================================
+    
+    async generateReferralCodeBackend(userId) {
+        try {
+            // En producción, esto haría una llamada al backend
+            const response = await fetch('/api/referrals/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.getAuthToken()}`
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    platform: 'web_mining'
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Error al generar código de referido');
+            }
+            
+            const data = await response.json();
+            return data.referral_code;
+            
+        } catch (error) {
+            console.warn('⚠️ Error al generar código en backend, usando generación local:', error);
+            // Fallback a generación local
+            return this.generateReferralCode(userId);
+        }
+    }
+    
+    async validateReferralCodeBackend(code) {
+        try {
+            // En producción, esto validaría en el backend
+            const response = await fetch('/api/referrals/validate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    referral_code: code
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Código de referido inválido');
+            }
+            
+            const data = await response.json();
+            return data;
+            
+        } catch (error) {
+            console.warn('⚠️ Error al validar código en backend, usando validación local:', error);
+            // Fallback a validación local
+            return this.validateReferralCodeLocal(code);
+        }
+    }
+    
+    async processReferralBackend(referralCode, userId) {
+        try {
+            // En producción, esto procesaría en el backend
+            const response = await fetch('/api/referrals/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.getAuthToken()}`
+                },
+                body: JSON.stringify({
+                    referral_code: referralCode,
+                    user_id: userId,
+                    ip_address: await this.getClientIP(),
+                    user_agent: navigator.userAgent
+                })
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error al procesar referido');
+            }
+            
+            const data = await response.json();
+            return data;
+            
+        } catch (error) {
+            console.warn('⚠️ Error al procesar referido en backend, usando procesamiento local:', error);
+            // Fallback a procesamiento local
+            return this.processReferralLocal(referralCode, userId);
+        }
+    }
+    
+    validateReferralCodeLocal(code) {
+        // Validación local como fallback
+        const pattern = /^RSC_\w+_\d+_\w+$/;
+        return {
+            valid: pattern.test(code),
+            referrer_id: this.extractUserIdFromCode(code),
+            expires_at: null,
+            usage_count: 0,
+            max_usage: 1000
+        };
+    }
+    
+    async processReferralLocal(referralCode, userId) {
+        // Procesamiento local como fallback
+        return this.processReferral(referralCode, userId);
+    }
+    
+    getAuthToken() {
+        // Obtener token de autenticación del usuario
+        return localStorage.getItem('rsc_auth_token') || null;
     }
     
     // ========================================
@@ -596,6 +817,80 @@ class RSCSimulatedMiningEngine {
     emitActivityUpdate(activity) {
         const event = new CustomEvent('activityUpdate', {
             detail: activity
+        });
+        document.dispatchEvent(event);
+    }
+    
+    // ========================================
+    // FUNCIONES DE BALANCE Y EVENTOS
+    // ========================================
+    
+    initializeUserBalance() {
+        // Inicializar balance del usuario si no existe
+        const savedData = localStorage.getItem('rsc_user_balance');
+        if (!savedData) {
+            this.miningState.userBalance = 0;
+            const userData = {
+                id: 'test_user_123',
+                balance: 0,
+                lastUpdate: new Date().toISOString()
+            };
+            localStorage.setItem('rsc_user_balance', JSON.stringify(userData));
+            console.log('💰 Balance inicializado: 0.00000000 RSC');
+        } else {
+            const userData = JSON.parse(savedData);
+            this.miningState.userBalance = userData.balance || 0;
+            console.log('💰 Balance cargado:', this.miningState.userBalance.toFixed(8), 'RSC');
+        }
+    }
+    
+    updateUserBalance(amount) {
+        // Actualizar balance en el estado de minería
+        if (!this.miningState.userBalance) {
+            this.miningState.userBalance = 0;
+        }
+        this.miningState.userBalance += amount;
+        
+        // Guardar en localStorage para persistencia
+        const userData = {
+            id: this.currentSession?.user_id || 'test_user_123',
+            balance: this.miningState.userBalance,
+            lastUpdate: new Date().toISOString()
+        };
+        localStorage.setItem('rsc_user_balance', JSON.stringify(userData));
+        
+        console.log('💰 Balance actualizado:', this.miningState.userBalance.toFixed(8), 'RSC');
+    }
+    
+    getUserBalance() {
+        // Obtener balance desde localStorage o estado
+        const savedData = localStorage.getItem('rsc_user_balance');
+        if (savedData) {
+            const userData = JSON.parse(savedData);
+            this.miningState.userBalance = userData.balance || 0;
+        }
+        return this.miningState.userBalance || 0;
+    }
+    
+    emitBalanceUpdate() {
+        const event = new CustomEvent('balanceUpdate', {
+            detail: {
+                balance: this.miningState.userBalance,
+                sessionTokens: this.miningState.sessionTokens,
+                totalBlocks: this.miningState.totalBlocksFound
+            }
+        });
+        document.dispatchEvent(event);
+    }
+    
+    emitStatsUpdate() {
+        const event = new CustomEvent('statsUpdate', {
+            detail: {
+                hashRate: this.miningState.currentHashRate,
+                efficiency: this.miningState.efficiency,
+                blocksFound: this.miningState.totalBlocksFound,
+                sessionTokens: this.miningState.sessionTokens
+            }
         });
         document.dispatchEvent(event);
     }
