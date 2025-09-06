@@ -393,6 +393,42 @@ function applyAnimationClasses() {
   document.querySelectorAll('.card, .stat-card, .action-card').forEach(card => {
     card.classList.add('card-floating');
   });
+
+  // Aplicar efectos 3D
+  apply3DEffects();
+}
+
+// Función para aplicar efectos 3D
+function apply3DEffects() {
+  // Aplicar efectos 3D a cards
+  document.querySelectorAll('.card, .stat-card, .action-card').forEach(card => {
+    card.classList.add('card-3d-advanced');
+  });
+
+  // Aplicar efectos 3D a botones
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.classList.add('btn-3d');
+  });
+
+  // Aplicar efectos 3D a texto
+  document.querySelectorAll('h1, h2').forEach(text => {
+    text.classList.add('text-3d');
+  });
+
+  // Aplicar efectos de glassmorphism
+  document.querySelectorAll('.highlight-card, .stat-card').forEach(card => {
+    card.classList.add('glass-3d');
+  });
+
+  // Aplicar efectos de neon
+  document.querySelectorAll('h1').forEach(title => {
+    title.classList.add('neon-3d');
+  });
+
+  // Aplicar efectos de tilt 3D avanzado
+  document.querySelectorAll('.card, .stat-card, .action-card').forEach(card => {
+    card.classList.add('tilt-3d-advanced');
+  });
 }
 
 // Efectos de scroll suave

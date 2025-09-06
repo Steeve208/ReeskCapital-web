@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC Chain - 3D WebGL Demo</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/global.css?v=4.0">
+  <link rel="stylesheet" href="styles/animations.css?v=4.0">
+  <link rel="stylesheet" href="styles/3d-effects.css?v=4.0">
+  
+  <style>
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      padding: 2rem;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .demo-section {
+      margin-bottom: 6rem;
+      padding: 3rem;
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .demo-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .demo-item {
+      padding: 2rem;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-lg);
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .demo-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+    }
+    
+    .demo-button {
+      margin: 0.5rem;
+    }
+    
+    .demo-card {
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+    
+    .demo-input {
+      width: 100%;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: var(--bg-secondary);
+      border: 1px solid var(--text-muted);
+      border-radius: var(--border-radius-md);
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+    
+    .demo-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    }
+    
+    .progress-demo {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-secondary);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    
+    .toggle-demo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .particle-container {
+      position: relative;
+      height: 300px;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+    
+    .cube-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 300px;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      margin: 1rem 0;
+    }
+    
+    .carousel-container {
+      height: 300px;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .flip-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      margin: 1rem 0;
+    }
+    
+    .glass-container {
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      margin: 1rem 0;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .neon-container {
+      text-align: center;
+      padding: 2rem;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      margin: 1rem 0;
+    }
+    
+    .parallax-demo {
+      height: 400px;
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+      border-radius: var(--border-radius-md);
+      margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .parallax-layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 1rem;
+      border-radius: var(--border-radius-md);
+      z-index: 1000;
+    }
+    
+    .control-button {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      margin: 0.25rem 0;
+      background: var(--gradient-primary);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .control-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+    }
+    
+    .info-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 1rem;
+      border-radius: var(--border-radius-md);
+      z-index: 1000;
+      max-width: 300px;
+    }
+    
+    .info-panel h4 {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .info-panel p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin: 0.25rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1 class="demo-title text-3d-large">RSC Chain - 3D WebGL Demo</h1>
+    
+    <!-- Controls -->
+    <div class="controls">
+      <button class="control-button" onclick="toggleWebGL()">Toggle WebGL</button>
+      <button class="control-button" onclick="toggleParticles()">Toggle Particles</button>
+      <button class="control-button" onclick="toggleAnimations()">Toggle Animations</button>
+      <button class="control-button" onclick="resetAll()">Reset All</button>
+    </div>
+    
+    <!-- Info Panel -->
+    <div class="info-panel">
+      <h4>3D WebGL System</h4>
+      <p><strong>WebGL:</strong> <span id="webglStatus">Loading...</span></p>
+      <p><strong>Particles:</strong> <span id="particleStatus">Active</span></p>
+      <p><strong>Animations:</strong> <span id="animationStatus">Active</span></p>
+      <p><strong>Mouse:</strong> <span id="mousePos">0, 0</span></p>
+    </div>
+    
+    <!-- Basic 3D Elements -->
+    <section class="demo-section">
+      <h2 class="demo-title">Basic 3D Elements</h2>
+      <div class="demo-grid">
+        <div class="demo-item element-3d">
+          <h3>3D Element</h3>
+          <p>Hover to see 3D effect</p>
+        </div>
+        <div class="demo-item card-3d-advanced">
+          <div class="card-content">
+            <h3>3D Advanced Card</h3>
+            <p>Hover for advanced 3D effects</p>
+          </div>
+        </div>
+        <div class="demo-item btn-3d">
+          <h3>3D Button</h3>
+          <p>Click for 3D interaction</p>
+        </div>
+        <div class="demo-item text-3d">
+          <h3>3D Text</h3>
+          <p>Hover for 3D text effect</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 3D Cube -->
+    <section class="demo-section">
+      <h2 class="demo-title">3D Cube</h2>
+      <div class="cube-container" id="cubeContainer">
+        <!-- Cube will be generated by JavaScript -->
+      </div>
+    </section>
+    
+    <!-- Flip Cards -->
+    <section class="demo-section">
+      <h2 class="demo-title">3D Flip Cards</h2>
+      <div class="demo-grid">
+        <div class="flip-container">
+          <div class="flip-card-3d">
+            <div class="flip-card-front">RSC</div>
+            <div class="flip-card-back">CHAIN</div>
+          </div>
+        </div>
+        <div class="flip-container">
+          <div class="flip-card-3d">
+            <div class="flip-card-front">3D</div>
+            <div class="flip-card-back">WEBGL</div>
+          </div>
+        </div>
+        <div class="flip-container">
+          <div class="flip-card-3d">
+            <div class="flip-card-front">BLOCK</div>
+            <div class="flip-card-back">CHAIN</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 3D Carousel -->
+    <section class="demo-section">
+      <h2 class="demo-title">3D Carousel</h2>
+      <div class="carousel-container" id="carouselContainer">
+        <!-- Carousel will be generated by JavaScript -->
+      </div>
+    </section>
+    
+    <!-- Glassmorphism 3D -->
+    <section class="demo-section">
+      <h2 class="demo-title">Glassmorphism 3D</h2>
+      <div class="demo-grid">
+        <div class="demo-item glass-3d">
+          <h3>Glass 3D</h3>
+          <p>Hover for glassmorphism effect</p>
+        </div>
+        <div class="demo-item glass-3d">
+          <h3>Glass Card</h3>
+          <p>3D glass effect with blur</p>
+        </div>
+        <div class="demo-item glass-3d">
+          <h3>Glass Button</h3>
+          <p>Interactive glass element</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Neon 3D -->
+    <section class="demo-section">
+      <h2 class="demo-title">Neon 3D Effects</h2>
+      <div class="neon-container">
+        <h1 class="neon-3d">NEON 3D</h1>
+        <p>Hover for neon glow effect</p>
+      </div>
+    </section>
+    
+    <!-- Parallax 3D -->
+    <section class="demo-section">
+      <h2 class="demo-title">Parallax 3D</h2>
+      <div class="parallax-demo" data-parallax-3d="0.5">
+        <div class="parallax-layer parallax-layer-1">Background</div>
+        <div class="parallax-layer parallax-layer-2">Midground</div>
+        <div class="parallax-layer parallax-layer-3">Foreground</div>
+      </div>
+    </section>
+    
+    <!-- Tilt 3D Advanced -->
+    <section class="demo-section">
+      <h2 class="demo-title">Tilt 3D Advanced</h2>
+      <div class="demo-grid">
+        <div class="demo-item tilt-3d-advanced">
+          <h3>Tilt 3D</h3>
+          <p>Advanced tilt effect</p>
+        </div>
+        <div class="demo-item tilt-3d-advanced">
+          <h3>Mouse Follow</h3>
+          <p>Follows mouse movement</p>
+        </div>
+        <div class="demo-item tilt-3d-advanced">
+          <h3>Perspective</h3>
+          <p>3D perspective effect</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Scroll 3D -->
+    <section class="demo-section">
+      <h2 class="demo-title">Scroll 3D Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item" data-scroll-3d="0.3">
+          <h3>Scroll 3D</h3>
+          <p>3D effect on scroll</p>
+        </div>
+        <div class="demo-item" data-scroll-3d="0.5">
+          <h3>Parallax Scroll</h3>
+          <p>Parallax with 3D</p>
+        </div>
+        <div class="demo-item" data-scroll-3d="0.7">
+          <h3>Depth Scroll</h3>
+          <p>Depth effect on scroll</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Particle System -->
+    <section class="demo-section">
+      <h2 class="demo-title">3D Particle System</h2>
+      <div class="particle-container">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;">
+          <h3>3D Particles</h3>
+          <p>Interactive particle system</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- WebGL Background -->
+    <section class="demo-section">
+      <h2 class="demo-title">WebGL Background</h2>
+      <div style="height: 400px; background: var(--bg-secondary); border-radius: var(--border-radius-md); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;">
+          <h3>WebGL Effects</h3>
+          <p>Real-time WebGL rendering</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="scripts/3d-webgl-system.js?v=4.0"></script>
+  <script src="scripts/advanced-animations.js?v=4.0"></script>
+  <script src="scripts/animations.js?v=4.0"></script>
+  
+  <script>
+    // Demo functionality
+    let webglEnabled = true;
+    let particlesEnabled = true;
+    let animationsEnabled = true;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize 3D system
+      if (window.RSC3DSystem) {
+        // Create 3D cube
+        const cubeContainer = document.getElementById('cubeContainer');
+        if (cubeContainer) {
+          window.RSC3DSystem.createCube3D(cubeContainer, 200);
+        }
+        
+        // Create 3D carousel
+        const carouselContainer = document.getElementById('carouselContainer');
+        if (carouselContainer) {
+          const items = ['RSC', 'CHAIN', '3D', 'WEBGL', 'BLOCK', 'CHAIN'];
+          window.RSC3DSystem.createCarousel3D(carouselContainer, items);
+        }
+      }
+      
+      // Initialize advanced animations
+      if (window.RSCAdvancedAnimations) {
+        window.RSCAdvancedAnimations = new window.RSCAdvancedAnimations();
+      }
+      
+      // Update status
+      updateStatus();
+      
+      // Mouse tracking
+      document.addEventListener('mousemove', (e) => {
+        document.getElementById('mousePos').textContent = `${e.clientX}, ${e.clientY}`;
+      });
+    });
+    
+    function toggleWebGL() {
+      webglEnabled = !webglEnabled;
+      if (window.RSC3DSystem) {
+        if (webglEnabled) {
+          window.RSC3DSystem = new window.RSC3DSystem();
+        } else {
+          window.RSC3DSystem.destroy();
+        }
+      }
+      updateStatus();
+    }
+    
+    function toggleParticles() {
+      particlesEnabled = !particlesEnabled;
+      const particles = document.querySelectorAll('.particle-3d');
+      particles.forEach(particle => {
+        particle.style.display = particlesEnabled ? 'block' : 'none';
+      });
+      updateStatus();
+    }
+    
+    function toggleAnimations() {
+      animationsEnabled = !animationsEnabled;
+      const animatedElements = document.querySelectorAll('.element-3d, .card-3d-advanced, .btn-3d, .text-3d, .tilt-3d-advanced, .glass-3d, .neon-3d');
+      animatedElements.forEach(element => {
+        if (animationsEnabled) {
+          element.style.animationPlayState = 'running';
+          element.style.transition = 'all 0.3s ease';
+        } else {
+          element.style.animationPlayState = 'paused';
+          element.style.transition = 'none';
+        }
+      });
+      updateStatus();
+    }
+    
+    function resetAll() {
+      webglEnabled = true;
+      particlesEnabled = true;
+      animationsEnabled = true;
+      
+      if (window.RSC3DSystem) {
+        window.RSC3DSystem.destroy();
+        window.RSC3DSystem = new window.RSC3DSystem();
+      }
+      
+      const particles = document.querySelectorAll('.particle-3d');
+      particles.forEach(particle => {
+        particle.style.display = 'block';
+      });
+      
+      const animatedElements = document.querySelectorAll('.element-3d, .card-3d-advanced, .btn-3d, .text-3d, .tilt-3d-advanced, .glass-3d, .neon-3d');
+      animatedElements.forEach(element => {
+        element.style.animationPlayState = 'running';
+        element.style.transition = 'all 0.3s ease';
+        element.style.transform = '';
+      });
+      
+      updateStatus();
+    }
+    
+    function updateStatus() {
+      document.getElementById('webglStatus').textContent = webglEnabled ? 'Active' : 'Disabled';
+      document.getElementById('particleStatus').textContent = particlesEnabled ? 'Active' : 'Disabled';
+      document.getElementById('animationStatus').textContent = animationsEnabled ? 'Active' : 'Disabled';
+    }
+  </script>
+</body>
+</html>

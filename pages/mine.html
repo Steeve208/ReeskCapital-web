@@ -211,6 +211,15 @@
                             </div>
                         </div>
                         
+                        <!-- Hash Visualization -->
+                        <div class="hash-visualization">
+                            <div class="hash-header">
+                                <h4>🔗 Hash en Tiempo Real</h4>
+                                <span class="hash-count">Hashes: <span id="hashCount">0</span></span>
+                            </div>
+                            <div class="hash-display" id="hashDisplay">0000000000000000000000000000000000000000000000000000000000000000</div>
+                        </div>
+                        
                         <div class="session-stats">
                             <div class="stat-card">
                                 <div class="stat-icon">
@@ -240,6 +249,99 @@
                                     <span class="stat-value" id="estimatedReward">0.00000000</span>
                                     <span class="stat-label">Estimado por Hora</span>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mainnet Preparation -->
+                <div class="mainnet-preparation">
+                    <div class="mainnet-card">
+                        <div class="mainnet-header">
+                            <h3>🚀 Preparación para Mainnet</h3>
+                            <div class="mainnet-countdown" id="mainnetCountdown">
+                                <span class="countdown-item">
+                                    <span class="countdown-value" id="mainnetDays">0</span>
+                                    <span class="countdown-label">Días</span>
+                                </span>
+                                <span class="countdown-item">
+                                    <span class="countdown-value" id="mainnetHours">0</span>
+                                    <span class="countdown-label">Horas</span>
+                                </span>
+                                <span class="countdown-item">
+                                    <span class="countdown-value" id="mainnetMinutes">0</span>
+                                    <span class="countdown-label">Min</span>
+                                </span>
+                                <span class="countdown-item">
+                                    <span class="countdown-value" id="mainnetSeconds">0</span>
+                                    <span class="countdown-label">Seg</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="mainnet-progress">
+                            <div class="progress-header">
+                                <span>Progreso de Desarrollo</span>
+                                <span id="mainnetProgress">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="mainnetProgressFill"></div>
+                            </div>
+                            <div class="progress-phase" id="mainnetPhase">Desarrollo Inicial</div>
+                        </div>
+                        
+                        <div class="mainnet-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Minería Simulada</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Sistema de Referidos</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Wallet Integration</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Transacciones Reales</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Referral System -->
+                <div class="referral-system">
+                    <div class="referral-card">
+                        <div class="referral-header">
+                            <h3>👥 Sistema de Referidos</h3>
+                            <div class="referral-stats">
+                                <span class="referral-count">Referidos: <span id="referralCount">0</span></span>
+                                <span class="referral-earnings">Ganado: <span id="referralEarnings">0.00000000 RSC</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="referral-content">
+                            <div class="referral-code-section">
+                                <label>Tu Código de Referido:</label>
+                                <div class="referral-code-display">
+                                    <input type="text" id="referralCode" readonly value="RSC_1234567890">
+                                    <button class="btn-secondary" id="copyReferralBtn">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <p class="referral-info">Comparte este código y gana 10% de las ganancias de tus referidos</p>
+                            </div>
+                            
+                            <div class="referral-benefits">
+                                <h4>Beneficios del Sistema de Referidos:</h4>
+                                <ul>
+                                    <li>🎯 10% de las ganancias de cada referido</li>
+                                    <li>📈 Bonificaciones por alcanzar hitos</li>
+                                    <li>🏆 Acceso prioritario al mainnet</li>
+                                    <li>💎 RSC extra para usuarios activos</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -402,8 +504,8 @@
     <script src="../scripts/supabase-config-simple.js"></script>
     <!-- Sistema de autenticación enterprise -->
     <script src="../scripts/rsc-mining-auth-system.js"></script>
-    <!-- Motor de minería real -->
-    <script src="../scripts/rsc-mining-engine.js"></script>
+    <!-- Motor de minería simulada revolucionario -->
+    <script src="../scripts/rsc-simulated-mining-engine.js"></script>
     <!-- Interfaz moderna de minería -->
     <script src="../scripts/mining-modern-ui.js"></script>
 </body>

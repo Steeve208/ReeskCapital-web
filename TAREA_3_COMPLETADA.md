@@ -190,3 +190,4 @@ RSC Chain ahora cuenta con un sistema de animaciones avanzadas y micro-interacci
 
 **Estado del Proyecto**: 3/7 Tareas Completadas (43%)
 **Próxima Tarea**: TAREA 4 - Elementos 3D y Efectos WebGL
+

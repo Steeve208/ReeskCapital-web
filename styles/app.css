@@ -735,10 +735,11 @@ header .logo-circle {
 
 /* DEBUG: Asegurar que la barra sea visible */
 .ad-banner-section {
-  border: 3px solid #ff0000 !important;
-  background: #ff0000 !important;
+  border: 2px solid #00ff88 !important;
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important;
   opacity: 1 !important;
   visibility: visible !important;
+  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4) !important;
 }
 
 /* Left Section - Icon & Text */
@@ -832,7 +833,7 @@ header .logo-circle {
 }
 
 .ad-highlight {
-  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  background: linear-gradient(135deg, #00ff88, #00ccff);
   color: #000;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
@@ -840,16 +841,16 @@ header .logo-circle {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 255, 136, 0.4);
   animation: adHighlightGlow 2s ease-in-out infinite;
 }
 
 @keyframes adHighlightGlow {
   0%, 100% { 
-    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 255, 136, 0.4);
   }
   50% { 
-    box-shadow: 0 4px 16px rgba(255, 107, 53, 0.6);
+    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.8);
   }
 }
 
@@ -5201,25 +5202,11 @@ html {
   font-weight: 600;
 }
 
-.metric-chart {
-  display: flex;
-  align-items: end;
-  gap: 0.25rem;
-  height: 60px;
-  margin-bottom: 1rem;
-}
+/* .metric-chart eliminado - ya no se necesita */
 
-.chart-bar {
-  flex: 1;
-  background: linear-gradient(to top, #00ff88, #00ccff);
-  border-radius: 2px;
-  animation: chartBarGrow 1s ease-out;
-}
+/* .chart-bar eliminado - ya no se necesita */
 
-@keyframes chartBarGrow {
-  0% { height: 0; }
-  100% { height: var(--height, 50%); }
-}
+/* @keyframes chartBarGrow eliminado - ya no se necesita */
 
 .block-visualization {
   margin-bottom: 1rem;

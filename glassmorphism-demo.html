@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC Chain - Glassmorphism Effects Demo</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/global.css?v=4.0">
+  <link rel="stylesheet" href="styles/animations.css?v=4.0">
+  <link rel="stylesheet" href="styles/3d-effects.css?v=4.0">
+  <link rel="stylesheet" href="styles/responsive-mobile.css?v=4.0">
+  <link rel="stylesheet" href="styles/glassmorphism-effects.css?v=4.0">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .demo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .demo-section {
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    .demo-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      background: linear-gradient(135deg, #00ff88 0%, #4ecdc4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .demo-item {
+      padding: 1.5rem;
+      text-align: center;
+      border-radius: 15px;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+    }
+    
+    .demo-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      z-index: 1000;
+    }
+    
+    .control-button {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      margin: 0.25rem 0;
+      background: linear-gradient(135deg, #00ff88 0%, #4ecdc4 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .control-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+    }
+    
+    .info-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      z-index: 1000;
+      max-width: 300px;
+    }
+    
+    .info-panel h4 {
+      margin: 0 0 0.5rem 0;
+      color: #00ff88;
+    }
+    
+    .info-panel p {
+      margin: 0.25rem 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .effect-preview {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .effect-preview-item {
+      flex: 1;
+      min-width: 100px;
+      padding: 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      text-align: center;
+    }
+    
+    .effect-preview-item:hover {
+      border-color: #00ff88;
+      transform: scale(1.05);
+    }
+    
+    .effect-preview-item.active {
+      border-color: #00ff88;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    }
+    
+    .particle-info {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      z-index: 1000;
+    }
+    
+    .particle-info h4 {
+      margin: 0 0 0.5rem 0;
+      color: #00ff88;
+    }
+    
+    .particle-info p {
+      margin: 0.25rem 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <!-- Controls -->
+  <div class="controls">
+    <button class="control-button" onclick="toggleParticles()">Toggle Particles</button>
+    <button class="control-button" onclick="addParticle()">Add Particle</button>
+    <button class="control-button" onclick="clearParticles()">Clear Particles</button>
+    <button class="control-button" onclick="toggleEffects()">Toggle Effects</button>
+    <button class="control-button" onclick="resetAll()">Reset All</button>
+  </div>
+  
+  <!-- Particle Info -->
+  <div class="particle-info" id="particleInfo">
+    <h4>Particle System</h4>
+    <p><strong>Count:</strong> <span id="particleCount">0</span></p>
+    <p><strong>Status:</strong> <span id="particleStatus">Stopped</span></p>
+    <p><strong>Mouse:</strong> <span id="mousePos">0, 0</span></p>
+  </div>
+  
+  <!-- Info Panel -->
+  <div class="info-panel">
+    <h4>Glassmorphism Effects</h4>
+    <p>Hover over elements to see effects</p>
+    <p>Move mouse to attract particles</p>
+    <p>Scroll to see parallax effects</p>
+    <p>Touch elements for mobile effects</p>
+  </div>
+  
+  <div class="demo-container">
+    <h1 class="demo-title">RSC Chain - Glassmorphism Effects Demo</h1>
+    
+    <!-- Glassmorphism Cards -->
+    <section class="demo-section">
+      <h2 class="demo-title">Glassmorphism Cards</h2>
+      <div class="demo-grid">
+        <div class="demo-item glass-card hover-lift">
+          <h3>Glass Card</h3>
+          <p>Basic glassmorphism effect with hover lift</p>
+          <button class="glass-btn">Action</button>
+        </div>
+        <div class="demo-item glass-card glass-neon hover-glow">
+          <h3>Glass Neon</h3>
+          <p>Glassmorphism with neon glow effect</p>
+          <button class="glass-btn">Action</button>
+        </div>
+        <div class="demo-item glass-card glass-gradient hover-scale">
+          <h3>Glass Gradient</h3>
+          <p>Glassmorphism with gradient background</p>
+          <button class="glass-btn">Action</button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Neon Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Neon Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item neon neon-primary hover-glow">
+          <h3>Neon Primary</h3>
+          <p>Primary neon glow effect</p>
+        </div>
+        <div class="demo-item neon neon-secondary hover-glow">
+          <h3>Neon Secondary</h3>
+          <p>Secondary neon glow effect</p>
+        </div>
+        <div class="demo-item neon neon-accent hover-glow">
+          <h3>Neon Accent</h3>
+          <p>Accent neon glow effect</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Gradient Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Gradient Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item gradient-neon hover-scale">
+          <h3>Neon Gradient</h3>
+          <p>Animated neon gradient</p>
+        </div>
+        <div class="demo-item gradient-rainbow hover-scale">
+          <h3>Rainbow Gradient</h3>
+          <p>Animated rainbow gradient</p>
+        </div>
+        <div class="demo-item gradient-aurora hover-scale">
+          <h3>Aurora Gradient</h3>
+          <p>Animated aurora gradient</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Blur Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Blur Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item glass blur-sm hover-glow">
+          <h3>Small Blur</h3>
+          <p>Light blur effect</p>
+        </div>
+        <div class="demo-item glass blur-md hover-glow">
+          <h3>Medium Blur</h3>
+          <p>Medium blur effect</p>
+        </div>
+        <div class="demo-item glass blur-lg hover-glow">
+          <h3>Large Blur</h3>
+          <p>Heavy blur effect</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Morphing Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Morphing Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item glass morph hover-scale">
+          <h3>Basic Morph</h3>
+          <p>Morphs to circle on hover</p>
+        </div>
+        <div class="demo-item glass morph-smooth hover-scale">
+          <h3>Smooth Morph</h3>
+          <p>Smooth morphing with rotation</p>
+        </div>
+        <div class="demo-item glass liquid hover-scale">
+          <h3>Liquid Effect</h3>
+          <p>Liquid morphing effect</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Floating Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Floating Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item glass floating hover-glow">
+          <h3>Floating</h3>
+          <p>Floating animation</p>
+        </div>
+        <div class="demo-item glass floating-slow hover-glow">
+          <h3>Slow Floating</h3>
+          <p>Slow floating animation</p>
+        </div>
+        <div class="demo-item glass floating-fast hover-glow">
+          <h3>Fast Floating</h3>
+          <p>Fast floating animation</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Glow Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Glow Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item glass glow hover-glow">
+          <h3>Basic Glow</h3>
+          <p>Basic glow effect</p>
+        </div>
+        <div class="demo-item glass glow-pulse hover-glow">
+          <h3>Pulse Glow</h3>
+          <p>Pulsing glow effect</p>
+        </div>
+        <div class="demo-item glass neon-text hover-glow">
+          <h3>Neon Text</h3>
+          <p>Neon text glow effect</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Effect Preview -->
+    <section class="demo-section">
+      <h2 class="demo-title">Effect Preview</h2>
+      <div class="effect-preview">
+        <div class="effect-preview-item glass" onclick="applyEffect('glass')">
+          <h4>Glass</h4>
+          <p>Basic glassmorphism</p>
+        </div>
+        <div class="effect-preview-item glass-neon" onclick="applyEffect('glass-neon')">
+          <h4>Glass Neon</h4>
+          <p>Glass with neon</p>
+        </div>
+        <div class="effect-preview-item gradient-neon" onclick="applyEffect('gradient-neon')">
+          <h4>Gradient</h4>
+          <p>Animated gradient</p>
+        </div>
+        <div class="effect-preview-item neon" onclick="applyEffect('neon')">
+          <h4>Neon</h4>
+          <p>Neon glow</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="scripts/glassmorphism-system.js?v=4.0"></script>
+  <script src="scripts/mobile-responsive-system.js?v=4.0"></script>
+  <script src="scripts/advanced-animations.js?v=4.0"></script>
+  <script src="scripts/animations.js?v=4.0"></script>
+  
+  <script>
+    // Demo functionality
+    let effectsEnabled = true;
+    let particlesEnabled = true;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize glassmorphism system
+      if (window.RSCGlassmorphismSystem) {
+        window.RSCGlassmorphismSystem = new window.RSCGlassmorphismSystem();
+      }
+      
+      // Initialize mobile system
+      if (window.RSCMobileSystem) {
+        window.RSCMobileSystem = new window.RSCMobileSystem();
+      }
+      
+      // Initialize advanced animations
+      if (window.RSCAdvancedAnimations) {
+        window.RSCAdvancedAnimations = new window.RSCAdvancedAnimations();
+      }
+      
+      // Update particle info
+      updateParticleInfo();
+      
+      // Update mouse position
+      document.addEventListener('mousemove', updateMousePosition);
+      
+      // Add scroll effects
+      addScrollEffects();
+    });
+    
+    function updateParticleInfo() {
+      if (window.RSCGlassmorphismSystem) {
+        document.getElementById('particleCount').textContent = window.RSCGlassmorphismSystem.particles.length;
+        document.getElementById('particleStatus').textContent = window.RSCGlassmorphismSystem.isRunning ? 'Running' : 'Stopped';
+      }
+      
+      setTimeout(updateParticleInfo, 1000);
+    }
+    
+    function updateMousePosition(e) {
+      document.getElementById('mousePos').textContent = `${e.clientX}, ${e.clientY}`;
+    }
+    
+    function addScrollEffects() {
+      const sections = document.querySelectorAll('.demo-section');
+      sections.forEach(section => {
+        section.classList.add('parallax');
+      });
+    }
+    
+    function toggleParticles() {
+      if (window.RSCGlassmorphismSystem) {
+        if (particlesEnabled) {
+          window.RSCGlassmorphismSystem.stop();
+          particlesEnabled = false;
+        } else {
+          window.RSCGlassmorphismSystem.start();
+          particlesEnabled = true;
+        }
+      }
+    }
+    
+    function addParticle() {
+      if (window.RSCGlassmorphismSystem) {
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        window.RSCGlassmorphismSystem.addParticle(x, y);
+      }
+    }
+    
+    function clearParticles() {
+      if (window.RSCGlassmorphismSystem) {
+        window.RSCGlassmorphismSystem.clearParticles();
+      }
+    }
+    
+    function toggleEffects() {
+      effectsEnabled = !effectsEnabled;
+      
+      const elements = document.querySelectorAll('.hover-lift, .hover-glow, .hover-scale, .hover-rotate');
+      elements.forEach(element => {
+        if (effectsEnabled) {
+          element.style.pointerEvents = 'auto';
+          element.style.opacity = '1';
+        } else {
+          element.style.pointerEvents = 'none';
+          element.style.opacity = '0.5';
+        }
+      });
+    }
+    
+    function resetAll() {
+      if (window.RSCGlassmorphismSystem) {
+        window.RSCGlassmorphismSystem.clearParticles();
+        window.RSCGlassmorphismSystem.start();
+      }
+      
+      effectsEnabled = true;
+      particlesEnabled = true;
+      
+      const elements = document.querySelectorAll('.hover-lift, .hover-glow, .hover-scale, .hover-rotate');
+      elements.forEach(element => {
+        element.style.pointerEvents = 'auto';
+        element.style.opacity = '1';
+        element.style.transform = '';
+        element.style.boxShadow = '';
+      });
+    }
+    
+    function applyEffect(effectClass) {
+      const previewItems = document.querySelectorAll('.effect-preview-item');
+      previewItems.forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      const activeItem = document.querySelector(`.effect-preview-${effectClass}`);
+      if (activeItem) {
+        activeItem.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>

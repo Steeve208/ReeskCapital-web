@@ -716,3 +716,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== EXPORT FOR GLOBAL USE =====
 window.RSCAdvancedAnimations = AdvancedAnimationSystem;
+

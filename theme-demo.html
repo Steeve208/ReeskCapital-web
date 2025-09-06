@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC Chain - Theme System Demo</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/global.css?v=4.0">
+  <link rel="stylesheet" href="styles/animations.css?v=4.0">
+  <link rel="stylesheet" href="styles/3d-effects.css?v=4.0">
+  <link rel="stylesheet" href="styles/responsive-mobile.css?v=4.0">
+  <link rel="stylesheet" href="styles/theme-system.css?v=4.0">
+  
+  <style>
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      transition: var(--theme-transition);
+    }
+    
+    .demo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .demo-section {
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: var(--theme-transition);
+    }
+    
+    .demo-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      transition: var(--theme-transition);
+    }
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .demo-item {
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--border-radius-md);
+      text-align: center;
+      transition: var(--theme-transition);
+    }
+    
+    .demo-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-color);
+    }
+    
+    .theme-info {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--border-radius-md);
+      padding: 1rem;
+      font-size: 0.9rem;
+      z-index: 1000;
+      transition: var(--theme-transition);
+    }
+    
+    .theme-info h4 {
+      margin: 0 0 0.5rem 0;
+      color: var(--primary-color);
+    }
+    
+    .theme-info p {
+      margin: 0.25rem 0;
+      color: var(--text-secondary);
+    }
+    
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--border-radius-md);
+      padding: 1rem;
+      z-index: 1000;
+      transition: var(--theme-transition);
+    }
+    
+    .control-button {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      margin: 0.25rem 0;
+      background: var(--gradient-primary);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--theme-transition);
+    }
+    
+    .control-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+    }
+    
+    .theme-preview {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .theme-preview-item {
+      flex: 1;
+      padding: 1rem;
+      border: 2px solid var(--border-primary);
+      border-radius: var(--border-radius-md);
+      cursor: pointer;
+      transition: var(--theme-transition);
+    }
+    
+    .theme-preview-item:hover {
+      border-color: var(--primary-color);
+      transform: scale(1.05);
+    }
+    
+    .theme-preview-item.active {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    }
+    
+    .theme-preview-light {
+      background: #ffffff;
+      color: #212529;
+    }
+    
+    .theme-preview-dark {
+      background: #000000;
+      color: #ffffff;
+    }
+    
+    .theme-preview-auto {
+      background: linear-gradient(135deg, #ffffff 0%, #000000 100%);
+      color: #212529;
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Info -->
+  <div class="theme-info" id="themeInfo">
+    <h4>Theme Info</h4>
+    <p><strong>Current:</strong> <span id="currentTheme">Loading...</span></p>
+    <p><strong>Effective:</strong> <span id="effectiveTheme">Loading...</span></p>
+    <p><strong>System:</strong> <span id="systemTheme">Loading...</span></p>
+    <p><strong>Auto:</strong> <span id="isAuto">Loading...</span></p>
+  </div>
+  
+  <!-- Controls -->
+  <div class="controls">
+    <button class="control-button" onclick="cycleTheme()">Cycle Theme</button>
+    <button class="control-button" onclick="setLight()">Light Theme</button>
+    <button class="control-button" onclick="setDark()">Dark Theme</button>
+    <button class="control-button" onclick="setAuto()">Auto Theme</button>
+    <button class="control-button" onclick="resetTheme()">Reset</button>
+  </div>
+  
+  <div class="demo-container">
+    <h1 class="demo-title">RSC Chain - Theme System Demo</h1>
+    
+    <!-- Theme Preview -->
+    <section class="demo-section">
+      <h2 class="demo-title">Theme Preview</h2>
+      <div class="theme-preview">
+        <div class="theme-preview-item theme-preview-light" onclick="setLight()">
+          <h3>Light Theme</h3>
+          <p>Clean and bright interface</p>
+        </div>
+        <div class="theme-preview-item theme-preview-dark" onclick="setDark()">
+          <h3>Dark Theme</h3>
+          <p>Easy on the eyes</p>
+        </div>
+        <div class="theme-preview-item theme-preview-auto" onclick="setAuto()">
+          <h3>Auto Theme</h3>
+          <p>Follows system preference</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Theme Cards -->
+    <section class="demo-section">
+      <h2 class="demo-title">Theme Cards</h2>
+      <div class="demo-grid">
+        <div class="demo-item theme-card">
+          <h3>Card 1</h3>
+          <p>This card adapts to the current theme</p>
+          <button class="theme-button">Action</button>
+        </div>
+        <div class="demo-item theme-card">
+          <h3>Card 2</h3>
+          <p>Colors change automatically</p>
+          <button class="theme-button">Action</button>
+        </div>
+        <div class="demo-item theme-card">
+          <h3>Card 3</h3>
+          <p>Smooth transitions between themes</p>
+          <button class="theme-button">Action</button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Theme Forms -->
+    <section class="demo-section">
+      <h2 class="demo-title">Theme Forms</h2>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h3>Form Inputs</h3>
+          <input type="text" class="theme-input" placeholder="Enter text" style="width: 100%; margin: 0.5rem 0;">
+          <input type="email" class="theme-input" placeholder="Enter email" style="width: 100%; margin: 0.5rem 0;">
+          <select class="theme-input" style="width: 100%; margin: 0.5rem 0;">
+            <option>Select option</option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+          </select>
+        </div>
+        <div class="demo-item">
+          <h3>Theme Text</h3>
+          <p class="theme-text">Primary text color</p>
+          <p class="theme-text-secondary">Secondary text color</p>
+          <p class="theme-text-muted">Muted text color</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Theme Effects -->
+    <section class="demo-section">
+      <h2 class="demo-title">Theme Effects</h2>
+      <div class="demo-grid">
+        <div class="demo-item theme-glow">
+          <h3>Glow Effect</h3>
+          <p>Hover for glow effect</p>
+        </div>
+        <div class="demo-item theme-glass">
+          <h3>Glass Effect</h3>
+          <p>Glassmorphism with theme colors</p>
+        </div>
+        <div class="demo-item theme-transition">
+          <h3>Smooth Transition</h3>
+          <p>All elements transition smoothly</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="scripts/theme-system.js?v=4.0"></script>
+  <script src="scripts/mobile-responsive-system.js?v=4.0"></script>
+  <script src="scripts/advanced-animations.js?v=4.0"></script>
+  <script src="scripts/animations.js?v=4.0"></script>
+  
+  <script>
+    // Demo functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize theme system
+      if (window.RSCThemeSystem) {
+        window.RSCThemeSystem = new window.RSCThemeSystem();
+      }
+      
+      // Initialize mobile system
+      if (window.RSCMobileSystem) {
+        window.RSCMobileSystem = new window.RSCMobileSystem();
+      }
+      
+      // Initialize advanced animations
+      if (window.RSCAdvancedAnimations) {
+        window.RSCAdvancedAnimations = new window.RSCAdvancedAnimations();
+      }
+      
+      // Update theme info
+      updateThemeInfo();
+      
+      // Listen for theme changes
+      document.addEventListener('themeChanged', updateThemeInfo);
+      
+      // Update theme preview
+      updateThemePreview();
+    });
+    
+    function updateThemeInfo() {
+      if (window.RSCThemeSystem) {
+        document.getElementById('currentTheme').textContent = window.RSCThemeSystem.getCurrentTheme();
+        document.getElementById('effectiveTheme').textContent = window.RSCThemeSystem.getEffectiveTheme();
+        document.getElementById('systemTheme').textContent = window.RSCThemeSystem.systemTheme;
+        document.getElementById('isAuto').textContent = window.RSCThemeSystem.isAuto() ? 'Yes' : 'No';
+      }
+    }
+    
+    function updateThemePreview() {
+      const previewItems = document.querySelectorAll('.theme-preview-item');
+      previewItems.forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      if (window.RSCThemeSystem) {
+        const currentTheme = window.RSCThemeSystem.getCurrentTheme();
+        const activeItem = document.querySelector(`.theme-preview-${currentTheme}`);
+        if (activeItem) {
+          activeItem.classList.add('active');
+        }
+      }
+    }
+    
+    function cycleTheme() {
+      if (window.RSCThemeSystem) {
+        window.RSCThemeSystem.cycleTheme();
+        updateThemePreview();
+      }
+    }
+    
+    function setLight() {
+      if (window.RSCThemeSystem) {
+        window.RSCThemeSystem.setTheme('light');
+        updateThemePreview();
+      }
+    }
+    
+    function setDark() {
+      if (window.RSCThemeSystem) {
+        window.RSCThemeSystem.setTheme('dark');
+        updateThemePreview();
+      }
+    }
+    
+    function setAuto() {
+      if (window.RSCThemeSystem) {
+        window.RSCThemeSystem.setTheme('auto');
+        updateThemePreview();
+      }
+    }
+    
+    function resetTheme() {
+      if (window.RSCThemeSystem) {
+        window.RSCThemeSystem.setTheme('auto');
+        updateThemePreview();
+      }
+    }
+  </script>
+</body>
+</html>

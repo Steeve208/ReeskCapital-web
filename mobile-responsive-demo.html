@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC Chain - Mobile Responsive Demo</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/global.css?v=4.0">
+  <link rel="stylesheet" href="styles/animations.css?v=4.0">
+  <link rel="stylesheet" href="styles/3d-effects.css?v=4.0">
+  <link rel="stylesheet" href="styles/responsive-mobile.css?v=4.0">
+  
+  <style>
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    
+    .demo-container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0;
+    }
+    
+    .demo-section {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .demo-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+    
+    .demo-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .demo-item {
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .demo-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+    }
+    
+    .demo-button {
+      margin: 0.25rem;
+    }
+    
+    .demo-card {
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+    
+    .demo-input {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      background: var(--bg-secondary);
+      border: 1px solid var(--text-muted);
+      border-radius: var(--border-radius-md);
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+    
+    .demo-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    }
+    
+    .progress-demo {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-secondary);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    
+    .toggle-demo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+    }
+    
+    .swipe-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      padding: 1rem 0;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+    }
+    
+    .swipe-item {
+      flex-shrink: 0;
+      width: 200px;
+      height: 150px;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      scroll-snap-align: start;
+    }
+    
+    .device-info {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 0.5rem;
+      border-radius: var(--border-radius-sm);
+      font-size: 0.8rem;
+      z-index: 1000;
+    }
+    
+    .controls {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 0.5rem;
+      border-radius: var(--border-radius-sm);
+      z-index: 1000;
+    }
+    
+    .control-button {
+      display: block;
+      width: 100%;
+      padding: 0.25rem 0.5rem;
+      margin: 0.125rem 0;
+      background: var(--gradient-primary);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .control-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
+    }
+    
+    .touch-feedback {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .touch-feedback::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s;
+    }
+    
+    .touch-feedback:active::before {
+      width: 100px;
+      height: 100px;
+    }
+    
+    .lazy-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    
+    .lazy-content.loaded {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    @media (min-width: 768px) {
+      .demo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .demo-section {
+        padding: 1.5rem;
+      }
+      
+      .demo-title {
+        font-size: 2rem;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .demo-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .demo-section {
+        padding: 2rem;
+      }
+      
+      .demo-title {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Device Info -->
+  <div class="device-info" id="deviceInfo">
+    <div><strong>Device:</strong> <span id="deviceType">Loading...</span></div>
+    <div><strong>Size:</strong> <span id="screenSize">Loading...</span></div>
+    <div><strong>Orientation:</strong> <span id="orientation">Loading...</span></div>
+    <div><strong>Touch:</strong> <span id="touchSupport">Loading...</span></div>
+  </div>
+  
+  <!-- Controls -->
+  <div class="controls">
+    <button class="control-button" onclick="toggleMobileNav()">Toggle Nav</button>
+    <button class="control-button" onclick="testSwipe()">Test Swipe</button>
+    <button class="control-button" onclick="testPullRefresh()">Pull Refresh</button>
+    <button class="control-button" onclick="testLazyLoad()">Lazy Load</button>
+  </div>
+  
+  <div class="demo-container">
+    <!-- Header -->
+    <header class="header-responsive">
+      <div class="header-content">
+        <a href="#" class="header-logo">RSC Chain</a>
+        <nav class="header-nav">
+          <a href="#" class="header-nav-item">Home</a>
+          <a href="#" class="header-nav-item">About</a>
+          <a href="#" class="header-nav-item">Features</a>
+          <a href="#" class="header-nav-item">Mining</a>
+          <a href="#" class="header-nav-item">Wallet</a>
+        </nav>
+      </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content-responsive">
+      <h1 class="demo-title">RSC Chain - Mobile Responsive Demo</h1>
+      
+      <!-- Responsive Grid -->
+      <section class="demo-section">
+        <h2 class="demo-title">Responsive Grid</h2>
+        <div class="demo-grid grid-responsive">
+          <div class="demo-item">
+            <h3>Grid Item 1</h3>
+            <p>Responsive grid item</p>
+          </div>
+          <div class="demo-item">
+            <h3>Grid Item 2</h3>
+            <p>Responsive grid item</p>
+          </div>
+          <div class="demo-item">
+            <h3>Grid Item 3</h3>
+            <p>Responsive grid item</p>
+          </div>
+          <div class="demo-item">
+            <h3>Grid Item 4</h3>
+            <p>Responsive grid item</p>
+          </div>
+          <div class="demo-item">
+            <h3>Grid Item 5</h3>
+            <p>Responsive grid item</p>
+          </div>
+          <div class="demo-item">
+            <h3>Grid Item 6</h3>
+            <p>Responsive grid item</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Responsive Cards -->
+      <section class="demo-section">
+        <h2 class="demo-title">Responsive Cards</h2>
+        <div class="demo-grid">
+          <div class="demo-card card-responsive">
+            <h3>Card 1</h3>
+            <p>Responsive card with hover effects</p>
+            <button class="btn-responsive btn-primary demo-button">Action</button>
+          </div>
+          <div class="demo-card card-responsive">
+            <h3>Card 2</h3>
+            <p>Responsive card with hover effects</p>
+            <button class="btn-responsive btn-secondary demo-button">Action</button>
+          </div>
+          <div class="demo-card card-responsive">
+            <h3>Card 3</h3>
+            <p>Responsive card with hover effects</p>
+            <button class="btn-responsive btn-outline demo-button">Action</button>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Responsive Buttons -->
+      <section class="demo-section">
+        <h2 class="demo-title">Responsive Buttons</h2>
+        <div class="demo-grid">
+          <button class="btn-responsive btn-primary demo-button touch-feedback">
+            Primary Button
+          </button>
+          <button class="btn-responsive btn-secondary demo-button touch-feedback">
+            Secondary Button
+          </button>
+          <button class="btn-responsive btn-outline demo-button touch-feedback">
+            Outline Button
+          </button>
+          <button class="btn-responsive btn-ghost demo-button touch-feedback">
+            Ghost Button
+          </button>
+        </div>
+      </section>
+      
+      <!-- Responsive Forms -->
+      <section class="demo-section">
+        <h2 class="demo-title">Responsive Forms</h2>
+        <form class="form-responsive">
+          <div class="form-group-responsive">
+            <label class="form-label-responsive">Name</label>
+            <input type="text" class="form-input-responsive" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group-responsive">
+            <label class="form-label-responsive">Email</label>
+            <input type="email" class="form-input-responsive" placeholder="Enter your email" required>
+          </div>
+          <div class="form-group-responsive">
+            <label class="form-label-responsive">Message</label>
+            <textarea class="form-input-responsive" placeholder="Enter your message" rows="4"></textarea>
+          </div>
+          <button type="submit" class="btn-responsive btn-primary">Submit</button>
+        </form>
+      </section>
+      
+      <!-- Swipe Container -->
+      <section class="demo-section">
+        <h2 class="demo-title">Swipe Container</h2>
+        <div class="swipe-container">
+          <div class="swipe-item">Swipe Item 1</div>
+          <div class="swipe-item">Swipe Item 2</div>
+          <div class="swipe-item">Swipe Item 3</div>
+          <div class="swipe-item">Swipe Item 4</div>
+          <div class="swipe-item">Swipe Item 5</div>
+          <div class="swipe-item">Swipe Item 6</div>
+        </div>
+      </section>
+      
+      <!-- Lazy Loading -->
+      <section class="demo-section">
+        <h2 class="demo-title">Lazy Loading</h2>
+        <div class="demo-grid">
+          <div class="demo-item lazy-content" data-lazy="<h3>Lazy Content 1</h3><p>This content was loaded lazily</p>">
+            Loading...
+          </div>
+          <div class="demo-item lazy-content" data-lazy="<h3>Lazy Content 2</h3><p>This content was loaded lazily</p>">
+            Loading...
+          </div>
+          <div class="demo-item lazy-content" data-lazy="<h3>Lazy Content 3</h3><p>This content was loaded lazily</p>">
+            Loading...
+          </div>
+        </div>
+      </section>
+      
+      <!-- Touch Interactions -->
+      <section class="demo-section">
+        <h2 class="demo-title">Touch Interactions</h2>
+        <div class="demo-grid">
+          <div class="demo-item touch-feedback">
+            <h3>Touch Feedback</h3>
+            <p>Touch for feedback effect</p>
+          </div>
+          <div class="demo-item touch-feedback">
+            <h3>Touch Target</h3>
+            <p>Comfortable touch target</p>
+          </div>
+          <div class="demo-item touch-feedback">
+            <h3>Touch Scale</h3>
+            <p>Scale effect on touch</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Responsive Typography -->
+      <section class="demo-section">
+        <h2 class="demo-title">Responsive Typography</h2>
+        <div class="demo-grid">
+          <div class="demo-item">
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <p>Responsive paragraph text that scales with screen size.</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Progress Bars -->
+      <section class="demo-section">
+        <h2 class="demo-title">Progress Bars</h2>
+        <div class="demo-grid">
+          <div class="demo-item">
+            <h3>Progress 1</h3>
+            <div class="progress-demo">
+              <div class="progress-bar" style="width: 25%"></div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <h3>Progress 2</h3>
+            <div class="progress-demo">
+              <div class="progress-bar" style="width: 50%"></div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <h3>Progress 3</h3>
+            <div class="progress-demo">
+              <div class="progress-bar" style="width: 75%"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Toggle Switches -->
+      <section class="demo-section">
+        <h2 class="demo-title">Toggle Switches</h2>
+        <div class="demo-grid">
+          <div class="demo-item">
+            <div class="toggle-demo">
+              <span>Toggle 1</span>
+              <div class="toggle-switch"></div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <div class="toggle-demo">
+              <span>Toggle 2</span>
+              <div class="toggle-switch"></div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <div class="toggle-demo">
+              <span>Toggle 3</span>
+              <div class="toggle-switch"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="scripts/mobile-responsive-system.js?v=4.0"></script>
+  <script src="scripts/advanced-animations.js?v=4.0"></script>
+  <script src="scripts/animations.js?v=4.0"></script>
+  
+  <script>
+    // Demo functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize mobile system
+      if (window.RSCMobileSystem) {
+        window.RSCMobileSystem = new window.RSCMobileSystem();
+      }
+      
+      // Initialize advanced animations
+      if (window.RSCAdvancedAnimations) {
+        window.RSCAdvancedAnimations = new window.RSCAdvancedAnimations();
+      }
+      
+      // Update device info
+      updateDeviceInfo();
+      
+      // Toggle switches
+      document.querySelectorAll('.toggle-switch').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+          this.classList.toggle('active');
+        });
+      });
+      
+      // Touch feedback
+      document.querySelectorAll('.touch-feedback').forEach(element => {
+        element.addEventListener('touchstart', function() {
+          this.style.transform = 'scale(0.95)';
+        });
+        
+        element.addEventListener('touchend', function() {
+          this.style.transform = 'scale(1)';
+        });
+      });
+    });
+    
+    function updateDeviceInfo() {
+      const deviceType = window.innerWidth <= 768 ? 'Mobile' : 
+                        window.innerWidth <= 1024 ? 'Tablet' : 'Desktop';
+      const screenSize = `${window.innerWidth}x${window.innerHeight}`;
+      const orientation = window.innerWidth > window.innerHeight ? 'Landscape' : 'Portrait';
+      const touchSupport = 'ontouchstart' in window ? 'Yes' : 'No';
+      
+      document.getElementById('deviceType').textContent = deviceType;
+      document.getElementById('screenSize').textContent = screenSize;
+      document.getElementById('orientation').textContent = orientation;
+      document.getElementById('touchSupport').textContent = touchSupport;
+    }
+    
+    function toggleMobileNav() {
+      if (window.RSCMobileSystem) {
+        window.RSCMobileSystem.toggleMobileNav();
+      }
+    }
+    
+    function testSwipe() {
+      alert('Swipe left or right on the swipe container to test swipe gestures');
+    }
+    
+    function testPullRefresh() {
+      alert('Pull down from the top to test pull-to-refresh');
+    }
+    
+    function testLazyLoad() {
+      const lazyElements = document.querySelectorAll('.lazy-content');
+      lazyElements.forEach(element => {
+        if (element.dataset.lazy) {
+          element.innerHTML = element.dataset.lazy;
+          element.classList.add('loaded');
+        }
+      });
+    }
+    
+    // Update device info on resize
+    window.addEventListener('resize', updateDeviceInfo);
+    window.addEventListener('orientationchange', () => {
+      setTimeout(updateDeviceInfo, 100);
+    });
+  </script>
+</body>
+</html>
