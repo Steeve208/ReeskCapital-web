@@ -15,6 +15,7 @@ class ChatComponent {
 
     this.createChatHTML();
     this.initializeChat();
+    this.loadAIAgent();
   }
 
   createChatHTML() {
@@ -226,6 +227,34 @@ class ChatComponent {
       console.log('Chat inicializado en la página');
     } else {
       console.warn('AdvancedSupportChat no está disponible');
+    }
+  }
+
+  async loadAIAgent() {
+    try {
+      // Cargar el script del agente IA si no está ya cargado
+      if (typeof window.initializeRSCAIAgent === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'scripts/ai-agent-loader.js';
+        script.async = true;
+        document.head.appendChild(script);
+        
+        // Esperar a que se cargue
+        await new Promise((resolve, reject) => {
+          script.onload = resolve;
+          script.onerror = reject;
+        });
+      }
+
+      // Inicializar el agente IA
+      if (typeof window.initializeRSCAIAgent !== 'undefined') {
+        await window.initializeRSCAIAgent();
+        console.log('🤖 Agente IA cargado en chat component');
+      }
+      
+    } catch (error) {
+      console.warn('⚠️ No se pudo cargar el agente IA:', error);
+      // El chat seguirá funcionando con respuestas básicas
     }
   }
 }

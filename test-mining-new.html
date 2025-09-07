@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Nuevo Sistema de Minería RSC</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/mining.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/img/logo.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="mining-header">
+        <div class="header-background">
+            <div class="header-particles"></div>
+            <div class="header-gradient"></div>
+        </div>
+        
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <div class="logo-inner">
+                                <div class="logo-symbol">RSC</div>
+                                <div class="logo-glow"></div>
+                            </div>
+                        </div>
+                        <div class="logo-rings">
+                            <div class="ring ring-1"></div>
+                            <div class="ring ring-2"></div>
+                            <div class="ring ring-3"></div>
+                        </div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="platform-title">
+                            <span class="title-main">RSC</span>
+                            <span class="title-sub">Mining Test</span>
+                        </h1>
+                        <p class="platform-subtitle">
+                            <span class="subtitle-icon">⚡</span>
+                            Nuevo sistema de minería funcional
+                        </p>
+                        <div class="platform-badges">
+                            <span class="badge badge-primary">Test Mode</span>
+                            <span class="badge badge-secondary">RSC CHAIN</span>
+                            <span class="badge badge-accent">Live</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <div class="status-panel">
+                    <div class="status-indicator">
+                        <div class="status-dot" id="networkStatus">
+                            <div class="pulse-ring"></div>
+                        </div>
+                        <div class="status-text">
+                            <span class="status-label">Network</span>
+                            <span class="status-value" id="networkStatusText">Testing</span>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-badge">
+                        <div class="demo-icon">
+                            <i class="fas fa-hammer"></i>
+                            <div class="demo-glow"></div>
+                        </div>
+                        <div class="demo-text">
+                            <span class="demo-label">Mining Status</span>
+                            <span class="demo-desc" id="miningStatusText">Ready</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn-home" onclick="window.location.href='index.html'">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                    <button class="btn-help" id="helpBtn">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Help</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-bottom">
+            <div class="progress-bar">
+                <div class="progress-fill" id="headerProgress"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mining-main">
+        <div class="container">
+            <!-- Test Info -->
+            <div class="test-info-card">
+                <h2>🧪 Test del Nuevo Sistema de Minería</h2>
+                <p>Este es el nuevo sistema de minería completamente funcional. Prueba las siguientes características:</p>
+                <ul>
+                    <li>✅ Minería de 24 horas continuas</li>
+                    <li>✅ Persistencia automática</li>
+                    <li>✅ Interfaz en tiempo real</li>
+                    <li>✅ Conexión con backend</li>
+                    <li>✅ Restauración de sesiones</li>
+                </ul>
+            </div>
+
+            <!-- Mining Dashboard -->
+            <section class="mining-dashboard">
+                <!-- User Info -->
+                <div class="user-info-card">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <h3 class="user-name" id="userName">Test Miner</h3>
+                        <p class="user-email" id="userEmail">test@rscchain.com</p>
+                        <p class="user-wallet" id="userWallet">0x0000...0000</p>
+                    </div>
+                    <div class="user-balance">
+                        <span class="balance-label">Balance</span>
+                        <span class="balance-value" id="userBalance">0.000000 RSC</span>
+                    </div>
+                </div>
+
+                <!-- Mining Controls -->
+                <div class="mining-controls">
+                    <div class="control-card">
+                        <div class="control-header">
+                            <h3>⛏️ Mining Control</h3>
+                            <div class="mining-status" id="miningStatus">
+                                <span class="status-dot offline"></span>
+                                <span class="status-text">Stopped</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-actions">
+                            <button class="btn-success btn-large" id="startMiningBtn">
+                                <i class="fas fa-play"></i>
+                                Start Mining
+                            </button>
+                            <button class="btn-danger btn-large hidden" id="stopMiningBtn">
+                                <i class="fas fa-stop"></i>
+                                Stop Mining
+                            </button>
+                        </div>
+                        
+                        <div class="mining-info">
+                            <div class="info-item">
+                                <span class="info-label">Hash Rate:</span>
+                                <span class="info-value" id="hashRate">0 H/s</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Mined:</span>
+                                <span class="info-value" id="minedAmount">0.000000 RSC</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Active Time:</span>
+                                <span class="info-value" id="activeTime">00:00:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mining Stats -->
+                <div class="mining-stats">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>Total Mined</h4>
+                                <p class="stat-value" id="totalMined">0.000000 RSC</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>Session Time</h4>
+                                <p class="stat-value" id="sessionTime">00:00:00</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>Hash Rate</h4>
+                                <p class="stat-value" id="currentHashRate">0 H/s</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>Efficiency</h4>
+                                <p class="stat-value" id="efficiency">100%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mining Progress -->
+                <div class="mining-progress">
+                    <div class="progress-header">
+                        <h3>Mining Progress</h3>
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progressBarFill"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span class="progress-label">Session Progress</span>
+                        <span class="progress-time" id="progressTime">0 / 24 hours</span>
+                    </div>
+                </div>
+
+                <!-- Test Instructions -->
+                <div class="test-instructions">
+                    <h3>📋 Instrucciones de Prueba</h3>
+                    <ol>
+                        <li><strong>Paso 1:</strong> Haz clic en "Start Mining" para iniciar una sesión de 24 horas</li>
+                        <li><strong>Paso 2:</strong> Observa cómo los tokens se acumulan en tiempo real</li>
+                        <li><strong>Paso 3:</strong> <strong>CIERRA ESTA PESTAÑA</strong> y espera unos minutos</li>
+                        <li><strong>Paso 4:</strong> Regresa a esta página</li>
+                        <li><strong>Paso 5:</strong> Verifica que la sesión se restauró automáticamente</li>
+                        <li><strong>Paso 6:</strong> Los tokens siguieron acumulándose en segundo plano</li>
+                    </ol>
+                    <p><strong>⚠️ Importante:</strong> El sistema funciona en segundo plano usando Service Worker y persistencia local.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Mining Help</h2>
+                <button class="modal-close" id="closeHelpModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h4>🚀 How to get started?</h4>
+                    <ol>
+                        <li>Click "Start Mining" to begin mining RSC tokens</li>
+                        <li>Keep the tab open to continue mining</li>
+                        <li>Mining runs for 24 hours continuously</li>
+                        <li>Tokens are automatically added to your wallet</li>
+                    </ol>
+                </div>
+                
+                <div class="help-section">
+                    <h4>⛏️ Mining Features</h4>
+                    <ul>
+                        <li><strong>24-hour sessions:</strong> Each mining session lasts exactly 24 hours</li>
+                        <li><strong>Background mining:</strong> Continues even when tab is closed</li>
+                        <li><strong>Real-time stats:</strong> See your progress and earnings</li>
+                        <li><strong>Automatic payout:</strong> Tokens are added to your wallet automatically</li>
+                    </ul>
+                </div>
+                
+                <div class="help-section">
+                    <h4>💡 Tips</h4>
+                    <ul>
+                        <li>Keep your browser open for best performance</li>
+                        <li>Check your wallet balance regularly</li>
+                        <li>Mining efficiency may vary based on your device</li>
+                        <li>Each session must be started manually after 24 hours</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/rsc-mining-core.js"></script>
+    <script src="scripts/rsc-mining-ui.js"></script>
+    <script src="scripts/rsc-mining-backend.js"></script>
+    
+    <style>
+        .test-info-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .test-info-card h2 {
+            color: #4caf50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .test-info-card p {
+            color: #cccccc;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .test-info-card ul {
+            color: #cccccc;
+            padding-left: 1.5rem;
+        }
+        
+        .test-info-card li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-instructions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .test-instructions h3 {
+            color: #4caf50;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .test-instructions ol {
+            color: #cccccc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .test-instructions li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        
+        .test-instructions strong {
+            color: #ffffff;
+        }
+        
+        .test-instructions p {
+            color: #ff9800;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+    </style>
+</body>
+</html>

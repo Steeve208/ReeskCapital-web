@@ -125,8 +125,104 @@
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
-  <!-- Main Content -->
-  <main class="explorer-main">
+  <!-- Coming Soon Screen -->
+  <div class="coming-soon-overlay" id="comingSoonOverlay">
+    <!-- Top Right Back Button -->
+    <button class="coming-soon-back-btn" onclick="window.location.href='../index.html'">
+      <i class="fas fa-home"></i>
+      <span>BACK TO HOME</span>
+    </button>
+    
+    <div class="coming-soon-container">
+      <!-- Animated Background -->
+      <div class="blockchain-bg">
+        <div class="blockchain-particles"></div>
+        <div class="blockchain-nodes">
+          <div class="node" style="--delay: 0s; --x: 10%; --y: 20%;"></div>
+          <div class="node" style="--delay: 0.5s; --x: 30%; --y: 40%;"></div>
+          <div class="node" style="--delay: 1s; --x: 60%; --y: 15%;"></div>
+          <div class="node" style="--delay: 1.5s; --x: 80%; --y: 60%;"></div>
+          <div class="node" style="--delay: 2s; --x: 20%; --y: 80%;"></div>
+          <div class="node" style="--delay: 2.5s; --x: 70%; --y: 85%;"></div>
+        </div>
+        <div class="blockchain-connections">
+          <div class="connection" style="--from-x: 10%; --from-y: 20%; --to-x: 30%; --to-y: 40%;"></div>
+          <div class="connection" style="--from-x: 30%; --from-y: 40%; --to-x: 60%; --to-y: 15%;"></div>
+          <div class="connection" style="--from-x: 60%; --from-y: 15%; --to-x: 80%; --to-y: 60%;"></div>
+          <div class="connection" style="--from-x: 80%; --to-y: 60%; --to-x: 20%; --to-y: 80%;"></div>
+          <div class="connection" style="--from-x: 20%; --from-y: 80%; --to-x: 70%; --to-y: 85%;"></div>
+          <div class="connection" style="--from-x: 70%; --from-y: 85%; --to-x: 10%; --to-y: 20%;"></div>
+        </div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="coming-soon-content">
+        <div class="coming-soon-logo">
+          <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+        </div>
+        
+        <h1 class="coming-soon-title">
+          <span class="title-line">BLOCKCHAIN</span>
+          <span class="title-line">EXPLORER</span>
+        </h1>
+        
+        <div class="coming-soon-subtitle">
+          <span class="subtitle-text">Coming Soon</span>
+          <div class="subtitle-underline"></div>
+        </div>
+        
+        <p class="coming-soon-description">
+          We're building the most advanced blockchain in the world.<br>
+          Get ready to explore the future of decentralized technology.
+        </p>
+        
+        <div class="coming-soon-features">
+          <div class="feature-item">
+            <div class="feature-icon">🔍</div>
+            <span>Real-time Block Explorer</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <span>Advanced Analytics</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🌐</div>
+            <span>Network Visualization</span>
+          </div>
+        </div>
+        
+        <div class="coming-soon-actions">
+          <button class="btn btn-primary btn-large" onclick="window.location.href='../index.html'">
+            <i class="fas fa-home"></i>
+            Back to Home
+          </button>
+          <button class="btn btn-secondary btn-large" onclick="window.location.href='mine.html'">
+            <i class="fas fa-hammer"></i>
+            Start Mining
+          </button>
+        </div>
+        
+        <div class="coming-soon-progress">
+          <div class="progress-label">Development Progress</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 75%"></div>
+          </div>
+          <div class="progress-text">75% Complete</div>
+        </div>
+      </div>
+      
+      <!-- Floating Elements -->
+      <div class="floating-elements">
+        <div class="floating-block" style="--delay: 0s; --x: 5%; --y: 10%;">Block #1</div>
+        <div class="floating-block" style="--delay: 1s; --x: 85%; --y: 20%;">TX: 0x1234</div>
+        <div class="floating-block" style="--delay: 2s; --x: 15%; --y: 70%;">Address: RSC1</div>
+        <div class="floating-block" style="--delay: 3s; --x: 75%; --y: 80%;">Hash: 0xabcd</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content (Hidden) -->
+  <main class="explorer-main" style="display: none;">
     <!-- Epic Explorer -->
     <section class="explorer-hero">
       <!-- Epic Header -->
@@ -521,6 +617,68 @@
       </main>
     </div>
   </main>
+
+  <!-- Coming Soon Script -->
+  <script>
+    // Coming Soon Screen Management
+    document.addEventListener('DOMContentLoaded', function() {
+      const comingSoonOverlay = document.getElementById('comingSoonOverlay');
+      const mainContent = document.querySelector('.explorer-main');
+      
+      // Show coming soon screen by default
+      if (comingSoonOverlay) {
+        comingSoonOverlay.style.display = 'flex';
+        if (mainContent) {
+          mainContent.style.display = 'none';
+        }
+      }
+      
+      // Add click handlers for navigation buttons
+      const homeBtn = document.querySelector('.coming-soon-actions .btn-primary');
+      const mineBtn = document.querySelector('.coming-soon-actions .btn-secondary');
+      
+      if (homeBtn) {
+        homeBtn.addEventListener('click', function() {
+          window.location.href = '../index.html';
+        });
+      }
+      
+      if (mineBtn) {
+        mineBtn.addEventListener('click', function() {
+          window.location.href = 'mine.html';
+        });
+      }
+      
+      // Add some interactive effects
+      const floatingBlocks = document.querySelectorAll('.floating-block');
+      floatingBlocks.forEach(block => {
+        block.addEventListener('mouseenter', function() {
+          this.style.transform = 'scale(1.1) rotate(5deg)';
+          this.style.transition = 'all 0.3s ease';
+        });
+        
+        block.addEventListener('mouseleave', function() {
+          this.style.transform = 'scale(1) rotate(0deg)';
+        });
+      });
+      
+      // Add particle effect on mouse move
+      document.addEventListener('mousemove', function(e) {
+        const particles = document.querySelector('.blockchain-particles');
+        if (particles) {
+          const x = e.clientX / window.innerWidth;
+          const y = e.clientY / window.innerHeight;
+          
+          particles.style.background = `
+            radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(0, 255, 136, 0.2) 0%, transparent 50%),
+            radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%)
+          `;
+        }
+      });
+    });
+  </script>
 
   <!-- Scripts -->
   <script src="../scripts/explorer.js"></script>

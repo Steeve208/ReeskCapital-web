@@ -11,7 +11,7 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="../styles/global.css">
-    <link rel="stylesheet" href="../styles/mining-modern.css">
+    <link rel="stylesheet" href="../styles/mining.css">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/logo.png">
@@ -47,12 +47,12 @@
                         </h1>
                         <p class="platform-subtitle">
                             <span class="subtitle-icon">⚡</span>
-                            The first web mining platform before mainnet
+                            Advanced blockchain mining platform
                         </p>
                         <div class="platform-badges">
                             <span class="badge badge-primary">Web Mining</span>
                             <span class="badge badge-secondary">RSC CHAIN</span>
-                            <span class="badge badge-accent">Pre-Mainnet</span>
+                            <span class="badge badge-accent">Live</span>
                         </div>
                     </div>
                 </div>
@@ -61,12 +61,12 @@
             <div class="header-actions">
                 <div class="status-panel">
                     <div class="status-indicator">
-                        <div class="status-dot">
+                        <div class="status-dot" id="networkStatus">
                             <div class="pulse-ring"></div>
                         </div>
                         <div class="status-text">
-                            <span class="status-label">Mainnet</span>
-                            <span class="status-value">Coming Soon</span>
+                            <span class="status-label">Network</span>
+                            <span class="status-value" id="networkStatusText">Connected</span>
                         </div>
                     </div>
                     
@@ -76,14 +76,14 @@
                             <div class="demo-glow"></div>
                         </div>
                         <div class="demo-text">
-                            <span class="demo-label">Active Mining</span>
-                            <span class="demo-desc">CHAIN CAD</span>
+                            <span class="demo-label">Mining Status</span>
+                            <span class="demo-desc" id="miningStatusText">Ready</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="action-buttons">
-                    <button class="btn-home" id="homeBtn">
+                    <button class="btn-home" onclick="window.location.href='../index.html'">
                         <i class="fas fa-home"></i>
                         <span>Home</span>
                         <div class="btn-glow"></div>
@@ -99,7 +99,7 @@
         
         <div class="header-bottom">
             <div class="progress-bar">
-                <div class="progress-fill"></div>
+                <div class="progress-fill" id="headerProgress"></div>
             </div>
         </div>
     </header>
@@ -107,118 +107,22 @@
     <!-- Main Content -->
     <main class="mining-main">
         <div class="container">
-            <!-- Authentication Section -->
-            <section class="auth-section" id="authSection">
-                <div class="auth-container">
-                    <div class="auth-header">
-                        <h2>🔐 Secure Access</h2>
-                        <p>Login or register to start mining RSC</p>
-                    </div>
-                    
-                    <!-- Login Form -->
-                    <form class="auth-form" id="loginForm">
-                        <div class="form-group">
-                            <label for="loginEmail">Email</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-envelope"></i>
-                                <input type="email" id="loginEmail" placeholder="tu@email.com" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="loginPassword">Contraseña</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-lock"></i>
-                                <input type="password" id="loginPassword" placeholder="••••••••" required>
-                                <button type="button" class="toggle-password" id="toggleLoginPassword">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn-primary btn-full">
-                            <i class="fas fa-sign-in-alt"></i>
-                            Iniciar Sesión
-                        </button>
-                    </form>
-                    
-                    <!-- Register Form -->
-                    <form class="auth-form hidden" id="registerForm">
-                        <div class="form-group">
-                            <label for="registerEmail">Email</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-envelope"></i>
-                                <input type="email" id="registerEmail" placeholder="tu@email.com" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="registerUsername">Nombre de Usuario</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-user"></i>
-                                <input type="text" id="registerUsername" placeholder="minero123" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="registerPassword">Contraseña</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-lock"></i>
-                                <input type="password" id="registerPassword" placeholder="••••••••" required>
-                                <button type="button" class="toggle-password" id="toggleRegisterPassword">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            <div class="password-strength" id="passwordStrength"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="registerWallet">Wallet (Opcional)</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-wallet"></i>
-                                <input type="text" id="registerWallet" placeholder="0x...">
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn-primary btn-full">
-                            <i class="fas fa-user-plus"></i>
-                            Crear Cuenta
-                        </button>
-                    </form>
-                    
-                    <!-- Form Toggle -->
-                    <div class="form-toggle">
-                        <span id="toggleText">Don't have an account?</span>
-                        <button type="button" class="btn-link" id="toggleFormBtn">Register here</button>
-                    </div>
-                </div>
-            </section>
-
             <!-- Mining Dashboard -->
-            <section class="mining-dashboard hidden" id="miningDashboard">
+            <section class="mining-dashboard">
                 <!-- User Info -->
                 <div class="user-info-card">
                     <div class="user-avatar">
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h3 id="userUsername">Usuario</h3>
-                        <p id="userEmail">email@ejemplo.com</p>
-                        <div class="user-stats">
-                            <span class="stat">
-                                <i class="fas fa-coins"></i>
-                                <span id="userBalance">0.00000000 RSC</span>
-                            </span>
-                            <span class="stat">
-                                <i class="fas fa-hammer"></i>
-                                <span id="userMiningPower">1.0x</span>
-                            </span>
-                        </div>
+                        <h3 class="user-name" id="userName">Miner</h3>
+                        <p class="user-email" id="userEmail">miner@rscchain.com</p>
+                        <p class="user-wallet" id="userWallet">0x0000...0000</p>
                     </div>
-                    <button class="btn-secondary" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
+                    <div class="user-balance">
+                        <span class="balance-label">Balance</span>
+                        <span class="balance-value" id="userBalance">0.000000 RSC</span>
+                    </div>
                 </div>
 
                 <!-- Mining Controls -->
@@ -229,10 +133,6 @@
                             <div class="mining-status" id="miningStatus">
                                 <span class="status-dot offline"></span>
                                 <span class="status-text">Stopped</span>
-                            </div>
-                            <div class="persistent-mining-indicator hidden" id="persistentMiningIndicator">
-                                <i class="fas fa-sync-alt fa-spin"></i>
-                                <span>Mining in Background</span>
                             </div>
                         </div>
                         
@@ -249,386 +149,121 @@
                         
                         <div class="mining-info">
                             <div class="info-item">
-                                <span class="label">Difficulty:</span>
-                                <span class="value" id="currentDifficulty">1.0x</span>
+                                <span class="info-label">Hash Rate:</span>
+                                <span class="info-value" id="hashRate">0 H/s</span>
                             </div>
                             <div class="info-item">
-                                <span class="label">Hash Rate:</span>
-                                <span class="value" id="currentHashRate">0 H/s</span>
+                                <span class="info-label">Mined:</span>
+                                <span class="info-value" id="minedAmount">0.000000 RSC</span>
                             </div>
                             <div class="info-item">
-                                <span class="label">Blocks Found:</span>
-                                <span class="value" id="blocksFound">0</span>
-                            </div>
-                            <div class="info-item session-timer">
-                                <span class="label">Session Time:</span>
-                                <span class="value" id="sessionTimeRemaining">0h 0m 0s</span>
+                                <span class="info-label">Active Time:</span>
+                                <span class="info-value" id="activeTime">00:00:00</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Mining Session -->
-                <div class="mining-session hidden" id="miningSession">
-                    <div class="session-card">
-                        <div class="session-header">
-                            <h3>📊 Sesión Activa</h3>
-                            <div class="session-timer" id="sessionTimer">00:00:00</div>
-                        </div>
-                        
-                        <div class="session-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="sessionProgress"></div>
+                <!-- Mining Stats -->
+                <div class="mining-stats">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-coins"></i>
                             </div>
-                            <div class="progress-labels">
-                                <span>Inicio</span>
-                                <span id="sessionDuration">0 min</span>
+                            <div class="stat-content">
+                                <h4>Total Mined</h4>
+                                <p class="stat-value" id="totalMined">0.000000 RSC</p>
                             </div>
                         </div>
                         
-                        <!-- Hash Visualization -->
-                        <div class="hash-visualization">
-                            <div class="hash-header">
-                                <h4>🔗 Hash en Tiempo Real</h4>
-                                <span class="hash-count">Hashes: <span id="hashCount">0</span></span>
-                            </div>
-                            <div class="hash-display" id="hashDisplay">0000000000000000000000000000000000000000000000000000000000000000</div>
-                        </div>
-                        
-                        <div class="session-stats">
-                            <div class="stat-card">
-                                <div class="stat-icon">
-                                    <i class="fas fa-coins"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <span class="stat-value" id="sessionTokens">0.00000000</span>
-                                    <span class="stat-label">RSC Ganados</span>
-                                </div>
-                            </div>
-                            
-                            <div class="stat-card">
-                                <div class="stat-icon">
-                                    <i class="fas fa-tachometer-alt"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <span class="stat-value" id="sessionEfficiency">0%</span>
-                                    <span class="stat-label">Eficiencia</span>
-                                </div>
-                            </div>
-                            
-                            <div class="stat-card">
-                                <div class="stat-icon">
-                                    <i class="fas fa-clock"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <span class="stat-value" id="estimatedReward">0.00000000</span>
-                                    <span class="stat-label">Estimado por Hora</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mainnet Preparation -->
-                <div class="mainnet-preparation">
-                    <div class="mainnet-card">
-                        <div class="mainnet-header">
-                            <h3>🚀 Preparación para Mainnet</h3>
-                            <div class="mainnet-countdown" id="mainnetCountdown">
-                                <span class="countdown-item">
-                                    <span class="countdown-value" id="mainnetDays">0</span>
-                                    <span class="countdown-label">Días</span>
-                                </span>
-                                <span class="countdown-item">
-                                    <span class="countdown-value" id="mainnetHours">0</span>
-                                    <span class="countdown-label">Horas</span>
-                                </span>
-                                <span class="countdown-item">
-                                    <span class="countdown-value" id="mainnetMinutes">0</span>
-                                    <span class="countdown-label">Min</span>
-                                </span>
-                                <span class="countdown-item">
-                                    <span class="countdown-value" id="mainnetSeconds">0</span>
-                                    <span class="countdown-label">Seg</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <div class="mainnet-progress">
-                            <div class="progress-header">
-                                <span>Progreso de Desarrollo</span>
-                                <span id="mainnetProgress">0%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="mainnetProgressFill"></div>
-                            </div>
-                            <div class="progress-phase" id="mainnetPhase">Desarrollo Inicial</div>
-                        </div>
-                        
-                        <div class="mainnet-features">
-                            <div class="feature-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Minería Simulada</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Referral System</span>
-                            </div>
-                            <div class="feature-item">
+                        <div class="stat-card">
+                            <div class="stat-icon">
                                 <i class="fas fa-clock"></i>
-                                <span>Wallet Integration</span>
                             </div>
-                            <div class="feature-item">
-                                <i class="fas fa-clock"></i>
-                                <span>Transacciones Reales</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Referral System -->
-                <div class="referral-system">
-                    <div class="referral-card">
-                        <div class="referral-header">
-                            <h3>👥 Referral System</h3>
-                            <div class="referral-stats">
-                                <span class="referral-count">Referrals: <span id="referralCount">0</span></span>
-                                <span class="referral-earnings">Earned: <span id="referralEarnings">0.00000000 RSC</span></span>
+                            <div class="stat-content">
+                                <h4>Session Time</h4>
+                                <p class="stat-value" id="sessionTime">00:00:00</p>
                             </div>
                         </div>
                         
-                        <div class="referral-content">
-                            <div class="referral-code-section">
-                                <label>Your Referral Code:</label>
-                                <div class="referral-code-display">
-                                    <input type="text" id="referralCode" readonly value="RSC_1234567890">
-                                    <button class="btn-secondary" id="copyReferralBtn">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                </div>
-                                <p class="referral-info">Share this code and earn 10% of your referrals' earnings</p>
-                                
-                                <!-- Usar código de referido -->
-                                <div class="use-referral-section">
-                                    <label>Do you have a referral code?</label>
-                                    <div class="referral-input-section">
-                                        <input type="text" id="referralInput" placeholder="RSC_1234567890">
-                                        <button class="btn-primary" id="useReferralBtn">
-                                            <i class="fas fa-gift"></i>
-                                            Use Code
-                                        </button>
-                                    </div>
-                                    <p class="referral-info">Use a referral code to earn bonuses</p>
-                                </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tachometer-alt"></i>
                             </div>
-                            
-                            <div class="referral-benefits">
-                                <h4>Referral System Benefits:</h4>
-                                <ul>
-                                    <li>🎯 10% of each referral's earnings</li>
-                                    <li>📈 Bonuses for reaching milestones</li>
-                                    <li>🏆 Priority access to mainnet</li>
-                                    <li>💎 Extra RSC for active users</li>
-                                </ul>
-                                
-                                <!-- Demo codes -->
-                                <div class="demo-codes-section">
-                                    <h5>🧪 Test Codes (Demo):</h5>
-                                    <div class="demo-codes">
-                                        <div class="demo-code-item">
-                                            <span class="demo-username">CryptoMiner:</span>
-                                            <code class="demo-code">RSC_demo_user_1_1703123456789</code>
-                                            <button class="btn-copy-small" onclick="copyToClipboard('RSC_demo_user_1_1703123456789')">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                        </div>
-                                        <div class="demo-code-item">
-                                            <span class="demo-username">BlockChainPro:</span>
-                                            <code class="demo-code">RSC_demo_user_2_1703123456790</code>
-                                            <button class="btn-copy-small" onclick="copyToClipboard('RSC_demo_user_2_1703123456790')">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                        </div>
-                                        <div class="demo-code-item">
-                                            <span class="demo-username">HashMaster:</span>
-                                            <code class="demo-code">RSC_demo_user_3_1703123456791</code>
-                                            <button class="btn-copy-small" onclick="copyToClipboard('RSC_demo_user_3_1703123456791')">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <p class="demo-info">Usa estos códigos para probar el sistema de referidos</p>
-                                </div>
+                            <div class="stat-content">
+                                <h4>Hash Rate</h4>
+                                <p class="stat-value" id="currentHashRate">0 H/s</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Mining Statistics Table -->
-                <div class="mining-stats-table">
-                    <div class="stats-table-card">
-                        <div class="stats-table-header">
-                            <div class="stats-table-icon">
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
                                 <i class="fas fa-chart-line"></i>
                             </div>
-                            <h3 class="stats-table-title">Mining Statistics</h3>
-                        </div>
-                        
-                        <div class="stats-table-content">
-                            <div class="stats-section">
-                                <h4 class="section-title">🌐 Global Network</h4>
-                                <div class="stats-grid">
-                                    <div class="stat-item">
-                                        <span class="stat-label">Active Miners:</span>
-                                        <span class="stat-value table-number" id="activeMiners">0</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Total Power:</span>
-                                        <span class="stat-value table-number" id="totalMiningPower">0.0x</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Difficulty:</span>
-                                        <span class="stat-value table-percentage" id="networkDifficulty">1.0x</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="stats-section">
-                                <h4 class="section-title">📊 24h Statistics</h4>
-                                <div class="stats-grid">
-                                    <div class="stat-item">
-                                        <span class="stat-label">Blocks Mined:</span>
-                                        <span class="stat-value table-number" id="blocks24h">0</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">RSC Mined:</span>
-                                        <span class="stat-value table-currency" id="rsc24h">0.00000000</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Average Time:</span>
-                                        <span class="stat-value table-number" id="avgBlockTime">0s</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="stats-section">
-                                <h4 class="section-title">👤 My Performance</h4>
-                                <div class="stats-grid">
-                                    <div class="stat-item">
-                                        <span class="stat-label">Hash Rate:</span>
-                                        <span class="stat-value table-number" id="hashRate">0 H/s</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Efficiency:</span>
-                                        <span class="stat-value table-percentage" id="efficiency">0%</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Blocks Found:</span>
-                                        <span class="stat-value table-number" id="blocksMined">0</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="stats-section">
-                                <h4 class="section-title">⏱️ Mining Usage</h4>
-                                <div class="stats-grid">
-                                    <div class="stat-item">
-                                        <span class="stat-label">Total Sessions:</span>
-                                        <span class="stat-value table-number" id="miningSessions">0</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Total Time:</span>
-                                        <span class="stat-value table-number" id="totalMiningTime">0s</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Current Session:</span>
-                                        <span class="stat-value table-number" id="currentSession">0h 0m</span>
-                                    </div>
-                                </div>
+                            <div class="stat-content">
+                                <h4>Efficiency</h4>
+                                <p class="stat-value" id="efficiency">100%</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Recent Activity -->
-                <div class="recent-activity">
-                    <div class="activity-table">
-                        <div class="activity-header">
-                            <div class="activity-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <h3 class="activity-title">Recent Activity</h3>
-                            <button class="btn-secondary" id="refreshActivityBtn">
-                                <i class="fas fa-sync-alt"></i>
-                                Refresh
-                            </button>
-                        </div>
-                        
-                        <div class="activity-list" id="activityList">
-                            <div class="activity-item">
-                                <div class="activity-icon-small info">
-                                    <i class="fas fa-info-circle"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <p class="activity-message">Inicia una sesión de minería para ver tu actividad</p>
-                                    <p class="activity-time">Ahora</p>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Mining Progress -->
+                <div class="mining-progress">
+                    <div class="progress-header">
+                        <h3>Mining Progress</h3>
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progressBarFill"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span class="progress-label">Session Progress</span>
+                        <span class="progress-time" id="progressTime">0 / 24 hours</span>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Notifications -->
-    <div class="notifications-container" id="notificationsContainer"></div>
-
-    <!-- Loading Overlay -->
-    <div class="loading-overlay hidden" id="loadingOverlay">
-        <div class="loading-spinner">
-            <div class="spinner"></div>
-            <p>Cargando...</p>
-        </div>
-    </div>
-
     <!-- Help Modal -->
-    <div class="modal-overlay hidden" id="helpModal">
-        <div class="modal">
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
             <div class="modal-header">
-                <h3>❓ Ayuda - RSC Mining</h3>
+                <h2>Mining Help</h2>
                 <button class="modal-close" id="closeHelpModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-content">
+            <div class="modal-body">
                 <div class="help-section">
                     <h4>🚀 How to get started?</h4>
                     <ol>
-                        <li>Register with your email and password</li>
-                        <li>Login to your account</li>
-                        <li>Click "Start Mining"</li>
-                        <li>Keep the tab open to mine!</li>
+                        <li>Click "Start Mining" to begin mining RSC tokens</li>
+                        <li>Keep the tab open to continue mining</li>
+                        <li>Mining runs for 24 hours continuously</li>
+                        <li>Tokens are automatically added to your wallet</li>
                     </ol>
                 </div>
                 
                 <div class="help-section">
-                    <h4>⛏️ How does mining work?</h4>
+                    <h4>⛏️ Mining Features</h4>
                     <ul>
-                        <li>Mining is automatic once started</li>
-                        <li>Earn RSC based on time and mining power</li>
-                        <li>Daily limit: 2 RSC maximum</li>
-                        <li>Difficulty adjusts automatically</li>
+                        <li><strong>24-hour sessions:</strong> Each mining session lasts exactly 24 hours</li>
+                        <li><strong>Background mining:</strong> Continues even when tab is closed</li>
+                        <li><strong>Real-time stats:</strong> See your progress and earnings</li>
+                        <li><strong>Automatic payout:</strong> Tokens are added to your wallet automatically</li>
                     </ul>
                 </div>
                 
                 <div class="help-section">
-                    <h4>🔒 Security</h4>
+                    <h4>💡 Tips</h4>
                     <ul>
-                        <li>Passwords hashed with PBKDF2</li>
-                        <li>Unique salt per user</li>
-                        <li>Protection against brute force attacks</li>
-                        <li>Complete audit of all actions</li>
+                        <li>Keep your browser open for best performance</li>
+                        <li>Check your wallet balance regularly</li>
+                        <li>Mining efficiency may vary based on your device</li>
+                        <li>Each session must be started manually after 24 hours</li>
                     </ul>
                 </div>
             </div>
@@ -636,42 +271,8 @@
     </div>
 
     <!-- Scripts -->
-    <!-- Supabase CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Configuración de Supabase -->
-    <script src="../scripts/supabase-config-simple.js"></script>
-    <!-- Sistema de autenticación enterprise -->
-    <script src="../scripts/rsc-mining-auth-system.js"></script>
-    <!-- Motor de minería simulada revolucionario -->
-    <script src="../scripts/rsc-simulated-mining-engine.js"></script>
-    <!-- Interfaz moderna de minería -->
-    <script src="../scripts/mining-modern-ui.js"></script>
-    
-    <!-- Funciones de utilidad -->
-    <script>
-        // Función para copiar códigos al portapapeles
-        async function copyToClipboard(text) {
-            try {
-                await navigator.clipboard.writeText(text);
-                // Mostrar notificación de éxito
-                if (window.miningUI) {
-                    window.miningUI.showNotification('success', 'Copiado', 'Código copiado al portapapeles');
-                }
-            } catch (error) {
-                console.warn('Error al copiar:', error);
-                // Fallback para navegadores más antiguos
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                if (window.miningUI) {
-                    window.miningUI.showNotification('success', 'Copiado', 'Código copiado al portapapeles');
-                }
-            }
-        }
-    </script>
+    <script src="../scripts/rsc-mining-core.js"></script>
+    <script src="../scripts/rsc-mining-ui.js"></script>
+    <script src="../scripts/rsc-mining-backend.js"></script>
 </body>
 </html>
