@@ -89,10 +89,10 @@
                         <div class="btn-glow"></div>
                     </button>
                     <button class="btn-help" id="helpBtn">
-                        <i class="fas fa-question-circle"></i>
+                    <i class="fas fa-question-circle"></i>
                         <span>Help</span>
                         <div class="btn-glow"></div>
-                    </button>
+                </button>
                 </div>
             </div>
         </div>
@@ -107,8 +107,76 @@
     <!-- Main Content -->
     <main class="mining-main">
         <div class="container">
+            <!-- Authentication Section -->
+            <section class="auth-section" id="authSection">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <div class="auth-logo">
+                                <div class="logo-icon">
+                                    <div class="logo-inner">
+                                        <div class="logo-symbol">RSC</div>
+                                        <div class="logo-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 class="auth-title">Welcome to RSC Mining</h2>
+                            <p class="auth-subtitle">Sign in to start mining RSC tokens</p>
+                        </div>
+                        
+                        <div class="auth-forms">
+                            <!-- Login Form -->
+                            <form class="auth-form active" id="loginForm">
+                                <div class="form-group">
+                                    <label for="loginEmail">Email</label>
+                                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="loginPassword">Password</label>
+                                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                                </div>
+                                <button type="submit" class="btn-primary btn-full">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Sign In
+                                </button>
+                                <div class="form-footer">
+                                    <p>Don't have an account? <a href="#" id="showRegister">Sign up</a></p>
+                                </div>
+                            </form>
+                            
+                            <!-- Register Form -->
+                            <form class="auth-form" id="registerForm">
+                                <div class="form-group">
+                                    <label for="registerEmail">Email</label>
+                                    <input type="email" id="registerEmail" placeholder="Enter your email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerUsername">Username</label>
+                                    <input type="text" id="registerUsername" placeholder="Choose a username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerPassword">Password</label>
+                                    <input type="password" id="registerPassword" placeholder="Create a password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="referralCode">Referral Code (Optional)</label>
+                                    <input type="text" id="referralCode" placeholder="Enter referral code">
+                                </div>
+                                <button type="submit" class="btn-primary btn-full">
+                                    <i class="fas fa-user-plus"></i>
+                                    Sign Up
+                                </button>
+                                <div class="form-footer">
+                                    <p>Already have an account? <a href="#" id="showLogin">Sign in</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
             <!-- Mining Dashboard -->
-            <section class="mining-dashboard">
+            <section class="mining-dashboard hidden" id="miningDashboard">
                 <!-- User Info -->
                 <div class="user-info-card">
                     <div class="user-avatar">
@@ -118,7 +186,7 @@
                         <h3 class="user-name" id="userName">Miner</h3>
                         <p class="user-email" id="userEmail">miner@rscchain.com</p>
                         <p class="user-wallet" id="userWallet">0x0000...0000</p>
-                    </div>
+                        </div>
                     <div class="user-balance">
                         <span class="balance-label">Balance</span>
                         <span class="balance-value" id="userBalance">0.000000 RSC</span>
@@ -167,25 +235,25 @@
                 <!-- Mining Stats -->
                 <div class="mining-stats">
                     <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-coins"></i>
-                            </div>
-                            <div class="stat-content">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div class="stat-content">
                                 <h4>Total Mined</h4>
                                 <p class="stat-value" id="totalMined">0.000000 RSC</p>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="stat-content">
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-content">
                                 <h4>Session Time</h4>
                                 <p class="stat-value" id="sessionTime">00:00:00</p>
                             </div>
-                        </div>
+                                </div>
                         
                         <div class="stat-card">
                             <div class="stat-icon">
@@ -214,7 +282,7 @@
                     <div class="progress-header">
                         <h3>Mining Progress</h3>
                         <span class="progress-percentage" id="progressPercentage">0%</span>
-                    </div>
+                            </div>
                     <div class="progress-bar-container">
                         <div class="progress-bar-fill" id="progressBarFill"></div>
                     </div>
@@ -271,8 +339,9 @@
     </div>
 
     <!-- Scripts -->
+    <script src="../scripts/rsc-auth.js"></script>
     <script src="../scripts/rsc-mining-core.js"></script>
     <script src="../scripts/rsc-mining-ui.js"></script>
-    <script src="../scripts/rsc-mining-backend.js"></script>
+    <script src="../scripts/rsc-mining-backend-integration.js"></script>
 </body>
 </html>

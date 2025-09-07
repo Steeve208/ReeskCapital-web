@@ -97,25 +97,48 @@ class RSCMiningCore {
      */
     async initBackend() {
         try {
-            // Verificar si el backend está disponible
-            const response = await fetch('/api/mining/status', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            // Cargar script de integración con backend si no está cargado
+            if (!window.RSCMiningBackend) {
+                await this.loadBackendIntegration();
+            }
             
-            if (response.ok) {
-                this.isBackendConnected = true;
-                console.log('✅ Backend conectado correctamente');
+            // Inicializar integración con backend
+            if (window.RSCMiningBackend) {
+                const connected = await window.RSCMiningBackend.initialize();
+                this.isBackendConnected = connected;
+                
+                if (connected) {
+                    console.log('🔗 Backend conectado y sincronizado');
+                } else {
+                    console.log('📱 Modo offline - Backend no disponible');
+                }
             } else {
-                console.warn('⚠️ Backend no disponible, usando modo offline');
+                console.log('📱 Modo offline - Script de integración no cargado');
                 this.isBackendConnected = false;
             }
         } catch (error) {
             console.warn('⚠️ Error conectando con backend:', error);
             this.isBackendConnected = false;
         }
+    }
+
+    /**
+     * Cargar script de integración con backend
+     */
+    async loadBackendIntegration() {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'scripts/rsc-mining-backend-integration.js';
+            script.onload = () => {
+                console.log('📦 Script de integración con backend cargado');
+                resolve();
+            };
+            script.onerror = () => {
+                console.warn('⚠️ Error cargando script de integración con backend');
+                reject(new Error('Script no encontrado'));
+            };
+            document.head.appendChild(script);
+        });
     }
 
     /**
@@ -294,7 +317,7 @@ class RSCMiningCore {
     /**
      * Realizar operación de minería
      */
-    performMining() {
+    async performMining() {
         if (!this.isMining || !this.startTime) return;
 
         // Verificar si la sesión ha expirado
@@ -321,7 +344,7 @@ class RSCMiningCore {
         this.stats.level = this.calculateLevel();
         
         // 🔥 IMPORTANTE: Sincronizar balance con tokens minados
-        this.syncWalletBalance();
+        await this.syncWalletBalance();
         
         // Emitir evento de actualización
         this.emit('miningUpdate', {
@@ -374,13 +397,27 @@ class RSCMiningCore {
     /**
      * Sincronizar balance de wallet con tokens minados
      */
-    syncWalletBalance() {
+    async syncWalletBalance() {
         try {
             // El balance debe ser igual a los tokens minados en esta sesión
             const newBalance = this.stats.sessionMined;
             
-            // Guardar balance sincronizado
+            // Guardar balance sincronizado localmente
             localStorage.setItem('rsc_wallet_balance', newBalance.toString());
+            
+            // Sincronizar con backend si está conectado
+            if (this.isBackendConnected && window.RSCMiningBackend) {
+                try {
+                    await window.RSCMiningBackend.syncMiningData({
+                        tokensMined: newBalance,
+                        hashRate: this.stats.hashRate,
+                        efficiency: this.stats.efficiency,
+                        isActive: this.isMining
+                    });
+                } catch (error) {
+                    console.warn('⚠️ Error sincronizando con backend:', error);
+                }
+            }
             
             // Emitir evento de actualización de wallet (sin notificación)
             this.emit('walletBalanceUpdated', {
