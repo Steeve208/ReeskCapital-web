@@ -406,7 +406,7 @@ body {
     gap: 1rem;
 }
 
-.btn-home, .btn-help {
+.btn-home, .btn-help, .btn-logout {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -422,6 +422,18 @@ body {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+}
+
+.btn-logout {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.btn-logout:hover {
+    background: rgba(239, 68, 68, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .btn-home:hover, .btn-help:hover {
@@ -440,7 +452,7 @@ body {
     transition: left 0.5s ease;
 }
 
-.btn-home:hover .btn-glow, .btn-help:hover .btn-glow {
+.btn-home:hover .btn-glow, .btn-help:hover .btn-glow, .btn-logout:hover .btn-glow {
     left: 100%;
 }
 

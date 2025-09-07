@@ -88,6 +88,11 @@
                         <span>Home</span>
                         <div class="btn-glow"></div>
                     </button>
+                    <button class="btn-logout" id="logoutBtn" onclick="window.RSCAuth.logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                        <div class="btn-glow"></div>
+                    </button>
                     <button class="btn-help" id="helpBtn">
                     <i class="fas fa-question-circle"></i>
                         <span>Help</span>
@@ -339,6 +344,8 @@
     </div>
 
     <!-- Scripts -->
+    <script src="../scripts/clear-data.js"></script>
+    <script src="../scripts/supabase-direct.js"></script>
     <script src="../scripts/rsc-auth.js"></script>
     <script src="../scripts/rsc-mining-core.js"></script>
     <script src="../scripts/rsc-mining-ui.js"></script>

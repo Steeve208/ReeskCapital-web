@@ -34,6 +34,11 @@ class RSCAuth {
                 this.backend = window.RSCMiningBackend;
             }
             
+            // Si no hay usuario guardado, mostrar auth
+            if (!this.isAuthenticated) {
+                this.showAuthSection();
+            }
+            
             console.log('✅ Sistema de autenticación inicializado');
         } catch (error) {
             console.error('❌ Error inicializando autenticación:', error);
@@ -49,13 +54,52 @@ class RSCAuth {
             if (storedUser) {
                 this.currentUser = JSON.parse(storedUser);
                 this.isAuthenticated = true;
-                this.showMiningDashboard();
+                
+                // Verificar si el backend está disponible
+                this.verifyBackendConnection();
+                
                 console.log('👤 Usuario autenticado:', this.currentUser.username);
             }
         } catch (error) {
             console.error('❌ Error verificando usuario guardado:', error);
             localStorage.removeItem('rsc_user');
         }
+    }
+
+    /**
+     * Verificar conexión con backend
+     */
+    async verifyBackendConnection() {
+        try {
+            const backendConnected = await this.connectToBackend();
+            if (backendConnected) {
+                // Si hay backend, mostrar dashboard
+                this.showMiningDashboard();
+            } else {
+                // Si no hay backend, mostrar auth
+                this.showAuthSection();
+            }
+        } catch (error) {
+            console.error('❌ Error verificando backend:', error);
+            this.showAuthSection();
+        }
+    }
+
+    /**
+     * Mostrar sección de autenticación
+     */
+    showAuthSection() {
+        const authSection = document.getElementById('authSection');
+        const miningDashboard = document.getElementById('miningDashboard');
+        
+        if (authSection) authSection.classList.remove('hidden');
+        if (miningDashboard) miningDashboard.classList.add('hidden');
+        
+        // Limpiar datos de usuario
+        this.currentUser = null;
+        this.isAuthenticated = false;
+        localStorage.removeItem('rsc_user');
+        localStorage.removeItem('rsc_user_id');
     }
 
     /**
@@ -104,12 +148,10 @@ class RSCAuth {
         try {
             this.showLoading('Iniciando sesión...');
             
-            // Intentar conectar con backend
-            const backendConnected = await this.connectToBackend();
-            
-            if (backendConnected) {
-                // Login con backend
-                const user = await this.loginWithBackend(email, password);
+            // Usar Supabase directo
+            if (window.SupabaseDirect && window.SupabaseDirect.isConnected) {
+                // Login con Supabase
+                const user = await this.loginWithSupabase(email, password);
                 if (user) {
                     this.currentUser = user;
                     this.isAuthenticated = true;
@@ -125,7 +167,7 @@ class RSCAuth {
                     
                     console.log('✅ Login exitoso:', user.username);
                 } else {
-                    this.showNotification('error', 'Error', 'Credenciales incorrectas');
+                    this.showNotification('error', 'Error', 'Error al iniciar sesión');
                 }
             } else {
                 // Simular login local
@@ -158,40 +200,43 @@ class RSCAuth {
     }
 
     /**
-     * Login con backend
+     * Login con Supabase directo
      */
-    async loginWithBackend(email, password) {
+    async loginWithSupabase(email, password) {
         try {
-            // Por ahora, crear usuario automáticamente si no existe
-            // En producción esto sería una llamada a /api/users/login
-            const response = await fetch('http://localhost:3000/api/users/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: email,
-                    username: email.split('@')[0], // Usar email como username
-                    referralCode: null
-                })
-            });
-
-            const result = await response.json();
+            // Buscar usuario existente
+            const existingUser = await window.SupabaseDirect.getUserByEmail(email);
             
-            if (result.success) {
+            if (existingUser) {
                 return {
-                    id: result.user.id,
-                    email: result.user.email,
-                    username: result.user.username,
-                    balance: result.user.balance || 0,
-                    referralCode: result.user.referral_code
+                    id: existingUser.id,
+                    email: existingUser.email,
+                    username: existingUser.username,
+                    balance: existingUser.balance || 0,
+                    referralCode: existingUser.referral_code
                 };
             } else {
-                // Si el usuario ya existe, intentar obtener sus datos
-                return await this.getUserFromBackend(email);
+                // Crear usuario si no existe
+                const result = await window.SupabaseDirect.registerUser({
+                    email: email,
+                    username: email.split('@')[0],
+                    referralCode: null
+                });
+                
+                if (result.success) {
+                    return {
+                        id: result.user.id,
+                        email: result.user.email,
+                        username: result.user.username,
+                        balance: result.user.balance || 0,
+                        referralCode: result.user.referral_code
+                    };
+                }
             }
+            
+            return null;
         } catch (error) {
-            console.error('❌ Error en login con backend:', error);
+            console.error('❌ Error en login con Supabase:', error);
             return null;
         }
     }
@@ -273,18 +318,22 @@ class RSCAuth {
      */
     async registerUser(userData) {
         try {
-            // Intentar conectar con backend
-            const backendConnected = await this.connectToBackend();
-            
-            if (backendConnected) {
-                const result = await this.registerWithBackend({
+            // Usar conexión directa a Supabase
+            if (window.SupabaseDirect && window.SupabaseDirect.isConnected) {
+                const result = await window.SupabaseDirect.registerUser({
                     email: userData.email,
                     username: userData.username,
                     referralCode: userData.referralCode
                 });
                 
                 if (result.success) {
-                    return result.user;
+                    return {
+                        id: result.user.id,
+                        email: result.user.email,
+                        username: result.user.username,
+                        balance: result.user.balance,
+                        referralCode: result.user.referral_code
+                    };
                 } else {
                     throw new Error(result.error);
                 }
@@ -304,7 +353,13 @@ class RSCAuth {
     async connectToBackend() {
         try {
             const response = await fetch('http://localhost:3000/health');
-            return response.ok;
+            if (response.ok) {
+                console.log('✅ Backend conectado correctamente');
+                return true;
+            } else {
+                console.warn('⚠️ Backend no disponible, usando modo local');
+                return false;
+            }
         } catch (error) {
             console.warn('⚠️ Backend no disponible, usando modo local');
             return false;
@@ -471,6 +526,7 @@ class RSCAuth {
         
         localStorage.removeItem('rsc_user');
         localStorage.removeItem('rsc_user_id');
+        localStorage.removeItem('rsc_users'); // Limpiar usuarios locales
         
         const authSection = document.getElementById('authSection');
         const miningDashboard = document.getElementById('miningDashboard');
@@ -479,6 +535,29 @@ class RSCAuth {
         if (miningDashboard) miningDashboard.classList.add('hidden');
         
         console.log('👋 Sesión cerrada');
+    }
+
+    /**
+     * Limpiar todos los datos y forzar autenticación
+     */
+    clearAllData() {
+        // Limpiar localStorage
+        localStorage.removeItem('rsc_user');
+        localStorage.removeItem('rsc_user_id');
+        localStorage.removeItem('rsc_users');
+        localStorage.removeItem('rsc_wallet_balance');
+        localStorage.removeItem('rsc_mining_session');
+        localStorage.removeItem('rsc_mining_stats');
+        localStorage.removeItem('rsc_mining_config');
+        
+        // Resetear estado
+        this.currentUser = null;
+        this.isAuthenticated = false;
+        
+        // Mostrar auth
+        this.showAuthSection();
+        
+        console.log('🧹 Todos los datos limpiados');
     }
 
     /**

@@ -97,49 +97,25 @@ class RSCMiningCore {
      */
     async initBackend() {
         try {
-            // Cargar script de integración con backend si no está cargado
-            if (!window.RSCMiningBackend) {
-                await this.loadBackendIntegration();
-            }
-            
-            // Inicializar integración con backend
-            if (window.RSCMiningBackend) {
-                const connected = await window.RSCMiningBackend.initialize();
-                this.isBackendConnected = connected;
+            // Verificar si SupabaseDirect está disponible
+            if (window.SupabaseDirect) {
+                this.isBackendConnected = window.SupabaseDirect.isConnected;
                 
-                if (connected) {
-                    console.log('🔗 Backend conectado y sincronizado');
+                if (this.isBackendConnected) {
+                    console.log('🔗 Supabase Direct conectado y sincronizado');
                 } else {
-                    console.log('📱 Modo offline - Backend no disponible');
+                    console.log('📱 Modo offline - Supabase no disponible');
                 }
             } else {
-                console.log('📱 Modo offline - Script de integración no cargado');
+                console.log('📱 Modo offline - SupabaseDirect no cargado');
                 this.isBackendConnected = false;
             }
         } catch (error) {
-            console.warn('⚠️ Error conectando con backend:', error);
+            console.warn('⚠️ Error conectando con Supabase:', error);
             this.isBackendConnected = false;
         }
     }
 
-    /**
-     * Cargar script de integración con backend
-     */
-    async loadBackendIntegration() {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = 'scripts/rsc-mining-backend-integration.js';
-            script.onload = () => {
-                console.log('📦 Script de integración con backend cargado');
-                resolve();
-            };
-            script.onerror = () => {
-                console.warn('⚠️ Error cargando script de integración con backend');
-                reject(new Error('Script no encontrado'));
-            };
-            document.head.appendChild(script);
-        });
-    }
 
     /**
      * Iniciar minería
@@ -405,17 +381,21 @@ class RSCMiningCore {
             // Guardar balance sincronizado localmente
             localStorage.setItem('rsc_wallet_balance', newBalance.toString());
             
-            // Sincronizar con backend si está conectado
-            if (this.isBackendConnected && window.RSCMiningBackend) {
+            // 🔥 SINCRONIZAR CON SUPABASE DIRECT
+            if (window.SupabaseDirect && window.SupabaseDirect.isConnected) {
                 try {
-                    await window.RSCMiningBackend.syncMiningData({
-                        tokensMined: newBalance,
-                        hashRate: this.stats.hashRate,
-                        efficiency: this.stats.efficiency,
-                        isActive: this.isMining
-                    });
+                    // Obtener usuario actual
+                    const currentUser = localStorage.getItem('rsc_user');
+                    if (currentUser) {
+                        const user = JSON.parse(currentUser);
+                        
+                        // Actualizar balance en Supabase
+                        await window.SupabaseDirect.updateUserBalance(user.email, newBalance);
+                        
+                        console.log('✅ Balance sincronizado con Supabase:', newBalance);
+                    }
                 } catch (error) {
-                    console.warn('⚠️ Error sincronizando con backend:', error);
+                    console.warn('⚠️ Error sincronizando balance con Supabase:', error);
                 }
             }
             
