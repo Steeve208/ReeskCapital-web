@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test RSC Supabase Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+        .test-button {
+            background: #00d4ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .test-button:hover {
+            background: #00b8e6;
+        }
+        .test-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        .test-result {
+            background: #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            border-left: 4px solid #00ff00;
+        }
+        .error {
+            border-left: 4px solid #ff0000;
+        }
+        .warning {
+            border-left: 4px solid #ffaa00;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔗 RSC Supabase Connection Test</h1>
+        
+        <div class="test-section">
+            <h2>1. Test de Conexión</h2>
+            <button class="test-button" onclick="testConnection()">Probar Conexión</button>
+            <div id="connectionResult" class="test-result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>2. Test de Autenticación</h2>
+            <button class="test-button" onclick="testAuth()">Probar Auth</button>
+            <div id="authResult" class="test-result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>3. Test de Base de Datos</h2>
+            <button class="test-button" onclick="testDatabase()">Probar Base de Datos</button>
+            <div id="databaseResult" class="test-result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>4. Test de Registro</h2>
+            <button class="test-button" onclick="testRegister()">Probar Registro</button>
+            <div id="registerResult" class="test-result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>5. Test de Minería</h2>
+            <button class="test-button" onclick="testMining()">Probar Minería</button>
+            <div id="miningResult" class="test-result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Importar Supabase Client
+        import { supabaseClient } from './scripts/config/supabase-client.js';
+        
+        // Hacer disponible globalmente
+        window.supabaseClient = supabaseClient;
+        
+        // Inicializar cliente
+        supabaseClient.init().then(() => {
+            console.log('✅ Supabase Client inicializado');
+        });
+        
+        // Función para mostrar resultados
+        function showResult(elementId, message, type = 'success') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `test-result ${type}`;
+            element.textContent = message;
+        }
+        
+        // Test de conexión
+        window.testConnection = async function() {
+            try {
+                showResult('connectionResult', 'Probando conexión...', 'warning');
+                
+                const { data, error } = await window.supabaseClient.supabase
+                    .from('users')
+                    .select('count')
+                    .limit(1);
+                
+                if (error) throw error;
+                
+                showResult('connectionResult', 
+                    `✅ Conexión exitosa!\n` +
+                    `URL: ${window.supabaseClient.supabase.supabaseUrl}\n` +
+                    `Estado: Conectado\n` +
+                    `Timestamp: ${new Date().toISOString()}`, 
+                    'success'
+                );
+            } catch (error) {
+                showResult('connectionResult', 
+                    `❌ Error de conexión:\n${error.message}`, 
+                    'error'
+                );
+            }
+        };
+        
+        // Test de autenticación
+        window.testAuth = async function() {
+            try {
+                showResult('authResult', 'Probando autenticación...', 'warning');
+                
+                const { data, error } = await window.supabaseClient.supabase.auth.getSession();
+                
+                if (error) throw error;
+                
+                showResult('authResult', 
+                    `✅ Autenticación funcionando!\n` +
+                    `Sesión activa: ${data.session ? 'Sí' : 'No'}\n` +
+                    `Usuario: ${data.session?.user?.email || 'Ninguno'}\n` +
+                    `Timestamp: ${new Date().toISOString()}`, 
+                    'success'
+                );
+            } catch (error) {
+                showResult('authResult', 
+                    `❌ Error de autenticación:\n${error.message}`, 
+                    'error'
+                );
+            }
+        };
+        
+        // Test de base de datos
+        window.testDatabase = async function() {
+            try {
+                showResult('databaseResult', 'Probando base de datos...', 'warning');
+                
+                // Probar tabla users
+                const { data: users, error: usersError } = await window.supabaseClient.supabase
+                    .from('users')
+                    .select('id, email, username, balance, referral_code')
+                    .limit(5);
+                
+                if (usersError) throw usersError;
+                
+                // Probar tabla mining_sessions
+                const { data: sessions, error: sessionsError } = await window.supabaseClient.supabase
+                    .from('mining_sessions')
+                    .select('id, user_id, session_id, status')
+                    .limit(5);
+                
+                if (sessionsError) throw sessionsError;
+                
+                showResult('databaseResult', 
+                    `✅ Base de datos funcionando!\n` +
+                    `Usuarios encontrados: ${users.length}\n` +
+                    `Sesiones encontradas: ${sessions.length}\n` +
+                    `Tablas accesibles: users, mining_sessions, transactions, referrals, referral_codes\n` +
+                    `Timestamp: ${new Date().toISOString()}`, 
+                    'success'
+                );
+            } catch (error) {
+                showResult('databaseResult', 
+                    `❌ Error de base de datos:\n${error.message}`, 
+                    'error'
+                );
+            }
+        };
+        
+        // Test de registro
+        window.testRegister = async function() {
+            try {
+                showResult('registerResult', 'Probando registro...', 'warning');
+                
+                const testEmail = `test_${Date.now()}@rscchain.com`;
+                const testUsername = `testuser_${Date.now()}`;
+                const testPassword = 'testpassword123';
+                
+                const result = await window.supabaseClient.registerUser(
+                    testEmail,
+                    testUsername,
+                    testPassword
+                );
+                
+                if (result.success) {
+                    showResult('registerResult', 
+                        `✅ Registro exitoso!\n` +
+                        `Email: ${testEmail}\n` +
+                        `Username: ${testUsername}\n` +
+                        `Referral Code: ${result.referralCode}\n` +
+                        `User ID: ${result.user.id}\n` +
+                        `Timestamp: ${new Date().toISOString()}`, 
+                        'success'
+                    );
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                showResult('registerResult', 
+                    `❌ Error de registro:\n${error.message}`, 
+                    'error'
+                );
+            }
+        };
+        
+        // Test de minería
+        window.testMining = async function() {
+            try {
+                showResult('miningResult', 'Probando minería...', 'warning');
+                
+                // Crear usuario de prueba
+                const testEmail = `mining_test_${Date.now()}@rscchain.com`;
+                const testUsername = `mininguser_${Date.now()}`;
+                const testPassword = 'testpassword123';
+                
+                const registerResult = await window.supabaseClient.registerUser(
+                    testEmail,
+                    testUsername,
+                    testPassword
+                );
+                
+                if (!registerResult.success) {
+                    throw new Error(registerResult.error);
+                }
+                
+                // Crear sesión de minería
+                const sessionResult = await window.supabaseClient.createMiningSession(
+                    registerResult.user.id,
+                    'quantum',
+                    1.0
+                );
+                
+                if (!sessionResult.success) {
+                    throw new Error(sessionResult.error);
+                }
+                
+                // Simular datos de minería
+                const miningData = {
+                    tokens_mined: 0.001,
+                    hash_rate: 1000,
+                    efficiency: 100.0,
+                    duration_ms: 5000
+                };
+                
+                // Actualizar sesión
+                const updateResult = await window.supabaseClient.updateMiningSession(
+                    sessionResult.session.session_id,
+                    miningData
+                );
+                
+                if (!updateResult.success) {
+                    throw new Error(updateResult.error);
+                }
+                
+                showResult('miningResult', 
+                    `✅ Minería funcionando!\n` +
+                    `Usuario creado: ${testUsername}\n` +
+                    `Sesión ID: ${sessionResult.session.session_id}\n` +
+                    `Tokens minados: ${miningData.tokens_mined}\n` +
+                    `Hash Rate: ${miningData.hash_rate}\n` +
+                    `Eficiencia: ${miningData.efficiency}%\n` +
+                    `Timestamp: ${new Date().toISOString()}`, 
+                    'success'
+                );
+            } catch (error) {
+                showResult('miningResult', 
+                    `❌ Error de minería:\n${error.message}`, 
+                    'error'
+                );
+            }
+        };
+    </script>
+</body>
+</html>

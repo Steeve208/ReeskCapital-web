@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test RSC Quantum Mining</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+        .test-button {
+            background: #00d4ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .test-button:hover {
+            background: #00b8e6;
+        }
+        .test-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .status.success {
+            background: #2d5a2d;
+            border: 1px solid #4a7c4a;
+        }
+        .status.error {
+            background: #5a2d2d;
+            border: 1px solid #7c4a4a;
+        }
+        .status.info {
+            background: #2d4a5a;
+            border: 1px solid #4a6a7c;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .metric {
+            background: #333;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+        .metric-label {
+            font-size: 14px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        .log {
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🚀 RSC Quantum Mining - Test</h1>
+        
+        <div class="test-section">
+            <h2>Estado del Sistema</h2>
+            <div id="systemStatus" class="status info">Inicializando...</div>
+            <div class="metrics" id="metricsDisplay">
+                <!-- Las métricas se cargarán aquí -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Controles de Minería</h2>
+            <button id="startMiningBtn" class="test-button">Iniciar Minería</button>
+            <button id="stopMiningBtn" class="test-button" disabled>Detener Minería</button>
+            <button id="pauseMiningBtn" class="test-button" disabled>Pausar</button>
+            <button id="resumeMiningBtn" class="test-button" disabled>Reanudar</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Algoritmos</h2>
+            <div id="algorithmsDisplay">
+                <!-- Los algoritmos se cargarán aquí -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Log del Sistema</h2>
+            <div id="systemLog" class="log">Iniciando sistema...\n</div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/mining/quantum-mining-engine.js"></script>
+    <script src="scripts/mining/real-time-sync.js"></script>
+    <script src="scripts/mining/quantum-mining-ui.js"></script>
+    
+    <script>
+        // Test script
+        let logElement = document.getElementById('systemLog');
+        let systemStatus = document.getElementById('systemStatus');
+        let metricsDisplay = document.getElementById('metricsDisplay');
+        let algorithmsDisplay = document.getElementById('algorithmsDisplay');
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.textContent += `[${timestamp}] ${message}\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        }
+        
+        function updateSystemStatus(message, type = 'info') {
+            systemStatus.textContent = message;
+            systemStatus.className = `status ${type}`;
+        }
+        
+        function updateMetrics(metrics, state) {
+            metricsDisplay.innerHTML = `
+                <div class="metric">
+                    <div class="metric-value">${metrics.hashRate.toFixed(2)}</div>
+                    <div class="metric-label">Hash Rate (H/s)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">${state.tokensMined.toFixed(6)}</div>
+                    <div class="metric-label">Tokens Minados</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">${metrics.efficiency.toFixed(1)}%</div>
+                    <div class="metric-label">Eficiencia</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">${state.totalHashes.toLocaleString()}</div>
+                    <div class="metric-label">Total Hashes</div>
+                </div>
+            `;
+        }
+        
+        function updateAlgorithms() {
+            if (window.RSCQuantumMining) {
+                const algorithms = window.RSCQuantumMining.getState().algorithms;
+                algorithmsDisplay.innerHTML = Object.entries(algorithms).map(([id, config]) => `
+                    <div style="background: #333; padding: 10px; margin: 5px; border-radius: 5px;">
+                        <strong>${config.name}</strong><br>
+                        <small>Eficiencia: ${config.efficiency}% | Consumo: ${config.powerConsumption}x</small>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('startMiningBtn').addEventListener('click', async () => {
+            try {
+                log('Iniciando minería...');
+                const result = await window.RSCQuantumMining.startMining('test_user', 'quantum');
+                if (result.success) {
+                    log('✅ Minería iniciada correctamente');
+                    updateSystemStatus('Minería activa', 'success');
+                    document.getElementById('startMiningBtn').disabled = true;
+                    document.getElementById('stopMiningBtn').disabled = false;
+                    document.getElementById('pauseMiningBtn').disabled = false;
+                }
+            } catch (error) {
+                log('❌ Error iniciando minería: ' + error.message);
+                updateSystemStatus('Error iniciando minería', 'error');
+            }
+        });
+        
+        document.getElementById('stopMiningBtn').addEventListener('click', async () => {
+            try {
+                log('Deteniendo minería...');
+                const result = await window.RSCQuantumMining.stopMining();
+                if (result.success) {
+                    log('⏹️ Minería detenida');
+                    updateSystemStatus('Minería detenida', 'info');
+                    document.getElementById('startMiningBtn').disabled = false;
+                    document.getElementById('stopMiningBtn').disabled = true;
+                    document.getElementById('pauseMiningBtn').disabled = true;
+                    document.getElementById('resumeMiningBtn').disabled = true;
+                }
+            } catch (error) {
+                log('❌ Error deteniendo minería: ' + error.message);
+            }
+        });
+        
+        document.getElementById('pauseMiningBtn').addEventListener('click', () => {
+            window.RSCQuantumMining.pauseMining();
+            log('⏸️ Minería pausada');
+            updateSystemStatus('Minería pausada', 'info');
+            document.getElementById('pauseMiningBtn').disabled = true;
+            document.getElementById('resumeMiningBtn').disabled = false;
+        });
+        
+        document.getElementById('resumeMiningBtn').addEventListener('click', () => {
+            window.RSCQuantumMining.resumeMining();
+            log('▶️ Minería reanudada');
+            updateSystemStatus('Minería activa', 'success');
+            document.getElementById('pauseMiningBtn').disabled = false;
+            document.getElementById('resumeMiningBtn').disabled = true;
+        });
+        
+        // Mining engine events
+        if (window.RSCQuantumMining) {
+            window.RSCQuantumMining.on('engineReady', (data) => {
+                log('✅ Motor de minería listo');
+                updateSystemStatus('Sistema listo', 'success');
+                updateAlgorithms();
+            });
+            
+            window.RSCQuantumMining.on('miningStarted', (data) => {
+                log('🚀 Minería iniciada: ' + JSON.stringify(data));
+            });
+            
+            window.RSCQuantumMining.on('miningStopped', (data) => {
+                log('⏹️ Minería detenida: ' + JSON.stringify(data));
+            });
+            
+            window.RSCQuantumMining.on('hashFound', (data) => {
+                log('💎 Hash encontrado: ' + data.hash + ' - Recompensa: ' + data.reward.toFixed(6) + ' RSC');
+            });
+            
+            window.RSCQuantumMining.on('metricsUpdate', (data) => {
+                updateMetrics(data.metrics, data.state);
+            });
+            
+            window.RSCQuantumMining.on('miningError', (data) => {
+                log('❌ Error de minería: ' + data.error);
+                updateSystemStatus('Error en minería', 'error');
+            });
+        }
+        
+        // Initialize
+        log('Inicializando test de minería...');
+        updateSystemStatus('Esperando inicialización...', 'info');
+    </script>
+</body>
+</html>

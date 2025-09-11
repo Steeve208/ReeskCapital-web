@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSC Quantum Mining Platform - REVOLUCIONARIO</title>
+    <title>RSC  Mining Platform - </title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -210,7 +210,7 @@
             </section>
             
             <!-- Quantum Mining Dashboard -->
-            <section class="mining-dashboard hidden" id="miningDashboard">
+            <section class="mining-dashboard" id="miningDashboard" style="display: none;">
                 <!-- User Stats -->
                 <div class="user-stats">
                     <div class="stat-card">
@@ -261,7 +261,53 @@
                         Select Mining Algorithm
                     </h3>
                     <div class="algorithm-grid" id="algorithmGrid">
-                        <!-- Algorithms will be loaded dynamically -->
+                        <div class="algorithm-card active" data-algorithm="quantum-core">
+                            <div class="algorithm-icon">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                            <h4>Quantum Core</h4>
+                            <p>Highest efficiency, moderate power consumption</p>
+                            <div class="algorithm-stats">
+                                <span class="stat">Efficiency: 95%</span>
+                                <span class="stat">Power: 2.5kW</span>
+                            </div>
+                        </div>
+                        
+                        <div class="algorithm-card" data-algorithm="neural-network">
+                            <div class="algorithm-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h4>Neural Network</h4>
+                            <p>Adaptive learning, low power consumption</p>
+                            <div class="algorithm-stats">
+                                <span class="stat">Efficiency: 88%</span>
+                                <span class="stat">Power: 1.8kW</span>
+                            </div>
+                        </div>
+                        
+                        <div class="algorithm-card" data-algorithm="hybrid-fusion">
+                            <div class="algorithm-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h4>Hybrid Fusion</h4>
+                            <p>Best of both worlds, high power consumption</p>
+                            <div class="algorithm-stats">
+                                <span class="stat">Efficiency: 92%</span>
+                                <span class="stat">Power: 3.2kW</span>
+                            </div>
+                        </div>
+                        
+                        <div class="algorithm-card" data-algorithm="adaptive-matrix">
+                            <div class="algorithm-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h4>Adaptive Matrix</h4>
+                            <p>Self-optimizing, highest power consumption</p>
+                            <div class="algorithm-stats">
+                                <span class="stat">Efficiency: 98%</span>
+                                <span class="stat">Power: 4.1kW</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -426,7 +472,61 @@
                         Mining Equipment
                     </h3>
                     <div class="equipment-grid" id="equipmentGrid">
-                        <!-- Equipment will be loaded dynamically -->
+                        <div class="equipment-card">
+                            <div class="equipment-icon">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <h4>Quantum Processor</h4>
+                            <p>Advanced quantum computing unit</p>
+                            <div class="equipment-level">
+                                <span>Level 1</span>
+                                <div class="level-bar">
+                                    <div class="level-fill" style="width: 25%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="equipment-card">
+                            <div class="equipment-icon">
+                                <i class="fas fa-memory"></i>
+                            </div>
+                            <h4>Neural Memory</h4>
+                            <p>High-speed memory for mining data</p>
+                            <div class="equipment-level">
+                                <span>Level 1</span>
+                                <div class="level-bar">
+                                    <div class="level-fill" style="width: 15%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="equipment-card">
+                            <div class="equipment-icon">
+                                <i class="fas fa-fan"></i>
+                            </div>
+                            <h4>Cooling System</h4>
+                            <p>Advanced thermal management</p>
+                            <div class="equipment-level">
+                                <span>Level 1</span>
+                                <div class="level-bar">
+                                    <div class="level-fill" style="width: 30%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="equipment-card">
+                            <div class="equipment-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h4>Power Core</h4>
+                            <p>Efficient energy management system</p>
+                            <div class="equipment-level">
+                                <span>Level 1</span>
+                                <div class="level-bar">
+                                    <div class="level-fill" style="width: 20%"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -446,7 +546,50 @@
                             </div>
                         </div>
                         <div class="leaderboard-list" id="leaderboardList">
-                            <!-- Leaderboard will be loaded dynamically -->
+                            <div class="leaderboard-item">
+                                <div class="rank">1</div>
+                                <div class="miner-info">
+                                    <div class="miner-name">QuantumMiner</div>
+                                    <div class="miner-stats">1,234.567 RSC</div>
+                        </div>
+                                <div class="miner-status online">Online</div>
+                            </div>
+                            
+                            <div class="leaderboard-item">
+                                <div class="rank">2</div>
+                                <div class="miner-info">
+                                    <div class="miner-name">NeuralNet</div>
+                                    <div class="miner-stats">987.654 RSC</div>
+                                </div>
+                                <div class="miner-status online">Online</div>
+                            </div>
+                            
+                            <div class="leaderboard-item">
+                                <div class="rank">3</div>
+                                <div class="miner-info">
+                                    <div class="miner-name">HybridFusion</div>
+                                    <div class="miner-stats">876.543 RSC</div>
+                                </div>
+                                <div class="miner-status offline">Offline</div>
+                            </div>
+                            
+                            <div class="leaderboard-item">
+                                <div class="rank">4</div>
+                                <div class="miner-info">
+                                    <div class="miner-name">AdaptiveMatrix</div>
+                                    <div class="miner-stats">765.432 RSC</div>
+                                </div>
+                                <div class="miner-status online">Online</div>
+                            </div>
+                            
+                            <div class="leaderboard-item">
+                                <div class="rank">5</div>
+                                <div class="miner-info">
+                                    <div class="miner-name">CryptoMiner</div>
+                                    <div class="miner-stats">654.321 RSC</div>
+                                </div>
+                                <div class="miner-status online">Online</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -525,9 +668,685 @@
     <div class="notifications-container" id="notificationsContainer"></div>
 
     <!-- Scripts -->
-    <script src="../scripts/mining/quantum-mining-engine.js"></script>
-    <script src="../scripts/mining/real-time-sync.js"></script>
-    <script src="../scripts/mining/quantum-mining-ui.js"></script>
-    <script src="../scripts/mining/quantum-mining-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/main.min.js"></script>
+    <script src="../scripts/supabase-integration.js"></script>
+    <script>
+        // Inicializar cuando esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 RSC Mining Platform cargando...');
+            
+            // Esperar a que Supabase Integration se cargue
+            let attempts = 0;
+            const maxAttempts = 50;
+            
+            const checkSupabase = () => {
+                attempts++;
+                console.log(`🔍 Intento ${attempts}/${maxAttempts} - Verificando Supabase Integration...`);
+                
+                if (window.supabaseIntegration) {
+                    console.log('✅ Supabase Integration detectado');
+                    initializeMiningPlatform();
+                } else if (attempts >= maxAttempts) {
+                    console.error('❌ Timeout: Supabase Integration no se cargó en 5 segundos');
+                } else {
+                    setTimeout(checkSupabase, 100);
+                }
+            };
+            
+            checkSupabase();
+        });
+
+        function initializeMiningPlatform() {
+            console.log('🚀 Inicializando RSC Mining Platform...');
+            
+            // Configurar event listeners para el sistema existente
+            setupAuthEventListeners();
+            setupMiningEventListeners();
+            
+            // Verificar si el usuario ya está autenticado
+            if (window.supabaseIntegration.isUserAuthenticated()) {
+                showMiningDashboard();
+                
+                // Esperar un poco para que se cargue la sesión
+                setTimeout(async () => {
+                    await checkAndRestoreMiningSession();
+                }, 1000);
+            } else {
+                showAuthSection();
+            }
+            
+            console.log('✅ RSC Mining Platform - LISTO');
+        }
+
+        async function checkAndRestoreMiningSession() {
+            try {
+                console.log('🔍 Verificando sesión de minería...');
+                
+                // Verificar si hay una sesión de minería activa usando la función de supabaseIntegration
+                const hasActiveSession = await window.supabaseIntegration.checkMiningSession();
+                
+                if (hasActiveSession) {
+                    console.log('⛏️ Sesión de minería activa detectada - Reanudando...');
+                    console.log(`⏰ Tiempo restante: ${window.supabaseIntegration.getRemainingTime()} horas`);
+                    
+                    // Sincronizar balance del usuario con la sesión
+                    syncUserBalance();
+                    
+                    // Ocultar botón de inicio y mostrar que está minando
+                    document.getElementById('startMiningBtn').style.display = 'none';
+                    document.getElementById('stopMiningBtn').classList.add('hidden');
+                    
+                    // Reanudar simulación de minería
+                    startMiningSimulation();
+                    
+                    // Mostrar estado actual de la sesión
+                    showSessionStatus();
+                    
+                    // Mostrar notificación
+                    showNotification('⛏️ Minería reanudada - Sesión de 24 horas activa', 'success');
+                } else {
+                    console.log('ℹ️ No hay sesión de minería activa');
+                }
+            } catch (error) {
+                console.error('❌ Error verificando sesión de minería:', error);
+            }
+        }
+
+        function syncUserBalance() {
+            try {
+                const user = window.supabaseIntegration.getCurrentUser();
+                const session = window.supabaseIntegration.getMiningSession();
+                
+                if (user && session.isActive) {
+                    console.log('🔄 Sincronizando balance del usuario...');
+                    console.log(`💰 Balance actual: ${user.balance.toFixed(6)} RSC`);
+                    console.log(`⛏️ Tokens en sesión: ${session.tokensMined.toFixed(6)} RSC`);
+                    
+                    // Actualizar la interfaz para mostrar el balance correcto
+                    updateBalanceDisplay();
+                    
+                    console.log('✅ Balance sincronizado correctamente');
+                }
+            } catch (error) {
+                console.error('❌ Error sincronizando balance:', error);
+            }
+        }
+
+        function updateBalanceDisplay() {
+            const user = window.supabaseIntegration.getCurrentUser();
+            if (user) {
+                // Actualizar balance en el header
+                const userBalance = document.getElementById('userBalance');
+                const userBalanceDisplay = document.getElementById('userBalanceDisplay');
+                const totalMinedDisplay = document.getElementById('totalMinedDisplay');
+                
+                if (userBalance) {
+                    userBalance.textContent = user.balance.toFixed(6) + ' RSC';
+                }
+                if (userBalanceDisplay) {
+                    userBalanceDisplay.textContent = user.balance.toFixed(6) + ' RSC';
+                }
+                if (totalMinedDisplay) {
+                    totalMinedDisplay.textContent = user.balance.toFixed(6) + ' RSC';
+                }
+                
+                console.log(`💰 Balance actualizado en UI: ${user.balance.toFixed(6)} RSC`);
+            }
+        }
+
+        function setupAuthEventListeners() {
+            // Login form
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    await handleLogin();
+                });
+            }
+
+            // Register form
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    await handleRegister();
+                });
+            }
+
+            // Tab switching
+            const showRegister = document.getElementById('showRegister');
+            const showLogin = document.getElementById('showLogin');
+            
+            if (showRegister) {
+                showRegister.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchAuthTab('register');
+                });
+            }
+            
+            if (showLogin) {
+                showLogin.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchAuthTab('login');
+                });
+            }
+        }
+
+        function setupMiningEventListeners() {
+            // Start mining button
+            const startMiningBtn = document.getElementById('startMiningBtn');
+            if (startMiningBtn) {
+                startMiningBtn.addEventListener('click', async () => {
+                    await handleStartMining();
+                });
+            }
+
+            // Stop mining button
+            const stopMiningBtn = document.getElementById('stopMiningBtn');
+            if (stopMiningBtn) {
+                stopMiningBtn.addEventListener('click', async () => {
+                    await handleStopMining();
+                });
+            }
+
+            // Logout button
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    handleLogout();
+                });
+            }
+
+            // Algorithm selection
+            const algorithmCards = document.querySelectorAll('.algorithm-card');
+            algorithmCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Remove active class from all cards
+                    algorithmCards.forEach(c => c.classList.remove('active'));
+                    // Add active class to clicked card
+                    card.classList.add('active');
+                    
+                    const algorithm = card.getAttribute('data-algorithm');
+                    console.log('Selected algorithm:', algorithm);
+                });
+            });
+
+            // Leaderboard tabs
+            const leaderboardTabs = document.querySelectorAll('.tab-btn');
+            leaderboardTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    leaderboardTabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    const period = tab.getAttribute('data-period');
+                    console.log('Selected period:', period);
+                });
+            });
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                showNotification('Por favor ingresa tu email y contraseña', 'error');
+                return;
+            }
+
+            try {
+                const userData = await window.supabaseIntegration.loginUser(email, password);
+                showNotification('Sesión iniciada correctamente', 'success');
+                showMiningDashboard();
+                
+                // Verificar si hay una sesión de minería activa después del login
+                setTimeout(async () => {
+                    await checkAndRestoreMiningSession();
+                }, 500);
+            } catch (error) {
+                showNotification('Error iniciando sesión: ' + error.message, 'error');
+            }
+        }
+
+        async function handleRegister() {
+            const email = document.getElementById('registerEmail').value;
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const referralCode = document.getElementById('referralCode').value;
+
+            if (!email || !username || !password) {
+                showNotification('Por favor completa todos los campos requeridos (email, usuario y contraseña)', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showNotification('La contraseña debe tener al menos 6 caracteres', 'error');
+                return;
+            }
+
+            try {
+                const result = await window.supabaseIntegration.registerUser(email, username, password, referralCode || null);
+                showNotification('Usuario registrado correctamente', 'success');
+                showMiningDashboard();
+                
+                // Verificar si hay una sesión de minería activa después del registro
+                setTimeout(async () => {
+                    await checkAndRestoreMiningSession();
+                }, 500);
+            } catch (error) {
+                showNotification('Error registrando usuario: ' + error.message, 'error');
+            }
+        }
+
+        async function handleStartMining() {
+            try {
+                // Limpiar completamente cualquier sesión existente antes de intentar iniciar
+                console.log('🧹 Limpiando sesiones existentes...');
+                localStorage.removeItem('rsc_mining_session');
+                
+                // Resetear el estado de minería en supabaseIntegration
+                if (window.supabaseIntegration) {
+                    window.supabaseIntegration.miningSession.isActive = false;
+                    window.supabaseIntegration.miningSession.sessionId = null;
+                    window.supabaseIntegration.miningSession.startTime = null;
+                    window.supabaseIntegration.miningSession.endTime = null;
+                    window.supabaseIntegration.miningSession.tokensMined = 0;
+                }
+                
+                // Esperar un momento para que se procese la limpieza
+                await new Promise(resolve => setTimeout(resolve, 200));
+                
+                await window.supabaseIntegration.startMiningSession();
+                showNotification('⛏️ Minería de 24 horas iniciada - No se detendrá hasta completarse', 'success');
+                
+                // Actualizar UI
+                document.getElementById('startMiningBtn').style.display = 'none';
+                document.getElementById('stopMiningBtn').classList.add('hidden'); // Ocultar botón de detener
+                
+                // Mostrar información de la sesión
+                const session = window.supabaseIntegration.getMiningSession();
+                const endTime = new Date(session.endTime);
+                showNotification(`⏰ La minería terminará el: ${endTime.toLocaleString()}`, 'info');
+                
+                // Iniciar simulación de minería
+                startMiningSimulation();
+            } catch (error) {
+                console.error('❌ Error en handleStartMining:', error);
+                showNotification('Error iniciando minería: ' + error.message, 'error');
+            }
+        }
+
+        async function handleStopMining() {
+            showNotification('❌ No puedes detener la minería - Dura 24 horas completas', 'error');
+        }
+
+        function handleLogout() {
+            window.supabaseIntegration.logout();
+            showNotification('Sesión cerrada', 'info');
+            showAuthSection();
+        }
+
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            
+            if (tab === 'register') {
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+            } else {
+                registerForm.classList.remove('active');
+                loginForm.classList.add('active');
+            }
+        }
+
+        function showAuthSection() {
+            document.getElementById('authSection').style.display = 'block';
+            document.getElementById('miningDashboard').style.display = 'none';
+        }
+
+        function showMiningDashboard() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('miningDashboard').style.display = 'block';
+            
+            // Actualizar información del usuario
+            const user = window.supabaseIntegration.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.username;
+                
+                // Usar la función centralizada para actualizar el balance
+                updateBalanceDisplay();
+                
+                // Mostrar información del usuario en el header
+                document.getElementById('userInfo').style.display = 'flex';
+                
+                // Mostrar botón de logout
+                document.getElementById('logoutBtn').style.display = 'block';
+                
+                // Actualizar estado de conexión
+                document.getElementById('connectionText').textContent = 'Connected';
+                document.getElementById('connectionStatus').classList.add('connected');
+            }
+        }
+
+        let miningInterval = null;
+
+        function startMiningSimulation() {
+            console.log('⛏️ Iniciando simulación de minería...');
+            
+            // Detener cualquier simulación anterior
+            stopMiningSimulation();
+            
+            // Verificar que hay una sesión activa
+            const session = window.supabaseIntegration.getMiningSession();
+            if (!session.isActive) {
+                console.log('❌ No hay sesión activa para simular');
+                return;
+            }
+            
+            console.log(`✅ Simulación iniciada - Sesión: ${session.sessionId}`);
+            console.log(`⏰ Tiempo restante: ${window.supabaseIntegration.getRemainingTime()} horas`);
+            
+            // Actualizar progreso cada segundo
+            const progressInterval = setInterval(() => {
+                updateMiningProgress();
+                
+                // Verificar si la sesión expiró
+                if (window.supabaseIntegration.isSessionExpired()) {
+                    console.log('⏰ Sesión de 24 horas completada automáticamente');
+                    showNotification('🎉 ¡Sesión de 24 horas completada! Puedes iniciar una nueva sesión', 'success');
+                    stopMiningSimulation();
+                    resetMiningUI();
+                    return;
+                }
+            }, 1000);
+            
+            // Simular minería cada 5 segundos
+            miningInterval = setInterval(() => {
+                // Verificar si la sesión sigue activa
+                const currentSession = window.supabaseIntegration.getMiningSession();
+                if (!currentSession.isActive) {
+                    console.log('⏹️ Sesión de minería detenida');
+                    stopMiningSimulation();
+                    return;
+                }
+                
+                // Simular minería
+                const tokensMined = Math.random() * 0.009 + 0.001;
+                const hashRate = Math.random() * 900 + 100;
+                const efficiency = Math.random() * 20 + 80;
+                
+                // Actualizar stats en Supabase (incluye balance automáticamente)
+                window.supabaseIntegration.updateMiningStats(tokensMined, hashRate, efficiency);
+                
+                // Actualizar UI
+                updateMiningUI(tokensMined, hashRate, efficiency);
+            }, 5000);
+            
+            // Guardar referencia al intervalo de progreso para poder detenerlo
+            window.miningProgressInterval = progressInterval;
+        }
+
+        function stopMiningSimulation() {
+            console.log('⏹️ Deteniendo simulación de minería...');
+            
+            if (miningInterval) {
+                clearInterval(miningInterval);
+                miningInterval = null;
+                console.log('✅ Intervalo de minería detenido');
+            }
+            
+            if (window.miningProgressInterval) {
+                clearInterval(window.miningProgressInterval);
+                window.miningProgressInterval = null;
+                console.log('✅ Intervalo de progreso detenido');
+            }
+            
+            console.log('✅ Simulación de minería detenida completamente');
+        }
+
+
+        function showSessionStatus() {
+            const session = window.supabaseIntegration.getMiningSession();
+            if (session.isActive) {
+                const startTime = new Date(session.startTime);
+                const endTime = new Date(session.endTime);
+                const now = new Date();
+                const elapsed = now - startTime;
+                const remaining = endTime - now;
+                
+                const hours = Math.floor(elapsed / 3600000);
+                const minutes = Math.floor((elapsed % 3600000) / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                
+                const remainingHours = Math.floor(remaining / 3600000);
+                const remainingMinutes = Math.floor((remaining % 3600000) / 60000);
+                
+                console.log(`📊 Estado de la sesión:`);
+                console.log(`⏰ Tiempo transcurrido: ${hours}h ${minutes}m ${seconds}s`);
+                console.log(`⏳ Tiempo restante: ${remainingHours}h ${remainingMinutes}m`);
+                console.log(`💰 Tokens minados: ${session.tokensMined.toFixed(6)} RSC`);
+                console.log(`🔋 Hash Rate: ${session.hashRate.toFixed(2)} H/s`);
+                console.log(`⚡ Eficiencia: ${session.efficiency.toFixed(1)}%`);
+            }
+        }
+
+        function checkExpiredSession() {
+            try {
+                const stored = localStorage.getItem('rsc_mining_session');
+                if (stored) {
+                    const sessionData = JSON.parse(stored);
+                    const now = new Date();
+                    const startTime = new Date(sessionData.startTime);
+                    const elapsed = now - startTime;
+                    const duration = 24 * 60 * 60 * 1000; // 24 horas
+                    
+                    if (elapsed >= duration) {
+                        console.log('⏰ Sesión expirada detectada - Procesando recompensas...');
+                        
+                        // Procesar recompensas de la sesión expirada
+                        const tokensMined = sessionData.tokensMined || 0;
+                        if (tokensMined > 0) {
+                            const user = window.supabaseIntegration.getCurrentUser();
+                            if (user) {
+                                user.balance += tokensMined;
+                                window.supabaseIntegration.saveUserToStorage();
+                                
+                                // Actualizar UI
+                                const userBalance = document.getElementById('userBalance');
+                                const userBalanceDisplay = document.getElementById('userBalanceDisplay');
+                                
+                                if (userBalance) {
+                                    userBalance.textContent = user.balance.toFixed(6) + ' RSC';
+                                }
+                                if (userBalanceDisplay) {
+                                    userBalanceDisplay.textContent = user.balance.toFixed(6) + ' RSC';
+                                }
+                                
+                                showNotification(`🎉 ¡Sesión de 24 horas completada! +${tokensMined.toFixed(6)} RSC agregados`, 'success');
+                            }
+                        }
+                        
+                        // Limpiar sesión expirada
+                        localStorage.removeItem('rsc_mining_session');
+                        console.log('✅ Sesión expirada procesada y limpiada');
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error procesando sesión expirada:', error);
+            }
+        }
+
+        function resetMiningUI() {
+            // Mostrar botón de inicio
+            document.getElementById('startMiningBtn').style.display = 'block';
+            document.getElementById('stopMiningBtn').classList.add('hidden');
+            
+            // Resetear métricas
+            const hashRateDisplay = document.getElementById('hashRateDisplay');
+            if (hashRateDisplay) {
+                hashRateDisplay.textContent = '0 H/s';
+            }
+            
+            const efficiencyDisplay = document.getElementById('efficiencyDisplay');
+            if (efficiencyDisplay) {
+                efficiencyDisplay.textContent = '100%';
+            }
+            
+            const tokensPerSecondDisplay = document.getElementById('tokensPerSecondDisplay');
+            if (tokensPerSecondDisplay) {
+                tokensPerSecondDisplay.textContent = '0.000000 RSC/s';
+            }
+            
+            // Resetear progreso
+            const sessionTimeDisplay = document.getElementById('sessionTimeDisplay');
+            if (sessionTimeDisplay) {
+                sessionTimeDisplay.textContent = '00:00:00';
+            }
+            
+            const sessionTokensDisplay = document.getElementById('sessionTokensDisplay');
+            if (sessionTokensDisplay) {
+                sessionTokensDisplay.textContent = '0.000000 RSC';
+            }
+            
+            const totalHashesDisplay = document.getElementById('totalHashesDisplay');
+            if (totalHashesDisplay) {
+                totalHashesDisplay.textContent = '0';
+            }
+            
+            const progressPercentageDisplay = document.getElementById('progressPercentage');
+            if (progressPercentageDisplay) {
+                progressPercentageDisplay.textContent = '0%';
+            }
+            
+            const progressBarFill = document.getElementById('progressBarFill');
+            if (progressBarFill) {
+                progressBarFill.style.width = '0%';
+            }
+        }
+
+
+        function updateMiningUI(tokensMined, hashRate, efficiency) {
+            // Actualizar métricas en tiempo real
+            const hashRateDisplay = document.getElementById('hashRateDisplay');
+            if (hashRateDisplay) {
+                hashRateDisplay.textContent = Math.round(hashRate) + ' H/s';
+            }
+            
+            const efficiencyDisplay = document.getElementById('efficiencyDisplay');
+            if (efficiencyDisplay) {
+                efficiencyDisplay.textContent = Math.round(efficiency) + '%';
+            }
+            
+            const tokensPerSecondDisplay = document.getElementById('tokensPerSecondDisplay');
+            if (tokensPerSecondDisplay) {
+                tokensPerSecondDisplay.textContent = tokensMined.toFixed(6) + ' RSC/s';
+            }
+            
+            // Actualizar balance del usuario en la interfaz
+            updateBalanceDisplay();
+            
+            // Actualizar progreso de minería
+            updateMiningProgress();
+        }
+
+        // Función de emergencia para limpiar sesiones (disponible en consola)
+        window.forceCleanMiningSessions = function() {
+            console.log('🧹 FORZANDO limpieza completa de sesiones...');
+            localStorage.removeItem('rsc_mining_session');
+            localStorage.removeItem('rsc_user_data');
+            
+            if (window.supabaseIntegration) {
+                window.supabaseIntegration.miningSession.isActive = false;
+                window.supabaseIntegration.miningSession.sessionId = null;
+                window.supabaseIntegration.miningSession.startTime = null;
+                window.supabaseIntegration.miningSession.endTime = null;
+                window.supabaseIntegration.miningSession.tokensMined = 0;
+            }
+            
+            console.log('✅ Limpieza completa realizada');
+            showNotification('🧹 Sesiones limpiadas completamente', 'success');
+        };
+
+        function updateMiningProgress() {
+            const session = window.supabaseIntegration.getMiningSession();
+            if (!session.isActive) return;
+            
+            // Calcular tiempo transcurrido
+            const now = new Date();
+            const startTime = new Date(session.startTime);
+            const elapsed = now - startTime;
+            const hours = Math.floor(elapsed / 3600000);
+            const minutes = Math.floor((elapsed % 3600000) / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            
+            // Actualizar tiempo de sesión
+            const sessionTimeDisplay = document.getElementById('sessionTimeDisplay');
+            if (sessionTimeDisplay) {
+                sessionTimeDisplay.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Actualizar tokens minados en la sesión
+            const sessionTokensDisplay = document.getElementById('sessionTokensDisplay');
+            if (sessionTokensDisplay) {
+                sessionTokensDisplay.textContent = session.tokensMined.toFixed(6) + ' RSC';
+            }
+            
+            // Calcular hashes totales (aproximado)
+            const totalHashes = Math.floor(session.hashRate * elapsed / 1000);
+            const totalHashesDisplay = document.getElementById('totalHashesDisplay');
+            if (totalHashesDisplay) {
+                totalHashesDisplay.textContent = totalHashes.toLocaleString();
+            }
+            
+            // Calcular porcentaje de progreso (basado en 24 horas)
+            const progressPercentage = Math.min(100, (elapsed / (24 * 60 * 60 * 1000)) * 100);
+            const progressPercentageDisplay = document.getElementById('progressPercentage');
+            if (progressPercentageDisplay) {
+                progressPercentageDisplay.textContent = Math.round(progressPercentage) + '%';
+            }
+            
+            // Actualizar barra de progreso
+            const progressBarFill = document.getElementById('progressBarFill');
+            if (progressBarFill) {
+                progressBarFill.style.width = Math.round(progressPercentage) + '%';
+            }
+            
+            // Actualizar total minado (balance total del usuario)
+            const totalMinedDisplay = document.getElementById('totalMinedDisplay');
+            if (totalMinedDisplay) {
+                const user = window.supabaseIntegration.getCurrentUser();
+                if (user) {
+                    totalMinedDisplay.textContent = user.balance.toFixed(6) + ' RSC';
+                    console.log(`📊 Total Mined actualizado: ${user.balance.toFixed(6)} RSC`);
+                }
+            }
+            
+            // Mostrar tiempo restante en el título de la página
+            const remainingHours = window.supabaseIntegration.getRemainingTime();
+            if (remainingHours > 0) {
+                document.title = `RSC Mining Platform - ${remainingHours}h restantes`;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            console.log(`[${type.toUpperCase()}] ${message}`);
+            
+            // Crear notificación visual si es necesario
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            
+            const container = document.getElementById('notificationsContainer');
+            if (container) {
+                container.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+    </script>
 </body>
 </html>
