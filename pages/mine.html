@@ -1206,7 +1206,12 @@
             
             const sessionTokensDisplay = document.getElementById('sessionTokensDisplay');
             if (sessionTokensDisplay) {
-                sessionTokensDisplay.textContent = '0.000000 RSC';
+                const user = window.supabaseIntegration.getCurrentUser();
+                if (user) {
+                    sessionTokensDisplay.textContent = user.balance.toFixed(6) + ' RSC';
+                } else {
+                    sessionTokensDisplay.textContent = '0.000000 RSC';
+                }
             }
             
             const totalHashesDisplay = document.getElementById('totalHashesDisplay');
@@ -1287,10 +1292,15 @@
                     `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
             
-            // Actualizar tokens minados en la sesión
+            // Actualizar tokens minados en la sesión (mostrar balance del usuario)
             const sessionTokensDisplay = document.getElementById('sessionTokensDisplay');
             if (sessionTokensDisplay) {
-                sessionTokensDisplay.textContent = session.tokensMined.toFixed(6) + ' RSC';
+                const user = window.supabaseIntegration.getCurrentUser();
+                if (user) {
+                    sessionTokensDisplay.textContent = user.balance.toFixed(6) + ' RSC';
+                } else {
+                    sessionTokensDisplay.textContent = session.tokensMined.toFixed(6) + ' RSC';
+                }
             }
             
             // Calcular hashes totales (aproximado)
