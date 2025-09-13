@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About RSC Chain - Revolutionary Blockchain Technology</title>
     <meta name="description" content="Discover RSC Chain, the world's most advanced blockchain platform with AI integration, post-quantum cryptography, and revolutionary consensus mechanisms.">
-    <link rel="icon" href="../assets/img/logo.png" type="image/png">
+    <link rel="icon" href="../assets/img/rsc-logo-official.png" type="image/png">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/about-ultra.css">
+    <link rel="stylesheet" href="../styles/quantum-about.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -24,7 +25,7 @@
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="../index.html">
-                    <img src="../assets/img/logo.png" alt="RSC Chain Logo">
+                    <img src="../assets/img/rsc-logo-official.png" alt="RSC Chain Logo">
                     <span>RSC CHAIN</span>
                 </a>
             </div>
@@ -47,144 +48,485 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-ultra">
-        <div class="particles-bg" id="particles-js"></div>
-        <div class="hero-content">
-            <div class="hero-text" data-aos="fade-up" data-aos-duration="1000">
-                <h1 class="hero-title">
-                    <span class="gradient-text">RSC Chain</span>
-                    <span class="subtitle">The Future of Blockchain</span>
-                </h1>
-                <p class="hero-description">
-                    Revolutionizing decentralized technology with AI-powered consensus, 
-                    post-quantum cryptography, and hybrid blockchain architecture. 
-                    Experience the next generation of blockchain innovation.
-                </p>
-                <div class="hero-stats">
-                    <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
-                        <div class="stat-number" data-count="100000">0</div>
-                        <div class="stat-label">Transactions/sec</div>
+    <!-- Quantum Hero Section -->
+    <section class="quantum-hero-about">
+        <div class="quantum-bg-layers">
+            <div class="quantum-layer quantum-layer-1"></div>
+            <div class="quantum-layer quantum-layer-2"></div>
+            <div class="quantum-layer quantum-layer-3"></div>
+        </div>
+        
+        <div class="quantum-particles" id="quantum-particles"></div>
+        
+        <div class="container">
+            <div class="quantum-hero-content">
+                <div class="hero-text-section" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="quantum-badge">
+                        <i class="fas fa-atom"></i>
+                        <span>Revolutionary Technology</span>
                     </div>
-                    <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
-                        <div class="stat-number" data-count="1.2">0</div>
-                        <div class="stat-label">Second Finality</div>
+                    
+                    <h1 class="quantum-title">
+                        <span class="title-line">The World's Most</span>
+                        <span class="title-highlight">Advanced Blockchain</span>
+                        <span class="title-line">Platform</span>
+                    </h1>
+                    
+                    <p class="quantum-description">
+                        RSC Chain represents a <strong>paradigm shift</strong> in blockchain technology, 
+                        integrating <strong>Artificial Intelligence</strong>, <strong>Post-Quantum Cryptography</strong>, 
+                        and <strong>Hybrid Consensus</strong> to create the most secure, scalable, and intelligent 
+                        blockchain platform ever built.
+                    </p>
+                    
+                    <div class="quantum-stats">
+                        <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                            <div class="stat-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" data-count="100000">0</div>
+                                <div class="stat-label">Transactions/sec</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                            <div class="stat-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" data-count="99.99">0</div>
+                                <div class="stat-label">Uptime %</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                            <div class="stat-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" data-count="1.2">0</div>
+                                <div class="stat-label">Second Finality</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
-                        <div class="stat-number" data-count="99.99">0</div>
-                        <div class="stat-label">Uptime %</div>
+                    
+                    <div class="quantum-actions" data-aos="fade-up" data-aos-delay="500">
+                        <a href="mine.html" class="quantum-btn quantum-btn-primary">
+                            <i class="fas fa-rocket"></i>
+                            <span>Start Mining</span>
+                        </a>
+                        <a href="wallet.html" class="quantum-btn quantum-btn-secondary">
+                            <i class="fas fa-wallet"></i>
+                            <span>Create Wallet</span>
+                        </a>
+                        <a href="#architecture" class="quantum-btn quantum-btn-outline">
+                            <i class="fas fa-cogs"></i>
+                            <span>Explore Technology</span>
+                        </a>
                     </div>
                 </div>
-                <div class="hero-actions" data-aos="fade-up" data-aos-delay="500">
-                    <a href="mine.html" class="btn-primary">Start Mining</a>
-                    <a href="wallet.html" class="btn-secondary">Create Wallet</a>
-                    <a href="#technology" class="btn-outline">Learn More</a>
-                </div>
-            </div>
-            <div class="hero-visual" data-aos="fade-left" data-aos-delay="600">
-                <div class="blockchain-visualization">
-                    <div class="block-chain">
-                        <div class="block" data-block="1"></div>
-                        <div class="block" data-block="2"></div>
-                        <div class="block" data-block="3"></div>
-                        <div class="block" data-block="4"></div>
-                        <div class="block" data-block="5"></div>
-                    </div>
-                    <div class="ai-brain">
-                        <div class="neural-network">
-                            <div class="node"></div>
-                            <div class="node"></div>
-                            <div class="node"></div>
-                            <div class="node"></div>
-                            <div class="node"></div>
-                            <div class="node"></div>
+                
+                <div class="hero-visual-section" data-aos="fade-left" data-aos-delay="600">
+                    <div class="quantum-visualization">
+                        <div class="blockchain-core">
+                            <div class="core-center">
+                                <div class="core-logo">
+                                    <img src="../assets/img/rsc-logo-official.png" alt="RSC Chain">
+                                </div>
+                                <div class="core-rings">
+                                    <div class="ring ring-1"></div>
+                                    <div class="ring ring-2"></div>
+                                    <div class="ring ring-3"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="quantum-nodes">
+                                <div class="quantum-node node-1" data-tech="AI">
+                                    <i class="fas fa-brain"></i>
+                                    <span>AI</span>
+                                </div>
+                                <div class="quantum-node node-2" data-tech="Quantum">
+                                    <i class="fas fa-atom"></i>
+                                    <span>Quantum</span>
+                                </div>
+                                <div class="quantum-node node-3" data-tech="Consensus">
+                                    <i class="fas fa-link"></i>
+                                    <span>Consensus</span>
+                                </div>
+                                <div class="quantum-node node-4" data-tech="Security">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Security</span>
+                                </div>
+                                <div class="quantum-node node-5" data-tech="P2P">
+                                    <i class="fas fa-network-wired"></i>
+                                    <span>P2P</span>
+                                </div>
+                                <div class="quantum-node node-6" data-tech="Storage">
+                                    <i class="fas fa-database"></i>
+                                    <span>Storage</span>
+                                </div>
+                            </div>
+                            
+                            <div class="data-streams">
+                                <div class="stream stream-1"></div>
+                                <div class="stream stream-2"></div>
+                                <div class="stream stream-3"></div>
+                                <div class="stream stream-4"></div>
+                                <div class="stream stream-5"></div>
+                                <div class="stream stream-6"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
         <div class="scroll-indicator">
             <div class="scroll-arrow"></div>
-            <span>Scroll to explore</span>
+            <span>Explore the Technology</span>
         </div>
     </section>
 
-    <!-- Technology Section -->
-    <section id="technology" class="technology-section">
+    <!-- Architecture Section -->
+    <section id="architecture" class="architecture-section">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2>Revolutionary Technology Stack</h2>
-                <p>Cutting-edge innovations that power the future of blockchain</p>
+                <h2>Revolutionary Architecture</h2>
+                <p>The world's first blockchain with fully integrated AI and post-quantum cryptography</p>
             </div>
             
-            <div class="tech-grid">
-                <div class="tech-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="tech-icon">
-                        <svg viewBox="0 0 100 100" class="icon-svg">
-                            <circle cx="50" cy="50" r="40" fill="none" stroke="url(#ai-gradient)" stroke-width="3"/>
-                            <path d="M30 50 L45 35 L60 50 L75 35" fill="none" stroke="url(#ai-gradient)" stroke-width="2"/>
-                            <circle cx="50" cy="50" r="8" fill="url(#ai-gradient)"/>
-                            <defs>
-                                <linearGradient id="ai-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#00cc6a;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
+            <div class="architecture-diagram" data-aos="fade-up" data-aos-delay="200">
+                <div class="architecture-layers">
+                    <div class="layer ai-layer">
+                        <div class="layer-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="layer-content">
+                            <h3>AI Layer</h3>
+                            <p>Neural Networks, Federated Learning, Anomaly Detection, Optimization</p>
+                        </div>
                     </div>
-                    <h3>AI-Powered Consensus</h3>
-                    <p>Machine learning algorithms continuously optimize network performance, security, and efficiency in real-time.</p>
-                    <div class="tech-features">
-                        <span class="feature">Auto-optimization</span>
-                        <span class="feature">Predictive scaling</span>
-                        <span class="feature">Smart routing</span>
+                    
+                    <div class="layer security-layer">
+                        <div class="layer-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="layer-content">
+                            <h3>Security Layer</h3>
+                            <p>Post-Quantum Cryptography, Zero-Knowledge Proofs, Firewall L7, Behavioral Analysis</p>
+                        </div>
+                    </div>
+                    
+                    <div class="layer consensus-layer">
+                        <div class="layer-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div class="layer-content">
+                            <h3>Consensus Layer</h3>
+                            <p>Hybrid PoW/PoS/VRF, Neural Consensus, Dynamic Adjustment, Cross-Chain</p>
+                        </div>
+                    </div>
+                    
+                    <div class="layer network-layer">
+                        <div class="layer-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <div class="layer-content">
+                            <h3>P2P Network</h3>
+                            <p>Kademlia DHT, Gossip Protocol, QUIC/Noise, Geographic Analysis</p>
+                        </div>
+                    </div>
+                    
+                    <div class="layer storage-layer">
+                        <div class="layer-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="layer-content">
+                            <h3>Storage Layer</h3>
+                            <p>RocksDB, TTL Cache, Compression, Automated Backups</p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="tech-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="tech-icon">
-                        <svg viewBox="0 0 100 100" class="icon-svg">
-                            <rect x="20" y="20" width="60" height="60" fill="none" stroke="url(#quantum-gradient)" stroke-width="2"/>
-                            <rect x="30" y="30" width="40" height="40" fill="none" stroke="url(#quantum-gradient)" stroke-width="2"/>
-                            <rect x="40" y="40" width="20" height="20" fill="url(#quantum-gradient)"/>
-                            <defs>
-                                <linearGradient id="quantum-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#f7931e;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                    </div>
-                    <h3>Post-Quantum Security</h3>
-                    <p>Quantum-resistant cryptographic algorithms ensure long-term security against future quantum computing threats.</p>
-                    <div class="tech-features">
-                        <span class="feature">Quantum-safe</span>
-                        <span class="feature">Future-proof</span>
-                        <span class="feature">Military-grade</span>
-                    </div>
+            </div>
+            
+            <div class="architecture-stats" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-item">
+                    <div class="stat-number">100,000+</div>
+                    <div class="stat-label">TPS Maximum</div>
                 </div>
+                <div class="stat-item">
+                    <div class="stat-number">&lt; 100ms</div>
+                    <div class="stat-label">Latency</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">&lt; 10s</div>
+                    <div class="stat-label">Finality</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">Infinite</div>
+                    <div class="stat-label">Scalability</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="tech-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="tech-icon">
-                        <svg viewBox="0 0 100 100" class="icon-svg">
-                            <circle cx="50" cy="50" r="35" fill="none" stroke="url(#consensus-gradient)" stroke-width="3"/>
-                            <circle cx="50" cy="50" r="20" fill="none" stroke="url(#consensus-gradient)" stroke-width="2"/>
-                            <circle cx="50" cy="50" r="8" fill="url(#consensus-gradient)"/>
-                            <path d="M50 15 L50 35 M50 65 L50 85 M15 50 L35 50 M65 50 L85 50" stroke="url(#consensus-gradient)" stroke-width="2"/>
-                            <defs>
-                                <linearGradient id="consensus-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
+    <!-- Technology Deep Dive -->
+    <section class="technology-deep-dive">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Technology Deep Dive</h2>
+                <p>Explore the cutting-edge technologies that power RSC Chain</p>
+            </div>
+            
+            <div class="tech-tabs" data-aos="fade-up" data-aos-delay="200">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="ai">AI Integration</button>
+                    <button class="tab-btn" data-tab="quantum">Post-Quantum</button>
+                    <button class="tab-btn" data-tab="consensus">Hybrid Consensus</button>
+                    <button class="tab-btn" data-tab="security">Advanced Security</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div class="tab-panel active" id="ai-panel">
+                        <div class="tech-panel-content">
+                            <div class="tech-panel-text">
+                                <h3>Artificial Intelligence Integration</h3>
+                                <p>RSC Chain is the first blockchain to fully integrate AI in every component, providing intelligent optimization, anomaly detection, and predictive analytics.</p>
+                                
+                                <div class="tech-features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-brain"></i>
+                                        <div>
+                                            <h4>Neural Networks</h4>
+                                            <p>LSTM, Transformers, ConvNets, and GNN for advanced pattern recognition</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-users"></i>
+                                        <div>
+                                            <h4>Federated Learning</h4>
+                                            <p>Privacy-preserving machine learning across the network</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <div>
+                                            <h4>Anomaly Detection</h4>
+                                            <p>Autoencoders and ML algorithms for threat detection</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-chart-line"></i>
+                                        <div>
+                                            <h4>Predictive Analytics</h4>
+                                            <p>Real-time optimization and performance prediction</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tech-panel-visual">
+                                <div class="ai-visualization">
+                                    <div class="neural-network">
+                                        <div class="neuron"></div>
+                                        <div class="neuron"></div>
+                                        <div class="neuron"></div>
+                                        <div class="neuron"></div>
+                                        <div class="neuron"></div>
+                                        <div class="neuron"></div>
+                                        <div class="neuron"></div>
+                                        <div class="neuron"></div>
+                                        <div class="neuron"></div>
+                                    </div>
+                                    <div class="neural-connections">
+                                        <div class="connection"></div>
+                                        <div class="connection"></div>
+                                        <div class="connection"></div>
+                                        <div class="connection"></div>
+                                        <div class="connection"></div>
+                                        <div class="connection"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Hybrid Consensus</h3>
-                    <p>Combines multiple consensus mechanisms for optimal security, decentralization, and performance.</p>
-                    <div class="tech-features">
-                        <span class="feature">Multi-layer</span>
-                        <span class="feature">Adaptive</span>
-                        <span class="feature">Scalable</span>
+                    
+                    <div class="tab-panel" id="quantum-panel">
+                        <div class="tech-panel-content">
+                            <div class="tech-panel-text">
+                                <h3>Post-Quantum Cryptography</h3>
+                                <p>Military-grade security with quantum-resistant algorithms to protect against future quantum computing threats.</p>
+                                
+                                <div class="tech-features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-key"></i>
+                                        <div>
+                                            <h4>XMSS</h4>
+                                            <p>Extended Merkle Signature Scheme for quantum-safe signatures</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <div>
+                                            <h4>SPHINCS+</h4>
+                                            <p>Spherical signatures with stateless security</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-lock"></i>
+                                        <div>
+                                            <h4>Dilithium</h4>
+                                            <p>Lattice-based cryptography for digital signatures</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-eye-slash"></i>
+                                        <div>
+                                            <h4>Zero-Knowledge</h4>
+                                            <p>zk-SNARKs and zk-STARKs for privacy preservation</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tech-panel-visual">
+                                <div class="quantum-visualization">
+                                    <div class="quantum-core">
+                                        <div class="quantum-particle"></div>
+                                        <div class="quantum-particle"></div>
+                                        <div class="quantum-particle"></div>
+                                        <div class="quantum-particle"></div>
+                                    </div>
+                                    <div class="quantum-field"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-panel" id="consensus-panel">
+                        <div class="tech-panel-content">
+                            <div class="tech-panel-text">
+                                <h3>Hybrid Consensus</h3>
+                                <p>The world's first hybrid consensus combining PoW, PoS, and VRF for maximum security and efficiency.</p>
+                                
+                                <div class="tech-features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-hammer"></i>
+                                        <div>
+                                            <h4>Proof of Work</h4>
+                                            <p>Multiple algorithms with auto-tuning difficulty</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-coins"></i>
+                                        <div>
+                                            <h4>Proof of Stake</h4>
+                                            <p>Intelligent validator selection with slashing</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-dice"></i>
+                                        <div>
+                                            <h4>VRF</h4>
+                                            <p>Verifiable Random Function for fair selection</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-robot"></i>
+                                        <div>
+                                            <h4>AI Optimization</h4>
+                                            <p>Neural consensus with dynamic adjustment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tech-panel-visual">
+                                <div class="consensus-visualization">
+                                    <div class="consensus-center">
+                                        <div class="consensus-logo">RSC</div>
+                                    </div>
+                                    <div class="consensus-nodes">
+                                        <div class="consensus-node pow">PoW</div>
+                                        <div class="consensus-node pos">PoS</div>
+                                        <div class="consensus-node vrf">VRF</div>
+                                    </div>
+                                    <div class="consensus-connections">
+                                        <div class="consensus-connection"></div>
+                                        <div class="consensus-connection"></div>
+                                        <div class="consensus-connection"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-panel" id="security-panel">
+                        <div class="tech-panel-content">
+                            <div class="tech-panel-text">
+                                <h3>Advanced Security</h3>
+                                <p>Multi-layered security system with behavioral analysis, threat detection, and adaptive protection.</p>
+                                
+                                <div class="tech-features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-fire"></i>
+                                        <div>
+                                            <h4>Firewall L7</h4>
+                                            <p>Intelligent filtering and DDoS protection</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-user-secret"></i>
+                                        <div>
+                                            <h4>Behavioral Analysis</h4>
+                                            <p>User profiling and anomaly detection</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-search"></i>
+                                        <div>
+                                            <h4>Threat Detection</h4>
+                                            <p>Real-time monitoring and response</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-item">
+                                        <i class="fas fa-cog"></i>
+                                        <div>
+                                            <h4>Adaptive Security</h4>
+                                            <p>Self-evolving protection system</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tech-panel-visual">
+                                <div class="security-visualization">
+                                    <div class="security-shield">
+                                        <div class="shield-layer"></div>
+                                        <div class="shield-layer"></div>
+                                        <div class="shield-layer"></div>
+                                    </div>
+                                    <div class="security-threats">
+                                        <div class="threat blocked">Blocked</div>
+                                        <div class="threat blocked">Blocked</div>
+                                        <div class="threat blocked">Blocked</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -983,6 +1325,6 @@
     <script src="../scripts/rsc-loader.js"></script>
     
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="../scripts/about-ultra.js"></script>
+    <script src="../scripts/quantum-about.js"></script>
 </body>
 </html>

@@ -3,28 +3,28 @@
 /* ===== CSS VARIABLES - ENTERPRISE LEVEL ===== */
 :root {
   /* Primary Colors - RSC Chain Brand */
-  --rsc-primary: #00ff88;
-  --rsc-primary-dark: #00cc6a;
-  --rsc-primary-light: #33ff99;
-  --rsc-primary-glow: rgba(0, 255, 136, 0.3);
+  --rsc-primary: #00d4ff;
+  --rsc-primary-dark: #00a8cc;
+  --rsc-primary-light: #33ddff;
+  --rsc-primary-glow: rgba(0, 212, 255, 0.5);
   
-  /* Secondary Colors - Electric Blue */
-  --rsc-secondary: #00bfff;
-  --rsc-secondary-dark: #0099cc;
-  --rsc-secondary-light: #33ccff;
-  --rsc-secondary-glow: rgba(0, 191, 255, 0.3);
+  /* Secondary Colors - Electric Magenta */
+  --rsc-secondary: #ff00ff;
+  --rsc-secondary-dark: #cc00cc;
+  --rsc-secondary-light: #ff33ff;
+  --rsc-secondary-glow: rgba(255, 0, 255, 0.5);
   
-  /* Accent Colors - Neon Purple */
-  --rsc-accent: #8b5cf6;
-  --rsc-accent-dark: #7c3aed;
-  --rsc-accent-light: #a78bfa;
-  --rsc-accent-glow: rgba(139, 92, 246, 0.3);
+  /* Accent Colors - Neon Green */
+  --rsc-accent: #00ff88;
+  --rsc-accent-dark: #00cc6a;
+  --rsc-accent-light: #33ff99;
+  --rsc-accent-glow: rgba(0, 255, 136, 0.5);
   
-  /* Background Colors */
-  --rsc-bg-primary: rgba(0, 0, 0, 0.95);
-  --rsc-bg-secondary: rgba(10, 10, 20, 0.9);
-  --rsc-bg-glass: rgba(255, 255, 255, 0.05);
-  --rsc-bg-glass-hover: rgba(255, 255, 255, 0.1);
+  /* Background Colors (Roadmap Colors) */
+  --rsc-bg-primary: #0a0a0a;
+  --rsc-bg-secondary: #1a1a1a;
+  --rsc-bg-glass: rgba(0, 212, 255, 0.1);
+  --rsc-bg-glass-hover: rgba(0, 212, 255, 0.2);
   
   /* Text Colors */
   --rsc-text-primary: #ffffff;
@@ -269,20 +269,17 @@
 /* ===== MAIN NAVBAR ===== */
 .navbar {
   position: fixed;
-  top: 60px;
+  top: 0;
   left: 0;
   right: 0;
-  z-index: var(--rsc-z-sticky);
-  background: linear-gradient(135deg, 
-    var(--rsc-bg-primary) 0%, 
-    var(--rsc-bg-secondary) 50%, 
-    var(--rsc-bg-primary) 100%);
+  z-index: var(--rsc-z-fixed);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
   backdrop-filter: var(--rsc-blur-xl);
   -webkit-backdrop-filter: var(--rsc-blur-xl);
-  border: 1px solid var(--rsc-border-primary);
-  border-radius: 0 0 var(--rsc-radius-2xl) var(--rsc-radius-2xl);
+  border-bottom: 2px solid var(--rsc-primary);
   box-shadow: 
     var(--rsc-shadow-xl),
+    0 0 30px var(--rsc-primary-glow),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   overflow: hidden;
   height: 80px;
@@ -296,13 +293,26 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-    var(--rsc-primary-glow) 0%, 
-    transparent 50%);
-  opacity: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+  opacity: 1;
   transition: opacity 0.3s ease;
   pointer-events: none;
   z-index: -1;
+  animation: navbar-glow 4s ease-in-out infinite;
+}
+
+@keyframes navbar-glow {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.6;
+    transform: scale(1.02);
+  }
 }
 
 .navbar:hover::before {
@@ -340,7 +350,8 @@
   border-radius: var(--rsc-radius-full);
   background: linear-gradient(135deg, 
     var(--rsc-primary) 0%, 
-    var(--rsc-secondary) 100%);
+    var(--rsc-secondary) 50%,
+    var(--rsc-accent) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -371,7 +382,8 @@
   background: linear-gradient(135deg, 
     var(--rsc-primary), 
     var(--rsc-secondary), 
-    var(--rsc-accent));
+    var(--rsc-accent),
+    var(--rsc-primary));
   border-radius: var(--rsc-radius-full);
   z-index: -1;
   animation: border-rotate 3s linear infinite;
@@ -717,7 +729,8 @@
   background: linear-gradient(135deg, 
     var(--rsc-primary), 
     var(--rsc-secondary), 
-    var(--rsc-accent));
+    var(--rsc-accent),
+    var(--rsc-primary));
   border-radius: var(--rsc-radius-full);
   opacity: 0;
   transition: var(--rsc-transition-normal);
@@ -734,7 +747,8 @@
   background: linear-gradient(135deg, 
     var(--rsc-primary), 
     var(--rsc-secondary), 
-    var(--rsc-accent));
+    var(--rsc-accent),
+    var(--rsc-primary));
   border-radius: var(--rsc-radius-full);
   opacity: 0;
   transition: var(--rsc-transition-normal);
@@ -901,6 +915,7 @@
   
   .navbar {
     top: 0;
+    border-radius: 0;
   }
 }
 

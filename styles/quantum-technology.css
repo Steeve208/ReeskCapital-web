@@ -1,0 +1,855 @@
+/* ===== QUANTUM TECHNOLOGY SECTION ===== */
+
+.quantum-technology {
+  position: relative;
+  padding: 6rem 0;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+  color: #ffffff;
+  overflow: hidden;
+}
+
+/* ===== QUANTUM BACKGROUND ===== */
+
+.quantum-tech-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.tech-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #00d4ff, transparent),
+    radial-gradient(2px 2px at 40px 70px, #ff00ff, transparent),
+    radial-gradient(1px 1px at 90px 40px, #00ff88, transparent),
+    radial-gradient(1px 1px at 130px 80px, #00d4ff, transparent),
+    radial-gradient(2px 2px at 160px 30px, #ff00ff, transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: techParticleFloat 25s linear infinite;
+  opacity: 0.4;
+}
+
+.tech-grid-pattern {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: techGridPulse 6s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+.tech-energy-waves {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse 1000px 500px at 20% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 800px 400px at 80% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 600px 300px at 50% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+  animation: techWaveMotion 12s ease-in-out infinite;
+}
+
+/* ===== QUANTUM SECTION HEADER ===== */
+
+.quantum-section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.quantum-section-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 2rem;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 50px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.badge-energy {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+  animation: badgeEnergyFlow 3s ease-in-out infinite;
+}
+
+.badge-icon {
+  font-size: 18px;
+  color: #00d4ff;
+  animation: badgeIconSpin 4s linear infinite;
+}
+
+.badge-text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #00d4ff;
+  text-transform: uppercase;
+}
+
+.badge-orbit {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 1px solid rgba(0, 212, 255, 0.5);
+  border-radius: 50px;
+  animation: badgeOrbitRotate 8s linear infinite;
+}
+
+.quantum-section-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.title-primary {
+  display: block;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.title-highlight {
+  display: block;
+  background: linear-gradient(135deg, #00d4ff, #ff00ff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.title-highlight::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #00d4ff, #ff00ff, #00ff88);
+  filter: blur(20px);
+  opacity: 0.3;
+  z-index: -1;
+  animation: titleGlow 4s ease-in-out infinite;
+}
+
+.quantum-section-description {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #a3a3a3;
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+}
+
+.tech-highlight {
+  color: #00d4ff;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+/* ===== TECHNOLOGY OVERVIEW STATS ===== */
+
+.tech-overview-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.overview-stat {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.overview-stat:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 212, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.overview-stat .stat-icon {
+  font-size: 24px;
+  color: #00d4ff;
+  animation: statIconPulse 3s ease-in-out infinite;
+}
+
+.overview-stat .stat-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.overview-stat .stat-number {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #00ff88;
+  line-height: 1;
+}
+
+.overview-stat .stat-label {
+  font-size: 0.875rem;
+  color: #a3a3a3;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== QUANTUM TECHNOLOGY GRID ===== */
+
+.quantum-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== QUANTUM TECH CARDS ===== */
+
+.quantum-tech-card {
+  position: relative;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.quantum-tech-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(0, 212, 255, 0.5);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(0, 212, 255, 0.2);
+}
+
+.tech-card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.card-energy-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0, 212, 255, 0.05) 0%, transparent 70%);
+  animation: cardEnergyPulse 6s ease-in-out infinite;
+}
+
+.card-particle-system {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, rgba(0, 212, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 40px 70px, rgba(255, 0, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(0, 255, 136, 0.3), transparent);
+  background-size: 100px 100px;
+  animation: cardParticleMove 15s linear infinite;
+  opacity: 0.6;
+}
+
+/* ===== TECH CARD HEADER ===== */
+
+.tech-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.tech-icon-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tech-icon-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #00d4ff, #ff00ff);
+  border-radius: 50%;
+  opacity: 0.2;
+  animation: iconBgRotate 8s linear infinite;
+}
+
+.tech-icon {
+  position: relative;
+  z-index: 3;
+  font-size: 32px;
+  color: #00d4ff;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.tech-icon-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(0, 212, 255, 0.5);
+  border-radius: 50%;
+  animation: iconPulse 3s ease-in-out infinite;
+}
+
+.tech-icon-orbit {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 50%;
+  animation: iconOrbit 10s linear infinite;
+}
+
+.tech-header-content {
+  flex: 1;
+}
+
+.tech-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.tech-subtitle {
+  font-size: 0.875rem;
+  color: #00d4ff;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tech-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #666666;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.status-dot.active {
+  background: #00ff88;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.status-text {
+  font-size: 0.75rem;
+  color: #a3a3a3;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== TECH CARD CONTENT ===== */
+
+.tech-card-content {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 2rem;
+}
+
+.tech-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #a3a3a3;
+  margin-bottom: 1.5rem;
+}
+
+.tech-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(0, 212, 255, 0.05);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: rgba(0, 212, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.feature-icon {
+  font-size: 12px;
+  color: #00d4ff;
+  width: 16px;
+  text-align: center;
+}
+
+.feature-text {
+  font-size: 0.8rem;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* ===== TECH METRICS ===== */
+
+.tech-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.metric-item {
+  position: relative;
+}
+
+.metric-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #00ff88;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: #a3a3a3;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.metric-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.metric-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #00ff88);
+  border-radius: 2px;
+  transition: width 2s ease;
+  animation: metricFillGlow 3s ease-in-out infinite;
+}
+
+/* ===== TECH CARD FOOTER ===== */
+
+.tech-card-footer {
+  position: relative;
+  z-index: 2;
+}
+
+.tech-learn-more {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 255, 0.1));
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 12px;
+  color: #00d4ff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.tech-learn-more:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(255, 0, 255, 0.2));
+  border-color: rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+}
+
+.tech-learn-more i {
+  transition: transform 0.3s ease;
+}
+
+.tech-learn-more:hover i {
+  transform: translateX(5px);
+}
+
+/* ===== TECHNOLOGY COMPARISON SECTION ===== */
+
+.tech-comparison-section {
+  position: relative;
+  z-index: 2;
+  margin-top: 4rem;
+  padding: 3rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.comparison-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.comparison-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.chart-category {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.category-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  min-width: 150px;
+}
+
+.chart-bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.chart-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 40px;
+}
+
+.bar-label {
+  font-size: 0.875rem;
+  color: #a3a3a3;
+  min-width: 150px;
+}
+
+.bar-fill {
+  height: 20px;
+  border-radius: 10px;
+  transition: width 2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-bar.rsc .bar-fill {
+  background: linear-gradient(90deg, #00d4ff, #00ff88);
+  animation: barFillGlow 3s ease-in-out infinite;
+}
+
+.chart-bar.competitor .bar-fill {
+  background: linear-gradient(90deg, #666666, #999999);
+}
+
+.bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: barShine 3s ease-in-out infinite;
+}
+
+/* ===== TECH CARD VARIATIONS ===== */
+
+.quantum-tech-card[data-tech="ai"] {
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+.quantum-tech-card[data-tech="ai"]:hover {
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(0, 212, 255, 0.3);
+}
+
+.quantum-tech-card[data-tech="crypto"] {
+  border-color: rgba(255, 0, 255, 0.3);
+}
+
+.quantum-tech-card[data-tech="crypto"]:hover {
+  border-color: rgba(255, 0, 255, 0.6);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(255, 0, 255, 0.3);
+}
+
+.quantum-tech-card[data-tech="consensus"] {
+  border-color: rgba(0, 255, 136, 0.3);
+}
+
+.quantum-tech-card[data-tech="consensus"]:hover {
+  border-color: rgba(0, 255, 136, 0.6);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(0, 255, 136, 0.3);
+}
+
+.quantum-tech-card[data-tech="network"] {
+  border-color: rgba(255, 136, 0, 0.3);
+}
+
+.quantum-tech-card[data-tech="network"]:hover {
+  border-color: rgba(255, 136, 0, 0.6);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(255, 136, 0, 0.3);
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes techParticleFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(180deg); }
+}
+
+@keyframes techGridPulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes techWaveMotion {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(180deg); }
+}
+
+@keyframes badgeEnergyFlow {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes badgeIconSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes badgeOrbitRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes titleGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes statIconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes cardEnergyPulse {
+  0%, 100% { opacity: 0.05; transform: scale(1); }
+  50% { opacity: 0.15; transform: scale(1.05); }
+}
+
+@keyframes cardParticleMove {
+  0% { transform: translateX(0px) translateY(0px); }
+  100% { transform: translateX(20px) translateY(-20px); }
+}
+
+@keyframes iconBgRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes iconOrbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes metricFillGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.3); }
+  50% { box-shadow: 0 0 15px rgba(0, 212, 255, 0.6); }
+}
+
+@keyframes barFillGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+}
+
+@keyframes barShine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 1200px) {
+  .quantum-section-title {
+    font-size: 3rem;
+  }
+  
+  .tech-overview-stats {
+    gap: 2rem;
+  }
+  
+  .quantum-tech-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .quantum-technology {
+    padding: 4rem 0;
+  }
+  
+  .quantum-section-title {
+    font-size: 2.5rem;
+  }
+  
+  .quantum-section-description {
+    font-size: 1.125rem;
+  }
+  
+  .tech-overview-stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .overview-stat {
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .quantum-tech-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .quantum-tech-card {
+    padding: 1.5rem;
+  }
+  
+  .tech-card-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .tech-features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tech-comparison-section {
+    padding: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .comparison-title {
+    font-size: 1.5rem;
+  }
+  
+  .chart-category {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .category-label {
+    min-width: auto;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .quantum-section-title {
+    font-size: 2rem;
+  }
+  
+  .quantum-section-description {
+    font-size: 1rem;
+  }
+  
+  .quantum-tech-card {
+    padding: 1rem;
+  }
+  
+  .tech-icon-container {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .tech-icon {
+    font-size: 24px;
+  }
+  
+  .tech-title {
+    font-size: 1.25rem;
+  }
+  
+  .tech-comparison-section {
+    padding: 1.5rem;
+  }
+  
+  .comparison-title {
+    font-size: 1.25rem;
+  }
+}

@@ -32,17 +32,17 @@
   --glass-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
   --glass-shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.25);
   
-  /* Neon Effects */
-  --neon-primary: 0 0 20px rgba(0, 255, 136, 0.5);
-  --neon-secondary: 0 0 20px rgba(255, 107, 53, 0.5);
-  --neon-accent: 0 0 20px rgba(78, 205, 196, 0.5);
+  /* Neon Effects - Quantum */
+  --neon-primary: 0 0 20px rgba(0, 212, 255, 0.5);
+  --neon-secondary: 0 0 20px rgba(255, 0, 255, 0.5);
+  --neon-accent: 0 0 20px rgba(0, 255, 136, 0.5);
   --neon-warning: 0 0 20px rgba(255, 217, 61, 0.5);
   --neon-error: 0 0 20px rgba(255, 107, 107, 0.5);
   
   /* Advanced Gradients */
   --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
   --gradient-glass-dark: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
-  --gradient-neon: linear-gradient(135deg, #00ff88 0%, #4ecdc4 50%, #ff6b35 100%);
+  --gradient-neon: linear-gradient(135deg, #00d4ff 0%, #ff00ff 50%, #00ff88 100%);
   --gradient-rainbow: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 25%, #45b7d1 50%, #96ceb4 75%, #feca57 100%);
   --gradient-aurora: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
   

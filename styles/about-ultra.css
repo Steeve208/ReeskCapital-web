@@ -1,9 +1,9 @@
 /* About Page - Ultra Modern Design */
 
 :root {
-  --primary-color: #00ff88;
-  --secondary-color: #ff6b35;
-  --accent-color: #6366f1;
+  --primary-color: #00d4ff;
+  --secondary-color: #ff00ff;
+  --accent-color: #00ff88;
   --bg-primary: #0a0a0a;
   --bg-secondary: #111111;
   --bg-tertiary: #1a1a1a;
@@ -17,7 +17,7 @@
   --gradient-accent: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   --shadow-primary: 0 20px 40px rgba(0, 255, 136, 0.15);
   --shadow-secondary: 0 20px 40px rgba(255, 107, 53, 0.15);
-  --shadow-accent: 0 20px 40px rgba(99, 102, 241, 0.15);
+  --shadow-accent: 0 20px 40px rgba(0, 255, 136, 0.15);
 }
 
 /* Base Styles */
@@ -767,7 +767,7 @@ body {
 }
 
 .timeline-status.future {
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(0, 255, 136, 0.1);
   color: var(--accent-color);
 }
 
@@ -2020,7 +2020,7 @@ input:focus {
   .btn-secondary,
   .btn-outline {
     border: 1px solid #000;
-    color: #000;
+    color: #0a0a0a;
     background: transparent;
   }
 }

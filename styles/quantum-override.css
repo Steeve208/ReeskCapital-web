@@ -1,0 +1,435 @@
+/* ===== QUANTUM COLOR OVERRIDE - FORZAR COLORES QUANTUM ===== */
+
+/* Sobrescribir TODOS los colores azules con colores quantum */
+* {
+  /* Reemplazar colores azules comunes */
+  --blue: #00d4ff !important;
+  --light-blue: #00d4ff !important;
+  --dark-blue: #007d99 !important;
+  --primary-blue: #00d4ff !important;
+  --secondary-blue: #ff00ff !important;
+  --accent-blue: #00ff88 !important;
+}
+
+/* Forzar colores quantum en TODOS los elementos activos */
+.active, [class*="active"], .badge, [class*="badge"], .status, [class*="status"] {
+  color: #00d4ff !important;
+  background-color: rgba(0, 212, 255, 0.1) !important;
+  border-color: rgba(0, 212, 255, 0.3) !important;
+}
+
+/* Elementos específicos de la interfaz */
+.tech-card .active, .feature-card .active, .card .active {
+  color: #00d4ff !important;
+  background: rgba(0, 212, 255, 0.1) !important;
+  border: 1px solid rgba(0, 212, 255, 0.3) !important;
+}
+
+/* Badges y indicadores específicos */
+.badge-active, .status-active, .indicator-active, .network-active {
+  color: #00d4ff !important;
+  background: rgba(0, 212, 255, 0.1) !important;
+  border: 1px solid rgba(0, 212, 255, 0.3) !important;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5) !important;
+}
+
+/* Elementos con texto "ACTIVE" */
+[data-text*="ACTIVE"], [aria-label*="ACTIVE"], [title*="ACTIVE"] {
+  color: #00d4ff !important;
+  background: rgba(0, 212, 255, 0.1) !important;
+}
+
+/* Sobrescribir cualquier estilo inline azul */
+[style*="color: blue"], 
+[style*="color: #3"], 
+[style*="color: #4"], 
+[style*="color: #5"], 
+[style*="color: #6"], 
+[style*="background: blue"], 
+[style*="background: #3"], 
+[style*="background: #4"], 
+[style*="background: #5"], 
+[style*="background: #6"] {
+  color: #00d4ff !important;
+  background: rgba(0, 212, 255, 0.1) !important;
+}
+
+/* Elementos generados dinámicamente */
+.dynamic-active, .js-active, .state-active {
+  color: #00d4ff !important;
+  background: rgba(0, 212, 255, 0.1) !important;
+  border: 1px solid rgba(0, 212, 255, 0.3) !important;
+}
+
+/* Iconos y elementos Font Awesome */
+.fa, .fas, .far, .fab {
+  color: inherit !important;
+}
+
+/* Elementos de navegación activos */
+.nav-link.active, .menu-link.active, .tab.active {
+  color: #00d4ff !important;
+  background: rgba(0, 212, 255, 0.1) !important;
+  border-color: rgba(0, 212, 255, 0.3) !important;
+}
+
+/* Botones activos */
+.btn.active, .button.active, [role="button"].active {
+  color: #00d4ff !important;
+  background: rgba(0, 212, 255, 0.1) !important;
+  border-color: rgba(0, 212, 255, 0.3) !important;
+}
+
+/* Elementos de estado */
+.online, .connected, .enabled, .running {
+  color: #00ff88 !important;
+  background: rgba(0, 255, 136, 0.1) !important;
+}
+
+.offline, .disconnected, .disabled, .stopped {
+  color: #ff4444 !important;
+  background: rgba(255, 68, 68, 0.1) !important;
+}
+
+/* Elementos de cards tecnológicas */
+.tech-card, .feature-card, .info-card {
+  border-color: rgba(0, 212, 255, 0.2) !important;
+}
+
+.tech-card:hover, .feature-card:hover, .info-card:hover {
+  border-color: rgba(0, 212, 255, 0.5) !important;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3) !important;
+}
+
+/* Texto de estado específico */
+.status-text, .state-text, .indicator-text {
+  color: #00d4ff !important;
+}
+
+/* Elementos con pseudo-elementos */
+.active::before, .active::after,
+[class*="active"]::before, [class*="active"]::after,
+.badge::before, .badge::after,
+[class*="badge"]::before, [class*="badge"]::after {
+  background: rgba(0, 212, 255, 0.1) !important;
+  border-color: rgba(0, 212, 255, 0.3) !important;
+  color: #00d4ff !important;
+}
+
+/* Sobrescribir colores de bibliotecas externas */
+.bootstrap .active, .material .active, .ant .active {
+  color: #00d4ff !important;
+  background: rgba(0, 212, 255, 0.1) !important;
+}
+
+/* ===== COLORES DE TEXTO QUANTUM ===== */
+
+/* Títulos y encabezados principales */
+h1, h2, h3, h4, h5, h6, .title, .heading, [class*="title"], [class*="heading"] {
+  color: #ffffff !important;
+}
+
+/* Texto destacado y enlaces */
+.highlight, .featured, .accent-text, [class*="highlight"], [class*="featured"] {
+  color: #00d4ff !important;
+}
+
+/* Enlaces activos y hover */
+a:hover, .link:hover, [class*="link"]:hover {
+  color: #00d4ff !important;
+}
+
+/* Texto de estado y badges */
+.success, .online, .connected, .active-text {
+  color: #00ff88 !important;
+}
+
+.error, .offline, .disconnected, .inactive-text {
+  color: #ff4444 !important;
+}
+
+.warning, .pending, .processing {
+  color: #ffaa00 !important;
+}
+
+.info, .note, .tip {
+  color: #00d4ff !important;
+}
+
+/* Texto secundario quantum */
+.secondary-text, .muted, .subtitle, [class*="secondary"], [class*="muted"] {
+  color: #b3b3b3 !important;
+}
+
+/* Texto de descripción */
+.description, .desc, .summary, [class*="description"], [class*="summary"] {
+  color: #a3a3a3 !important;
+}
+
+/* Texto de cards y elementos interactivos */
+.card-title, .card-header, .card-text {
+  color: #ffffff !important;
+}
+
+.card-accent, .card-highlight {
+  color: #00d4ff !important;
+}
+
+/* Navegación y menús */
+.nav-text, .menu-text, .nav-title, .menu-title {
+  color: #ffffff !important;
+}
+
+.nav-active, .menu-active, .nav-selected, .menu-selected {
+  color: #00d4ff !important;
+}
+
+/* Formularios */
+.form-label, .input-label, label {
+  color: #ffffff !important;
+}
+
+.form-text, .input-text, .help-text {
+  color: #a3a3a3 !important;
+}
+
+/* Botones de texto */
+.btn-text, .text-button, .link-button {
+  color: #00d4ff !important;
+}
+
+.btn-text:hover, .text-button:hover, .link-button:hover {
+  color: #00ff88 !important;
+}
+
+/* Indicadores de progreso */
+.progress-text, .status-text, .indicator-text {
+  color: #00d4ff !important;
+}
+
+/* Texto de datos y métricas */
+.metric-value, .data-value, .stat-value, [class*="value"] {
+  color: #00ff88 !important;
+}
+
+.metric-label, .data-label, .stat-label, [class*="label"] {
+  color: #b3b3b3 !important;
+}
+
+/* Texto de tiempo y fechas */
+.time, .date, .timestamp, [class*="time"], [class*="date"] {
+  color: #a3a3a3 !important;
+}
+
+/* Texto de código y técnico */
+.code, .tech-text, .monospace, [class*="code"], [class*="tech"] {
+  color: #00ff88 !important;
+}
+
+/* Placeholder y texto deshabilitado */
+::placeholder, .placeholder, .disabled-text {
+  color: #666666 !important;
+}
+
+/* Texto seleccionado */
+::selection {
+  background: rgba(0, 212, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* ===== ELEMENTOS ESPECÍFICOS DE LA INTERFAZ ===== */
+
+/* Hero section */
+.hero-title, .hero-subtitle, .hero-description {
+  color: #ffffff !important;
+}
+
+.hero-badge, .hero-accent {
+  color: #00d4ff !important;
+}
+
+/* Technology cards */
+.tech-card-title, .feature-card-title {
+  color: #ffffff !important;
+}
+
+.tech-card-description, .feature-card-description {
+  color: #a3a3a3 !important;
+}
+
+/* Navbar elements */
+.nav-link, .navbar-link, .menu-item {
+  color: #ffffff !important;
+}
+
+.nav-link.active, .navbar-link.active, .menu-item.active {
+  color: #00d4ff !important;
+}
+
+/* Footer elements */
+.footer-title, .footer-heading {
+  color: #ffffff !important;
+}
+
+.footer-link, .footer-text {
+  color: #a3a3a3 !important;
+}
+
+.footer-link:hover {
+  color: #00d4ff !important;
+}
+
+/* Sidebar elements */
+.sidebar-title, .sidebar-heading {
+  color: #ffffff !important;
+}
+
+.sidebar-link, .sidebar-item {
+  color: #a3a3a3 !important;
+}
+
+.sidebar-link.active, .sidebar-item.active {
+  color: #00d4ff !important;
+}
+
+/* Modal elements */
+.modal-title, .modal-header {
+  color: #ffffff !important;
+}
+
+.modal-body, .modal-content {
+  color: #a3a3a3 !important;
+}
+
+/* Table elements */
+.table-header, .table-title {
+  color: #ffffff !important;
+}
+
+.table-cell, .table-data {
+  color: #a3a3a3 !important;
+}
+
+/* List elements */
+.list-title, .list-header {
+  color: #ffffff !important;
+}
+
+.list-item, .list-text {
+  color: #a3a3a3 !important;
+}
+
+.list-item.active, .list-text.active {
+  color: #00d4ff !important;
+}
+
+/* Notification elements */
+.notification-title, .alert-title {
+  color: #ffffff !important;
+}
+
+.notification-text, .alert-text {
+  color: #a3a3a3 !important;
+}
+
+/* Breadcrumb elements */
+.breadcrumb-item, .breadcrumb-link {
+  color: #a3a3a3 !important;
+}
+
+.breadcrumb-item.active, .breadcrumb-link.active {
+  color: #00d4ff !important;
+}
+
+/* Tab elements */
+.tab-title, .tab-header {
+  color: #a3a3a3 !important;
+}
+
+.tab-title.active, .tab-header.active {
+  color: #00d4ff !important;
+}
+
+/* Accordion elements */
+.accordion-title, .accordion-header {
+  color: #ffffff !important;
+}
+
+.accordion-content, .accordion-body {
+  color: #a3a3a3 !important;
+}
+
+/* Tooltip elements */
+.tooltip-title, .tooltip-text {
+  color: #ffffff !important;
+}
+
+/* Dropdown elements */
+.dropdown-title, .dropdown-header {
+  color: #ffffff !important;
+}
+
+.dropdown-item, .dropdown-link {
+  color: #a3a3a3 !important;
+}
+
+.dropdown-item:hover, .dropdown-link:hover {
+  color: #00d4ff !important;
+}
+
+/* ===== REGLAS GLOBALES DE TEXTO QUANTUM ===== */
+
+/* Asegurar que todos los elementos de texto usen colores quantum */
+* {
+  /* Sobrescribir cualquier color de texto residual */
+  --color-primary: #00d4ff;
+  --color-secondary: #ff00ff;
+  --color-accent: #00ff88;
+  --color-success: #00ff88;
+  --color-warning: #ffaa00;
+  --color-error: #ff4444;
+  --color-info: #00d4ff;
+  --color-text: #ffffff;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted: #666666;
+}
+
+/* Forzar colores en elementos que puedan tener estilos inline */
+[style*="color: blue"], [style*="color: #3"], [style*="color: #4"], [style*="color: #5"], [style*="color: #6"], [style*="color: rgb("] {
+  color: #00d4ff !important;
+}
+
+/* Elementos de texto por defecto */
+p, span, div, article, section {
+  color: inherit;
+}
+
+/* Elementos que deben ser blancos por defecto */
+body, main, .container, .wrapper {
+  color: #ffffff;
+}
+
+/* Elementos que deben ser cian quantum */
+.primary, .accent, .highlight, .featured {
+  color: #00d4ff !important;
+}
+
+/* Elementos que deben ser verde quantum */
+.success, .positive, .active, .online {
+  color: #00ff88 !important;
+}
+
+/* Elementos que deben ser magenta quantum */
+.secondary, .special, .premium {
+  color: #ff00ff !important;
+}
+
+/* Texto de error */
+.error, .danger, .negative, .offline {
+  color: #ff4444 !important;
+}
+
+/* Texto de advertencia */
+.warning, .caution, .pending {
+  color: #ffaa00 !important;
+}
