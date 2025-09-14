@@ -762,74 +762,186 @@
     padding: 4rem 0;
   }
   
+  .container {
+    padding: 0 1rem;
+  }
+  
   .quantum-section-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
   }
   
   .quantum-section-description {
-    font-size: 1.125rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
   }
   
   .tech-overview-stats {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
   }
   
   .overview-stat {
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 1.5rem;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+  
+  .overview-stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .overview-stat-label {
+    font-size: 0.85rem;
   }
   
   .quantum-tech-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
+    padding: 0 1rem;
   }
   
   .quantum-tech-card {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
   }
   
   .tech-card-header {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tech-icon-container {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+  }
+  
+  .tech-icon {
+    font-size: 28px;
+  }
+  
+  .tech-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tech-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
   
   .tech-features-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .tech-feature {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .tech-feature-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    margin: 0 auto 0.8rem;
+  }
+  
+  .tech-feature h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tech-feature p {
+    font-size: 0.85rem;
+    line-height: 1.4;
   }
   
   .tech-comparison-section {
-    padding: 2rem;
+    padding: 2rem 1rem;
     margin-top: 3rem;
   }
   
   .comparison-title {
     font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
   
   .chart-category {
     flex-direction: column;
     gap: 1rem;
+    margin-bottom: 1.5rem;
   }
   
   .category-label {
     min-width: auto;
     text-align: center;
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+  
+  .metric-bar {
+    height: 8px;
+  }
+  
+  .metric-value {
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 480px) {
+  .quantum-technology {
+    padding: 3rem 0;
+  }
+  
+  .container {
+    padding: 0 0.5rem;
+  }
+  
   .quantum-section-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.1;
   }
   
   .quantum-section-description {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
+  }
+  
+  .tech-overview-stats {
+    padding: 0 0.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .overview-stat {
+    padding: 0.8rem 1rem;
+  }
+  
+  .overview-stat-number {
+    font-size: 1.5rem;
+  }
+  
+  .overview-stat-label {
+    font-size: 0.8rem;
+  }
+  
+  .quantum-tech-grid {
+    padding: 0 0.5rem;
+    gap: 1.5rem;
   }
   
   .quantum-tech-card {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
   }
   
   .tech-icon-container {
@@ -842,14 +954,72 @@
   }
   
   .tech-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+  }
+  
+  .tech-description {
+    font-size: 0.85rem;
+  }
+  
+  .tech-feature {
+    padding: 0.8rem;
+  }
+  
+  .tech-feature-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .tech-feature h4 {
+    font-size: 0.9rem;
+  }
+  
+  .tech-feature p {
+    font-size: 0.8rem;
   }
   
   .tech-comparison-section {
-    padding: 1.5rem;
+    padding: 1.5rem 0.5rem;
   }
   
   .comparison-title {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
+  }
+  
+  .category-label {
+    font-size: 0.8rem;
+    padding: 0.6rem;
+  }
+  
+  .metric-bar {
+    height: 6px;
+  }
+  
+  .metric-value {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .quantum-section-title {
+    font-size: 1.6rem;
+  }
+  
+  .quantum-tech-card {
+    padding: 1rem 0.8rem;
+  }
+  
+  .tech-icon-container {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .tech-icon {
+    font-size: 20px;
+  }
+  
+  .tech-title {
+    font-size: 1.1rem;
   }
 }

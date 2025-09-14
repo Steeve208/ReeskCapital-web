@@ -1100,76 +1100,162 @@
 
 @media (max-width: 768px) {
   .quantum-hero {
-    min-height: 60vh;
-    padding: 1.5rem 0;
+    min-height: 100vh;
+    padding: 2rem 0;
   }
   
   .quantum-hero-content {
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+  
+  .hero-text-section {
+    order: 1;
     padding: 0 1rem;
   }
   
+  .hero-visual-section {
+    order: 2;
+    height: 300px;
+    margin-top: 2rem;
+  }
+  
   .quantum-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
     line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  
+  .title-line {
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  
+  .title-highlight {
+    display: block;
+    margin: 0.5rem 0;
   }
   
   .quantum-description {
     font-size: 1rem;
-    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
   }
   
   .quantum-stats {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 0 1rem;
   }
   
-  .quantum-actions {
-    justify-content: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+  .stat-card {
+    padding: 1.5rem;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
   }
   
-  .quantum-btn {
-    padding: 0.75rem 1.25rem;
+  .stat-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+    margin-right: 1rem;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .stat-label {
     font-size: 0.85rem;
   }
   
+  .quantum-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .quantum-btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+    padding: 1rem 2rem;
+    font-size: 0.95rem;
+  }
+  
   .blockchain-core {
-    width: 350px;
-    height: 350px;
-    right: 50%;
-    transform: translate(50%, -50%);
+    width: 280px;
+    height: 280px;
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 0 auto;
+  }
+  
+  .core-center {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .core-logo img {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .core-rings {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .ring-1 {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .ring-2 {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .ring-3 {
+    width: 250px;
+    height: 250px;
   }
   
   .quantum-node {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
+    font-size: 0.55rem;
+    padding: 0.2rem;
   }
   
   .node-icon {
-    width: 25px;
-    height: 25px;
-    font-size: 12px;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+    margin-bottom: 0.1rem;
   }
   
   .node-label {
-    font-size: 7px;
-    margin-top: 2px;
+    font-size: 0.5rem;
+    margin-top: 0.1rem;
   }
   
   .quantum-badge {
-    padding: 0.5rem 1rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.8rem;
+    padding: 0.6rem 1.2rem;
+    margin: 0 auto 1.5rem;
   }
   
   .badge-text {
-    font-size: 10px;
-  }
-  
-  .hero-visual-section {
-    height: 250px;
+    font-size: 0.8rem;
   }
   
   .floating-tech {
@@ -1199,79 +1285,130 @@
 
 @media (max-width: 480px) {
   .quantum-hero {
-    min-height: 50vh;
+    min-height: 100vh;
     padding: 1rem 0;
   }
   
+  .quantum-hero-content {
+    gap: 1.5rem;
+    padding: 0 0.5rem;
+  }
+  
+  .hero-text-section {
+    padding: 0 0.5rem;
+  }
+  
   .quantum-title {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    line-height: 1.1;
   }
   
   .quantum-description {
     font-size: 0.9rem;
-    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .quantum-stats {
+    padding: 0 0.5rem;
+    margin: 1.5rem 0;
   }
   
   .stat-card {
     padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
   }
   
-  .stat-value {
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-number {
     font-size: 1.5rem;
   }
   
   .stat-label {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
   }
   
   .quantum-actions {
-    justify-content: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    padding: 0 0.5rem;
+    gap: 0.8rem;
   }
   
   .quantum-btn {
-    padding: 0.65rem 1rem;
-    font-size: 0.8rem;
-    flex: 1;
-    min-width: 120px;
-    max-width: 140px;
-  }
-  
-  .blockchain-core {
-    width: 280px;
-    height: 280px;
-    right: 50%;
-    transform: translate(50%, -50%);
-  }
-  
-  .quantum-node {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .node-icon {
-    width: 20px;
-    height: 20px;
-    font-size: 10px;
-  }
-  
-  .node-label {
-    font-size: 6px;
-  }
-  
-  .quantum-badge {
-    padding: 0.4rem 0.8rem;
-    margin-bottom: 1rem;
-  }
-  
-  .badge-text {
-    font-size: 9px;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
   }
   
   .hero-visual-section {
+    height: 250px;
+  }
+  
+  .blockchain-core {
+    width: 220px;
+    height: 220px;
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 0 auto;
+  }
+  
+  .core-center {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .core-logo img {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .core-rings {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .ring-1 {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .ring-2 {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .ring-3 {
+    width: 200px;
     height: 200px;
+  }
+  
+  .quantum-node {
+    width: 30px;
+    height: 30px;
+    font-size: 0.5rem;
+  }
+  
+  .node-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 0.6rem;
+  }
+  
+  .node-label {
+    font-size: 0.45rem;
+  }
+  
+  .quantum-badge {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
   }
   
   .quantum-field {
@@ -1300,6 +1437,43 @@
   
   .scroll-text {
     font-size: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .quantum-title {
+    font-size: 1.6rem;
+  }
+  
+  .blockchain-core {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .core-center {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .core-logo img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .quantum-node {
+    width: 25px;
+    height: 25px;
+    font-size: 0.45rem;
+  }
+  
+  .node-icon {
+    width: 15px;
+    height: 15px;
+    font-size: 0.5rem;
+  }
+  
+  .node-label {
+    font-size: 0.4rem;
   }
 }
 

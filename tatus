@@ -1,0 +1,5 @@
+[33mb55500e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Update project with quantum components and styling improvements
+[33m0bc031e[m Update mine.html with latest changes
+[33m1214469[m Update mining system with real Supabase integration and test files
+[33mf480d7c[m Major refactor: Restructured mining system, improved modularity, and enhanced error handling
+[33ma985358[m Update: Additional improvements to mining system and authentication
