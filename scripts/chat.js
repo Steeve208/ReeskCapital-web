@@ -1,4 +1,4 @@
-// ===== CHAT DE SOPORTE AVANZADO - RSC CHAIN =====
+// ===== ADVANCED SUPPORT CHAT - RSC CHAIN =====
 
 class AdvancedSupportChat {
   constructor() {
@@ -35,12 +35,12 @@ class AdvancedSupportChat {
   }
 
   setupEventListeners() {
-    // Toggle del chat
+    // Chat toggle
     this.chatToggle.addEventListener('click', () => {
       this.toggleChat();
     });
 
-    // Controles del chat
+    // Chat controls
     this.minimizeBtn.addEventListener('click', () => {
       this.toggleMinimize();
     });
@@ -49,7 +49,7 @@ class AdvancedSupportChat {
       this.closeChat();
     });
 
-    // Envío de mensajes
+    // Message sending
     this.sendBtn.addEventListener('click', () => {
       this.sendMessage();
     });
@@ -77,7 +77,7 @@ class AdvancedSupportChat {
       });
     });
 
-    // Categorías de soporte
+    // Support categories
     document.querySelectorAll('.category-card').forEach(card => {
       card.addEventListener('click', () => {
         this.selectCategory(card.dataset.category);
@@ -280,7 +280,7 @@ class AdvancedSupportChat {
   }
 
   generateAIResponse(userMessage) {
-    // Usar la IA avanzada si está disponible
+    // Use advanced AI if available
     if (window.RSCChainAI) {
       const ai = new RSCChainAI();
       const response = ai.processMessage(userMessage);
@@ -288,11 +288,11 @@ class AdvancedSupportChat {
       return;
     }
     
-    // Fallback a respuestas básicas si la IA no está disponible
+    // Fallback to basic responses if AI is not available
     const lowerMessage = userMessage.toLowerCase();
     let response = '';
 
-    // Detectar categoría basada en palabras clave
+    // Detect category based on keywords
     if (lowerMessage.includes('error') || lowerMessage.includes('problema') || lowerMessage.includes('bug')) {
       response = this.generateCategoryResponse('technical');
     } else if (lowerMessage.includes('transacción') || lowerMessage.includes('pago') || lowerMessage.includes('transferencia')) {
@@ -467,7 +467,7 @@ class AdvancedSupportChat {
     }
   }
 
-  // Simular notificaciones automáticas
+  // Simulate automatic notifications
   startAutoNotifications() {
     setInterval(() => {
       if (!this.isOpen && Math.random() < 0.1) {
@@ -478,7 +478,7 @@ class AdvancedSupportChat {
   }
 }
 
-// Inicializar cuando el DOM esté listo
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   window.chatManager = new AdvancedSupportChat();
   window.chatManager.startAutoNotifications();

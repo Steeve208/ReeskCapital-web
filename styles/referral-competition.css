@@ -1,0 +1,396 @@
+/* ===== REFERRAL COMPETITION STYLES ===== */
+
+.leaderboard-item.current-user {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.05));
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.leaderboard-item.rank-1 {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.leaderboard-item.rank-2 {
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.1), rgba(192, 192, 192, 0.05));
+    border: 1px solid rgba(192, 192, 192, 0.3);
+}
+
+.leaderboard-item.rank-3 {
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.1), rgba(205, 127, 50, 0.05));
+    border: 1px solid rgba(205, 127, 50, 0.3);
+}
+
+.leaderboard-empty {
+    text-align: center;
+    padding: 20px;
+    color: #ccc;
+}
+
+.leaderboard-empty p {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
+
+.leaderboard-empty small {
+    font-size: 12px;
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.empty-competition-info {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(0, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.empty-competition-info .prize-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.empty-competition-info .prize-amount {
+    font-weight: bold;
+    color: #ffd700;
+    font-size: 14px;
+}
+
+.empty-competition-info .time-remaining {
+    color: #00ffff;
+    font-size: 12px;
+}
+
+.empty-competition-info .competition-rules small {
+    color: #ccc;
+    font-size: 11px;
+}
+
+.competition-info {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(0, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.prize-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.prize-amount {
+    font-weight: bold;
+    color: #ffd700;
+    font-size: 16px;
+}
+
+.time-remaining {
+    color: #00ffff;
+    font-size: 14px;
+}
+
+.competition-rules small {
+    color: #ccc;
+    font-size: 12px;
+}
+
+/* Leaderboard Modal */
+.leaderboard-modal-content {
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.competition-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.competition-title h3 {
+    margin: 0 0 5px 0;
+    color: #ffd700;
+}
+
+.competition-title p {
+    margin: 0;
+    color: #ccc;
+}
+
+.timer-display {
+    text-align: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.timer-value {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #00ffff;
+}
+
+.timer-label {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.user-competition-status {
+    margin-bottom: 20px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.status-item {
+    text-align: center;
+    padding: 15px;
+    background: rgba(0, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.status-value {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    color: #00ffff;
+}
+
+.status-label {
+    font-size: 12px;
+    color: #ccc;
+    margin-top: 5px;
+}
+
+.qualification-status {
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.qualification-status.qualified {
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    color: #00ff00;
+}
+
+.qualification-status.not-qualified {
+    background: rgba(255, 255, 0, 0.1);
+    border: 1px solid rgba(255, 255, 0, 0.3);
+    color: #ffff00;
+}
+
+.full-leaderboard h4 {
+    color: #00ffff;
+    margin-bottom: 15px;
+}
+
+.leaderboard-list-full {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.leaderboard-item-full {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.leaderboard-item-full:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(5px);
+}
+
+.leaderboard-item-full.current-user {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.05));
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.rank-display {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 15px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.user-details {
+    flex: 1;
+}
+
+.user-name-full {
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.user-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.referrals-count {
+    font-size: 14px;
+    color: #ccc;
+    min-width: 80px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ffff, #0080ff);
+    transition: width 0.3s ease;
+}
+
+.user-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.badge {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.badge.leader {
+    background: rgba(255, 215, 0, 0.2);
+    color: #ffd700;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.badge.qualified {
+    background: rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+    border: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+.competition-rules-full {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.competition-rules-full h4 {
+    color: #00ffff;
+    margin-bottom: 15px;
+}
+
+.competition-rules-full ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.competition-rules-full li {
+    padding: 8px 0;
+    color: #ccc;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.competition-rules-full li:last-child {
+    border-bottom: none;
+}
+
+/* Referral Info Styling */
+.referral-info {
+    margin-top: 5px;
+}
+
+.referral-info small {
+    color: #00ffff;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.referral-info i {
+    color: #ffd700;
+}
+
+/* Modal Animation */
+.modal {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .competition-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .status-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .leaderboard-item-full {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .user-progress {
+        width: 100%;
+    }
+    
+    .user-badges {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+}

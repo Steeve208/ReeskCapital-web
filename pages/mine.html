@@ -1,8 +1,8 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSC  Mining Platform - </title>
+    <title>RSC Mining Platform - Advanced Blockchain Mining</title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -11,18 +11,21 @@
     <!-- Styles -->
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/quantum-mining.css">
+    <link rel="stylesheet" href="../styles/advanced-mining.css">
+    <link rel="stylesheet" href="../styles/referral-competition.css">
+    <link rel="stylesheet" href="../styles/modern-auth.css">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/logo.png">
     
     <!-- Meta tags -->
-    <meta name="description" content="RSC Quantum Mining Platform - El sistema de minería más avanzado del mundo">
+    <meta name="description" content="RSC Mining Platform - The world's most advanced mining system">
     <meta name="keywords" content="RSC, mining, quantum, blockchain, cryptocurrency">
     <meta name="author" content="RSC Chain">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="RSC Quantum Mining Platform">
-    <meta property="og:description" content="El sistema de minería más avanzado del mundo">
+    <meta property="og:title" content="RSC Mining Platform">
+    <meta property="og:description" content="The world's most advanced mining system">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rscchain.com/mine">
     <meta property="og:image" content="../assets/img/hero-mining.png">
@@ -55,12 +58,12 @@
                     </div>
                     <div class="logo-info">
                         <h1 class="platform-title">
-                            <span class="title-main">QUANTUM</span>
+                            <span class="title-main">RSC</span>
                             <span class="title-sub">MINING PLATFORM</span>
                         </h1>
                         <p class="platform-description">
                             <i class="fas fa-atom"></i>
-                            Sistema de minería cuántica de última generación
+                            Next-generation mining system
                         </p>
                         <div class="platform-badges">
                             <span class="badge badge-quantum">Quantum Core</span>
@@ -95,7 +98,7 @@
                 </div>
                 
                 <div class="header-actions">
-                    <button class="btn-header" id="settingsBtn">
+                    <button class="btn-header" id="settingsBtn" style="display: none;">
                         <i class="fas fa-cog"></i>
                         <span>Settings</span>
                     </button>
@@ -117,93 +120,196 @@
         <div class="container">
             <!-- Authentication Section -->
             <section class="auth-section" id="authSection">
+                <div class="auth-background">
+                    <div class="auth-particles">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
+                </div>
+                
                 <div class="auth-container">
                     <div class="auth-card">
+                        <!-- Auth Navigation -->
+                        <div class="auth-nav">
+                            <button class="auth-nav-btn active" id="loginTab" onclick="switchAuthTab('login')">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span>Sign In</span>
+                            </button>
+                            <button class="auth-nav-btn" id="registerTab" onclick="switchAuthTab('register')">
+                                <i class="fas fa-user-plus"></i>
+                                <span>Sign Up</span>
+                            </button>
+                        </div>
+
+                        <!-- Auth Header -->
                         <div class="auth-header">
                             <div class="auth-logo">
-                                <div class="quantum-logo">
-                                    <div class="logo-core">
-                                        <div class="logo-quantum">
-                                            <div class="quantum-ring ring-1"></div>
-                                            <div class="quantum-ring ring-2"></div>
-                                            <div class="quantum-ring ring-3"></div>
-                                            <div class="quantum-center">
-                                                <span class="logo-text">RSC</span>
-                                            </div>
-                                        </div>
+                                <div class="quantum-logo-modern">
+                                    <div class="logo-rings">
+                                        <div class="ring ring-1"></div>
+                                        <div class="ring ring-2"></div>
+                                        <div class="ring ring-3"></div>
+                                    </div>
+                                    <div class="logo-center">
+                                        <span class="logo-text">RSC</span>
                                     </div>
                                 </div>
                             </div>
-                            <h2 class="auth-title">Welcome to Quantum Mining</h2>
-                            <p class="auth-subtitle">Sign in to access the most advanced mining platform</p>
+                            <div class="auth-title-container">
+                                <h1 class="auth-title">RSC Quantum Mining</h1>
+                                <p class="auth-subtitle" id="authSubtitle">Welcome back! Sign in to continue mining</p>
+                            </div>
                         </div>
                         
                         <div class="auth-forms">
                             <!-- Login Form -->
                             <form class="auth-form active" id="loginForm">
                                 <div class="form-group">
-                                    <label for="loginEmail">Email Address</label>
-                                    <div class="input-container">
+                                    <label for="loginEmail">
                                         <i class="fas fa-envelope"></i>
-                                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                                        Email Address
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="email" id="loginEmail" placeholder="Enter your email address" required>
+                                        <div class="input-focus-line"></div>
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
-                                    <label for="loginPassword">Password</label>
-                                    <div class="input-container">
+                                    <label for="loginPassword">
                                         <i class="fas fa-lock"></i>
+                                        Password
+                                    </label>
+                                    <div class="input-wrapper">
                                         <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                                        <div class="input-focus-line"></div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn-quantum btn-full">
-                                    <i class="fas fa-sign-in-alt"></i>
-                                    <span>Sign In</span>
-                                    <div class="btn-glow"></div>
-                                </button>
-                                <div class="form-footer">
-                                    <p>Don't have an account? <a href="#" id="showRegister">Sign up</a></p>
+                                
+                                <div class="form-options">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="rememberMe">
+                                        <span class="checkmark"></span>
+                                        Remember me
+                                    </label>
+                                    <a href="#" class="forgot-password">Forgot password?</a>
                                 </div>
+                                
+                                <button type="submit" class="btn-modern btn-primary">
+                                    <span class="btn-content">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                        Sign In
+                                    </span>
+                                    <div class="btn-ripple"></div>
+                                </button>
                             </form>
                             
                             <!-- Register Form -->
                             <form class="auth-form" id="registerForm">
                                 <div class="form-group">
-                                    <label for="registerEmail">Email Address</label>
-                                    <div class="input-container">
+                                    <label for="registerEmail">
                                         <i class="fas fa-envelope"></i>
-                                        <input type="email" id="registerEmail" placeholder="Enter your email" required>
+                                        Email Address
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="email" id="registerEmail" placeholder="Enter your email address" required>
+                                        <div class="input-focus-line"></div>
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
-                                    <label for="registerUsername">Username</label>
-                                    <div class="input-container">
+                                    <label for="registerUsername">
                                         <i class="fas fa-user"></i>
-                                        <input type="text" id="registerUsername" placeholder="Choose a username" required>
+                                        Username
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="registerUsername" placeholder="Choose your username" required>
+                                        <div class="input-focus-line"></div>
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
-                                    <label for="registerPassword">Password</label>
-                                    <div class="input-container">
+                                    <label for="registerPassword">
                                         <i class="fas fa-lock"></i>
-                                        <input type="password" id="registerPassword" placeholder="Create a password" required>
+                                        Password
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="password" id="registerPassword" placeholder="Create a strong password" required>
+                                        <div class="input-focus-line"></div>
+                                    </div>
+                                    <div class="password-strength">
+                                        <div class="strength-bar">
+                                            <div class="strength-fill"></div>
+                                        </div>
+                                        <span class="strength-text">Password strength</span>
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
-                                    <label for="referralCode">Referral Code (Optional)</label>
-                                    <div class="input-container">
+                                    <label for="inviterCode">
                                         <i class="fas fa-gift"></i>
-                                        <input type="text" id="referralCode" placeholder="Enter referral code">
+                                        Referral Code (Optional)
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="inviterCode" placeholder="Enter referral code" maxlength="10">
+                                        <div class="input-focus-line"></div>
+                                    </div>
+                                    <div class="referral-bonus">
+                                        <i class="fas fa-star"></i>
+                                        <span>Get special bonuses if you were invited!</span>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn-quantum btn-full">
-                                    <i class="fas fa-user-plus"></i>
-                                    <span>Sign Up</span>
-                                    <div class="btn-glow"></div>
-                                </button>
-                                <div class="form-footer">
-                                    <p>Already have an account? <a href="#" id="showLogin">Sign in</a></p>
+                                
+                                <div class="form-terms">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="acceptTerms" required>
+                                        <span class="checkmark"></span>
+                                        I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="privacy-link">Privacy Policy</a>
+                                    </label>
                                 </div>
+                                
+                                <button type="submit" class="btn-modern btn-primary">
+                                    <span class="btn-content">
+                                        <i class="fas fa-rocket"></i>
+                                        Start Mining
+                                    </span>
+                                    <div class="btn-ripple"></div>
+                                </button>
                             </form>
+                        </div>
+                        
+                        <!-- Auth Features -->
+                        <div class="auth-features">
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Secure & Safe</h4>
+                                    <p>Your data is protected with enterprise-grade security</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Lightning Fast</h4>
+                                    <p>Start mining immediately with our quantum technology</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Community Driven</h4>
+                                    <p>Join thousands of miners in our growing ecosystem</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -465,6 +571,45 @@
                     </div>
                 </div>
 
+                <!-- Level System Section -->
+                <div class="level-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-star"></i>
+                        Level & Progress
+                    </h3>
+                    <div class="level-container">
+                        <div class="level-info">
+                            <div class="level-display">
+                                <div class="level-number" id="userLevelDisplay">1</div>
+                                <div class="level-label">Level</div>
+                            </div>
+                            <div class="level-progress">
+                                <div class="progress-header">
+                                    <span>Progress to Next Level</span>
+                                    <span id="levelProgressText">0/100 XP</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill" id="levelProgressBar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="level-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total XP</span>
+                                <span class="stat-value" id="totalXPDisplay">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Multiplier</span>
+                                <span class="stat-value" id="levelMultiplierDisplay">1.0x</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Unlocked Features</span>
+                                <span class="stat-value" id="unlockedFeaturesDisplay">1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Equipment Section -->
                 <div class="equipment-section">
                     <h3 class="section-title">
@@ -472,58 +617,486 @@
                         Mining Equipment
                     </h3>
                     <div class="equipment-grid" id="equipmentGrid">
-                        <div class="equipment-card">
-                            <div class="equipment-icon">
-                                <i class="fas fa-microchip"></i>
+                        <!-- Equipment cards will be populated by JavaScript -->
                             </div>
-                            <h4>Quantum Processor</h4>
-                            <p>Advanced quantum computing unit</p>
-                            <div class="equipment-level">
-                                <span>Level 1</span>
-                                <div class="level-bar">
-                                    <div class="level-fill" style="width: 25%"></div>
+                                </div>
+
+                <!-- Algorithm Section -->
+                <div class="algorithm-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-atom"></i>
+                        Mining Algorithms
+                    </h3>
+                    <div class="algorithm-grid" id="algorithmGrid">
+                        <!-- Algorithm cards will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                <!-- Clan System Section -->
+                <div class="clan-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-users"></i>
+                        Clans & Guilds
+                    </h3>
+                    <div class="clan-container" id="clanContainer">
+                        <div class="clan-info" id="clanInfo" style="display: none;">
+                            <div class="clan-header">
+                                <h4 id="clanName">Clan Name</h4>
+                                <span class="clan-level" id="clanLevel">Level 1</span>
+                            </div>
+                            <div class="clan-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Members</span>
+                                    <span class="stat-value" id="clanMemberCount">0/10</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Total Mining</span>
+                                    <span class="stat-value" id="clanTotalMining">0 RSC</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Your Contribution</span>
+                                    <span class="stat-value" id="userContribution">0 RSC</span>
+                                </div>
+                            </div>
+                            <div class="clan-actions">
+                                <button class="btn-secondary" id="clanChatBtn">
+                                    <i class="fas fa-comments"></i>
+                                    <span>Chat</span>
+                                </button>
+                                <button class="btn-danger" id="leaveClanBtn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Leave</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="clan-join" id="clanJoin">
+                            <div class="clan-join-content">
+                                <h4>Join a Clan</h4>
+                                <p>Join a clan to compete with other miners and earn group rewards!</p>
+                                <div class="clan-search">
+                                    <input type="text" id="clanSearchInput" placeholder="Search clans...">
+                                    <button class="btn-quantum" id="searchClansBtn">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <div class="clan-actions">
+                                    <button class="btn-quantum" id="createClanBtn">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Create Clan</span>
+                                    </button>
+                                    <button class="btn-secondary" id="joinClanBtn">
+                                        <i class="fas fa-users"></i>
+                                        <span>Join Clan</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                        
+                <!-- Marketplace Section HIDDEN -->
+                <div class="marketplace-section" style="display: none;">
+                    <h3 class="section-title">
+                        <i class="fas fa-store"></i>
+                        Equipment Marketplace
+                    </h3>
+                    <div class="marketplace-container">
+                        <div class="marketplace-tabs">
+                            <button class="tab-btn active" data-tab="browse">Browse</button>
+                            <button class="tab-btn" data-tab="sell">Sell</button>
+                            <button class="tab-btn" data-tab="my-listings">My Listings</button>
+                            <button class="tab-btn" data-tab="purchases">Purchases</button>
+                            </div>
+                        <div class="marketplace-content">
+                            <div class="tab-content active" id="browseTab">
+                                <div class="marketplace-filters">
+                                    <select id="equipmentTypeFilter">
+                                        <option value="">All Equipment</option>
+                                        <option value="processor">Processor</option>
+                                        <option value="memory">Memory</option>
+                                        <option value="cooling">Cooling</option>
+                                        <option value="power">Power</option>
+                                    </select>
+                                    <input type="number" id="minLevelFilter" placeholder="Min Level" min="1" max="10">
+                                    <input type="number" id="maxPriceFilter" placeholder="Max Price" min="0">
+                                    <button class="btn-quantum" id="applyFiltersBtn">
+                                        <i class="fas fa-filter"></i>
+                                        <span>Filter</span>
+                                    </button>
+                                </div>
+                                <div class="marketplace-listings" id="marketplaceListings">
+                                    <!-- Listings will be populated by JavaScript -->
+                                </div>
+                            </div>
+                            <div class="tab-content" id="sellTab">
+                                <div class="sell-form">
+                                    <h4>Sell Equipment</h4>
+                                    <div class="form-group">
+                                        <label for="sellEquipmentType">Equipment Type</label>
+                                        <select id="sellEquipmentType">
+                                            <option value="">Select Equipment</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sellLevel">Level</label>
+                                        <input type="number" id="sellLevel" min="1" max="10" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sellPrice">Price (RSC)</label>
+                                        <input type="number" id="sellPrice" min="0" step="0.01">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sellDescription">Description</label>
+                                        <textarea id="sellDescription" placeholder="Describe your equipment..."></textarea>
+                                    </div>
+                                    <button class="btn-quantum" id="createListingBtn">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Create Listing</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="tab-content" id="my-listingsTab">
+                                <div class="my-listings" id="myListings">
+                                    <!-- User listings will be populated by JavaScript -->
+                                </div>
+                            </div>
+                            <div class="tab-content" id="purchasesTab">
+                                <div class="purchases" id="purchases">
+                                    <!-- User purchases will be populated by JavaScript -->
+                                </div>
+                            </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="equipment-card">
-                            <div class="equipment-icon">
-                                <i class="fas fa-memory"></i>
+                <!-- Events Section -->
+                <div class="events-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        Events & Seasons
+                    </h3>
+                    <div class="events-container">
+                        <div class="active-events" id="activeEvents">
+                            <!-- Active events will be populated by JavaScript -->
                             </div>
-                            <h4>Neural Memory</h4>
-                            <p>High-speed memory for mining data</p>
-                            <div class="equipment-level">
-                                <span>Level 1</span>
-                                <div class="level-bar">
-                                    <div class="level-fill" style="width: 15%"></div>
+                        <div class="season-progress">
+                            <h4>Current Season</h4>
+                            <div class="season-info">
+                                <div class="season-level">
+                                    <span class="season-level-number" id="seasonLevel">1</span>
+                                    <span class="season-level-label">Season Level</span>
+                                </div>
+                                <div class="season-progress-bar">
+                                    <div class="progress-header">
+                                        <span>Season Progress</span>
+                                        <span id="seasonProgressText">0/1000 XP</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar-fill" id="seasonProgressBar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="season-time">
+                                <span class="season-time-label">Time Remaining:</span>
+                                <span class="season-time-value" id="seasonTimeRemaining">29d 23h 59m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Referral System -->
+                <div class="referral-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-users"></i>
+                        Sistema de Referidos
+                        <span class="section-badge" id="referralRankBadge">Bronze Recruiter</span>
+                    </h3>
+                    
+                    <div class="referral-container">
+                        <!-- Referral Code & Link -->
+                        <div class="referral-code-section">
+                            <div class="code-card">
+                                <div class="code-header">
+                                    <h4><i class="fas fa-gift"></i> Your Referral Code</h4>
+                                    <p>Share and earn lifelong commissions</p>
+                                </div>
+                                <div class="code-display">
+                                    <div class="code-container">
+                                        <span class="referral-code" id="referralCodeDisplay">Loading...</span>
+                                        <button class="btn-copy" id="copyReferralCode" title="Copiar código">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="link-container">
+                                        <input type="text" class="referral-link" id="referralLink" readonly placeholder="Tu enlace se generará aquí">
+                                        <button class="btn-copy" id="copyReferralLink" title="Copiar enlace">
+                                            <i class="fas fa-link"></i>
+                                        </button>
+                                        <button class="btn-share" id="shareReferralLink" title="Compartir">
+                                            <i class="fas fa-share-alt"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="equipment-card">
-                            <div class="equipment-icon">
-                                <i class="fas fa-fan"></i>
+
+                        <!-- Referral Stats Grid -->
+                        <div class="referral-stats-grid">
+                            <div class="stat-card primary">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="totalReferrals">0</div>
+                                    <div class="stat-label">Total Referidos</div>
+                                </div>
                             </div>
-                            <h4>Cooling System</h4>
-                            <p>Advanced thermal management</p>
-                            <div class="equipment-level">
-                                <span>Level 1</span>
-                                <div class="level-bar">
-                                    <div class="level-fill" style="width: 30%"></div>
+                            
+                            <div class="stat-card success">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="activeReferrals">0</div>
+                                    <div class="stat-label">Referidos Activos</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card warning">
+                                <div class="stat-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="totalCommissions">0.000000</div>
+                                    <div class="stat-label">Total Comisiones</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card info">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="monthlyEarnings">0.000000</div>
+                                    <div class="stat-label">Este Mes</div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="equipment-card">
-                            <div class="equipment-icon">
-                                <i class="fas fa-bolt"></i>
+
+                        <!-- Rank Progress -->
+                        <div class="rank-section">
+                            <div class="rank-header">
+                                <h4><i class="fas fa-medal"></i> Tu Rango Actual</h4>
                             </div>
-                            <h4>Power Core</h4>
-                            <p>Efficient energy management system</p>
-                            <div class="equipment-level">
-                                <span>Level 1</span>
-                                <div class="level-bar">
-                                    <div class="level-fill" style="width: 20%"></div>
+                            <div class="rank-display">
+                                <div class="current-rank" id="currentRank">
+                                    <div class="rank-icon">🥉</div>
+                                    <div class="rank-info">
+                                        <div class="rank-name">Bronze Recruiter</div>
+                                        <div class="rank-multiplier">Multiplicador: 1.0x</div>
+                                    </div>
+                                </div>
+                                <div class="rank-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="rankProgressFill" style="width: 0%"></div>
+                                    </div>
+                                    <div class="progress-text" id="rankProgressText">0/5 para Silver Ambassador</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Commission Structure -->
+                        <div class="commission-structure">
+                            <h4><i class="fas fa-layer-group"></i> Estructura de Comisiones</h4>
+                            <div class="commission-levels">
+                                <div class="commission-level level-1">
+                                    <div class="level-icon">1</div>
+                                    <div class="level-info">
+                                        <div class="level-title">Referidos Directos</div>
+                                        <div class="level-rate">10% de su minería</div>
+                                    </div>
+                                </div>
+                                <div class="commission-level level-2">
+                                    <div class="level-icon">2</div>
+                                    <div class="level-info">
+                                        <div class="level-title">Segundo Nivel</div>
+                                        <div class="level-rate">5% de su minería</div>
+                                    </div>
+                                </div>
+                                <div class="commission-level level-3">
+                                    <div class="level-icon">3</div>
+                                    <div class="level-info">
+                                        <div class="level-title">Tercer Nivel</div>
+                                        <div class="level-rate">2% de su minería</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Achievements -->
+                        <div class="achievements-section">
+                            <h4><i class="fas fa-trophy"></i> Logros de Referidos</h4>
+                            <div class="achievements-grid" id="referralAchievements">
+                                <!-- Achievements will be loaded dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Referral Tree/List -->
+                        <div class="referral-tree-section">
+                            <div class="tree-header">
+                                <h4><i class="fas fa-sitemap"></i> Tus Referidos</h4>
+                                <div class="tree-controls">
+                                    <button class="btn-secondary" id="toggleTreeView">
+                                        <i class="fas fa-list"></i> Vista Lista
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="referral-tree" id="referralTree">
+                                <div class="no-referrals" id="noReferrals">
+                                    <i class="fas fa-users"></i>
+                                    <h5>You don't have referrals yet</h5>
+                                    <p>Share your code to start earning commissions</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Leaderboard Preview -->
+                        <div class="leaderboard-preview">
+                            <div class="leaderboard-header">
+                                <h4><i class="fas fa-crown"></i> Top Referidores</h4>
+                                <button class="btn-secondary" id="viewFullLeaderboard">Ver Todo</button>
+                            </div>
+                            <div class="leaderboard-list" id="leaderboardPreview">
+                                <!-- Top 5 referrers will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="referral-section" style="display: none;">
+                    <h3 class="section-title">
+                        <i class="fas fa-users"></i>
+                        Referral System
+                    </h3>
+                    
+                    <div class="referral-container">
+                        <!-- Referral Code Display -->
+                        <div class="referral-code-card">
+                            <div class="referral-header">
+                                <h4><i class="fas fa-gift"></i> Your Referral Code</h4>
+                                <p>Share your code and earn 10% commission for each referral</p>
+                            </div>
+                            <div class="referral-code-display">
+                                <div class="code-container">
+                                    <span class="referral-code" id="referralCodeDisplay">RSC123456</span>
+                                    <button class="btn-copy" id="copyReferralCode">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="referral-link-container">
+                                    <input type="text" class="referral-link" id="referralLink" readonly 
+                                           value="https://rscchain.com/mine?ref=RSC123456">
+                                    <button class="btn-copy" id="copyReferralLink">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Referral Stats -->
+                        <div class="referral-stats">
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>Referidos Totales</h4>
+                                    <p class="stat-value" id="totalReferrals">0</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>Comisiones Ganadas</h4>
+                                    <p class="stat-value" id="totalCommissions">0.000000 RSC</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>Nivel de Referido</h4>
+                                    <p class="stat-value" id="referralLevel">1</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Share Buttons -->
+                        <div class="referral-share">
+                            <h4><i class="fas fa-share-alt"></i> Compartir en Redes Sociales</h4>
+                            <div class="share-buttons">
+                                <button class="share-btn share-whatsapp" data-platform="whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>WhatsApp</span>
+                                </button>
+                                <button class="share-btn share-telegram" data-platform="telegram">
+                                    <i class="fab fa-telegram"></i>
+                                    <span>Telegram</span>
+                                </button>
+                                <button class="share-btn share-twitter" data-platform="twitter">
+                                    <i class="fab fa-twitter"></i>
+                                    <span>Twitter</span>
+                                </button>
+                                <button class="share-btn share-facebook" data-platform="facebook">
+                                    <i class="fab fa-facebook"></i>
+                                    <span>Facebook</span>
+                                </button>
+                                <button class="share-btn share-copy" data-platform="copy">
+                                    <i class="fas fa-link"></i>
+                                    <span>Copiar Enlace</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Referral History -->
+                        <div class="referral-history">
+                            <h4><i class="fas fa-history"></i> Historial de Referidos</h4>
+                            <div class="referral-list" id="referralList">
+                                <div class="referral-item">
+                                    <div class="referral-info">
+                                        <div class="referral-name">Usuario123</div>
+                                        <div class="referral-date">Hace 2 días</div>
+                                    </div>
+                                    <div class="referral-commission">
+                                        <span class="commission-amount">+0.500000 RSC</span>
+                                        <span class="commission-status active">Activo</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="referral-item">
+                                    <div class="referral-info">
+                                        <div class="referral-name">MinerPro</div>
+                                        <div class="referral-date">Hace 1 semana</div>
+                                    </div>
+                                    <div class="referral-commission">
+                                        <span class="commission-amount">+1.200000 RSC</span>
+                                        <span class="commission-status active">Activo</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="referral-item">
+                                    <div class="referral-info">
+                                        <div class="referral-name">CryptoFan</div>
+                                        <div class="referral-date">Hace 2 semanas</div>
+                                    </div>
+                                    <div class="referral-commission">
+                                        <span class="commission-amount">+0.800000 RSC</span>
+                                        <span class="commission-status completed">Completado</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -531,7 +1104,7 @@
                 </div>
 
                 <!-- Leaderboard -->
-                <div class="leaderboard-section">
+                <div class="leaderboard-section" style="display: none;">
                     <h3 class="section-title">
                         <i class="fas fa-trophy"></i>
                         Top Miners
@@ -598,67 +1171,434 @@
     </main>
 
     <!-- Modals -->
-    <div class="modal" id="settingsModal">
-        <div class="modal-content">
+    <div class="modal hidden" id="settingsModal" style="display: none;">
+        <div class="modal-content settings-modal-content">
             <div class="modal-header">
-                <h2>Settings</h2>
+                <h2><i class="fas fa-cog"></i> Configuración</h2>
                 <button class="modal-close" id="closeSettingsModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="settings-section">
-                    <h4>Mining Settings</h4>
+                <!-- Navegación de configuración -->
+                <div class="settings-navigation">
+                    <button class="settings-nav-btn active" data-section="mining-settings">
+                        <i class="fas fa-pickaxe"></i> Minería
+                    </button>
+                    <button class="settings-nav-btn" data-section="display-settings">
+                        <i class="fas fa-desktop"></i> Pantalla
+                    </button>
+                    <button class="settings-nav-btn" data-section="notification-settings">
+                        <i class="fas fa-bell"></i> Notificaciones
+                    </button>
+                    <button class="settings-nav-btn" data-section="account-settings">
+                        <i class="fas fa-user"></i> Cuenta
+                    </button>
+                        <button class="settings-nav-btn" data-section="achievements-settings">
+                            <i class="fas fa-trophy"></i> Logros
+                        </button>
+                        <button class="settings-nav-btn" data-section="advanced-settings">
+                            <i class="fas fa-cogs"></i> Avanzado
+                        </button>
+                </div>
+
+                <!-- Contenido de configuración -->
+                <div class="settings-content">
+                    <!-- Mining Settings -->
+                    <div class="settings-section active" id="mining-settings">
+                        <h3><i class="fas fa-pickaxe"></i> Configuración de Minería</h3>
+                        <div class="settings-grid">
                     <div class="setting-item">
-                        <label for="autoSync">Auto Sync</label>
-                        <input type="checkbox" id="autoSync" checked>
+                                <div class="setting-info">
+                                    <label for="autoSync">Sincronización Automática</label>
+                                    <small>Sincronizar automáticamente con la base de datos</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="autoSync" checked class="toggle-switch">
+                                </div>
                     </div>
                     <div class="setting-item">
-                        <label for="notifications">Notifications</label>
-                        <input type="checkbox" id="notifications" checked>
+                                <div class="setting-info">
+                                    <label for="backgroundMining">Minería en Segundo Plano</label>
+                                    <small>Continuar minando cuando la pestaña esté oculta</small>
+                    </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="backgroundMining" checked class="toggle-switch">
+                </div>
+            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="autoRestart">Reinicio Automático</label>
+                                    <small>Reiniciar sesión automáticamente después de 24h</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="autoRestart" class="toggle-switch">
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="miningAlgorithm">Algoritmo Predeterminado</label>
+                                    <small>Algoritmo a usar al iniciar nueva sesión</small>
+                                </div>
+                                <div class="setting-control">
+                                    <select id="miningAlgorithm" class="setting-select">
+                                        <option value="sha256">SHA-256</option>
+                                        <option value="scrypt">Scrypt</option>
+                                        <option value="x11">X11</option>
+                                        <option value="ethash">Ethash</option>
+                                    </select>
+                                </div>
+                            </div>
+        </div>
+    </div>
+
+                    <!-- Display Settings -->
+                    <div class="settings-section" id="display-settings">
+                        <h3><i class="fas fa-desktop"></i> Configuración de Pantalla</h3>
+                        <div class="settings-grid">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="darkMode">Modo Oscuro</label>
+                                    <small>Interfaz con colores oscuros</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="darkMode" checked class="toggle-switch">
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="compactView">Vista Compacta</label>
+                                    <small>Mostrar menos espacios entre elementos</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="compactView" class="toggle-switch">
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="showAnimations">Mostrar Animaciones</label>
+                                    <small>Efectos visuales y transiciones</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="showAnimations" checked class="toggle-switch">
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="language">Idioma</label>
+                                    <small>Idioma de la interfaz</small>
+                                </div>
+                                <div class="setting-control">
+                                    <select id="language" class="setting-select">
+                                        <option value="es">Español</option>
+                                        <option value="en">English</option>
+                                        <option value="pt">Português</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="settings-section" id="notification-settings">
+                        <h3><i class="fas fa-bell"></i> Configuración de Notificaciones</h3>
+                        <div class="settings-grid">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="notifications">Notificaciones Generales</label>
+                                    <small>Recibir notificaciones del sistema</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="notifications" checked class="toggle-switch">
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="achievementNotifications">Notificaciones de Logros</label>
+                                    <small>Avisar cuando desbloquees achievements</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="achievementNotifications" checked class="toggle-switch">
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <!-- Referral notifications REMOVED -->
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="soundNotifications">Sonidos</label>
+                                    <small>Reproducir sonidos con las notificaciones</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="soundNotifications" class="toggle-switch">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Settings -->
+                    <div class="settings-section" id="account-settings">
+                        <h3><i class="fas fa-user"></i> Configuración de Cuenta</h3>
+                        <div class="settings-grid">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Usuario Actual</label>
+                                    <small id="currentUsername">Cargando...</small>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-secondary" id="changeUsernameBtn">Cambiar</button>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Email</label>
+                                    <small id="currentEmail">Cargando...</small>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-secondary" id="changeEmailBtn">Cambiar</button>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Balance Actual</label>
+                                    <small id="currentBalance">0.000000 RSC</small>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-primary" id="refreshBalanceBtn">Actualizar</button>
+                                </div>
+                            </div>
+                                <!-- Referral code setting REMOVED -->
+                        </div>
+                    </div>
+
+                        <!-- Achievements Settings -->
+                        <div class="settings-section" id="achievements-settings">
+                            <h3><i class="fas fa-trophy"></i> Logros y Achievements</h3>
+                            <div class="achievements-settings-content">
+                                <div class="achievement-stats">
+                                    <div class="achievement-stat-card">
+                                        <div class="stat-icon">🏆</div>
+                                        <div class="stat-info">
+                                            <div class="stat-value" id="achievementsCompleted">0</div>
+                                            <div class="stat-label">Completados</div>
+                                        </div>
+                                    </div>
+                                    <div class="achievement-stat-card">
+                                        <div class="stat-icon">📈</div>
+                                        <div class="stat-info">
+                                            <div class="stat-value" id="achievementsProgress">0%</div>
+                                            <div class="stat-label">Progreso</div>
+                                        </div>
+                                    </div>
+                                    <div class="achievement-stat-card">
+                                        <div class="stat-icon">⭐</div>
+                                        <div class="stat-info">
+                                            <div class="stat-value" id="achievementsRewards">0</div>
+                                            <div class="stat-label">Recompensas</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="achievement-categories">
+                                    <button class="achievement-category-btn active" data-category="all">Todos</button>
+                                    <button class="achievement-category-btn" data-category="starter">Inicio</button>
+                                    <button class="achievement-category-btn" data-category="mining">Minería</button>
+                                    <button class="achievement-category-btn" data-category="progression">Progresión</button>
+                                    <button class="achievement-category-btn" data-category="social">Social</button>
+                                </div>
+                                
+                                <div class="achievement-grid" id="achievementGrid">
+                                    <!-- Los logros se cargarán dinámicamente -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Settings -->
+                        <div class="settings-section" id="advanced-settings">
+                            <h3><i class="fas fa-cogs"></i> Configuración Avanzada</h3>
+                        <div class="settings-grid">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="debugMode">Modo Debug</label>
+                                    <small>Mostrar información adicional en consola</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="debugMode" class="toggle-switch">
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label for="autoSave">Auto Guardado</label>
+                                    <small>Guardar automáticamente cada 30 segundos</small>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="checkbox" id="autoSave" checked class="toggle-switch">
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Limpiar Datos Locales</label>
+                                    <small>Eliminar todos los datos guardados en el navegador</small>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-danger" id="clearDataBtn">Limpiar</button>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Exportar Datos</label>
+                                    <small>Descargar backup de tus datos</small>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-secondary" id="exportDataBtn">Exportar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal" id="helpModal">
-        <div class="modal-content">
+                <!-- Background Mining Controls -->
+                <div class="background-mining-controls">
+                    <h3 class="section-title">
+                        <i class="fas fa-mobile-alt"></i>
+                        Minería en Segundo Plano
+                    </h3>
+                    <div class="background-mining-toggle">
+                        <div class="background-mining-status" id="backgroundStatus">
+                            <i class="fas fa-pause-circle" style="color: #888;"></i>
+                            Background mining inactive
+                        </div>
+                        <button class="btn btn-primary" id="toggleBackgroundMining">
+                            Activar
+                        </button>
+                    </div>
+                    <div class="background-mining-stats" id="backgroundStats" style="display: none;">
+                        <div class="background-stat-item">
+                            <div class="background-stat-value" id="backgroundTokens">0.0000</div>
+                            <div class="background-stat-label">RSC Minados</div>
+                        </div>
+                        <div class="background-stat-item">
+                            <div class="background-stat-value" id="backgroundDuration">0m</div>
+                            <div class="background-stat-label">Tiempo Activo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements moved to Settings modal -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Mining Indicator -->
+    <div class="background-mining-indicator" id="backgroundMiningIndicator">
+        <i class="fas fa-mobile-alt"></i>
+        <span>Minería en segundo plano activa</span>
+    </div>
+
+    <div class="modal hidden" id="helpModal">
+        <div class="modal-content help-modal-content">
             <div class="modal-header">
-                <h2>Help & Support</h2>
+                <h2><i class="fas fa-question-circle"></i> Ayuda & Soporte</h2>
                 <button class="modal-close" id="closeHelpModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="help-section">
-                    <h4>🚀 Getting Started</h4>
-                    <ol>
-                        <li>Select your preferred mining algorithm</li>
-                        <li>Click "Start Quantum Mining" to begin</li>
-                        <li>Monitor real-time metrics and progress</li>
-                        <li>Your tokens are automatically saved</li>
-                    </ol>
+                <!-- Navegación de ayuda -->
+                <div class="help-navigation">
+                    <button class="help-nav-btn active" data-section="getting-started">
+                        <i class="fas fa-play-circle"></i> Comenzar
+                    </button>
+                    <button class="help-nav-btn" data-section="mining-guide">
+                        <i class="fas fa-pickaxe"></i> Minería
+                    </button>
+                    <button class="help-nav-btn" data-section="systems-guide">
+                        <i class="fas fa-cogs"></i> Sistemas
+                    </button>
+                        <!-- Referrals guide REMOVED -->
+                    <button class="help-nav-btn" data-section="contact">
+                        <i class="fas fa-headset"></i> Contacto
+                    </button>
                 </div>
                 
-                <div class="help-section">
-                    <h4>⛏️ Mining Features</h4>
-                    <ul>
-                        <li><strong>Quantum Core:</strong> Highest efficiency, moderate power consumption</li>
-                        <li><strong>Neural Network:</strong> Adaptive learning, low power consumption</li>
-                        <li><strong>Hybrid Fusion:</strong> Best of both worlds, high power consumption</li>
-                        <li><strong>Adaptive Matrix:</strong> Self-optimizing, highest power consumption</li>
-                    </ul>
+                <!-- Contenido de ayuda -->
+                <div class="help-content">
+                    <!-- Getting Started -->
+                    <div class="help-section active" id="getting-started">
+                        <h3><i class="fas fa-rocket"></i> Comenzando en RSC Mining</h3>
+                        <div class="help-steps">
+                            <div class="help-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Inicia Sesión</h4>
+                                    <p>Crea tu cuenta o inicia sesión para comenzar a minar RSC tokens.</p>
+                                </div>
+                            </div>
+                            <div class="help-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Comienza a Minar</h4>
+                                    <p>Haz clic en "Iniciar Minería" para comenzar tu sesión de 24 horas.</p>
+                                </div>
+                            </div>
+                            <div class="help-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Mejora tu Equipo</h4>
+                                    <p>Compra y mejora equipos para aumentar tu tasa de minería.</p>
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 
-                <div class="help-section">
-                    <h4>💡 Tips</h4>
-                    <ul>
-                        <li>Keep your browser open for best performance</li>
-                        <li>Higher mining power = more tokens</li>
-                        <li>Equipment upgrades boost efficiency</li>
-                        <li>Refer friends to earn commissions</li>
+                    <!-- Mining Guide -->
+                    <div class="help-section" id="mining-guide">
+                        <h3><i class="fas fa-pickaxe"></i> Guía de Minería</h3>
+                        <div class="mining-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Conceptos Básicos</h4>
+                            <ul>
+                                <li>⚡ <strong>Hash Rate:</strong> Tu poder de minería (H/s)</li>
+                                <li>📈 <strong>Eficiencia:</strong> Qué tan optimizado está tu equipo (%)</li>
+                                <li>🪙 <strong>RSC Tokens:</strong> La criptomoneda que estás minando</li>
+                                <li>⏰ <strong>Sesiones 24h:</strong> Cada sesión dura 24 horas</li>
                     </ul>
+                </div>
+            </div>
+
+                    <!-- Systems Guide -->
+                    <div class="help-section" id="systems-guide">
+                        <h3><i class="fas fa-cogs"></i> Sistemas Avanzados</h3>
+                        <div class="systems-list">
+                            <div class="system-item">
+                                <strong>🔧 Equipos:</strong> Compra GPUs, ASICs y mejoras
+                            </div>
+                            <div class="system-item">
+                                <strong>📊 Niveles:</strong> Gana XP y desbloquea multiplicadores
+                            </div>
+                            <div class="system-item">
+                                <strong>👥 Clanes:</strong> Únete a grupos y colabora
+                            </div>
+                            <div class="system-item">
+                                <strong>🏆 Logros:</strong> Completa achievements y gana recompensas
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Referrals Guide REMOVED -->
+
+                    <!-- Contact -->
+                    <div class="help-section" id="contact">
+                        <h3><i class="fas fa-headset"></i> Contacto & Soporte</h3>
+                        <div class="contact-info">
+                            <p>📧 <strong>Email:</strong> support@rscmining.com</p>
+                            <p>💬 <strong>Discord:</strong> RSC Mining Community</p>
+                            <p>📱 <strong>Telegram:</strong> @RSCMining</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -670,6 +1610,18 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/main.min.js"></script>
     <script src="../scripts/supabase-integration.js"></script>
+    
+    <!-- Advanced Mining Systems -->
+    <script src="../scripts/mining/equipment-system.js"></script>
+    <script src="../scripts/mining/level-system.js"></script>
+    <script src="../scripts/mining/algorithm-system.js"></script>
+    <script src="../scripts/mining/clan-system.js"></script>
+    <!-- <script src="../scripts/mining/marketplace-system.js"></script> DISABLED -->
+    <script src="../scripts/mining/event-system-simple.js"></script>
+    <script src="../scripts/mining/achievement-system.js"></script>
+    <script src="../scripts/mining/background-mining.js"></script>
+    <script src="../scripts/advanced-referral-system.js"></script>
+    <script src="../scripts/referral-competition.js"></script>
     <script>
         // Inicializar cuando esté listo
         document.addEventListener('DOMContentLoaded', function() {
@@ -699,12 +1651,20 @@
         function initializeMiningPlatform() {
             console.log('🚀 Inicializando RSC Mining Platform...');
             
-            // Configurar event listeners para el sistema existente
+            // Setup event listeners for existing system
             setupAuthEventListeners();
             setupMiningEventListeners();
             
+            // Initialize advanced systems
+            initializeAdvancedSystems();
+            
+            // Inicializar sistema de referidos
+            // Inicializar sistema avanzado de referidos
+            initializeAdvancedReferralSystem();
+            
             // Verificar si el usuario ya está autenticado
             if (window.supabaseIntegration.isUserAuthenticated()) {
+                console.log('👤 Usuario autenticado, mostrando dashboard...');
                 showMiningDashboard();
                 
                 // Esperar un poco para que se cargue la sesión
@@ -712,10 +1672,390 @@
                     await checkAndRestoreMiningSession();
                 }, 1000);
             } else {
+                console.log('🔐 Usuario no autenticado, mostrando sección de auth...');
                 showAuthSection();
             }
             
             console.log('✅ RSC Mining Platform - LISTO');
+            
+            // Inicializar funcionalidades de auth
+            initializeAuthFeatures();
+        }
+        
+        function initializeAuthFeatures() {
+            // Password strength indicator
+            const passwordInput = document.getElementById('registerPassword');
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    updatePasswordStrength(this.value);
+                });
+            }
+            
+            // Form animations
+            const inputs = document.querySelectorAll('.input-wrapper input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+        }
+        
+        function updatePasswordStrength(password) {
+            const strengthFill = document.querySelector('.strength-fill');
+            const strengthText = document.querySelector('.strength-text');
+            
+            if (!strengthFill || !strengthText) return;
+            
+            let strength = 0;
+            let strengthLabel = 'Very Weak';
+            
+            // Length check
+            if (password.length >= 8) strength += 25;
+            
+            // Uppercase check
+            if (/[A-Z]/.test(password)) strength += 25;
+            
+            // Lowercase check
+            if (/[a-z]/.test(password)) strength += 25;
+            
+            // Number or special char check
+            if (/[\d\W]/.test(password)) strength += 25;
+            
+            // Update strength label
+            if (strength === 0) strengthLabel = 'Very Weak';
+            else if (strength === 25) strengthLabel = 'Weak';
+            else if (strength === 50) strengthLabel = 'Fair';
+            else if (strength === 75) strengthLabel = 'Good';
+            else if (strength === 100) strengthLabel = 'Strong';
+            
+            // Update UI
+            strengthFill.style.width = strength + '%';
+            strengthText.textContent = strengthLabel;
+            
+            // Update colors
+            if (strength <= 25) {
+                strengthFill.style.background = '#ff4757';
+            } else if (strength <= 50) {
+                strengthFill.style.background = '#ffa502';
+            } else if (strength <= 75) {
+                strengthFill.style.background = '#26de81';
+            } else {
+                strengthFill.style.background = '#2ed573';
+            }
+        }
+
+        function initializeAdvancedSystems() {
+            console.log('🔧 Inicializando sistemas avanzados...');
+            
+            // Inicializar sistemas cuando estén disponibles
+            const initSystems = () => {
+                const systems = [
+                    'equipmentSystem',
+                    'levelSystem', 
+                    'algorithmSystem',
+                    'clanSystem',
+                    // 'marketplaceSystem', // DISABLED
+                    'eventSystem',
+                    'achievementSystem',
+                    'backgroundMiningManager'
+                    // 'referralSystem' // REMOVED - Using existing backend system
+                ];
+                
+                const loadedSystems = systems.filter(system => window[system]);
+                console.log(`📊 Sistemas cargados: ${loadedSystems.length}/${systems.length}`, loadedSystems);
+                
+                if (loadedSystems.length === systems.length) {
+                    console.log('✅ Todos los sistemas avanzados cargados');
+                    
+                    // Configurar event listeners para sistemas avanzados
+                    setupAdvancedEventListeners();
+                    
+                    // Actualizar UI con datos de sistemas avanzados
+                    updateAdvancedUI();
+                    
+                    // Actualizar UI de logros
+                    updateAchievementUI();
+                    
+                    // Configurar background mining
+                    setupBackgroundMining();
+                    
+                    // Iniciar actualizaciones periódicas
+                    startAdvancedUpdates();
+                } else {
+                    console.log(`⏳ Esperando sistemas restantes... (${systems.length - loadedSystems.length} faltantes)`);
+                    setTimeout(initSystems, 500);
+                }
+            };
+            
+            // Esperar un poco más para que los scripts se carguen
+            setTimeout(initSystems, 1000);
+        }
+
+        // Actualizar UI de logros
+        function updateAchievementUI() {
+            if (!window.achievementSystem) return;
+
+            const achievementGrid = document.getElementById('achievementGrid');
+            const achievementsBadge = document.getElementById('achievementsBadge');
+            
+            if (!achievementGrid || !achievementsBadge) return;
+
+            const allAchievements = Object.values(window.achievementSystem.achievements);
+            const unlockedCount = window.achievementSystem.userAchievements.unlocked.length;
+            
+            // Actualizar badge
+            achievementsBadge.textContent = `${unlockedCount}/${allAchievements.length}`;
+            
+            // Renderizar logros
+            renderAchievements('all');
+            
+            // Setup event listeners para categorías
+            const categoryBtns = document.querySelectorAll('.achievement-category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    renderAchievements(e.target.dataset.category);
+                });
+            });
+        }
+
+        function renderAchievements(category) {
+            if (!window.achievementSystem) return;
+
+            const achievementGrid = document.getElementById('achievementGrid');
+            if (!achievementGrid) return;
+
+            let achievements;
+            if (category === 'all') {
+                achievements = Object.values(window.achievementSystem.achievements);
+            } else {
+                achievements = window.achievementSystem.getAchievementsByCategory(category);
+            }
+
+            achievementGrid.innerHTML = achievements.map(achievement => {
+                const isUnlocked = window.achievementSystem.isUnlocked(achievement.id);
+                const progress = window.achievementSystem.getProgress(achievement.id);
+                
+                return `
+                    <div class="achievement-card ${isUnlocked ? 'unlocked' : ''}">
+                        <div class="achievement-header">
+                            <i class="${achievement.icon} achievement-icon" style="color: ${achievement.color}"></i>
+                            <h4 class="achievement-title">${achievement.name}</h4>
+                        </div>
+                        <p class="achievement-description">${achievement.description}</p>
+                        ${!isUnlocked ? `
+                            <div class="achievement-progress">
+                                <div class="achievement-progress-bar" style="width: ${progress}%"></div>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">${progress.toFixed(1)}% completado</div>
+                        ` : ''}
+                        ${achievement.reward ? `
+                            <div class="achievement-reward">
+                                ${achievement.reward.tokens ? `<span class="achievement-reward-item">+${achievement.reward.tokens} RSC</span>` : ''}
+                                ${achievement.reward.xp ? `<span class="achievement-reward-item">+${achievement.reward.xp} XP</span>` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Configurar background mining
+        function setupBackgroundMining() {
+            if (!window.backgroundMiningManager) return;
+
+            const toggleBtn = document.getElementById('toggleBackgroundMining');
+            const backgroundStats = document.getElementById('backgroundStats');
+            
+            if (!toggleBtn) return;
+
+            let isBackgroundActive = false;
+
+            // Event listener para el botón toggle
+            toggleBtn.addEventListener('click', async () => {
+                if (!isBackgroundActive) {
+                    // Iniciar background mining
+                    const success = await window.backgroundMiningManager.startBackgroundMining({
+                        baseRate: 0.1,
+                        hashRate: 100,
+                        efficiency: 100
+                    });
+                    
+                    if (success) {
+                        isBackgroundActive = true;
+                        toggleBtn.textContent = 'Detener';
+                        toggleBtn.classList.add('btn-danger');
+                        toggleBtn.classList.remove('btn-primary');
+                        backgroundStats.style.display = 'grid';
+                    }
+                } else {
+                    // Detener background mining
+                    window.backgroundMiningManager.stopBackgroundMining();
+                    isBackgroundActive = false;
+                    toggleBtn.textContent = 'Activar';
+                    toggleBtn.classList.add('btn-primary');
+                    toggleBtn.classList.remove('btn-danger');
+                    backgroundStats.style.display = 'none';
+                }
+            });
+
+            // Event listeners para eventos del background mining
+            window.addEventListener('backgroundMiningUpdate', (event) => {
+                updateBackgroundMiningUI(event.detail);
+            });
+
+            window.addEventListener('backgroundMiningComplete', (event) => {
+                isBackgroundActive = false;
+                toggleBtn.textContent = 'Activar';
+                toggleBtn.classList.add('btn-primary');
+                toggleBtn.classList.remove('btn-danger');
+                backgroundStats.style.display = 'none';
+                
+                // Actualizar balance principal
+                if (window.supabaseIntegration) {
+                    window.supabaseIntegration.loadStoredUser();
+                }
+            });
+        }
+
+        // Actualizar UI de background mining
+        function updateBackgroundMiningUI(data) {
+            const backgroundTokens = document.getElementById('backgroundTokens');
+            const backgroundDuration = document.getElementById('backgroundDuration');
+            
+            if (backgroundTokens) {
+                backgroundTokens.textContent = data.tokensMinedInBackground.toFixed(4);
+            }
+            
+            if (backgroundDuration && data.duration) {
+                const minutes = Math.floor(data.duration / 60000);
+                const hours = Math.floor(minutes / 60);
+                
+                if (hours > 0) {
+                    backgroundDuration.textContent = `${hours}h ${minutes % 60}m`;
+                } else {
+                    backgroundDuration.textContent = `${minutes}m`;
+                }
+            }
+        }
+
+        // Referral functions removed - using existing backend system
+
+        function setupAdvancedEventListeners() {
+            // Equipment system events
+            setupEquipmentEventListeners();
+            
+            // Level system events
+            setupLevelEventListeners();
+            
+            // Algorithm system events
+            setupAlgorithmEventListeners();
+            
+            // Clan system events
+            setupClanEventListeners();
+            
+            // Marketplace system events DISABLED
+            // setupMarketplaceEventListeners();
+            
+            // Event system events
+            setupEventSystemListeners();
+        }
+
+        function setupEquipmentEventListeners() {
+            // Equipment upgrade buttons will be created dynamically
+            console.log('🔧 Equipment event listeners configurados');
+        }
+
+        function setupLevelEventListeners() {
+            // Level system is mostly automatic
+            console.log('⭐ Level event listeners configurados');
+        }
+
+        function setupAlgorithmEventListeners() {
+            // Algorithm selection will be handled in the existing algorithm section
+            console.log('⚡ Algorithm event listeners configurados');
+        }
+
+        function setupClanEventListeners() {
+            // Create clan button
+            const createClanBtn = document.getElementById('createClanBtn');
+            if (createClanBtn) {
+                createClanBtn.addEventListener('click', () => {
+                    showCreateClanModal();
+                });
+            }
+
+            // Join clan button
+            const joinClanBtn = document.getElementById('joinClanBtn');
+            if (joinClanBtn) {
+                joinClanBtn.addEventListener('click', () => {
+                    showJoinClanModal();
+                });
+            }
+
+            // Leave clan button
+            const leaveClanBtn = document.getElementById('leaveClanBtn');
+            if (leaveClanBtn) {
+                leaveClanBtn.addEventListener('click', async () => {
+                    try {
+                        await window.clanSystem.leaveClan();
+                        updateClanUI();
+                        showNotification('Clan left successfully', 'success');
+                    } catch (error) {
+                        showNotification('Error leaving clan: ' + error.message, 'error');
+                    }
+                });
+            }
+
+            // Clan chat button
+            const clanChatBtn = document.getElementById('clanChatBtn');
+            if (clanChatBtn) {
+                clanChatBtn.addEventListener('click', () => {
+                    showClanChatModal();
+                });
+            }
+
+            console.log('👥 Clan event listeners configurados');
+        }
+
+        function setupMarketplaceEventListeners() {
+            // Marketplace tab switching
+            const tabBtns = document.querySelectorAll('.marketplace-tabs .tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchMarketplaceTab(btn.dataset.tab);
+                });
+            });
+
+            // Create listing button
+            const createListingBtn = document.getElementById('createListingBtn');
+            if (createListingBtn) {
+                createListingBtn.addEventListener('click', () => {
+                    createMarketplaceListing();
+                });
+            }
+
+            // Apply filters button
+            const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+            if (applyFiltersBtn) {
+                applyFiltersBtn.addEventListener('click', () => {
+                    applyMarketplaceFilters();
+                });
+            }
+
+            console.log('🛒 Marketplace event listeners configurados');
+        }
+
+        function setupEventSystemListeners() {
+            // Event system is mostly automatic
+            console.log('🎉 Event system listeners configurados');
         }
 
         async function checkAndRestoreMiningSession() {
@@ -743,7 +2083,7 @@
                     showSessionStatus();
                     
                     // Mostrar notificación
-                    showNotification('⛏️ Minería reanudada - Sesión de 24 horas activa', 'success');
+                    showNotification('⛏️ Mining resumed - 24-hour session active', 'success');
                 } else {
                     console.log('ℹ️ No hay sesión de minería activa');
                 }
@@ -884,6 +2224,115 @@
                     console.log('Selected period:', period);
                 });
             });
+
+        // Help modal close button
+        const closeHelpModal = document.getElementById('closeHelpModal');
+        if (closeHelpModal) {
+            closeHelpModal.addEventListener('click', () => {
+                document.getElementById('helpModal').classList.add('hidden');
+            });
+        }
+
+        // Help button
+        const helpBtn = document.getElementById('helpBtn');
+        if (helpBtn) {
+            helpBtn.addEventListener('click', () => {
+                document.getElementById('helpModal').classList.remove('hidden');
+                setupHelpNavigation();
+            });
+        }
+
+        // Setup help navigation
+        function setupHelpNavigation() {
+            const helpNavBtns = document.querySelectorAll('.help-nav-btn');
+            const helpSections = document.querySelectorAll('.help-section');
+            
+            helpNavBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetSection = btn.dataset.section;
+                    
+                    // Remove active from all buttons and sections
+                    helpNavBtns.forEach(b => b.classList.remove('active'));
+                    helpSections.forEach(s => s.classList.remove('active'));
+                    
+                    // Add active to clicked button and target section
+                    btn.classList.add('active');
+                    const targetElement = document.getElementById(targetSection);
+                    if (targetElement) {
+                        targetElement.classList.add('active');
+                    }
+                });
+            });
+        }
+
+            // Settings modal close button
+            const closeSettingsModal = document.getElementById('closeSettingsModal');
+            if (closeSettingsModal) {
+                closeSettingsModal.addEventListener('click', () => {
+                    document.getElementById('settingsModal').classList.add('hidden');
+                });
+            }
+
+            // Settings button - DESACTIVADO PARA FUTURO
+            /*
+            const settingsBtn = document.getElementById('settingsBtn');
+            if (settingsBtn) {
+                settingsBtn.addEventListener('click', () => {
+                    document.getElementById('settingsModal').classList.remove('hidden');
+                    setupSettingsNavigation();
+                    updateSettingsUI();
+                });
+            }
+            */
+
+            // Setup settings navigation
+            function setupSettingsNavigation() {
+                const settingsNavBtns = document.querySelectorAll('.settings-nav-btn');
+                const settingsSections = document.querySelectorAll('.settings-section');
+                
+                settingsNavBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const targetSection = btn.dataset.section;
+                        
+                        // Remove active from all buttons and sections
+                        settingsNavBtns.forEach(b => b.classList.remove('active'));
+                        settingsSections.forEach(s => s.classList.remove('active'));
+                        
+                        // Add active to clicked button and target section
+                        btn.classList.add('active');
+                        const targetElement = document.getElementById(targetSection);
+                        if (targetElement) {
+                            targetElement.classList.add('active');
+                            
+                            // Si es la sección de logros, actualizar la UI
+                            if (targetSection === 'achievements-settings') {
+                                updateAchievementUI();
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Update settings UI with current values
+            function updateSettingsUI() {
+                if (window.supabaseIntegration?.user?.isAuthenticated) {
+                    const user = window.supabaseIntegration.user;
+                    
+                    // Update account info
+                    const currentUsername = document.getElementById('currentUsername');
+                    const currentEmail = document.getElementById('currentEmail');
+                    const currentBalance = document.getElementById('currentBalance');
+                    const currentReferralCode = document.getElementById('currentReferralCode');
+                    
+                    if (currentUsername) currentUsername.textContent = user.username || 'No disponible';
+                    if (currentEmail) currentEmail.textContent = user.email || 'No disponible';
+                    if (currentBalance) currentBalance.textContent = `${user.balance.toFixed(6)} RSC`;
+                    
+                    if (window.referralSystem && currentReferralCode) {
+                        currentReferralCode.textContent = window.referralSystem.getReferralCode() || 'Generando...';
+                    }
+                }
+            }
         }
 
         async function handleLogin() {
@@ -891,13 +2340,13 @@
             const password = document.getElementById('loginPassword').value;
             
             if (!email || !password) {
-                showNotification('Por favor ingresa tu email y contraseña', 'error');
+                showNotification('Please enter your email and password', 'error');
                 return;
             }
 
             try {
                 const userData = await window.supabaseIntegration.loginUser(email, password);
-                showNotification('Sesión iniciada correctamente', 'success');
+                showNotification('Session started successfully', 'success');
                 showMiningDashboard();
                 
                 // Verificar si hay una sesión de minería activa después del login
@@ -905,7 +2354,7 @@
                     await checkAndRestoreMiningSession();
                 }, 500);
             } catch (error) {
-                showNotification('Error iniciando sesión: ' + error.message, 'error');
+                showNotification('Error starting session: ' + error.message, 'error');
             }
         }
 
@@ -913,21 +2362,34 @@
             const email = document.getElementById('registerEmail').value;
             const username = document.getElementById('registerUsername').value;
             const password = document.getElementById('registerPassword').value;
-            const referralCode = document.getElementById('referralCode').value;
+            const inviterCode = document.getElementById('inviterCode').value.trim();
 
             if (!email || !username || !password) {
-                showNotification('Por favor completa todos los campos requeridos (email, usuario y contraseña)', 'error');
+                showNotification('Please complete all required fields (email, username and password)', 'error');
                 return;
             }
 
             if (password.length < 6) {
-                showNotification('La contraseña debe tener al menos 6 caracteres', 'error');
+                showNotification('Password must be at least 6 characters long', 'error');
+                return;
+            }
+
+            // Validar código de invitador si se proporcionó
+            if (inviterCode && inviterCode.length < 4) {
+                showNotification('Referral code must be at least 4 characters long', 'error');
                 return;
             }
 
             try {
-                const result = await window.supabaseIntegration.registerUser(email, username, password, referralCode || null);
-                showNotification('Usuario registrado correctamente', 'success');
+                // Registrar usuario con código de invitador
+                const result = await window.supabaseIntegration.registerUser(email, username, password, inviterCode);
+                
+                if (inviterCode) {
+                    showNotification('User registered successfully! 🎉 Referral bonuses applied', 'success');
+                } else {
+                    showNotification('User registered successfully', 'success');
+                }
+                
                 showMiningDashboard();
                 
                 // Verificar si hay una sesión de minería activa después del registro
@@ -935,7 +2397,7 @@
                     await checkAndRestoreMiningSession();
                 }, 500);
             } catch (error) {
-                showNotification('Error registrando usuario: ' + error.message, 'error');
+                showNotification('Error registering user: ' + error.message, 'error');
             }
         }
 
@@ -958,7 +2420,7 @@
                 await new Promise(resolve => setTimeout(resolve, 200));
                 
                 await window.supabaseIntegration.startMiningSession();
-                showNotification('⛏️ Minería de 24 horas iniciada - No se detendrá hasta completarse', 'success');
+                showNotification('⛏️ 24-hour mining started - Will not stop until completed', 'success');
                 
                 // Actualizar UI
                 document.getElementById('startMiningBtn').style.display = 'none';
@@ -973,30 +2435,49 @@
                 startMiningSimulation();
             } catch (error) {
                 console.error('❌ Error en handleStartMining:', error);
-                showNotification('Error iniciando minería: ' + error.message, 'error');
+                showNotification('Error starting mining: ' + error.message, 'error');
             }
         }
 
         async function handleStopMining() {
-            showNotification('❌ No puedes detener la minería - Dura 24 horas completas', 'error');
+            showNotification('❌ You cannot stop mining - Lasts 24 hours complete', 'error');
         }
 
         function handleLogout() {
             window.supabaseIntegration.logout();
-            showNotification('Sesión cerrada', 'info');
+            showNotification('Session closed', 'info');
             showAuthSection();
         }
 
         function switchAuthTab(tab) {
             const loginForm = document.getElementById('loginForm');
             const registerForm = document.getElementById('registerForm');
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            const authSubtitle = document.getElementById('authSubtitle');
             
             if (tab === 'register') {
+                // Switch forms
                 loginForm.classList.remove('active');
                 registerForm.classList.add('active');
+                
+                // Switch tabs
+                loginTab.classList.remove('active');
+                registerTab.classList.add('active');
+                
+                // Update subtitle
+                authSubtitle.textContent = 'Join thousands of miners and start earning today!';
             } else {
+                // Switch forms
                 registerForm.classList.remove('active');
                 loginForm.classList.add('active');
+                
+                // Switch tabs
+                registerTab.classList.remove('active');
+                loginTab.classList.add('active');
+                
+                // Update subtitle
+                authSubtitle.textContent = 'Welcome back! Sign in to continue mining';
             }
         }
 
@@ -1054,7 +2535,7 @@
                 // Verificar si la sesión expiró
                 if (window.supabaseIntegration.isSessionExpired()) {
                     console.log('⏰ Sesión de 24 horas completada automáticamente');
-                    showNotification('🎉 ¡Sesión de 24 horas completada! Puedes iniciar una nueva sesión', 'success');
+                    showNotification('🎉 24-hour session completed! You can start a new session', 'success');
                     stopMiningSimulation();
                     resetMiningUI();
                     return;
@@ -1071,10 +2552,22 @@
                     return;
                 }
                 
-                // Simular minería
-                const tokensMined = Math.random() * 0.009 + 0.001;
-                const hashRate = Math.random() * 900 + 100;
-                const efficiency = Math.random() * 20 + 80;
+                // Calcular minería usando sistemas avanzados
+                let tokensMined = 0;
+                let hashRate = 0;
+                let efficiency = 0;
+                
+                if (window.algorithmSystem) {
+                    // Usar algoritmo activo para calcular minería
+                    tokensMined = window.algorithmSystem.calculateMiningRate() * 5; // 5 segundos
+                    hashRate = window.algorithmSystem.calculateHashRate();
+                    efficiency = window.algorithmSystem.calculateEfficiency();
+                } else {
+                    // Fallback a minería básica
+                    tokensMined = Math.random() * 0.0002 + 0.0001;
+                    hashRate = Math.random() * 900 + 100;
+                    efficiency = Math.random() * 20 + 80;
+                }
                 
                 // Actualizar stats en Supabase (incluye balance automáticamente)
                 window.supabaseIntegration.updateMiningStats(tokensMined, hashRate, efficiency);
@@ -1253,6 +2746,680 @@
             
             // Actualizar progreso de minería
             updateMiningProgress();
+            
+            // Actualizar sistemas avanzados
+            updateAdvancedUI();
+        }
+
+        function updateAdvancedUI() {
+            updateLevelUI();
+            updateEquipmentUI();
+            updateAlgorithmUI();
+            updateClanUI();
+            // updateMarketplaceUI(); // DISABLED
+            updateEventsUI();
+        }
+
+        function updateLevelUI() {
+            if (!window.levelSystem) return;
+
+            const levelProgress = window.levelSystem.getLevelProgress();
+            
+            // Actualizar nivel del usuario
+            const userLevelDisplay = document.getElementById('userLevelDisplay');
+            if (userLevelDisplay) {
+                userLevelDisplay.textContent = levelProgress.currentLevel;
+            }
+
+            // Actualizar progreso de nivel
+            const levelProgressText = document.getElementById('levelProgressText');
+            if (levelProgressText) {
+                levelProgressText.textContent = `${levelProgress.progressXP}/${levelProgress.requiredXP} XP`;
+            }
+
+            const levelProgressBar = document.getElementById('levelProgressBar');
+            if (levelProgressBar) {
+                levelProgressBar.style.width = levelProgress.progressPercentage + '%';
+            }
+
+            // Actualizar estadísticas de nivel
+            const totalXPDisplay = document.getElementById('totalXPDisplay');
+            if (totalXPDisplay) {
+                totalXPDisplay.textContent = window.levelSystem.userLevel.totalXp;
+            }
+
+            const levelMultiplierDisplay = document.getElementById('levelMultiplierDisplay');
+            if (levelMultiplierDisplay) {
+                levelMultiplierDisplay.textContent = window.levelSystem.getCurrentMultiplier().toFixed(1) + 'x';
+            }
+
+            const unlockedFeaturesDisplay = document.getElementById('unlockedFeaturesDisplay');
+            if (unlockedFeaturesDisplay) {
+                unlockedFeaturesDisplay.textContent = window.levelSystem.userLevel.unlockedFeatures.length;
+            }
+        }
+
+        function updateEquipmentUI() {
+            if (!window.equipmentSystem) return;
+
+            const equipmentGrid = document.getElementById('equipmentGrid');
+            if (!equipmentGrid) return;
+
+            const equipmentStats = window.equipmentSystem.getAllEquipmentStats();
+            equipmentGrid.innerHTML = '';
+
+            Object.keys(equipmentStats).forEach(type => {
+                const stats = equipmentStats[type];
+                if (!stats) return;
+
+                const equipmentCard = document.createElement('div');
+                equipmentCard.className = 'equipment-card';
+                equipmentCard.innerHTML = `
+                    <div class="equipment-icon">
+                        <i class="${stats.icon}"></i>
+                    </div>
+                    <h4>${stats.name}</h4>
+                    <p>Level ${stats.level}</p>
+                    <div class="equipment-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Hash Rate</span>
+                            <span class="stat-value">+${stats.hashRate}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Efficiency</span>
+                            <span class="stat-value">+${stats.efficiency}%</span>
+                        </div>
+                    </div>
+                    <div class="equipment-level">
+                        <span>Level ${stats.level}</span>
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: ${(stats.level / stats.maxLevel) * 100}%"></div>
+                        </div>
+                    </div>
+                    <div class="equipment-actions">
+                        ${stats.canUpgrade ? `
+                            <button class="btn-quantum btn-small upgrade-equipment" data-type="${type}">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>Upgrade (${stats.cost} RSC)</span>
+                            </button>
+                        ` : `
+                            <span class="equipment-maxed">Max Level</span>
+                        `}
+                    </div>
+                `;
+
+                // Add upgrade event listener
+                const upgradeBtn = equipmentCard.querySelector('.upgrade-equipment');
+                if (upgradeBtn) {
+                    upgradeBtn.addEventListener('click', async () => {
+                        try {
+                            await window.equipmentSystem.upgradeEquipment(type);
+                            updateEquipmentUI();
+                            updateBalanceDisplay();
+                            showNotification(`${stats.name} upgraded to level ${stats.level + 1}!`, 'success');
+                        } catch (error) {
+                            showNotification('Error upgrading equipment: ' + error.message, 'error');
+                        }
+                    });
+                }
+
+                equipmentGrid.appendChild(equipmentCard);
+            });
+        }
+
+        function updateAlgorithmUI() {
+            if (!window.algorithmSystem) return;
+
+            const algorithmGrid = document.getElementById('algorithmGrid');
+            if (!algorithmGrid) return;
+
+            const algorithmStats = window.algorithmSystem.getAllAlgorithmStats();
+            algorithmGrid.innerHTML = '';
+
+            Object.keys(algorithmStats).forEach(algorithmId => {
+                const stats = algorithmStats[algorithmId];
+                if (!stats) return;
+
+                const algorithmCard = document.createElement('div');
+                algorithmCard.className = `algorithm-card ${stats.isActive ? 'active' : ''} ${!stats.isUnlocked ? 'locked' : ''}`;
+                algorithmCard.dataset.algorithm = algorithmId;
+                algorithmCard.innerHTML = `
+                    <div class="algorithm-icon" style="color: ${stats.color}">
+                        <i class="${stats.icon}"></i>
+                    </div>
+                    <h4>${stats.name}</h4>
+                    <p>${stats.description}</p>
+                    <div class="algorithm-stats">
+                        <span class="stat">Efficiency: ${stats.currentEfficiency}%</span>
+                        <span class="stat">Power: ${stats.currentPowerConsumption}kW</span>
+                        <span class="stat">Hash Rate: ${stats.currentHashRate} H/s</span>
+                    </div>
+                    <div class="algorithm-actions">
+                        ${!stats.isUnlocked ? `
+                            <span class="algorithm-locked">Unlock at Level ${stats.unlockLevel}</span>
+                        ` : !stats.isPurchased ? `
+                            <button class="btn-quantum btn-small purchase-algorithm" data-algorithm="${algorithmId}">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Buy (${stats.unlockCost} RSC)</span>
+                            </button>
+                        ` : stats.isActive ? `
+                            <span class="algorithm-active">Active</span>
+                        ` : `
+                            <button class="btn-secondary btn-small switch-algorithm" data-algorithm="${algorithmId}">
+                                <i class="fas fa-play"></i>
+                                <span>Switch</span>
+                            </button>
+                        `}
+                    </div>
+                `;
+
+                // Add event listeners
+                const purchaseBtn = algorithmCard.querySelector('.purchase-algorithm');
+                if (purchaseBtn) {
+                    purchaseBtn.addEventListener('click', async () => {
+                        try {
+                            await window.algorithmSystem.purchaseAlgorithm(algorithmId);
+                            updateAlgorithmUI();
+                            updateBalanceDisplay();
+                            showNotification(`${stats.name} purchased successfully!`, 'success');
+                        } catch (error) {
+                            showNotification('Error purchasing algorithm: ' + error.message, 'error');
+                        }
+                    });
+                }
+
+                const switchBtn = algorithmCard.querySelector('.switch-algorithm');
+                if (switchBtn) {
+                    switchBtn.addEventListener('click', async () => {
+                        try {
+                            await window.algorithmSystem.switchAlgorithm(algorithmId);
+                            updateAlgorithmUI();
+                            showNotification(`Switched to ${stats.name}`, 'success');
+                        } catch (error) {
+                            showNotification('Error switching algorithm: ' + error.message, 'error');
+                        }
+                    });
+                }
+
+                algorithmGrid.appendChild(algorithmCard);
+            });
+        }
+
+        function updateClanUI() {
+            if (!window.clanSystem) return;
+
+            const clanInfo = document.getElementById('clanInfo');
+            const clanJoin = document.getElementById('clanJoin');
+
+            if (window.clanSystem.isInClan()) {
+                // Show clan info
+                clanInfo.style.display = 'block';
+                clanJoin.style.display = 'none';
+
+                const clanStats = window.clanSystem.getClanStats();
+                if (clanStats) {
+                    document.getElementById('clanName').textContent = clanStats.name;
+                    document.getElementById('clanLevel').textContent = `Level ${clanStats.level}`;
+                    document.getElementById('clanMemberCount').textContent = `${clanStats.memberCount}/${clanStats.maxMembers}`;
+                    document.getElementById('clanTotalMining').textContent = `${clanStats.totalMining.toFixed(2)} RSC`;
+                    document.getElementById('userContribution').textContent = `${window.clanSystem.userClan.contribution.toFixed(2)} RSC`;
+                }
+            } else {
+                // Show join clan
+                clanInfo.style.display = 'none';
+                clanJoin.style.display = 'block';
+            }
+        }
+
+        function updateMarketplaceUI() {
+            if (!window.marketplaceSystem) return;
+
+            // Update marketplace listings
+            const listings = window.marketplaceSystem.searchListings();
+            const marketplaceListings = document.getElementById('marketplaceListings');
+            if (marketplaceListings) {
+                marketplaceListings.innerHTML = '';
+
+                if (listings.length === 0) {
+                    marketplaceListings.innerHTML = '<div class="no-listings">No listings found</div>';
+                    return;
+                }
+
+                listings.forEach(listing => {
+                    const listingCard = document.createElement('div');
+                    listingCard.className = 'listing-card';
+                    listingCard.innerHTML = `
+                        <div class="listing-header">
+                            <h4>${listing.equipmentType} Level ${listing.level}</h4>
+                            <span class="listing-price">${listing.price} RSC</span>
+                        </div>
+                        <div class="listing-info">
+                            <p>${listing.description || 'No description'}</p>
+                            <div class="listing-meta">
+                                <span>Seller: ${listing.sellerUsername}</span>
+                                <span>Views: ${listing.views}</span>
+                            </div>
+                        </div>
+                        <div class="listing-actions">
+                            <button class="btn-quantum btn-small purchase-listing" data-listing="${listing.id}">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Buy</span>
+                            </button>
+                            <button class="btn-secondary btn-small watch-listing" data-listing="${listing.id}">
+                                <i class="fas fa-eye"></i>
+                                <span>Watch</span>
+                            </button>
+                        </div>
+                    `;
+
+                    // Add event listeners
+                    const purchaseBtn = listingCard.querySelector('.purchase-listing');
+                    purchaseBtn.addEventListener('click', async () => {
+                        try {
+                            await window.marketplaceSystem.purchaseListing(listing.id);
+                            // updateMarketplaceUI(); // DISABLED
+                            updateBalanceDisplay();
+                            showNotification('Equipment purchased successfully!', 'success');
+                        } catch (error) {
+                            showNotification('Error purchasing equipment: ' + error.message, 'error');
+                        }
+                    });
+
+                    const watchBtn = listingCard.querySelector('.watch-listing');
+                    watchBtn.addEventListener('click', async () => {
+                        try {
+                            await window.marketplaceSystem.watchListing(listing.id);
+                            showNotification('Listing added to watchlist', 'success');
+                        } catch (error) {
+                            showNotification('Error watching listing: ' + error.message, 'error');
+                        }
+                    });
+
+                    marketplaceListings.appendChild(listingCard);
+                });
+            }
+        }
+
+        function updateEventsUI() {
+            if (!window.eventSystem) return;
+
+            const activeEvents = document.getElementById('activeEvents');
+            if (!activeEvents) return;
+
+            const events = window.eventSystem.getActiveEvents();
+            activeEvents.innerHTML = '';
+
+            if (events.length === 0) {
+                activeEvents.innerHTML = '<div class="no-events">No active events</div>';
+                return;
+            }
+
+            events.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                eventCard.style.borderLeftColor = event.color;
+                eventCard.innerHTML = `
+                    <div class="event-icon">
+                        <i class="${event.icon}"></i>
+                    </div>
+                    <div class="event-content">
+                        <h4>${event.name}</h4>
+                        <p>${event.description}</p>
+                        <div class="event-meta">
+                            <span class="event-multiplier">${event.multiplier}x Multiplier</span>
+                            <span class="event-duration">${event.duration}h remaining</span>
+                        </div>
+                    </div>
+                `;
+
+                activeEvents.appendChild(eventCard);
+            });
+
+            // Update season progress
+            const seasonProgress = window.eventSystem.getSeasonProgress();
+            const seasonTimeRemaining = window.eventSystem.getSeasonTimeRemaining();
+
+            document.getElementById('seasonLevel').textContent = seasonProgress.level;
+            document.getElementById('seasonProgressText').textContent = `${seasonProgress.progressXP}/${seasonProgress.requiredXP} XP`;
+            document.getElementById('seasonProgressBar').style.width = seasonProgress.progressPercentage + '%';
+            document.getElementById('seasonTimeRemaining').textContent = `${seasonTimeRemaining.days}d ${seasonTimeRemaining.hours}h ${seasonTimeRemaining.minutes}m`;
+        }
+
+        function startAdvancedUpdates() {
+            // Update advanced UI every 5 seconds
+            setInterval(() => {
+                updateAdvancedUI();
+            }, 5000);
+        }
+
+        // ===== CLAN MODAL FUNCTIONS =====
+        
+        function showCreateClanModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Create Clan</h2>
+                        <button class="modal-close" onclick="this.parentElement.parentElement.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="clanNameInput">Clan Name</label>
+                            <input type="text" id="clanNameInput" placeholder="Enter clan name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clanDescriptionInput">Description</label>
+                            <textarea id="clanDescriptionInput" placeholder="Enter clan description"></textarea>
+                        </div>
+                        <button class="btn-quantum" onclick="createClan()">
+                            <i class="fas fa-plus"></i>
+                            <span>Create Clan</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function showJoinClanModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Join Clan</h2>
+                        <button class="modal-close" onclick="this.parentElement.parentElement.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="clanIdInput">Clan ID</label>
+                            <input type="text" id="clanIdInput" placeholder="Enter clan ID" required>
+                        </div>
+                        <button class="btn-quantum" onclick="joinClan()">
+                            <i class="fas fa-users"></i>
+                            <span>Join Clan</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function showClanChatModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal clan-chat-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Clan Chat</h2>
+                        <button class="modal-close" onclick="this.parentElement.parentElement.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="chat-messages" id="clanChatMessages">
+                            <!-- Chat messages will be populated here -->
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="clanChatInput" placeholder="Type a message...">
+                            <button class="btn-quantum" onclick="sendClanMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        async function createClan() {
+            const name = document.getElementById('clanNameInput').value;
+            const description = document.getElementById('clanDescriptionInput').value;
+
+            if (!name) {
+                showNotification('Please enter a clan name', 'error');
+                return;
+            }
+
+            try {
+                await window.clanSystem.createClan(name, description);
+                updateClanUI();
+                showNotification('Clan created successfully!', 'success');
+                document.querySelector('.modal').remove();
+            } catch (error) {
+                showNotification('Error creating clan: ' + error.message, 'error');
+            }
+        }
+
+        async function joinClan() {
+            const clanId = document.getElementById('clanIdInput').value;
+
+            if (!clanId) {
+                showNotification('Please enter a clan ID', 'error');
+                return;
+            }
+
+            try {
+                await window.clanSystem.joinClan(clanId);
+                updateClanUI();
+                showNotification('Joined clan successfully!', 'success');
+                document.querySelector('.modal').remove();
+            } catch (error) {
+                showNotification('Error joining clan: ' + error.message, 'error');
+            }
+        }
+
+        async function sendClanMessage() {
+            const input = document.getElementById('clanChatInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            try {
+                await window.clanSystem.sendClanMessage(message);
+                input.value = '';
+                updateClanChat();
+            } catch (error) {
+                showNotification('Error sending message: ' + error.message, 'error');
+            }
+        }
+
+        function updateClanChat() {
+            const chatMessages = document.getElementById('clanChatMessages');
+            if (!chatMessages) return;
+
+            const chat = window.clanSystem.clanData.chat || [];
+            chatMessages.innerHTML = '';
+
+            chat.slice(-20).forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'chat-message';
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <span class="message-username">${msg.username}</span>
+                        <span class="message-time">${new Date(msg.timestamp).toLocaleTimeString()}</span>
+                    </div>
+                    <div class="message-content">${msg.message}</div>
+                `;
+                chatMessages.appendChild(messageDiv);
+            });
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // ===== MARKETPLACE FUNCTIONS =====
+
+        function switchMarketplaceTab(tab) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.marketplace-tabs .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to clicked tab
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(`${tab}Tab`).classList.add('active');
+
+            // Update content based on tab
+            switch (tab) {
+                case 'browse':
+                    // updateMarketplaceUI(); // DISABLED
+                    break;
+                case 'sell':
+                    updateSellForm();
+                    break;
+                case 'my-listings':
+                    updateMyListings();
+                    break;
+                case 'purchases':
+                    updatePurchases();
+                    break;
+            }
+        }
+
+        function updateSellForm() {
+            const equipmentTypeSelect = document.getElementById('sellEquipmentType');
+            if (!equipmentTypeSelect) return;
+
+            equipmentTypeSelect.innerHTML = '<option value="">Select Equipment</option>';
+
+            if (window.equipmentSystem) {
+                const equipmentStats = window.equipmentSystem.getAllEquipmentStats();
+                Object.keys(equipmentStats).forEach(type => {
+                    const stats = equipmentStats[type];
+                    if (stats && stats.level > 1) { // Only allow selling if level > 1
+                        const option = document.createElement('option');
+                        option.value = type;
+                        option.textContent = `${stats.name} (Level ${stats.level})`;
+                        equipmentTypeSelect.appendChild(option);
+                    }
+                });
+            }
+        }
+
+        function updateMyListings() {
+            const myListings = document.getElementById('myListings');
+            if (!myListings) return;
+
+            const listings = window.marketplaceSystem?.getUserListings() || [];
+            myListings.innerHTML = '';
+
+            if (listings.length === 0) {
+                myListings.innerHTML = '<div class="no-listings">You have no listings</div>';
+                return;
+            }
+
+            listings.forEach(listing => {
+                const listingCard = document.createElement('div');
+                listingCard.className = 'listing-card';
+                listingCard.innerHTML = `
+                    <div class="listing-header">
+                        <h4>${listing.equipmentType} Level ${listing.level}</h4>
+                        <span class="listing-price">${listing.price} RSC</span>
+                    </div>
+                    <div class="listing-info">
+                        <p>${listing.description || 'No description'}</p>
+                        <div class="listing-meta">
+                            <span>Status: ${listing.status}</span>
+                            <span>Views: ${listing.views}</span>
+                        </div>
+                    </div>
+                    <div class="listing-actions">
+                        ${listing.status === 'active' ? `
+                            <button class="btn-danger btn-small cancel-listing" data-listing="${listing.id}">
+                                <i class="fas fa-times"></i>
+                                <span>Cancel</span>
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+
+                const cancelBtn = listingCard.querySelector('.cancel-listing');
+                if (cancelBtn) {
+                    cancelBtn.addEventListener('click', async () => {
+                        try {
+                            await window.marketplaceSystem.cancelListing(listing.id);
+                            updateMyListings();
+                            showNotification('Listing cancelled', 'success');
+                        } catch (error) {
+                            showNotification('Error cancelling listing: ' + error.message, 'error');
+                        }
+                    });
+                }
+
+                myListings.appendChild(listingCard);
+            });
+        }
+
+        function updatePurchases() {
+            const purchases = document.getElementById('purchases');
+            if (!purchases) return;
+
+            const userPurchases = window.marketplaceSystem?.getUserPurchases() || [];
+            purchases.innerHTML = '';
+
+            if (userPurchases.length === 0) {
+                purchases.innerHTML = '<div class="no-purchases">You have no purchases</div>';
+                return;
+            }
+
+            userPurchases.forEach(purchase => {
+                const purchaseCard = document.createElement('div');
+                purchaseCard.className = 'purchase-card';
+                purchaseCard.innerHTML = `
+                    <div class="purchase-header">
+                        <h4>${purchase.equipmentType} Level ${purchase.level}</h4>
+                        <span class="purchase-price">${purchase.price} RSC</span>
+                    </div>
+                    <div class="purchase-info">
+                        <p>Seller: ${purchase.sellerUsername}</p>
+                        <p>Purchased: ${new Date(purchase.purchasedAt).toLocaleDateString()}</p>
+                    </div>
+                `;
+
+                purchases.appendChild(purchaseCard);
+            });
+        }
+
+        async function createMarketplaceListing() {
+            const equipmentType = document.getElementById('sellEquipmentType').value;
+            const level = document.getElementById('sellLevel').value;
+            const price = parseFloat(document.getElementById('sellPrice').value);
+            const description = document.getElementById('sellDescription').value;
+
+            if (!equipmentType || !level || !price) {
+                showNotification('Please fill in all required fields', 'error');
+                return;
+            }
+
+            try {
+                await window.marketplaceSystem.createListing(equipmentType, parseInt(level), price, description);
+                // updateMarketplaceUI(); // DISABLED
+                showNotification('Listing created successfully!', 'success');
+                
+                // Clear form
+                document.getElementById('sellEquipmentType').value = '';
+                document.getElementById('sellLevel').value = '';
+                document.getElementById('sellPrice').value = '';
+                document.getElementById('sellDescription').value = '';
+            } catch (error) {
+                showNotification('Error creating listing: ' + error.message, 'error');
+            }
+        }
+
+        function applyMarketplaceFilters() {
+            // updateMarketplaceUI(); // DISABLED
         }
 
         // Función de emergencia para limpiar sesiones (disponible en consola)
@@ -1357,6 +3524,875 @@
                 }, 3000);
             }
         }
+
+        // ===== ADVANCED REFERRAL SYSTEM FUNCTIONS =====
+        
+        function initializeAdvancedReferralSystem() {
+            console.log('🚀 Inicializando sistema avanzado de referidos...');
+            
+            // Configurar event listeners
+            setupAdvancedReferralEventListeners();
+            
+            // Cargar datos cuando el usuario esté autenticado
+            if (window.supabaseIntegration?.user?.isAuthenticated) {
+                updateAdvancedReferralUI().catch(error => {
+                    console.error('❌ Error inicial actualizando UI de referidos:', error);
+                });
+            }
+            
+            // Escuchar eventos de autenticación
+            window.addEventListener('userAuthenticated', async () => {
+                console.log('🔗 Usuario autenticado, actualizando UI de referidos...');
+                setTimeout(async () => {
+                    await updateAdvancedReferralUI();
+                }, 100);
+            });
+            
+            // Actualizar cada 5 segundos si el usuario está autenticado
+            setInterval(async () => {
+                if (window.supabaseIntegration?.user?.isAuthenticated) {
+                    await updateAdvancedReferralUI();
+                }
+            }, 5000);
+            
+            // Escuchar actualizaciones de competencia
+            window.addEventListener('referralCompetitionUpdate', async (event) => {
+                console.log('🏆 Actualización de competencia recibida');
+                updateLeaderboardPreview();
+                await updateAdvancedReferralUI();
+            });
+            
+            console.log('✅ Sistema avanzado de referidos inicializado');
+        }
+
+        function setupAdvancedReferralEventListeners() {
+            // Copiar código de referido
+            const copyCodeBtn = document.getElementById('copyReferralCode');
+            if (copyCodeBtn) {
+                copyCodeBtn.addEventListener('click', async () => {
+                    const code = window.supabaseIntegration?.user?.referralCode;
+                    if (code) {
+                        try {
+                            await navigator.clipboard.writeText(code);
+                            showNotification('📋 Code copied to clipboard!', 'success');
+                        } catch (error) {
+                            showNotification('❌ Error copying code', 'error');
+                        }
+                    } else {
+                        showNotification('❌ No code available', 'error');
+                    }
+                });
+            }
+
+            // Copiar enlace de referido
+            const copyLinkBtn = document.getElementById('copyReferralLink');
+            if (copyLinkBtn) {
+                copyLinkBtn.addEventListener('click', async () => {
+                    const code = window.supabaseIntegration?.user?.referralCode;
+                    if (code) {
+                        const baseUrl = window.location.origin + window.location.pathname;
+                        const link = `${baseUrl}?ref=${code}`;
+                        try {
+                            await navigator.clipboard.writeText(link);
+                            showNotification('📋 Enlace copiado al portapapeles!', 'success');
+                        } catch (error) {
+                            showNotification('❌ Error copiando enlace', 'error');
+                        }
+                    } else {
+                        showNotification('❌ No code available', 'error');
+                    }
+                });
+            }
+
+            // Compartir enlace de referido
+            const shareBtn = document.getElementById('shareReferralLink');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', () => {
+                    const code = window.supabaseIntegration?.user?.referralCode;
+                    
+                    if (code) {
+                        const baseUrl = window.location.origin + window.location.pathname;
+                        const link = `${baseUrl}?ref=${code}`;
+                        const text = `¡Únete a RSC Mining y comienza a minar criptomonedas! Usa mi código: ${code}`;
+                        
+                        if (navigator.share) {
+                            navigator.share({
+                                title: 'RSC Mining - Referido',
+                                text: text,
+                                url: link
+                            });
+                        } else {
+                            // Fallback: abrir en Twitter
+                            const shareText = encodeURIComponent(`${text} ${link}`);
+                            const shareUrl = `https://twitter.com/intent/tweet?text=${shareText}`;
+                            window.open(shareUrl, '_blank');
+                        }
+                    } else {
+                        showNotification('❌ No code available', 'error');
+                    }
+                });
+            }
+
+            // Toggle vista de árbol
+            const toggleTreeBtn = document.getElementById('toggleTreeView');
+            if (toggleTreeBtn) {
+                toggleTreeBtn.addEventListener('click', () => {
+                    // TODO: Implementar toggle entre vista árbol y lista
+                    showNotification('🔄 Cambiando vista...', 'info');
+                });
+            }
+
+            // Ver leaderboard completo
+            const viewLeaderboardBtn = document.getElementById('viewFullLeaderboard');
+            if (viewLeaderboardBtn) {
+                viewLeaderboardBtn.addEventListener('click', () => {
+                    showLeaderboardModal();
+                });
+            }
+        }
+
+        async function updateAdvancedReferralUI() {
+            // Obtener código directamente del usuario autenticado
+            const user = window.supabaseIntegration?.user;
+            const code = user?.referralCode;
+            
+            const codeDisplay = document.getElementById('referralCodeDisplay');
+            const linkInput = document.getElementById('referralLink');
+            
+            if (codeDisplay) {
+                if (code) {
+                    codeDisplay.textContent = code;
+                } else if (user?.isAuthenticated) {
+                    codeDisplay.textContent = 'No code assigned';
+                } else {
+                    codeDisplay.textContent = 'Sign in to see your code';
+                }
+            }
+            
+            if (linkInput && code) {
+                const baseUrl = window.location.origin + window.location.pathname;
+                linkInput.value = `${baseUrl}?ref=${code}`;
+            }
+
+            // Actualizar estadísticas
+            await updateReferralStats();
+            
+            // Actualizar rango
+            updateRankDisplay();
+            
+            // Actualizar logros
+            updateReferralAchievements();
+            
+            // Actualizar árbol de referidos
+            updateReferralTree();
+            
+            // Actualizar leaderboard preview
+            updateLeaderboardPreview();
+        }
+
+        async function updateReferralStats() {
+            if (!window.advancedReferralSystem) return;
+
+            // Mostrar estado de carga
+            const totalEl = document.getElementById('totalReferrals');
+            const activeEl = document.getElementById('activeReferrals');
+            const commissionsEl = document.getElementById('totalCommissions');
+            const monthlyEl = document.getElementById('monthlyEarnings');
+
+            if (totalEl) totalEl.textContent = 'Loading...';
+            if (activeEl) activeEl.textContent = 'Loading...';
+            if (commissionsEl) commissionsEl.textContent = 'Loading...';
+            if (monthlyEl) monthlyEl.textContent = 'Loading...';
+
+            try {
+                // Obtener datos reales de forma asíncrona
+                const totalReferrals = await window.advancedReferralSystem.getTotalReferrals();
+                const activeReferrals = await window.advancedReferralSystem.getActiveReferrals();
+                const totalCommissions = await window.advancedReferralSystem.getTotalCommissions();
+
+                // Actualizar elementos con datos reales
+                if (totalEl) totalEl.textContent = totalReferrals.toString();
+                if (activeEl) activeEl.textContent = activeReferrals.toString();
+                if (commissionsEl) commissionsEl.textContent = totalCommissions.toFixed(6);
+                if (monthlyEl) monthlyEl.textContent = '0.000000'; // TODO: Calcular mensual
+                
+                console.log('✅ Estadísticas de referidos actualizadas:', {
+                    total: totalReferrals,
+                    active: activeReferrals,
+                    commissions: totalCommissions
+                });
+            } catch (error) {
+                console.error('❌ Error actualizando estadísticas de referidos:', error);
+                
+                // Mostrar ceros en caso de error
+                if (totalEl) totalEl.textContent = '0';
+                if (activeEl) activeEl.textContent = '0';
+                if (commissionsEl) commissionsEl.textContent = '0.000000';
+                if (monthlyEl) monthlyEl.textContent = '0.000000';
+            }
+        }
+
+        function updateRankDisplay() {
+            if (!window.advancedReferralSystem) return;
+
+            const currentRank = window.advancedReferralSystem.getCurrentRank();
+            const totalReferrals = window.advancedReferralSystem.getTotalReferrals();
+
+            // Iconos por rango
+            const rankIcons = {
+                bronze: '🥉',
+                silver: '🥈', 
+                gold: '🥇',
+                platinum: '💎',
+                diamond: '💠',
+                legendary: '👑'
+            };
+
+            // Actualizar badge del título
+            const rankBadge = document.getElementById('referralRankBadge');
+            if (rankBadge && currentRank) {
+                rankBadge.textContent = currentRank.name;
+            }
+
+            // Actualizar display de rango
+            const rankIcon = document.querySelector('.rank-icon');
+            const rankName = document.querySelector('.rank-name');
+            const rankMultiplier = document.querySelector('.rank-multiplier');
+            const progressFill = document.getElementById('rankProgressFill');
+            const progressText = document.getElementById('rankProgressText');
+
+            if (currentRank) {
+                if (rankIcon) rankIcon.textContent = rankIcons[window.advancedReferralSystem.userStats.currentRank] || '🥉';
+                if (rankName) rankName.textContent = currentRank.name;
+                if (rankMultiplier) rankMultiplier.textContent = `Multiplicador: ${currentRank.multiplier}x`;
+
+                // Calcular progreso al siguiente rango
+                const nextRankKey = getNextRankKey(window.advancedReferralSystem.userStats.currentRank);
+                if (nextRankKey) {
+                    const nextRank = window.advancedReferralSystem.config.ranks[nextRankKey];
+                    const progress = ((totalReferrals - currentRank.min) / (nextRank.min - currentRank.min)) * 100;
+                    const remaining = nextRank.min - totalReferrals;
+
+                    if (progressFill) progressFill.style.width = Math.min(progress, 100) + '%';
+                    if (progressText) progressText.textContent = `${totalReferrals}/${nextRank.min} para ${nextRank.name}`;
+                } else {
+                    // Rango máximo alcanzado
+                    if (progressFill) progressFill.style.width = '100%';
+                    if (progressText) progressText.textContent = 'Rango máximo alcanzado!';
+                }
+            }
+        }
+
+        function getNextRankKey(currentRankKey) {
+            const ranks = ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'legendary'];
+            const currentIndex = ranks.indexOf(currentRankKey);
+            return currentIndex < ranks.length - 1 ? ranks[currentIndex + 1] : null;
+        }
+
+        function updateReferralAchievements() {
+            if (!window.advancedReferralSystem) return;
+
+            const achievements = window.advancedReferralSystem.getAchievements();
+            const achievementsGrid = document.getElementById('referralAchievements');
+
+            if (achievementsGrid) {
+                achievementsGrid.innerHTML = '';
+
+                // Mostrar todos los logros disponibles
+                Object.entries(window.advancedReferralSystem.config.achievements).forEach(([id, achievement]) => {
+                    const isUnlocked = achievements.some(a => a.id === id);
+                    
+                    const achievementEl = document.createElement('div');
+                    achievementEl.className = `achievement-item ${isUnlocked ? 'unlocked' : 'locked'}`;
+                    achievementEl.innerHTML = `
+                        <div class="achievement-icon">${achievement.icon}</div>
+                        <div class="achievement-info">
+                            <div class="achievement-name">${achievement.name}</div>
+                            <div class="achievement-reward">+${achievement.reward} RSC</div>
+                        </div>
+                        ${isUnlocked ? '<div class="achievement-check">✓</div>' : ''}
+                    `;
+                    
+                    achievementsGrid.appendChild(achievementEl);
+                });
+            }
+        }
+
+        function updateReferralTree() {
+            if (!window.advancedReferralSystem) return;
+
+            const tree = window.advancedReferralSystem.getReferralTree();
+            const treeContainer = document.getElementById('referralTree');
+            const noReferrals = document.getElementById('noReferrals');
+
+            if (treeContainer) {
+                if (tree.length === 0) {
+                    if (noReferrals) noReferrals.style.display = 'block';
+                } else {
+                    if (noReferrals) noReferrals.style.display = 'none';
+                    
+                    // Crear lista de referidos
+                    const referralsList = document.createElement('div');
+                    referralsList.className = 'referrals-list';
+                    
+                    tree.forEach(referral => {
+                        const referralItem = document.createElement('div');
+                        referralItem.className = 'referral-item';
+                        referralItem.innerHTML = `
+                            <div class="referral-user">
+                                <div class="user-avatar">${referral.username.charAt(0).toUpperCase()}</div>
+                                <div class="user-info">
+                                    <div class="user-name">${referral.username}</div>
+                                    <div class="user-date">${new Date(referral.created_at).toLocaleDateString()}</div>
+                                </div>
+                            </div>
+                            <div class="referral-stats">
+                                <div class="referral-commission">+${(referral.total_commission || 0).toFixed(6)} RSC</div>
+                                <div class="referral-level">Nivel 1</div>
+                            </div>
+                        `;
+                        
+                        referralsList.appendChild(referralItem);
+                    });
+                    
+                    treeContainer.innerHTML = '';
+                    treeContainer.appendChild(referralsList);
+                }
+            }
+        }
+
+        function updateLeaderboardPreview() {
+            const leaderboardPreview = document.getElementById('leaderboardPreview');
+            if (!leaderboardPreview || !window.referralCompetition) return;
+
+            const leaderboard = window.referralCompetition.getLeaderboard();
+            const competitionInfo = window.referralCompetition.getCompetitionInfo();
+            
+            if (leaderboard.length === 0) {
+                leaderboardPreview.innerHTML = `
+                    <div class="leaderboard-empty">
+                        <p>🏆 Be the first!</p>
+                        <small>No participants with referrals yet</small>
+                        <div class="empty-competition-info">
+                            <div class="prize-info">
+                                <span class="prize-amount">🎁 ${competitionInfo.prizeAmount || 550} RSC</span>
+                                <span class="time-remaining">${window.referralCompetition?.formatTimeRemaining() || '60 days'}</span>
+                            </div>
+                            <div class="competition-rules">
+                                <small>Invite ${competitionInfo.minReferrals || 5} friends to qualify</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Mostrar top 5
+            const topUsers = leaderboard.slice(0, 5);
+            let html = '';
+
+            topUsers.forEach(user => {
+                const isCurrentUser = user.isCurrentUser;
+                const rankClass = user.rank <= 3 ? `rank-${user.rank}` : '';
+                
+                html += `
+                    <div class="leaderboard-item ${isCurrentUser ? 'current-user' : ''} ${rankClass}">
+                        <div class="rank-position">
+                            ${user.rank === 1 ? '🥇' : user.rank === 2 ? '🥈' : user.rank === 3 ? '🥉' : user.rank}
+                        </div>
+                        <div class="user-info">
+                            <div class="user-name">${user.username}${isCurrentUser ? ' (You)' : ''}</div>
+                            <div class="user-referrals">${user.referralsCount} referrals</div>
+                        </div>
+                        <div class="user-status">
+                            ${user.rank === 1 ? '👑' : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Agregar información de la competencia
+            html += `
+                <div class="competition-info">
+                    <div class="prize-info">
+                        <span class="prize-amount">🎁 ${competitionInfo.prizeAmount} RSC</span>
+                        <span class="time-remaining">${window.referralCompetition.formatTimeRemaining()}</span>
+                    </div>
+                    <div class="competition-rules">
+                        <small>Minimum ${competitionInfo.minReferrals} referrals to win</small>
+                    </div>
+                </div>
+            `;
+
+            leaderboardPreview.innerHTML = html;
+        }
+
+        function showLeaderboardModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.id = 'leaderboardModal';
+            
+            const leaderboard = window.referralCompetition?.getLeaderboard() || [];
+            const competitionInfo = window.referralCompetition?.getCompetitionInfo() || {};
+            const userStats = window.referralCompetition?.getUserStats() || {};
+            
+            modal.innerHTML = `
+                <div class="modal-content leaderboard-modal-content">
+                    <div class="modal-header">
+                        <h2><i class="fas fa-trophy"></i> Competencia de Referidos</h2>
+                        <button class="modal-close" onclick="closeLeaderboardModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Información de la competencia -->
+                        <div class="competition-banner">
+                            <div class="competition-title">
+                                <h3>🏆 60-Day Competition</h3>
+                                <p>Invite friends and win <strong>${competitionInfo.prizeAmount || 550} RSC</strong>!</p>
+                            </div>
+                            <div class="competition-timer">
+                                <div class="timer-display">
+                                    <span class="timer-value">${userStats.daysRemaining || 0}</span>
+                                    <span class="timer-label">days remaining</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Estado del usuario -->
+                        <div class="user-competition-status">
+                            <div class="status-grid">
+                                <div class="status-item">
+                                    <span class="status-value">${userStats.currentRank || '-'}</span>
+                                    <span class="status-label">Your Position</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-value">${userStats.referralsCount || 0}</span>
+                                    <span class="status-label">Your Referrals</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-value">${competitionInfo.minReferrals || 5}</span>
+                                    <span class="status-label">Minimum Required</span>
+                                </div>
+                            </div>
+                            ${userStats.referralsCount >= (competitionInfo.minReferrals || 5) ? 
+                                '<div class="qualification-status qualified">✅ Qualified to win</div>' : 
+                                '<div class="qualification-status not-qualified">⚠️ You need more referrals to qualify</div>'
+                            }
+                        </div>
+
+                        <!-- Leaderboard completo -->
+                        <div class="full-leaderboard">
+                            <h4>🏅 Clasificación Actual</h4>
+                            <div class="leaderboard-list-full">
+                                ${leaderboard.map(user => `
+                                    <div class="leaderboard-item-full ${user.isCurrentUser ? 'current-user' : ''}">
+                                        <div class="rank-display">
+                                            ${user.rank === 1 ? '🥇' : user.rank === 2 ? '🥈' : user.rank === 3 ? '🥉' : `#${user.rank}`}
+                                        </div>
+                                        <div class="user-details">
+                                            <div class="user-name-full">${user.username}${user.isCurrentUser ? ' (You)' : ''}</div>
+                                            <div class="user-progress">
+                                                <span class="referrals-count">${user.referralsCount} referrals</span>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: ${Math.min(100, (user.referralsCount / Math.max(leaderboard[0]?.referralsCount || 1, 10)) * 100)}%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="user-badges">
+                                            ${user.rank === 1 ? '<span class="badge leader">👑 Líder</span>' : ''}
+                                            ${user.referralsCount >= (competitionInfo.minReferrals || 5) ? '<span class="badge qualified">✅ Calificado</span>' : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Reglas de la competencia -->
+                        <div class="competition-rules-full">
+                            <h4>📋 Competition Rules</h4>
+                            <ul>
+                                <li>🎯 <strong>Duration:</strong> 60 days from start</li>
+                                <li>🏆 <strong>Prize:</strong> ${competitionInfo.prizeAmount || 550} RSC for the winner</li>
+                                <li>👥 <strong>Minimum:</strong> ${competitionInfo.minReferrals || 5} referrals to qualify</li>
+                                <li>🔄 <strong>Renewal:</strong> New competition starts automatically</li>
+                                <li>✅ <strong>Validation:</strong> Only active referrals count</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Mostrar modal
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        function closeLeaderboardModal() {
+            const modal = document.getElementById('leaderboardModal');
+            if (modal) {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                }, 300);
+            }
+        }
+
+        // ===== REFERRAL SYSTEM FUNCTIONS REMOVED =====
+        /*
+        function initializeReferralSystem() {
+            console.log('🔗 Inicializando sistema de referidos...');
+            
+            // Configurar event listeners para referidos
+            setupReferralEventListeners();
+            
+            // Cargar datos de referidos del usuario
+            loadReferralData();
+            
+            // Verificar si hay código de referido en la URL
+            checkReferralCodeFromURL();
+            
+            console.log('✅ Sistema de referidos inicializado');
+        }
+
+        function setupReferralEventListeners() {
+            // Botón copiar código de referido
+            const copyReferralCodeBtn = document.getElementById('copyReferralCode');
+            if (copyReferralCodeBtn) {
+                copyReferralCodeBtn.addEventListener('click', copyReferralCode);
+            }
+
+            // Botón copiar enlace de referido
+            const copyReferralLinkBtn = document.getElementById('copyReferralLink');
+            if (copyReferralLinkBtn) {
+                copyReferralLinkBtn.addEventListener('click', copyReferralLink);
+            }
+
+            // Botones de compartir en redes sociales
+            const shareButtons = document.querySelectorAll('.share-btn');
+            shareButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const platform = e.currentTarget.getAttribute('data-platform');
+                    shareReferralLink(platform);
+                });
+            });
+        }
+
+        function loadReferralData() {
+            try {
+                const user = window.supabaseIntegration.getCurrentUser();
+                if (user && user.referralCode) {
+                    // Actualizar código de referido
+                    const referralCodeDisplay = document.getElementById('referralCodeDisplay');
+                    const referralLink = document.getElementById('referralLink');
+                    
+                    if (referralCodeDisplay) {
+                        referralCodeDisplay.textContent = user.referralCode;
+                    }
+                    
+                    if (referralLink) {
+                        const baseUrl = window.location.origin + window.location.pathname;
+                        referralLink.value = `${baseUrl}?ref=${user.referralCode}`;
+                    }
+                    
+                    // Cargar estadísticas de referidos (simuladas por ahora)
+                    loadReferralStats(user);
+                    
+                    console.log(`✅ Datos de referidos cargados: ${user.referralCode}`);
+                } else {
+                    console.log('⚠️ Usuario no autenticado o sin código de referido');
+                }
+            } catch (error) {
+                console.error('❌ Error cargando datos de referidos:', error);
+            }
+        }
+
+        async function loadReferralStats(user) {
+            try {
+                console.log('📊 Cargando estadísticas reales de referidos...');
+                
+                // Obtener datos reales de Supabase
+                const referralStats = await getReferralStatsFromSupabase(user.id);
+                
+                // Actualizar estadísticas en la UI
+                const totalReferralsEl = document.getElementById('totalReferrals');
+                const totalCommissionsEl = document.getElementById('totalCommissions');
+                const referralLevelEl = document.getElementById('referralLevel');
+                
+                if (totalReferralsEl) {
+                    totalReferralsEl.textContent = referralStats.totalReferrals;
+                }
+                
+                if (totalCommissionsEl) {
+                    totalCommissionsEl.textContent = referralStats.totalCommissions.toFixed(6) + ' RSC';
+                }
+                
+                if (referralLevelEl) {
+                    referralLevelEl.textContent = referralStats.referralLevel;
+                }
+                
+                // Cargar historial real
+                await loadReferralHistoryFromSupabase(user.id);
+                
+                console.log('✅ Estadísticas reales cargadas:', referralStats);
+            } catch (error) {
+                console.error('❌ Error cargando estadísticas de referidos:', error);
+                
+                // Fallback a datos simulados si hay error
+                const mockData = {
+                    totalReferrals: 0,
+                    totalCommissions: 0,
+                    referralLevel: 1
+                };
+                
+                document.getElementById('totalReferrals').textContent = mockData.totalReferrals;
+                document.getElementById('totalCommissions').textContent = mockData.totalCommissions.toFixed(6) + ' RSC';
+                document.getElementById('referralLevel').textContent = mockData.referralLevel;
+            }
+        }
+
+        async function getReferralStatsFromSupabase(userId) {
+            try {
+                // Obtener número de referidos
+                const referralsResponse = await window.supabaseIntegration.makeRequest('GET', 
+                    `/rest/v1/referrals?referrer_id=eq.${userId}&select=count`);
+                
+                const totalReferrals = referralsResponse.ok ? 
+                    (await referralsResponse.json()).length : 0;
+                
+                // Obtener comisiones totales
+                const commissionsResponse = await window.supabaseIntegration.makeRequest('GET', 
+                    `/rest/v1/transactions?user_id=eq.${userId}&type=eq.referral_commission&select=amount`);
+                
+                let totalCommissions = 0;
+                if (commissionsResponse.ok) {
+                    const transactions = await commissionsResponse.json();
+                    totalCommissions = transactions.reduce((sum, tx) => sum + parseFloat(tx.amount), 0);
+                }
+                
+                // Calcular nivel de referido (basado en número de referidos)
+                const referralLevel = Math.min(3, Math.floor(totalReferrals / 5) + 1);
+                
+                return {
+                    totalReferrals,
+                    totalCommissions,
+                    referralLevel
+                };
+            } catch (error) {
+                console.error('Error obteniendo estadísticas de Supabase:', error);
+                throw error;
+            }
+        }
+
+        async function loadReferralHistoryFromSupabase(userId) {
+            try {
+                // Obtener historial de referidos
+                const response = await window.supabaseIntegration.makeRequest('GET', 
+                    `/rest/v1/referrals?referrer_id=eq.${userId}&select=*,referred_id(username,created_at)`);
+                
+                if (response.ok) {
+                    const referrals = await response.json();
+                    updateReferralHistoryUI(referrals);
+                }
+            } catch (error) {
+                console.error('Error cargando historial de referidos:', error);
+            }
+        }
+
+        function updateReferralHistoryUI(referrals) {
+            const referralList = document.getElementById('referralList');
+            if (!referralList) return;
+            
+            referralList.innerHTML = '';
+            
+            if (referrals.length === 0) {
+                referralList.innerHTML = '<div class="referral-item"><div class="referral-info"><div class="referral-name">No hay referidos aún</div><div class="referral-date">Comparte tu código para empezar a ganar</div></div></div>';
+                return;
+            }
+            
+            referrals.forEach(referral => {
+                const referralItem = document.createElement('div');
+                referralItem.className = 'referral-item';
+                
+                const createdDate = new Date(referral.referred_id.created_at);
+                const timeAgo = getTimeAgo(createdDate);
+                
+                referralItem.innerHTML = `
+                    <div class="referral-info">
+                        <div class="referral-name">${referral.referred_id.username}</div>
+                        <div class="referral-date">${timeAgo}</div>
+                    </div>
+                    <div class="referral-commission">
+                        <span class="commission-amount">+${referral.total_commission.toFixed(6)} RSC</span>
+                        <span class="commission-status ${referral.total_commission > 0 ? 'active' : 'completed'}">${referral.total_commission > 0 ? 'Activo' : 'Nuevo'}</span>
+                    </div>
+                `;
+                referralList.appendChild(referralItem);
+            });
+        }
+
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diff = now - date;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            
+            if (days === 0) return 'Hoy';
+            if (days === 1) return 'Ayer';
+            if (days < 7) return `Hace ${days} días`;
+            if (days < 30) return `Hace ${Math.floor(days / 7)} semanas`;
+            return `Hace ${Math.floor(days / 30)} meses`;
+        }
+
+        function checkReferralCodeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const referralCode = urlParams.get('ref');
+            
+            if (referralCode) {
+                console.log(`🎁 Código de referido detectado: ${referralCode}`);
+                
+                // Mostrar notificación
+                showNotification(`¡Código de referido detectado: ${referralCode}!`, 'success');
+                
+                // Guardar código de referido para usar en el registro
+                localStorage.setItem('rsc_pending_referral', referralCode);
+                
+                // Actualizar el campo de código de referido en el formulario de registro
+                const referralCodeInput = document.getElementById('referralCode');
+                if (referralCodeInput) {
+                    referralCodeInput.value = referralCode;
+                }
+            }
+        }
+
+        function copyReferralCode() {
+            const referralCodeDisplay = document.getElementById('referralCodeDisplay');
+            if (referralCodeDisplay) {
+                const code = referralCodeDisplay.textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    showNotification('Referral code copied to clipboard', 'success');
+                }).catch(() => {
+                    // Fallback para navegadores que no soportan clipboard API
+                    const textArea = document.createElement('textarea');
+                    textArea.value = code;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showNotification('Referral code copied to clipboard', 'success');
+                });
+            }
+        }
+
+        function copyReferralLink() {
+            const referralLink = document.getElementById('referralLink');
+            if (referralLink) {
+                const link = referralLink.value;
+                navigator.clipboard.writeText(link).then(() => {
+                    showNotification('Enlace de referido copiado al portapapeles', 'success');
+                }).catch(() => {
+                    // Fallback
+                    const textArea = document.createElement('textarea');
+                    textArea.value = link;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showNotification('Enlace de referido copiado al portapapeles', 'success');
+                });
+            }
+        }
+
+        function shareReferralLink(platform) {
+            const referralLink = document.getElementById('referralLink');
+            if (!referralLink) return;
+            
+            const link = referralLink.value;
+            const message = `¡Únete a la minería cuántica RSC! Usa mi código de referido y gana tokens juntos. ${link}`;
+            
+            let shareUrl = '';
+            
+            switch (platform) {
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(message)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
+                    break;
+                case 'copy':
+                    copyReferralLink();
+                    return;
+                default:
+                    console.log('Plataforma no soportada:', platform);
+                    return;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+                showNotification(`Compartiendo en ${platform}...`, 'info');
+            }
+        }
+
+        function generateReferralLink(referralCode) {
+            const baseUrl = window.location.origin + window.location.pathname;
+            return `${baseUrl}?ref=${referralCode}`;
+        }
+
+        function updateReferralHistory() {
+            // Simular historial de referidos (en producción vendría de Supabase)
+            const mockHistory = [
+                {
+                    name: 'Usuario123',
+                    date: 'Hace 2 días',
+                    commission: '0.500000',
+                    status: 'active'
+                },
+                {
+                    name: 'MinerPro',
+                    date: 'Hace 1 semana',
+                    commission: '1.200000',
+                    status: 'active'
+                },
+                {
+                    name: 'CryptoFan',
+                    date: 'Hace 2 semanas',
+                    commission: '0.800000',
+                    status: 'completed'
+                }
+            ];
+            
+            const referralList = document.getElementById('referralList');
+            if (referralList) {
+                referralList.innerHTML = '';
+                
+                mockHistory.forEach(item => {
+                    const referralItem = document.createElement('div');
+                    referralItem.className = 'referral-item';
+                    referralItem.innerHTML = `
+                        <div class="referral-info">
+                            <div class="referral-name">${item.name}</div>
+                            <div class="referral-date">${item.date}</div>
+                        </div>
+                        <div class="referral-commission">
+                            <span class="commission-amount">+${item.commission} RSC</span>
+                            <span class="commission-status ${item.status}">${item.status === 'active' ? 'Activo' : 'Completado'}</span>
+                        </div>
+                    `;
+                    referralList.appendChild(referralItem);
+                });
+            }
+        }
+        */
     </script>
 </body>
 </html>
+
+

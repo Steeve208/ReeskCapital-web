@@ -1,8 +1,8 @@
-/* ===== WALLET RSC - JAVASCRIPT REDISEÑADO ===== */
+/* ===== RSC WALLET - REDESIGNED JAVASCRIPT ===== */
 
 class WalletRSC {
     constructor() {
-        // Estado de la wallet - Inicializado en 0 para usuarios nuevos
+        // Wallet state - Initialized to 0 for new users
         this.state = {
             balance: 0,
             miningRewards: 0,
@@ -15,10 +15,10 @@ class WalletRSC {
             isMiningConnected: false
         };
 
-        // Configuración - Sin datos simulados
+        // Configuration - No simulated data
         this.config = {
-            walletAddress: null, // Se obtendrá de la blockchain
-            rscPrice: 0, // Se obtendrá de la blockchain
+            walletAddress: null, // Will be obtained from blockchain
+            rscPrice: 0, // Will be obtained from blockchain
             gasFees: {
                 slow: 0,
                 normal: 0,
@@ -26,36 +26,36 @@ class WalletRSC {
             }
         };
 
-        // Inicializar
+        // Initialize
         this.init();
     }
 
     async init() {
         try {
-            console.log('🚀 Inicializando Wallet RSC...');
+            console.log('🚀 Initializing RSC Wallet...');
             
-            // Verificar si ya existe una wallet
+            // Check if wallet already exists
             await this.checkExistingWallet();
             
-            // Configurar event listeners
+            // Setup event listeners
             this.setupEventListeners();
             
-            // Configurar navegación
+            // Setup navigation
             this.setupNavigation();
             
-            // Cargar datos iniciales (solo si hay wallet)
+            // Load initial data (only if wallet exists)
             if (this.config.walletAddress) {
                 await this.loadInitialData();
             }
             
-            // Inicializar integraciones
+            // Initialize integrations
             await this.initializeIntegrations();
             
-            console.log('✅ Wallet RSC inicializada correctamente');
+            console.log('✅ RSC Wallet initialized correctly');
             
         } catch (error) {
-            console.error('❌ Error inicializando wallet:', error);
-            this.showNotification('Error inicializando wallet', 'error');
+            console.error('❌ Error initializing wallet:', error);
+            this.showNotification('Error initializing wallet', 'error');
         }
     }
 
@@ -69,38 +69,38 @@ class WalletRSC {
             if (storedWallet) {
                 const walletData = JSON.parse(storedWallet);
                 
-                // Verificar que sea una wallet válida de blockchain
+                // Verify it's a valid blockchain wallet
                 if (walletData.blockchainCreated && walletData.address) {
                     this.config.walletAddress = walletData.address;
-                    console.log('✅ Wallet existente encontrada:', walletData.address);
+                    console.log('✅ Existing wallet found:', walletData.address);
                 } else {
-                    // Wallet inválida, limpiar
-                    console.warn('⚠️ Wallet inválida encontrada, limpiando...');
+                    // Invalid wallet, clean up
+                    console.warn('⚠️ Invalid wallet found, cleaning...');
                     localStorage.removeItem('rsc_wallet');
-                    // No mostrar modal automáticamente cuando la blockchain no esté lista
-                    console.log('ℹ️ Blockchain no disponible - modal de wallet no mostrado');
+                    // Don't show modal automatically when blockchain is not ready
+                    console.log('ℹ️ Blockchain not available - wallet modal not shown');
                 }
             } else {
-                // No hay wallet, pero no mostrar prompt automáticamente
-                console.log('ℹ️ No hay wallet existente - modal de wallet no mostrado');
+                // No wallet, but don't show prompt automatically
+                console.log('ℹ️ No existing wallet - wallet modal not shown');
             }
         } catch (error) {
-            console.error('Error verificando wallet existente:', error);
+            console.error('Error checking existing wallet:', error);
             localStorage.removeItem('rsc_wallet');
-            // No mostrar modal automáticamente en caso de error
-            console.log('ℹ️ Error verificando wallet - modal de wallet no mostrado');
+            // Don't show modal automatically in case of error
+            console.log('ℹ️ Error checking wallet - wallet modal not shown');
         }
     }
 
     showCreateWalletPrompt() {
-        // Mostrar modal para crear wallet
+        // Show modal to create wallet
         const modal = document.createElement('div');
         modal.className = 'wallet-modal';
         modal.innerHTML = `
             <div class="wallet-modal-content">
-                <h2>🚀 Crear Nueva Wallet</h2>
-                <p>Para usar RSC Chain, necesitas crear una wallet en la blockchain.</p>
-                <button id="createWalletBtn" class="btn btn-primary">Crear Wallet</button>
+                <h2>🚀 Create New Wallet</h2>
+                <p>To use RSC Chain, you need to create a wallet on the blockchain.</p>
+                <button id="createWalletBtn" class="btn btn-primary">Create Wallet</button>
             </div>
         `;
         

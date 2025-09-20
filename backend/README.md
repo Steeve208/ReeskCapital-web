@@ -1,57 +1,57 @@
 # RSC Mining Backend
 
-Backend completo para el sistema de minería RSC con sistema de referidos integrado.
+Complete backend for the RSC mining system with integrated referral system.
 
-## 🚀 Características
+## 🚀 Features
 
-### **Sistema de Usuarios**
-- ✅ Registro de usuarios con email y username únicos
-- ✅ Gestión de balances de RSC
-- ✅ Sistema de códigos de invitación únicos
-- ✅ Autenticación y autorización
+### **User System**
+- ✅ User registration with unique email and username
+- ✅ RSC balance management
+- ✅ Unique invitation code system
+- ✅ Authentication and authorization
 
-### **Sistema de Referidos**
-- ✅ Códigos de invitación únicos de 8 caracteres
-- ✅ Comisión del 10% para referrers
-- ✅ Tracking de referidos y comisiones
-- ✅ Estadísticas de referidos
+### **Referral System**
+- ✅ Unique 8-character invitation codes
+- ✅ 10% commission for referrers
+- ✅ Referral and commission tracking
+- ✅ Referral statistics
 
-### **Sistema de Minería**
-- ✅ Gestión de sesiones de minería de 24 horas
-- ✅ Sincronización con frontend
-- ✅ Cálculo automático de comisiones
-- ✅ Historial de sesiones
+### **Mining System**
+- ✅ 24-hour mining session management
+- ✅ Frontend synchronization
+- ✅ Automatic commission calculation
+- ✅ Session history
 
-### **API REST Completa**
-- ✅ Endpoints de usuarios
-- ✅ Endpoints de minería
-- ✅ Endpoints de referidos
-- ✅ Middleware de seguridad
+### **Complete REST API**
+- ✅ User endpoints
+- ✅ Mining endpoints
+- ✅ Referral endpoints
+- ✅ Security middleware
 - ✅ Rate limiting
 
-## 📋 Requisitos
+## 📋 Requirements
 
 - **Node.js**: >= 18.0.0
 - **npm**: >= 8.0.0
-- **Supabase**: Proyecto configurado
-- **PostgreSQL**: Base de datos
+- **Supabase**: Configured project
+- **PostgreSQL**: Database
 
-## 🛠️ Instalación
+## 🛠️ Installation
 
-### 1. Clonar y configurar
+### 1. Clone and configure
 
 ```bash
 cd backend
 npm install
 ```
 
-### 2. Configurar variables de entorno
+### 2. Configure environment variables
 
 ```bash
 cp env.example .env
 ```
 
-Editar `.env` con tus credenciales:
+Edit `.env` with your credentials:
 
 ```env
 SUPABASE_URL=https://your-project.supabase.co
@@ -61,27 +61,27 @@ PORT=3000
 NODE_ENV=development
 ```
 
-### 3. Configurar base de datos
+### 3. Configure database
 
-Ejecutar el script SQL en Supabase:
+Run the SQL script in Supabase:
 
 ```bash
-# Copiar y pegar el contenido de supabase-schema.sql en el SQL Editor de Supabase
+# Copy and paste the content of supabase-schema.sql in Supabase SQL Editor
 ```
 
-### 4. Iniciar servidor
+### 4. Start server
 
 ```bash
-# Desarrollo
+# Development
 npm run dev
 
-# Producción
+# Production
 npm start
 ```
 
-## 📊 Estructura de Base de Datos
+## 📊 Database Structure
 
-### **Tabla: users**
+### **Table: users**
 ```sql
 - id (UUID, PK)
 - email (VARCHAR, UNIQUE)
@@ -94,7 +94,7 @@ npm start
 - is_active (BOOLEAN)
 ```
 
-### **Tabla: referrals**
+### **Table: referrals**
 ```sql
 - id (UUID, PK)
 - referrer_id (UUID, FK)
@@ -104,7 +104,7 @@ npm start
 - created_at (TIMESTAMP)
 ```
 
-### **Tabla: mining_sessions**
+### **Table: mining_sessions**
 ```sql
 - id (UUID, PK)
 - user_id (UUID, FK)
@@ -118,7 +118,7 @@ npm start
 - status (VARCHAR)
 ```
 
-### **Tabla: transactions**
+### **Table: transactions**
 ```sql
 - id (UUID, PK)
 - user_id (UUID, FK)
@@ -133,21 +133,21 @@ npm start
 
 ## 🔌 API Endpoints
 
-### **Usuarios**
+### **Users**
 
 #### `POST /api/users/register`
-Registrar nuevo usuario
+Register new user
 
 ```json
 {
   "email": "user@example.com",
   "username": "username",
-  "referralCode": "ABC12345" // Opcional
+  "referralCode": "ABC12345" // Optional
 }
 ```
 
 #### `GET /api/users/profile`
-Obtener perfil del usuario
+Get user profile
 
 **Headers:**
 ```

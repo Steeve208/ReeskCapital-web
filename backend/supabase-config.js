@@ -52,7 +52,7 @@ export const COMMISSION_RATES = {
 export const MINING_CONFIG = {
     SESSION_DURATION: 24 * 60 * 60 * 1000, // 24 horas en ms
     BASE_HASH_RATE: 1000, // H/s base
-    TOKENS_PER_SECOND: 0.001, // RSC por segundo
+    TOKENS_PER_SECOND: 0.000116, // RSC por segundo (10 RSC por día)
     MAX_EFFICIENCY: 150, // Máxima eficiencia %
     MIN_EFFICIENCY: 50,  // Mínima eficiencia %
     DIFFICULTY_ADJUSTMENT: 1.0

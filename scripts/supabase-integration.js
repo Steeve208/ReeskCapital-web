@@ -224,6 +224,9 @@ class SupabaseIntegration {
                     // Iniciar sincronización automática con el backend
                     this.startBackgroundSync();
                     
+                    // 🔧 INICIAR TIMER DE ACTUALIZACIÓN AUTOMÁTICA
+                    this.startMiningUpdateTimer();
+                    
                     console.log('✅ Sesión de minería activa restaurada');
                     console.log(`💰 Tokens minados: ${this.miningSession.tokensMined.toFixed(6)} RSC`);
                     console.log(`⏰ Tiempo restante: ${this.getRemainingTime()} horas`);
@@ -305,6 +308,9 @@ class SupabaseIntegration {
             // Iniciar sincronización automática con el backend
             this.startBackgroundSync();
             
+            // 🔧 INICIAR TIMER DE ACTUALIZACIÓN AUTOMÁTICA
+            this.startMiningUpdateTimer();
+            
             console.log('✅ Sesión de minería de 24 horas iniciada');
             console.log(`⏰ Terminará el: ${new Date(endTime).toLocaleString()}`);
             return true;
@@ -316,8 +322,8 @@ class SupabaseIntegration {
 
     calculateOfflineMining(elapsedTime) {
         // Calcular tokens minados basado en tiempo transcurrido
-        // Tasa de minería: aproximadamente 0.005 RSC por minuto (0.3 RSC por hora)
-        const miningRatePerMinute = 0.005;
+        // Tasa de minería: 0.00694 RSC por minuto (10 RSC por día)
+        const miningRatePerMinute = 0.00694;
         const elapsedMinutes = elapsedTime / (1000 * 60);
         
         // Agregar algo de variabilidad para hacer más realista
@@ -384,6 +390,9 @@ class SupabaseIntegration {
             this.miningSession.endTime = null;
             this.miningSession.tokensMined = 0;
             this.miningSession.hashRate = 0;
+            
+            // 🔧 DETENER TIMER DE ACTUALIZACIÓN AUTOMÁTICA
+            this.stopMiningUpdateTimer();
             this.miningSession.efficiency = 100;
             
             // Limpiar localStorage
@@ -475,14 +484,85 @@ class SupabaseIntegration {
                 const tokensToAdd = expectedTokens - this.miningSession.tokensMined;
                 this.miningSession.tokensMined = expectedTokens;
                 
+                // Aplicar multiplicadores de sistemas avanzados
+                const finalTokensToAdd = this.applyAdvancedMultipliers(tokensToAdd);
+                
                 // Actualizar balance del usuario
-                this.user.balance += tokensToAdd;
+                this.user.balance += finalTokensToAdd;
                 this.saveUserToStorage();
-                console.log(`💰 Minería continua: +${tokensToAdd.toFixed(6)} RSC | Balance: ${this.user.balance.toFixed(6)} RSC`);
+                
+                // 🔧 SINCRONIZAR CON BASE DE DATOS
+                this.syncBalanceToBackend().catch(error => {
+                    console.warn('⚠️ Error sincronizando balance:', error);
+                });
+                
+                // Actualizar sistemas avanzados
+                this.updateAdvancedSystems(finalTokensToAdd, hashRate, efficiency);
+                
+                console.log(`💰 Minería continua: +${finalTokensToAdd.toFixed(6)} RSC | Balance: ${this.user.balance.toFixed(6)} RSC`);
             }
             
             // Guardar sesión automáticamente
             this.saveMiningSession();
+        }
+    }
+
+    applyAdvancedMultipliers(baseTokens) {
+        let finalTokens = baseTokens;
+        
+        // Multiplicador de nivel
+        if (window.levelSystem) {
+            const levelMultiplier = window.levelSystem.getCurrentMultiplier();
+            finalTokens *= levelMultiplier;
+        }
+        
+        // Multiplicador de algoritmo
+        if (window.algorithmSystem) {
+            const algorithmMultiplier = window.algorithmSystem.getEventMultiplier('mining');
+            finalTokens *= algorithmMultiplier;
+        }
+        
+        // Multiplicador de eventos
+        if (window.eventSystem) {
+            const eventMultiplier = window.eventSystem.getEventMultiplier('double_xp');
+            finalTokens *= eventMultiplier;
+        }
+        
+        return finalTokens;
+    }
+
+    updateAdvancedSystems(tokensMined, hashRate, efficiency) {
+        // Actualizar sistema de niveles
+        if (window.levelSystem) {
+            const xpGained = Math.floor(tokensMined * 10); // 10 XP por RSC
+            window.levelSystem.addXP(xpGained, 'mining');
+        }
+        
+        // Actualizar sistema de clanes
+        if (window.clanSystem && window.clanSystem.isInClan()) {
+            window.clanSystem.addContribution(tokensMined);
+        }
+        
+        // Actualizar sistema de eventos
+        if (window.eventSystem) {
+            const activeEvents = window.eventSystem.getActiveEvents();
+            activeEvents.forEach(event => {
+                window.eventSystem.addEventContribution(event.id, tokensMined);
+            });
+            
+            // Agregar XP de temporada
+            window.eventSystem.addSeasonXP(Math.floor(tokensMined * 5));
+        }
+
+        // Actualizar sistema de logros
+        if (window.achievementSystem) {
+            window.achievementSystem.updateStats({
+                tokens_mined: tokensMined,
+                mining_sessions: 1,
+                max_hashrate: hashRate,
+                max_efficiency: efficiency,
+                level: window.levelSystem ? window.levelSystem.userLevel.level : 1
+            });
         }
     }
 
@@ -654,6 +734,39 @@ class SupabaseIntegration {
 
     getMiningSession() {
         return this.miningSession;
+    }
+
+    // 🔧 TIMER DE ACTUALIZACIÓN AUTOMÁTICA DE MINERÍA
+    startMiningUpdateTimer() {
+        // Limpiar timer existente si existe
+        if (this.miningUpdateTimer) {
+            clearInterval(this.miningUpdateTimer);
+        }
+
+        // Crear nuevo timer que se ejecute cada 30 segundos
+        this.miningUpdateTimer = setInterval(() => {
+            if (this.miningSession.isActive) {
+                // Forzar actualización de minería
+                const currentHashRate = this.miningSession.hashRate || 100;
+                const currentEfficiency = this.miningSession.efficiency || 100;
+                
+                // Actualizar stats (esto recalculará tokens basado en tiempo transcurrido)
+                this.updateMiningStats(0, currentHashRate, currentEfficiency);
+                
+                console.log('🔄 Actualización automática de minería ejecutada');
+            }
+        }, 30000); // 30 segundos
+
+        console.log('⏰ Timer de actualización automática iniciado (30s)');
+    }
+
+    // Detener timer de actualización
+    stopMiningUpdateTimer() {
+        if (this.miningUpdateTimer) {
+            clearInterval(this.miningUpdateTimer);
+            this.miningUpdateTimer = null;
+            console.log('⏹️ Timer de actualización automática detenido');
+        }
     }
 }
 
