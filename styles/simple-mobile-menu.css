@@ -1,0 +1,290 @@
+/* ===== SIMPLE MOBILE MENU ===== */
+/* Menú hamburguesa simple y funcional */
+
+/* ===== BOTÓN HAMBURGUESA ===== */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 10002;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 1023px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+}
+
+.mobile-menu-btn span {
+  width: 24px;
+  height: 2px;
+  background: #00d4ff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Animación del hamburguesa */
+.mobile-menu-btn.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* ===== MENÚ MÓVIL ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mobile-menu-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.mobile-menu-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(10, 10, 20, 0.95) 0%, 
+    rgba(20, 30, 50, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(0, 212, 255, 0.2);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-menu.active .mobile-menu-content {
+  transform: translateX(0);
+}
+
+/* ===== HEADER DEL MENÚ ===== */
+.mobile-menu-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.mobile-menu-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-menu-logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.mobile-menu-logo-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #00d4ff;
+  letter-spacing: 0.05em;
+}
+
+.mobile-menu-close {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.mobile-menu-close:hover {
+  background: rgba(0, 212, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* ===== CUERPO DEL MENÚ ===== */
+.mobile-menu-body {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.mobile-nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobile-nav-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(0, 212, 255, 0.1) 0%, 
+    rgba(0, 212, 255, 0.05) 100%);
+  transition: width 0.3s ease;
+}
+
+.mobile-nav-link:hover::before {
+  width: 100%;
+}
+
+.mobile-nav-link:hover {
+  color: #00d4ff;
+  transform: translateX(4px);
+}
+
+.mobile-nav-link i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  color: #00d4ff;
+}
+
+.mobile-nav-link span {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ===== ENLACES SOCIALES ===== */
+.mobile-social-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mobile-social-link {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.mobile-social-link:hover {
+  background: rgba(0, 212, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .mobile-menu-content {
+    width: 100%;
+  }
+  
+  .mobile-menu-header {
+    padding: 16px;
+  }
+  
+  .mobile-menu-body {
+    padding: 16px;
+  }
+  
+  .mobile-nav-link {
+    padding: 14px 16px;
+  }
+}
+
+/* ===== SCROLLBAR PERSONALIZADO ===== */
+.mobile-menu-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-menu-body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.3);
+  border-radius: 2px;
+}
+
+.mobile-menu-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 212, 255, 0.5);
+}

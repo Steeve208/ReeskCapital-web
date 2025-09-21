@@ -1,37 +1,37 @@
 /* ================================
    ADVANCED REFERRAL SYSTEM
-   Sistema de Referidos Gamificado y Escalable
+   Gamified and Scalable Referral System
 ================================ */
 
 /**
- * 🎯 SISTEMA DE REFERIDOS AVANZADO
+ * 🎯 ADVANCED REFERRAL SYSTEM
  * 
- * Características:
- * - Múltiples niveles de recompensas
- * - Bonificaciones por actividad del referido
- * - Sistema de rangos y logros
- * - Eventos especiales y multiplicadores
- * - Comisiones vitaliciass
- * - Leaderboard competitivo
+ * Features:
+ * - Multiple reward levels
+ * - Bonuses for referral activity
+ * - Ranks and achievements system
+ * - Special events and multipliers
+ * - Lifetime commissions
+ * - Competitive leaderboard
  */
 
 class AdvancedReferralSystem {
     constructor() {
         this.config = {
-            // Bonificaciones base
+            // Base bonuses
             welcomeBonus: {
-                referrer: 100,      // RSC para quien refiere
-                referred: 50        // RSC para el nuevo usuario
+                referrer: 100,      // RSC for referrer
+                referred: 50        // RSC for new user
             },
             
-            // Comisiones por minería (porcentajes)
+            // Mining commissions (percentages)
             miningCommissions: {
-                direct: 0.10,       // 10% comisión directa
-                level2: 0.05,       // 5% de referidos de tus referidos
-                level3: 0.02        // 2% del tercer nivel
+                direct: 0.10,       // 10% direct commission
+                level2: 0.05,       // 5% from your referrals' referrals
+                level3: 0.02        // 2% from third level
             },
             
-            // Sistema de rangos
+            // Ranks system
             ranks: {
                 bronze: { min: 0, max: 4, multiplier: 1.0, name: "Bronze Recruiter" },
                 silver: { min: 5, max: 14, multiplier: 1.2, name: "Silver Ambassador" },
@@ -41,16 +41,16 @@ class AdvancedReferralSystem {
                 legendary: { min: 100, max: Infinity, multiplier: 3.0, name: "Legendary Titan" }
             },
             
-            // Logros especiales
+            // Special achievements
             achievements: {
-                firstRefer: { reward: 25, name: "Primera Invitación", icon: "🎯" },
-                streak5: { reward: 100, name: "Racha de 5", icon: "🔥" },
-                powerUser: { reward: 200, name: "Usuario Poderoso", icon: "⚡" },
-                teamBuilder: { reward: 500, name: "Constructor de Equipos", icon: "🏗️" },
+                firstRefer: { reward: 25, name: "First Invitation", icon: "🎯" },
+                streak5: { reward: 100, name: "Streak of 5", icon: "🔥" },
+                powerUser: { reward: 200, name: "Powerful User", icon: "⚡" },
+                teamBuilder: { reward: 500, name: "Team Builder", icon: "🏗️" },
                 viral: { reward: 1000, name: "Viral Master", icon: "🌟" }
             },
             
-            // Eventos especiales
+            // Special events
             events: {
                 doubleWeekend: { multiplier: 2.0, active: false },
                 newUserBoost: { multiplier: 1.5, active: true },
@@ -329,38 +329,38 @@ class AdvancedReferralSystem {
     }
 
     // ===============================
-    // SISTEMA DE LOGROS
+    // ACHIEVEMENTS SYSTEM
     // ===============================
 
     async checkAchievements() {
         const achievements = [];
         
-        // Primer referido
+        // First referral
         if (this.userStats.totalReferrals >= 1 && !this.hasAchievement('firstRefer')) {
             achievements.push('firstRefer');
         }
         
-        // Racha de 5 referidos
+        // Streak of 5 referrals
         if (this.userStats.totalReferrals >= 5 && !this.hasAchievement('streak5')) {
             achievements.push('streak5');
         }
         
-        // Usuario poderoso (10 referidos activos)
+        // Powerful user (10 active referrals)
         if (this.userStats.activeReferrals >= 10 && !this.hasAchievement('powerUser')) {
             achievements.push('powerUser');
         }
         
-        // Constructor de equipos (25 referidos)
+        // Team builder (25 referrals)
         if (this.userStats.totalReferrals >= 25 && !this.hasAchievement('teamBuilder')) {
             achievements.push('teamBuilder');
         }
         
-        // Viral master (100 referidos)
+        // Viral master (100 referrals)
         if (this.userStats.totalReferrals >= 100 && !this.hasAchievement('viral')) {
             achievements.push('viral');
         }
         
-        // Procesar nuevos logros
+        // Process new achievements
         for (const achievementId of achievements) {
             await this.unlockAchievement(achievementId);
         }

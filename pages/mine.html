@@ -808,7 +808,7 @@
                 <div class="referral-section">
                     <h3 class="section-title">
                         <i class="fas fa-users"></i>
-                        Sistema de Referidos
+                        Referral System
                         <span class="section-badge" id="referralRankBadge">Bronze Recruiter</span>
                     </h3>
                     
@@ -823,16 +823,16 @@
                                 <div class="code-display">
                                     <div class="code-container">
                                         <span class="referral-code" id="referralCodeDisplay">Loading...</span>
-                                        <button class="btn-copy" id="copyReferralCode" title="Copiar código">
+                                        <button class="btn-copy" id="copyReferralCode" title="Copy code">
                                             <i class="fas fa-copy"></i>
                                         </button>
                                     </div>
                                     <div class="link-container">
-                                        <input type="text" class="referral-link" id="referralLink" readonly placeholder="Tu enlace se generará aquí">
-                                        <button class="btn-copy" id="copyReferralLink" title="Copiar enlace">
+                                        <input type="text" class="referral-link" id="referralLink" readonly placeholder="Your link will be generated here">
+                                        <button class="btn-copy" id="copyReferralLink" title="Copy link">
                                             <i class="fas fa-link"></i>
                                         </button>
-                                        <button class="btn-share" id="shareReferralLink" title="Compartir">
+                                        <button class="btn-share" id="shareReferralLink" title="Share">
                                             <i class="fas fa-share-alt"></i>
                                         </button>
                                     </div>
@@ -848,7 +848,7 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="stat-value" id="totalReferrals">0</div>
-                                    <div class="stat-label">Total Referidos</div>
+                                    <div class="stat-label">Total Referrals</div>
                                 </div>
                             </div>
                             
@@ -858,7 +858,7 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="stat-value" id="activeReferrals">0</div>
-                                    <div class="stat-label">Referidos Activos</div>
+                                    <div class="stat-label">Active Referrals</div>
                                 </div>
                             </div>
                             
@@ -886,7 +886,7 @@
                         <!-- Rank Progress -->
                         <div class="rank-section">
                             <div class="rank-header">
-                                <h4><i class="fas fa-medal"></i> Tu Rango Actual</h4>
+                                <h4><i class="fas fa-medal"></i> Your Current Rank</h4>                                 
                             </div>
                             <div class="rank-display">
                                 <div class="current-rank" id="currentRank">
@@ -907,27 +907,27 @@
 
                         <!-- Commission Structure -->
                         <div class="commission-structure">
-                            <h4><i class="fas fa-layer-group"></i> Estructura de Comisiones</h4>
+                            <h4><i class="fas fa-layer-group"></i> Commission Structure</h4>
                             <div class="commission-levels">
                                 <div class="commission-level level-1">
                                     <div class="level-icon">1</div>
                                     <div class="level-info">
-                                        <div class="level-title">Referidos Directos</div>
-                                        <div class="level-rate">10% de su minería</div>
+                                        <div class="level-title">Direct Referrals</div>
+                                        <div class="level-rate">10% of their mining</div>
                                     </div>
                                 </div>
                                 <div class="commission-level level-2">
                                     <div class="level-icon">2</div>
                                     <div class="level-info">
-                                        <div class="level-title">Segundo Nivel</div>
-                                        <div class="level-rate">5% de su minería</div>
+                                        <div class="level-title">Second Level</div>
+                                        <div class="level-rate">5% of their mining</div>
                                     </div>
                                 </div>
                                 <div class="commission-level level-3">
                                     <div class="level-icon">3</div>
                                     <div class="level-info">
-                                        <div class="level-title">Tercer Nivel</div>
-                                        <div class="level-rate">2% de su minería</div>
+                                        <div class="level-title">Third Level</div>
+                                        <div class="level-rate">2% of their mining</div>
                                     </div>
                                 </div>
                             </div>
@@ -935,7 +935,7 @@
 
                         <!-- Achievements -->
                         <div class="achievements-section">
-                            <h4><i class="fas fa-trophy"></i> Logros de Referidos</h4>
+                            <h4><i class="fas fa-trophy"></i> Referral Achievements</h4>
                             <div class="achievements-grid" id="referralAchievements">
                                 <!-- Achievements will be loaded dynamically -->
                             </div>
@@ -944,10 +944,10 @@
                         <!-- Referral Tree/List -->
                         <div class="referral-tree-section">
                             <div class="tree-header">
-                                <h4><i class="fas fa-sitemap"></i> Tus Referidos</h4>
+                                <h4><i class="fas fa-sitemap"></i> Your Referrals</h4>
                                 <div class="tree-controls">
                                     <button class="btn-secondary" id="toggleTreeView">
-                                        <i class="fas fa-list"></i> Vista Lista
+                                        <i class="fas fa-list"></i> List View
                                     </button>
                                 </div>
                             </div>
@@ -963,8 +963,8 @@
                         <!-- Leaderboard Preview -->
                         <div class="leaderboard-preview">
                             <div class="leaderboard-header">
-                                <h4><i class="fas fa-crown"></i> Top Referidores</h4>
-                                <button class="btn-secondary" id="viewFullLeaderboard">Ver Todo</button>
+                                <h4><i class="fas fa-crown"></i> Top Referrers</h4>
+                                <button class="btn-secondary" id="viewFullLeaderboard">View All</button>
                             </div>
                             <div class="leaderboard-list" id="leaderboardPreview">
                                 <!-- Top 5 referrers will be loaded here -->
@@ -1009,7 +1009,7 @@
                                     <i class="fas fa-user-plus"></i>
                                 </div>
                                 <div class="stat-content">
-                                    <h4>Referidos Totales</h4>
+                                    <h4>Total Referrals</h4>
                                     <p class="stat-value" id="totalReferrals">0</p>
                                 </div>
                             </div>
@@ -1029,7 +1029,7 @@
                                     <i class="fas fa-chart-line"></i>
                                 </div>
                                 <div class="stat-content">
-                                    <h4>Nivel de Referido</h4>
+                                    <h4>Referral Level</h4>
                                     <p class="stat-value" id="referralLevel">1</p>
                                 </div>
                             </div>
@@ -1037,7 +1037,7 @@
 
                         <!-- Share Buttons -->
                         <div class="referral-share">
-                            <h4><i class="fas fa-share-alt"></i> Compartir en Redes Sociales</h4>
+                            <h4><i class="fas fa-share-alt"></i> Share on Social Media</h4>
                             <div class="share-buttons">
                                 <button class="share-btn share-whatsapp" data-platform="whatsapp">
                                     <i class="fab fa-whatsapp"></i>
@@ -1064,38 +1064,38 @@
 
                         <!-- Referral History -->
                         <div class="referral-history">
-                            <h4><i class="fas fa-history"></i> Historial de Referidos</h4>
+                            <h4><i class="fas fa-history"></i> Referral History</h4>
                             <div class="referral-list" id="referralList">
                                 <div class="referral-item">
                                     <div class="referral-info">
-                                        <div class="referral-name">Usuario123</div>
-                                        <div class="referral-date">Hace 2 días</div>
+                                        <div class="referral-name">User123</div>
+                                        <div class="referral-date">2 days ago</div>
                                     </div>
                                     <div class="referral-commission">
                                         <span class="commission-amount">+0.500000 RSC</span>
-                                        <span class="commission-status active">Activo</span>
+                                        <span class="commission-status active">Active</span>
                                     </div>
                                 </div>
                                 
                                 <div class="referral-item">
                                     <div class="referral-info">
                                         <div class="referral-name">MinerPro</div>
-                                        <div class="referral-date">Hace 1 semana</div>
+                                        <div class="referral-date">1 week ago</div>
                                     </div>
                                     <div class="referral-commission">
                                         <span class="commission-amount">+1.200000 RSC</span>
-                                        <span class="commission-status active">Activo</span>
+                                        <span class="commission-status active">Active</span>
                                     </div>
                                 </div>
                                 
                                 <div class="referral-item">
                                     <div class="referral-info">
                                         <div class="referral-name">CryptoFan</div>
-                                        <div class="referral-date">Hace 2 semanas</div>
+                                        <div class="referral-date">2 weeks ago</div>
                                     </div>
                                     <div class="referral-commission">
                                         <span class="commission-amount">+0.800000 RSC</span>
-                                        <span class="commission-status completed">Completado</span>
+                                        <span class="commission-status completed">Completed</span>
                                     </div>
                                 </div>
                             </div>
@@ -1174,44 +1174,44 @@
     <div class="modal hidden" id="settingsModal" style="display: none;">
         <div class="modal-content settings-modal-content">
             <div class="modal-header">
-                <h2><i class="fas fa-cog"></i> Configuración</h2>
+                <h2><i class="fas fa-cog"></i> Settings</h2>
                 <button class="modal-close" id="closeSettingsModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Navegación de configuración -->
+                <!-- Settings Navigation -->
                 <div class="settings-navigation">
                     <button class="settings-nav-btn active" data-section="mining-settings">
-                        <i class="fas fa-pickaxe"></i> Minería
+                        <i class="fas fa-pickaxe"></i> Mining
                     </button>
                     <button class="settings-nav-btn" data-section="display-settings">
-                        <i class="fas fa-desktop"></i> Pantalla
+                        <i class="fas fa-desktop"></i> Display
                     </button>
                     <button class="settings-nav-btn" data-section="notification-settings">
-                        <i class="fas fa-bell"></i> Notificaciones
+                        <i class="fas fa-bell"></i> Notifications
                     </button>
                     <button class="settings-nav-btn" data-section="account-settings">
-                        <i class="fas fa-user"></i> Cuenta
+                        <i class="fas fa-user"></i> Account
                     </button>
                         <button class="settings-nav-btn" data-section="achievements-settings">
-                            <i class="fas fa-trophy"></i> Logros
+                            <i class="fas fa-trophy"></i> Achievements
                         </button>
                         <button class="settings-nav-btn" data-section="advanced-settings">
-                            <i class="fas fa-cogs"></i> Avanzado
+                            <i class="fas fa-cogs"></i> Advanced
                         </button>
                 </div>
 
-                <!-- Contenido de configuración -->
+                <!-- Settings Content -->
                 <div class="settings-content">
                     <!-- Mining Settings -->
                     <div class="settings-section active" id="mining-settings">
-                        <h3><i class="fas fa-pickaxe"></i> Configuración de Minería</h3>
+                        <h3><i class="fas fa-pickaxe"></i> Mining Settings</h3>
                         <div class="settings-grid">
                     <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="autoSync">Sincronización Automática</label>
-                                    <small>Sincronizar automáticamente con la base de datos</small>
+                                    <label for="autoSync">Automatic Sync</label>
+                                    <small>Automatically sync with the database</small>
                                 </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="autoSync" checked class="toggle-switch">
@@ -1219,8 +1219,8 @@
                     </div>
                     <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="backgroundMining">Minería en Segundo Plano</label>
-                                    <small>Continuar minando cuando la pestaña esté oculta</small>
+                                    <label for="backgroundMining">Background Mining</label>
+                                    <small>Continue mining when the tab is hidden</small>
                     </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="backgroundMining" checked class="toggle-switch">
@@ -1228,8 +1228,8 @@
             </div>
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="autoRestart">Reinicio Automático</label>
-                                    <small>Reiniciar sesión automáticamente después de 24h</small>
+                                    <label for="autoRestart">Automatic Restart</label>
+                                    <small>Automatically restart session after 24h</small>
                                 </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="autoRestart" class="toggle-switch">
@@ -1237,8 +1237,8 @@
                             </div>
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="miningAlgorithm">Algoritmo Predeterminado</label>
-                                    <small>Algoritmo a usar al iniciar nueva sesión</small>
+                                    <label for="miningAlgorithm">Default Algorithm</label>
+                                    <small>Algorithm to use when starting new session</small>
                                 </div>
                                 <div class="setting-control">
                                     <select id="miningAlgorithm" class="setting-select">
@@ -1254,12 +1254,12 @@
 
                     <!-- Display Settings -->
                     <div class="settings-section" id="display-settings">
-                        <h3><i class="fas fa-desktop"></i> Configuración de Pantalla</h3>
+                        <h3><i class="fas fa-desktop"></i> Display Settings</h3>
                         <div class="settings-grid">
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="darkMode">Modo Oscuro</label>
-                                    <small>Interfaz con colores oscuros</small>
+                                    <label for="darkMode">Dark Mode</label>
+                                    <small>Interface with dark colors</small>
                                 </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="darkMode" checked class="toggle-switch">
@@ -1267,8 +1267,8 @@
                             </div>
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="compactView">Vista Compacta</label>
-                                    <small>Mostrar menos espacios entre elementos</small>
+                                    <label for="compactView">Compact View</label>
+                                    <small>Show less space between elements</small>
                                 </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="compactView" class="toggle-switch">
@@ -1276,8 +1276,8 @@
                             </div>
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="showAnimations">Mostrar Animaciones</label>
-                                    <small>Efectos visuales y transiciones</small>
+                                    <label for="showAnimations">Show Animations</label>
+                                    <small>Visual effects and transitions</small>
                                 </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="showAnimations" checked class="toggle-switch">
@@ -1285,12 +1285,12 @@
                             </div>
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="language">Idioma</label>
-                                    <small>Idioma de la interfaz</small>
+                                    <label for="language">Language</label>
+                                    <small>Interface language</small>
                                 </div>
                                 <div class="setting-control">
                                     <select id="language" class="setting-select">
-                                        <option value="es">Español</option>
+                                        <option value="es">Spanish</option>
                                         <option value="en">English</option>
                                         <option value="pt">Português</option>
                                     </select>
@@ -1301,12 +1301,12 @@
 
                     <!-- Notification Settings -->
                     <div class="settings-section" id="notification-settings">
-                        <h3><i class="fas fa-bell"></i> Configuración de Notificaciones</h3>
+                        <h3><i class="fas fa-bell"></i> Notification Settings</h3>
                         <div class="settings-grid">
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="notifications">Notificaciones Generales</label>
-                                    <small>Recibir notificaciones del sistema</small>
+                                    <label for="notifications">General Notifications</label>
+                                    <small>Receive system notifications</small>
                                 </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="notifications" checked class="toggle-switch">
@@ -1314,8 +1314,8 @@
                             </div>
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="achievementNotifications">Notificaciones de Logros</label>
-                                    <small>Avisar cuando desbloquees achievements</small>
+                                    <label for="achievementNotifications">Achievement Notifications</label>
+                                    <small>Notify when you unlock achievements</small>
                                 </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="achievementNotifications" checked class="toggle-switch">
@@ -1339,33 +1339,33 @@
 
                     <!-- Account Settings -->
                     <div class="settings-section" id="account-settings">
-                        <h3><i class="fas fa-user"></i> Configuración de Cuenta</h3>
+                        <h3><i class="fas fa-user"></i> Account Settings</h3>
                         <div class="settings-grid">
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label>Usuario Actual</label>
-                                    <small id="currentUsername">Cargando...</small>
+                                    <label>Current User</label>
+                                    <small id="currentUsername">Loading...</small>
                                 </div>
                                 <div class="setting-control">
-                                    <button class="btn btn-secondary" id="changeUsernameBtn">Cambiar</button>
+                                    <button class="btn btn-secondary" id="changeUsernameBtn">Change</button>
                                 </div>
                             </div>
                             <div class="setting-item">
                                 <div class="setting-info">
                                     <label>Email</label>
-                                    <small id="currentEmail">Cargando...</small>
+                                    <small id="currentEmail">Loading...</small>
                                 </div>
                                 <div class="setting-control">
-                                    <button class="btn btn-secondary" id="changeEmailBtn">Cambiar</button>
+                                    <button class="btn btn-secondary" id="changeEmailBtn">Change</button>
                                 </div>
                             </div>
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label>Balance Actual</label>
+                                    <label>Current Balance</label>
                                     <small id="currentBalance">0.000000 RSC</small>
                                 </div>
                                 <div class="setting-control">
-                                    <button class="btn btn-primary" id="refreshBalanceBtn">Actualizar</button>
+                                    <button class="btn btn-primary" id="refreshBalanceBtn">Refresh</button>
                                 </div>
                             </div>
                                 <!-- Referral code setting REMOVED -->
@@ -1374,7 +1374,7 @@
 
                         <!-- Achievements Settings -->
                         <div class="settings-section" id="achievements-settings">
-                            <h3><i class="fas fa-trophy"></i> Logros y Achievements</h3>
+                            <h3><i class="fas fa-trophy"></i> Achievements</h3>
                             <div class="achievements-settings-content">
                                 <div class="achievement-stats">
                                     <div class="achievement-stat-card">
@@ -1388,40 +1388,40 @@
                                         <div class="stat-icon">📈</div>
                                         <div class="stat-info">
                                             <div class="stat-value" id="achievementsProgress">0%</div>
-                                            <div class="stat-label">Progreso</div>
+                                            <div class="stat-label">Progress</div>
                                         </div>
                                     </div>
                                     <div class="achievement-stat-card">
                                         <div class="stat-icon">⭐</div>
                                         <div class="stat-info">
                                             <div class="stat-value" id="achievementsRewards">0</div>
-                                            <div class="stat-label">Recompensas</div>
+                                            <div class="stat-label">Rewards</div>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="achievement-categories">
-                                    <button class="achievement-category-btn active" data-category="all">Todos</button>
-                                    <button class="achievement-category-btn" data-category="starter">Inicio</button>
-                                    <button class="achievement-category-btn" data-category="mining">Minería</button>
-                                    <button class="achievement-category-btn" data-category="progression">Progresión</button>
+                                    <button class="achievement-category-btn active" data-category="all">All</button>
+                                    <button class="achievement-category-btn" data-category="starter">Start</button>
+                                    <button class="achievement-category-btn" data-category="mining">Mining</button>
+                                    <button class="achievement-category-btn" data-category="progression">Progression</button>
                                     <button class="achievement-category-btn" data-category="social">Social</button>
                                 </div>
                                 
                                 <div class="achievement-grid" id="achievementGrid">
-                                    <!-- Los logros se cargarán dinámicamente -->
+                                    <!-- Achievements will be loaded dynamically -->
                                 </div>
                             </div>
                         </div>
 
                         <!-- Advanced Settings -->
                         <div class="settings-section" id="advanced-settings">
-                            <h3><i class="fas fa-cogs"></i> Configuración Avanzada</h3>
+                            <h3><i class="fas fa-cogs"></i> Advanced Settings</h3>
                         <div class="settings-grid">
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="debugMode">Modo Debug</label>
-                                    <small>Mostrar información adicional en consola</small>
+                                    <label for="debugMode">Debug Mode</label>
+                                    <small>Show additional information in console</small>
                                 </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="debugMode" class="toggle-switch">
@@ -1429,8 +1429,8 @@
                             </div>
                             <div class="setting-item">
                                 <div class="setting-info">
-                                    <label for="autoSave">Auto Guardado</label>
-                                    <small>Guardar automáticamente cada 30 segundos</small>
+                                    <label for="autoSave">Auto Save</label>
+                                    <small>Automatically save every 30 seconds</small>
                                 </div>
                                 <div class="setting-control">
                                     <input type="checkbox" id="autoSave" checked class="toggle-switch">
@@ -1465,7 +1465,7 @@
                 <div class="background-mining-controls">
                     <h3 class="section-title">
                         <i class="fas fa-mobile-alt"></i>
-                        Minería en Segundo Plano
+                        Background Mining
                     </h3>
                     <div class="background-mining-toggle">
                         <div class="background-mining-status" id="backgroundStatus">
@@ -1473,7 +1473,7 @@
                             Background mining inactive
                         </div>
                         <button class="btn btn-primary" id="toggleBackgroundMining">
-                            Activar
+                            Activate
                         </button>
                     </div>
                     <div class="background-mining-stats" id="backgroundStats" style="display: none;">
@@ -1496,60 +1496,60 @@
     <!-- Background Mining Indicator -->
     <div class="background-mining-indicator" id="backgroundMiningIndicator">
         <i class="fas fa-mobile-alt"></i>
-        <span>Minería en segundo plano activa</span>
+        <span>Background mining active</span>
     </div>
 
     <div class="modal hidden" id="helpModal">
         <div class="modal-content help-modal-content">
             <div class="modal-header">
-                <h2><i class="fas fa-question-circle"></i> Ayuda & Soporte</h2>
+                <h2><i class="fas fa-question-circle"></i> Help & Support</h2>
                 <button class="modal-close" id="closeHelpModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Navegación de ayuda -->
+                <!-- Help Navigation -->
                 <div class="help-navigation">
                     <button class="help-nav-btn active" data-section="getting-started">
-                        <i class="fas fa-play-circle"></i> Comenzar
+                        <i class="fas fa-play-circle"></i> Getting Started
                     </button>
                     <button class="help-nav-btn" data-section="mining-guide">
-                        <i class="fas fa-pickaxe"></i> Minería
+                        <i class="fas fa-pickaxe"></i> Mining
                     </button>
                     <button class="help-nav-btn" data-section="systems-guide">
-                        <i class="fas fa-cogs"></i> Sistemas
+                        <i class="fas fa-cogs"></i> Systems
                     </button>
                         <!-- Referrals guide REMOVED -->
                     <button class="help-nav-btn" data-section="contact">
-                        <i class="fas fa-headset"></i> Contacto
+                        <i class="fas fa-headset"></i> Contact
                     </button>
                 </div>
                 
-                <!-- Contenido de ayuda -->
+                <!-- Help Content -->
                 <div class="help-content">
                     <!-- Getting Started -->
                     <div class="help-section active" id="getting-started">
-                        <h3><i class="fas fa-rocket"></i> Comenzando en RSC Mining</h3>
+                        <h3><i class="fas fa-rocket"></i> Getting Started with RSC Mining</h3>
                         <div class="help-steps">
                             <div class="help-step">
                                 <div class="step-number">1</div>
                                 <div class="step-content">
-                                    <h4>Inicia Sesión</h4>
-                                    <p>Crea tu cuenta o inicia sesión para comenzar a minar RSC tokens.</p>
+                                    <h4>Sign In</h4>
+                                    <p>Create your account or sign in to start mining RSC tokens.</p>
                                 </div>
                             </div>
                             <div class="help-step">
                                 <div class="step-number">2</div>
                                 <div class="step-content">
-                                    <h4>Comienza a Minar</h4>
-                                    <p>Haz clic en "Iniciar Minería" para comenzar tu sesión de 24 horas.</p>
+                                    <h4>Start Mining</h4>
+                                    <p>Click "Start Mining" to begin your 24-hour session.</p>
                                 </div>
                             </div>
                             <div class="help-step">
                                 <div class="step-number">3</div>
                                 <div class="step-content">
-                                    <h4>Mejora tu Equipo</h4>
-                                    <p>Compra y mejora equipos para aumentar tu tasa de minería.</p>
+                                    <h4>Upgrade Your Equipment</h4>
+                                    <p>Buy and upgrade equipment to increase your mining rate.</p>
                                 </div>
                             </div>
                         </div>
@@ -1557,33 +1557,33 @@
                 
                     <!-- Mining Guide -->
                     <div class="help-section" id="mining-guide">
-                        <h3><i class="fas fa-pickaxe"></i> Guía de Minería</h3>
+                        <h3><i class="fas fa-pickaxe"></i> Mining Guide</h3>
                         <div class="mining-tips">
-                            <h4><i class="fas fa-lightbulb"></i> Conceptos Básicos</h4>
+                            <h4><i class="fas fa-lightbulb"></i> Basic Concepts</h4>
                             <ul>
-                                <li>⚡ <strong>Hash Rate:</strong> Tu poder de minería (H/s)</li>
-                                <li>📈 <strong>Eficiencia:</strong> Qué tan optimizado está tu equipo (%)</li>
-                                <li>🪙 <strong>RSC Tokens:</strong> La criptomoneda que estás minando</li>
-                                <li>⏰ <strong>Sesiones 24h:</strong> Cada sesión dura 24 horas</li>
+                                <li>⚡ <strong>Hash Rate:</strong> Your mining power (H/s)</li>
+                                <li>📈 <strong>Efficiency:</strong> How optimized your equipment is (%)</li>
+                                <li>🪙 <strong>RSC Tokens:</strong> The cryptocurrency you're mining</li>
+                                <li>⏰ <strong>24h Sessions:</strong> Each session lasts 24 hours</li>
                     </ul>
                 </div>
             </div>
 
                     <!-- Systems Guide -->
                     <div class="help-section" id="systems-guide">
-                        <h3><i class="fas fa-cogs"></i> Sistemas Avanzados</h3>
+                        <h3><i class="fas fa-cogs"></i> Advanced Systems</h3>
                         <div class="systems-list">
                             <div class="system-item">
-                                <strong>🔧 Equipos:</strong> Compra GPUs, ASICs y mejoras
+                                <strong>🔧 Equipment:</strong> Buy GPUs, ASICs and upgrades
                             </div>
                             <div class="system-item">
-                                <strong>📊 Niveles:</strong> Gana XP y desbloquea multiplicadores
+                                <strong>📊 Levels:</strong> Earn XP and unlock multipliers
                             </div>
                             <div class="system-item">
-                                <strong>👥 Clanes:</strong> Únete a grupos y colabora
+                                <strong>👥 Clans:</strong> Join groups and collaborate
                             </div>
                             <div class="system-item">
-                                <strong>🏆 Logros:</strong> Completa achievements y gana recompensas
+                                <strong>🏆 Achievements:</strong> Complete achievements and earn rewards
                             </div>
                         </div>
                     </div>
@@ -1592,7 +1592,7 @@
 
                     <!-- Contact -->
                     <div class="help-section" id="contact">
-                        <h3><i class="fas fa-headset"></i> Contacto & Soporte</h3>
+                        <h3><i class="fas fa-headset"></i> Contact & Support</h3>
                         <div class="contact-info">
                             <p>📧 <strong>Email:</strong> support@rscmining.com</p>
                             <p>💬 <strong>Discord:</strong> RSC Mining Community</p>
@@ -1623,23 +1623,23 @@
     <script src="../scripts/advanced-referral-system.js"></script>
     <script src="../scripts/referral-competition.js"></script>
     <script>
-        // Inicializar cuando esté listo
+        // Initialize when ready
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 RSC Mining Platform cargando...');
+            console.log('🚀 RSC Mining Platform loading...');
             
-            // Esperar a que Supabase Integration se cargue
+            // Wait for Supabase Integration to load
             let attempts = 0;
             const maxAttempts = 50;
             
             const checkSupabase = () => {
                 attempts++;
-                console.log(`🔍 Intento ${attempts}/${maxAttempts} - Verificando Supabase Integration...`);
+                console.log(`🔍 Attempt ${attempts}/${maxAttempts} - Checking Supabase Integration...`);
                 
                 if (window.supabaseIntegration) {
-                    console.log('✅ Supabase Integration detectado');
+                    console.log('✅ Supabase Integration detected');
                     initializeMiningPlatform();
                 } else if (attempts >= maxAttempts) {
-                    console.error('❌ Timeout: Supabase Integration no se cargó en 5 segundos');
+                    console.error('❌ Timeout: Supabase Integration did not load in 5 seconds');
                 } else {
                     setTimeout(checkSupabase, 100);
                 }
@@ -1658,27 +1658,27 @@
             // Initialize advanced systems
             initializeAdvancedSystems();
             
-            // Inicializar sistema de referidos
-            // Inicializar sistema avanzado de referidos
+            // Initialize referral system
+            // Initialize advanced referral system
             initializeAdvancedReferralSystem();
             
-            // Verificar si el usuario ya está autenticado
+            // Check if user is already authenticated
             if (window.supabaseIntegration.isUserAuthenticated()) {
-                console.log('👤 Usuario autenticado, mostrando dashboard...');
+                console.log('👤 User authenticated, showing dashboard...');
                 showMiningDashboard();
                 
-                // Esperar un poco para que se cargue la sesión
+                // Wait a bit for the session to load
                 setTimeout(async () => {
                     await checkAndRestoreMiningSession();
                 }, 1000);
             } else {
-                console.log('🔐 Usuario no autenticado, mostrando sección de auth...');
+                console.log('🔐 User not authenticated, showing auth section...');
                 showAuthSection();
             }
             
-            console.log('✅ RSC Mining Platform - LISTO');
+            console.log('✅ RSC Mining Platform - READY');
             
-            // Inicializar funcionalidades de auth
+            // Initialize auth features
             initializeAuthFeatures();
         }
         
@@ -1751,9 +1751,9 @@
         }
 
         function initializeAdvancedSystems() {
-            console.log('🔧 Inicializando sistemas avanzados...');
+            console.log('🔧 Initializing advanced systems...');
             
-            // Inicializar sistemas cuando estén disponibles
+            // Initialize systems when available
             const initSystems = () => {
                 const systems = [
                     'equipmentSystem',
@@ -1768,36 +1768,36 @@
                 ];
                 
                 const loadedSystems = systems.filter(system => window[system]);
-                console.log(`📊 Sistemas cargados: ${loadedSystems.length}/${systems.length}`, loadedSystems);
+                console.log(`📊 Systems loaded: ${loadedSystems.length}/${systems.length}`, loadedSystems);
                 
                 if (loadedSystems.length === systems.length) {
-                    console.log('✅ Todos los sistemas avanzados cargados');
+                    console.log('✅ All advanced systems loaded');
                     
-                    // Configurar event listeners para sistemas avanzados
+                    // Setup event listeners for advanced systems
                     setupAdvancedEventListeners();
                     
-                    // Actualizar UI con datos de sistemas avanzados
+                    // Update UI with advanced systems data
                     updateAdvancedUI();
                     
-                    // Actualizar UI de logros
+                    // Update achievements UI
                     updateAchievementUI();
                     
-                    // Configurar background mining
+                    // Setup background mining
                     setupBackgroundMining();
                     
-                    // Iniciar actualizaciones periódicas
+                    // Start periodic updates
                     startAdvancedUpdates();
                 } else {
-                    console.log(`⏳ Esperando sistemas restantes... (${systems.length - loadedSystems.length} faltantes)`);
+                    console.log(`⏳ Waiting for remaining systems... (${systems.length - loadedSystems.length} missing)`);
                     setTimeout(initSystems, 500);
                 }
             };
             
-            // Esperar un poco más para que los scripts se carguen
+            // Wait a bit more for scripts to load
             setTimeout(initSystems, 1000);
         }
 
-        // Actualizar UI de logros
+        // Update achievements UI
         function updateAchievementUI() {
             if (!window.achievementSystem) return;
 
@@ -1809,13 +1809,13 @@
             const allAchievements = Object.values(window.achievementSystem.achievements);
             const unlockedCount = window.achievementSystem.userAchievements.unlocked.length;
             
-            // Actualizar badge
+            // Update badge
             achievementsBadge.textContent = `${unlockedCount}/${allAchievements.length}`;
             
-            // Renderizar logros
+            // Render achievements
             renderAchievements('all');
             
-            // Setup event listeners para categorías
+            // Setup event listeners for categories
             const categoryBtns = document.querySelectorAll('.achievement-category-btn');
             categoryBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -1878,10 +1878,10 @@
 
             let isBackgroundActive = false;
 
-            // Event listener para el botón toggle
+            // Event listener for toggle button
             toggleBtn.addEventListener('click', async () => {
                 if (!isBackgroundActive) {
-                    // Iniciar background mining
+                    // Start background mining
                     const success = await window.backgroundMiningManager.startBackgroundMining({
                         baseRate: 0.1,
                         hashRate: 100,
@@ -1890,16 +1890,16 @@
                     
                     if (success) {
                         isBackgroundActive = true;
-                        toggleBtn.textContent = 'Detener';
+                        toggleBtn.textContent = 'Stop';
                         toggleBtn.classList.add('btn-danger');
                         toggleBtn.classList.remove('btn-primary');
                         backgroundStats.style.display = 'grid';
                     }
                 } else {
-                    // Detener background mining
+                    // Stop background mining
                     window.backgroundMiningManager.stopBackgroundMining();
                     isBackgroundActive = false;
-                    toggleBtn.textContent = 'Activar';
+                    toggleBtn.textContent = 'Activate';
                     toggleBtn.classList.add('btn-primary');
                     toggleBtn.classList.remove('btn-danger');
                     backgroundStats.style.display = 'none';
@@ -1913,19 +1913,19 @@
 
             window.addEventListener('backgroundMiningComplete', (event) => {
                 isBackgroundActive = false;
-                toggleBtn.textContent = 'Activar';
+                toggleBtn.textContent = 'Activate';
                 toggleBtn.classList.add('btn-primary');
                 toggleBtn.classList.remove('btn-danger');
                 backgroundStats.style.display = 'none';
                 
-                // Actualizar balance principal
+                // Update main balance
                 if (window.supabaseIntegration) {
                     window.supabaseIntegration.loadStoredUser();
                 }
             });
         }
 
-        // Actualizar UI de background mining
+        // Update background mining UI
         function updateBackgroundMiningUI(data) {
             const backgroundTokens = document.getElementById('backgroundTokens');
             const backgroundDuration = document.getElementById('backgroundDuration');
@@ -2060,35 +2060,35 @@
 
         async function checkAndRestoreMiningSession() {
             try {
-                console.log('🔍 Verificando sesión de minería...');
+                console.log('🔍 Checking mining session...');
                 
-                // Verificar si hay una sesión de minería activa usando la función de supabaseIntegration
+                // Check if there's an active mining session using supabaseIntegration function
                 const hasActiveSession = await window.supabaseIntegration.checkMiningSession();
                 
                 if (hasActiveSession) {
-                    console.log('⛏️ Sesión de minería activa detectada - Reanudando...');
-                    console.log(`⏰ Tiempo restante: ${window.supabaseIntegration.getRemainingTime()} horas`);
+                    console.log('⛏️ Active mining session detected - Resuming...');
+                    console.log(`⏰ Time remaining: ${window.supabaseIntegration.getRemainingTime()} hours`);
                     
-                    // Sincronizar balance del usuario con la sesión
+                    // Sync user balance with session
                     syncUserBalance();
                     
-                    // Ocultar botón de inicio y mostrar que está minando
+                    // Hide start button and show that it's mining
                     document.getElementById('startMiningBtn').style.display = 'none';
                     document.getElementById('stopMiningBtn').classList.add('hidden');
                     
-                    // Reanudar simulación de minería
+                    // Resume mining simulation
                     startMiningSimulation();
                     
-                    // Mostrar estado actual de la sesión
+                    // Show current session status
                     showSessionStatus();
                     
-                    // Mostrar notificación
+                    // Show notification
                     showNotification('⛏️ Mining resumed - 24-hour session active', 'success');
                 } else {
-                    console.log('ℹ️ No hay sesión de minería activa');
+                    console.log('ℹ️ No active mining session');
                 }
             } catch (error) {
-                console.error('❌ Error verificando sesión de minería:', error);
+                console.error('❌ Error checking mining session:', error);
             }
         }
 
@@ -2098,24 +2098,24 @@
                 const session = window.supabaseIntegration.getMiningSession();
                 
                 if (user && session.isActive) {
-                    console.log('🔄 Sincronizando balance del usuario...');
-                    console.log(`💰 Balance actual: ${user.balance.toFixed(6)} RSC`);
-                    console.log(`⛏️ Tokens en sesión: ${session.tokensMined.toFixed(6)} RSC`);
+                    console.log('🔄 Syncing user balance...');
+                    console.log(`💰 Current balance: ${user.balance.toFixed(6)} RSC`);
+                    console.log(`⛏️ Session tokens: ${session.tokensMined.toFixed(6)} RSC`);
                     
-                    // Actualizar la interfaz para mostrar el balance correcto
+                    // Update interface to show correct balance
                     updateBalanceDisplay();
                     
-                    console.log('✅ Balance sincronizado correctamente');
+                    console.log('✅ Balance synced successfully');
                 }
             } catch (error) {
-                console.error('❌ Error sincronizando balance:', error);
+                console.error('❌ Error syncing balance:', error);
             }
         }
 
         function updateBalanceDisplay() {
             const user = window.supabaseIntegration.getCurrentUser();
             if (user) {
-                // Actualizar balance en el header
+                // Update balance in header
                 const userBalance = document.getElementById('userBalance');
                 const userBalanceDisplay = document.getElementById('userBalanceDisplay');
                 const totalMinedDisplay = document.getElementById('totalMinedDisplay');
@@ -2304,7 +2304,7 @@
                         if (targetElement) {
                             targetElement.classList.add('active');
                             
-                            // Si es la sección de logros, actualizar la UI
+                            // If it's the achievements section, update the UI
                             if (targetSection === 'achievements-settings') {
                                 updateAchievementUI();
                             }
@@ -2324,12 +2324,12 @@
                     const currentBalance = document.getElementById('currentBalance');
                     const currentReferralCode = document.getElementById('currentReferralCode');
                     
-                    if (currentUsername) currentUsername.textContent = user.username || 'No disponible';
-                    if (currentEmail) currentEmail.textContent = user.email || 'No disponible';
+                    if (currentUsername) currentUsername.textContent = user.username || 'Not available';
+                    if (currentEmail) currentEmail.textContent = user.email || 'Not available';
                     if (currentBalance) currentBalance.textContent = `${user.balance.toFixed(6)} RSC`;
                     
                     if (window.referralSystem && currentReferralCode) {
-                        currentReferralCode.textContent = window.referralSystem.getReferralCode() || 'Generando...';
+                        currentReferralCode.textContent = window.referralSystem.getReferralCode() || 'Generating...';
                     }
                 }
             }
@@ -2349,7 +2349,7 @@
                 showNotification('Session started successfully', 'success');
                 showMiningDashboard();
                 
-                // Verificar si hay una sesión de minería activa después del login
+                // Check if there's an active mining session after login
                 setTimeout(async () => {
                     await checkAndRestoreMiningSession();
                 }, 500);
@@ -2374,14 +2374,14 @@
                 return;
             }
 
-            // Validar código de invitador si se proporcionó
+            // Validate inviter code if provided
             if (inviterCode && inviterCode.length < 4) {
                 showNotification('Referral code must be at least 4 characters long', 'error');
                 return;
             }
 
             try {
-                // Registrar usuario con código de invitador
+                // Register user with inviter code
                 const result = await window.supabaseIntegration.registerUser(email, username, password, inviterCode);
                 
                 if (inviterCode) {
@@ -2392,7 +2392,7 @@
                 
                 showMiningDashboard();
                 
-                // Verificar si hay una sesión de minería activa después del registro
+                // Check if there's an active mining session after registration
                 setTimeout(async () => {
                     await checkAndRestoreMiningSession();
                 }, 500);
@@ -2403,11 +2403,11 @@
 
         async function handleStartMining() {
             try {
-                // Limpiar completamente cualquier sesión existente antes de intentar iniciar
-                console.log('🧹 Limpiando sesiones existentes...');
+                // Completely clean any existing session before trying to start
+                console.log('🧹 Cleaning existing sessions...');
                 localStorage.removeItem('rsc_mining_session');
                 
-                // Resetear el estado de minería en supabaseIntegration
+                // Reset mining state in supabaseIntegration
                 if (window.supabaseIntegration) {
                     window.supabaseIntegration.miningSession.isActive = false;
                     window.supabaseIntegration.miningSession.sessionId = null;
@@ -2422,19 +2422,19 @@
                 await window.supabaseIntegration.startMiningSession();
                 showNotification('⛏️ 24-hour mining started - Will not stop until completed', 'success');
                 
-                // Actualizar UI
+                // Update UI
                 document.getElementById('startMiningBtn').style.display = 'none';
-                document.getElementById('stopMiningBtn').classList.add('hidden'); // Ocultar botón de detener
+                document.getElementById('stopMiningBtn').classList.add('hidden'); // Hide stop button
                 
-                // Mostrar información de la sesión
+                // Show session information
                 const session = window.supabaseIntegration.getMiningSession();
                 const endTime = new Date(session.endTime);
-                showNotification(`⏰ La minería terminará el: ${endTime.toLocaleString()}`, 'info');
+                showNotification(`⏰ Mining will end at: ${endTime.toLocaleString()}`, 'info');
                 
-                // Iniciar simulación de minería
+                // Start mining simulation
                 startMiningSimulation();
             } catch (error) {
-                console.error('❌ Error en handleStartMining:', error);
+                console.error('❌ Error in handleStartMining:', error);
                 showNotification('Error starting mining: ' + error.message, 'error');
             }
         }
@@ -2490,21 +2490,21 @@
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('miningDashboard').style.display = 'block';
             
-            // Actualizar información del usuario
+            // Update user information
             const user = window.supabaseIntegration.getCurrentUser();
             if (user) {
                 document.getElementById('userName').textContent = user.username;
                 
-                // Usar la función centralizada para actualizar el balance
+                // Use centralized function to update balance
                 updateBalanceDisplay();
                 
-                // Mostrar información del usuario en el header
+                // Show user information in header
                 document.getElementById('userInfo').style.display = 'flex';
                 
-                // Mostrar botón de logout
+                // Show logout button
                 document.getElementById('logoutBtn').style.display = 'block';
                 
-                // Actualizar estado de conexión
+                // Update connection status
                 document.getElementById('connectionText').textContent = 'Connected';
                 document.getElementById('connectionStatus').classList.add('connected');
             }
@@ -2513,28 +2513,28 @@
         let miningInterval = null;
 
         function startMiningSimulation() {
-            console.log('⛏️ Iniciando simulación de minería...');
+            console.log('⛏️ Starting mining simulation...');
             
-            // Detener cualquier simulación anterior
+            // Stop any previous simulation
             stopMiningSimulation();
             
-            // Verificar que hay una sesión activa
+            // Check that there's an active session
             const session = window.supabaseIntegration.getMiningSession();
             if (!session.isActive) {
-                console.log('❌ No hay sesión activa para simular');
+                console.log('❌ No active session to simulate');
                 return;
             }
             
-            console.log(`✅ Simulación iniciada - Sesión: ${session.sessionId}`);
-            console.log(`⏰ Tiempo restante: ${window.supabaseIntegration.getRemainingTime()} horas`);
+            console.log(`✅ Simulation started - Session: ${session.sessionId}`);
+            console.log(`⏰ Time remaining: ${window.supabaseIntegration.getRemainingTime()} hours`);
             
-            // Actualizar progreso cada segundo
+            // Update progress every second
             const progressInterval = setInterval(() => {
                 updateMiningProgress();
                 
-                // Verificar si la sesión expiró
+                // Check if session expired
                 if (window.supabaseIntegration.isSessionExpired()) {
-                    console.log('⏰ Sesión de 24 horas completada automáticamente');
+                    console.log('⏰ 24-hour session completed automatically');
                     showNotification('🎉 24-hour session completed! You can start a new session', 'success');
                     stopMiningSimulation();
                     resetMiningUI();
@@ -2542,60 +2542,60 @@
                 }
             }, 1000);
             
-            // Simular minería cada 5 segundos
+            // Simulate mining every 5 seconds
             miningInterval = setInterval(() => {
-                // Verificar si la sesión sigue activa
+                // Check if session is still active
                 const currentSession = window.supabaseIntegration.getMiningSession();
                 if (!currentSession.isActive) {
-                    console.log('⏹️ Sesión de minería detenida');
+                    console.log('⏹️ Mining session stopped');
                     stopMiningSimulation();
                     return;
                 }
                 
-                // Calcular minería usando sistemas avanzados
+                // Calculate mining using advanced systems
                 let tokensMined = 0;
                 let hashRate = 0;
                 let efficiency = 0;
                 
                 if (window.algorithmSystem) {
-                    // Usar algoritmo activo para calcular minería
-                    tokensMined = window.algorithmSystem.calculateMiningRate() * 5; // 5 segundos
+                    // Use active algorithm to calculate mining
+                    tokensMined = window.algorithmSystem.calculateMiningRate() * 5; // 5 seconds
                     hashRate = window.algorithmSystem.calculateHashRate();
                     efficiency = window.algorithmSystem.calculateEfficiency();
                 } else {
-                    // Fallback a minería básica
+                    // Fallback to basic mining
                     tokensMined = Math.random() * 0.0002 + 0.0001;
                     hashRate = Math.random() * 900 + 100;
                     efficiency = Math.random() * 20 + 80;
                 }
                 
-                // Actualizar stats en Supabase (incluye balance automáticamente)
+                // Update stats in Supabase (includes balance automatically)
                 window.supabaseIntegration.updateMiningStats(tokensMined, hashRate, efficiency);
                 
-                // Actualizar UI
+                // Update UI
                 updateMiningUI(tokensMined, hashRate, efficiency);
             }, 5000);
             
-            // Guardar referencia al intervalo de progreso para poder detenerlo
+            // Save reference to progress interval to be able to stop it
             window.miningProgressInterval = progressInterval;
         }
 
         function stopMiningSimulation() {
-            console.log('⏹️ Deteniendo simulación de minería...');
+            console.log('⏹️ Stopping mining simulation...');
             
             if (miningInterval) {
                 clearInterval(miningInterval);
                 miningInterval = null;
-                console.log('✅ Intervalo de minería detenido');
+                console.log('✅ Mining interval stopped');
             }
             
             if (window.miningProgressInterval) {
                 clearInterval(window.miningProgressInterval);
                 window.miningProgressInterval = null;
-                console.log('✅ Intervalo de progreso detenido');
+                console.log('✅ Progress interval stopped');
             }
             
-            console.log('✅ Simulación de minería detenida completamente');
+            console.log('✅ Mining simulation stopped completely');
         }
 
 
@@ -2615,12 +2615,12 @@
                 const remainingHours = Math.floor(remaining / 3600000);
                 const remainingMinutes = Math.floor((remaining % 3600000) / 60000);
                 
-                console.log(`📊 Estado de la sesión:`);
-                console.log(`⏰ Tiempo transcurrido: ${hours}h ${minutes}m ${seconds}s`);
-                console.log(`⏳ Tiempo restante: ${remainingHours}h ${remainingMinutes}m`);
-                console.log(`💰 Tokens minados: ${session.tokensMined.toFixed(6)} RSC`);
+                console.log(`📊 Session status:`);
+                console.log(`⏰ Elapsed time: ${hours}h ${minutes}m ${seconds}s`);
+                console.log(`⏳ Time remaining: ${remainingHours}h ${remainingMinutes}m`);
+                console.log(`💰 Tokens mined: ${session.tokensMined.toFixed(6)} RSC`);
                 console.log(`🔋 Hash Rate: ${session.hashRate.toFixed(2)} H/s`);
-                console.log(`⚡ Eficiencia: ${session.efficiency.toFixed(1)}%`);
+                console.log(`⚡ Efficiency: ${session.efficiency.toFixed(1)}%`);
             }
         }
 
@@ -2632,12 +2632,12 @@
                     const now = new Date();
                     const startTime = new Date(sessionData.startTime);
                     const elapsed = now - startTime;
-                    const duration = 24 * 60 * 60 * 1000; // 24 horas
+                    const duration = 24 * 60 * 60 * 1000; // 24 hours
                     
                     if (elapsed >= duration) {
-                        console.log('⏰ Sesión expirada detectada - Procesando recompensas...');
+                        console.log('⏰ Expired session detected - Processing rewards...');
                         
-                        // Procesar recompensas de la sesión expirada
+                        // Process rewards from expired session
                         const tokensMined = sessionData.tokensMined || 0;
                         if (tokensMined > 0) {
                             const user = window.supabaseIntegration.getCurrentUser();
@@ -2645,7 +2645,7 @@
                                 user.balance += tokensMined;
                                 window.supabaseIntegration.saveUserToStorage();
                                 
-                                // Actualizar UI
+                                // Update UI
                                 const userBalance = document.getElementById('userBalance');
                                 const userBalanceDisplay = document.getElementById('userBalanceDisplay');
                                 
@@ -2656,26 +2656,26 @@
                                     userBalanceDisplay.textContent = user.balance.toFixed(6) + ' RSC';
                                 }
                                 
-                                showNotification(`🎉 ¡Sesión de 24 horas completada! +${tokensMined.toFixed(6)} RSC agregados`, 'success');
+                                showNotification(`🎉 24-hour session completed! +${tokensMined.toFixed(6)} RSC added`, 'success');
                             }
                         }
                         
-                        // Limpiar sesión expirada
+                        // Clean expired session
                         localStorage.removeItem('rsc_mining_session');
-                        console.log('✅ Sesión expirada procesada y limpiada');
+                        console.log('✅ Expired session processed and cleaned');
                     }
                 }
             } catch (error) {
-                console.error('❌ Error procesando sesión expirada:', error);
+                console.error('❌ Error processing expired session:', error);
             }
         }
 
         function resetMiningUI() {
-            // Mostrar botón de inicio
+            // Show start button
             document.getElementById('startMiningBtn').style.display = 'block';
             document.getElementById('stopMiningBtn').classList.add('hidden');
             
-            // Resetear métricas
+            // Reset metrics
             const hashRateDisplay = document.getElementById('hashRateDisplay');
             if (hashRateDisplay) {
                 hashRateDisplay.textContent = '0 H/s';
@@ -2691,7 +2691,7 @@
                 tokensPerSecondDisplay.textContent = '0.000000 RSC/s';
             }
             
-            // Resetear progreso
+            // Reset progress
             const sessionTimeDisplay = document.getElementById('sessionTimeDisplay');
             if (sessionTimeDisplay) {
                 sessionTimeDisplay.textContent = '00:00:00';
@@ -2725,7 +2725,7 @@
 
 
         function updateMiningUI(tokensMined, hashRate, efficiency) {
-            // Actualizar métricas en tiempo real
+            // Update metrics in real time
             const hashRateDisplay = document.getElementById('hashRateDisplay');
             if (hashRateDisplay) {
                 hashRateDisplay.textContent = Math.round(hashRate) + ' H/s';
@@ -2741,13 +2741,13 @@
                 tokensPerSecondDisplay.textContent = tokensMined.toFixed(6) + ' RSC/s';
             }
             
-            // Actualizar balance del usuario en la interfaz
+            // Update user balance in interface
             updateBalanceDisplay();
             
-            // Actualizar progreso de minería
+            // Update mining progress
             updateMiningProgress();
             
-            // Actualizar sistemas avanzados
+            // Update advanced systems
             updateAdvancedUI();
         }
 
@@ -2765,13 +2765,13 @@
 
             const levelProgress = window.levelSystem.getLevelProgress();
             
-            // Actualizar nivel del usuario
+            // Update user level
             const userLevelDisplay = document.getElementById('userLevelDisplay');
             if (userLevelDisplay) {
                 userLevelDisplay.textContent = levelProgress.currentLevel;
             }
 
-            // Actualizar progreso de nivel
+            // Update level progress
             const levelProgressText = document.getElementById('levelProgressText');
             if (levelProgressText) {
                 levelProgressText.textContent = `${levelProgress.progressXP}/${levelProgress.requiredXP} XP`;
@@ -2782,7 +2782,7 @@
                 levelProgressBar.style.width = levelProgress.progressPercentage + '%';
             }
 
-            // Actualizar estadísticas de nivel
+            // Update level statistics
             const totalXPDisplay = document.getElementById('totalXPDisplay');
             if (totalXPDisplay) {
                 totalXPDisplay.textContent = window.levelSystem.userLevel.totalXp;
@@ -3422,9 +3422,9 @@
             // updateMarketplaceUI(); // DISABLED
         }
 
-        // Función de emergencia para limpiar sesiones (disponible en consola)
+        // Emergency function to clean sessions (available in console)
         window.forceCleanMiningSessions = function() {
-            console.log('🧹 FORZANDO limpieza completa de sesiones...');
+            console.log('🧹 FORCING complete session cleanup...');
             localStorage.removeItem('rsc_mining_session');
             localStorage.removeItem('rsc_user_data');
             
@@ -3452,14 +3452,14 @@
             const minutes = Math.floor((elapsed % 3600000) / 60000);
             const seconds = Math.floor((elapsed % 60000) / 1000);
             
-            // Actualizar tiempo de sesión
+            // Update session time
             const sessionTimeDisplay = document.getElementById('sessionTimeDisplay');
             if (sessionTimeDisplay) {
                 sessionTimeDisplay.textContent = 
                     `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
             
-            // Actualizar tokens minados en la sesión (mostrar balance del usuario)
+            // Update tokens mined in session (show user balance)
             const sessionTokensDisplay = document.getElementById('sessionTokensDisplay');
             if (sessionTokensDisplay) {
                 const user = window.supabaseIntegration.getCurrentUser();
@@ -3484,13 +3484,13 @@
                 progressPercentageDisplay.textContent = Math.round(progressPercentage) + '%';
             }
             
-            // Actualizar barra de progreso
+            // Update progress bar
             const progressBarFill = document.getElementById('progressBarFill');
             if (progressBarFill) {
                 progressBarFill.style.width = Math.round(progressPercentage) + '%';
             }
             
-            // Actualizar total minado (balance total del usuario)
+            // Update total mined (user's total balance)
             const totalMinedDisplay = document.getElementById('totalMinedDisplay');
             if (totalMinedDisplay) {
                 const user = window.supabaseIntegration.getCurrentUser();
@@ -3500,17 +3500,17 @@
                 }
             }
             
-            // Mostrar tiempo restante en el título de la página
+            // Show remaining time in page title
             const remainingHours = window.supabaseIntegration.getRemainingTime();
             if (remainingHours > 0) {
-                document.title = `RSC Mining Platform - ${remainingHours}h restantes`;
+                document.title = `RSC Mining Platform - ${remainingHours}h remaining`;
             }
         }
 
         function showNotification(message, type = 'info') {
             console.log(`[${type.toUpperCase()}] ${message}`);
             
-            // Crear notificación visual si es necesario
+            // Create visual notification if necessary
             const notification = document.createElement('div');
             notification.className = `notification notification-${type}`;
             notification.textContent = message;
@@ -3533,40 +3533,40 @@
             // Configurar event listeners
             setupAdvancedReferralEventListeners();
             
-            // Cargar datos cuando el usuario esté autenticado
+            // Load data when user is authenticated
             if (window.supabaseIntegration?.user?.isAuthenticated) {
                 updateAdvancedReferralUI().catch(error => {
                     console.error('❌ Error inicial actualizando UI de referidos:', error);
                 });
             }
             
-            // Escuchar eventos de autenticación
+            // Listen to authentication events
             window.addEventListener('userAuthenticated', async () => {
-                console.log('🔗 Usuario autenticado, actualizando UI de referidos...');
+                console.log('🔗 User authenticated, updating referral UI...');
                 setTimeout(async () => {
                     await updateAdvancedReferralUI();
                 }, 100);
             });
             
-            // Actualizar cada 5 segundos si el usuario está autenticado
+            // Update every 5 seconds if user is authenticated
             setInterval(async () => {
                 if (window.supabaseIntegration?.user?.isAuthenticated) {
                     await updateAdvancedReferralUI();
                 }
             }, 5000);
             
-            // Escuchar actualizaciones de competencia
+            // Listen to competition updates
             window.addEventListener('referralCompetitionUpdate', async (event) => {
-                console.log('🏆 Actualización de competencia recibida');
+                console.log('🏆 Competition update received');
                 updateLeaderboardPreview();
                 await updateAdvancedReferralUI();
             });
             
-            console.log('✅ Sistema avanzado de referidos inicializado');
+            console.log('✅ Advanced referral system initialized');
         }
 
         function setupAdvancedReferralEventListeners() {
-            // Copiar código de referido
+            // Copy referral code
             const copyCodeBtn = document.getElementById('copyReferralCode');
             if (copyCodeBtn) {
                 copyCodeBtn.addEventListener('click', async () => {
@@ -3584,7 +3584,7 @@
                 });
             }
 
-            // Copiar enlace de referido
+            // Copy referral link
             const copyLinkBtn = document.getElementById('copyReferralLink');
             if (copyLinkBtn) {
                 copyLinkBtn.addEventListener('click', async () => {
@@ -3604,7 +3604,7 @@
                 });
             }
 
-            // Compartir enlace de referido
+            // Share referral link
             const shareBtn = document.getElementById('shareReferralLink');
             if (shareBtn) {
                 shareBtn.addEventListener('click', () => {
@@ -3613,16 +3613,16 @@
                     if (code) {
                         const baseUrl = window.location.origin + window.location.pathname;
                         const link = `${baseUrl}?ref=${code}`;
-                        const text = `¡Únete a RSC Mining y comienza a minar criptomonedas! Usa mi código: ${code}`;
+                        const text = `Join RSC Mining and start mining cryptocurrencies! Use my code: ${code}`;
                         
                         if (navigator.share) {
                             navigator.share({
-                                title: 'RSC Mining - Referido',
+                                title: 'RSC Mining - Referral',
                                 text: text,
                                 url: link
                             });
                         } else {
-                            // Fallback: abrir en Twitter
+                            // Fallback: open on Twitter
                             const shareText = encodeURIComponent(`${text} ${link}`);
                             const shareUrl = `https://twitter.com/intent/tweet?text=${shareText}`;
                             window.open(shareUrl, '_blank');
@@ -3633,16 +3633,16 @@
                 });
             }
 
-            // Toggle vista de árbol
+            // Toggle tree view
             const toggleTreeBtn = document.getElementById('toggleTreeView');
             if (toggleTreeBtn) {
                 toggleTreeBtn.addEventListener('click', () => {
-                    // TODO: Implementar toggle entre vista árbol y lista
-                    showNotification('🔄 Cambiando vista...', 'info');
+                    // TODO: Implement toggle between tree and list view
+                    showNotification('🔄 Switching view...', 'info');
                 });
             }
 
-            // Ver leaderboard completo
+            // View full leaderboard
             const viewLeaderboardBtn = document.getElementById('viewFullLeaderboard');
             if (viewLeaderboardBtn) {
                 viewLeaderboardBtn.addEventListener('click', () => {
@@ -3652,7 +3652,7 @@
         }
 
         async function updateAdvancedReferralUI() {
-            // Obtener código directamente del usuario autenticado
+            // Get code directly from authenticated user
             const user = window.supabaseIntegration?.user;
             const code = user?.referralCode;
             
@@ -3674,19 +3674,19 @@
                 linkInput.value = `${baseUrl}?ref=${code}`;
             }
 
-            // Actualizar estadísticas
+            // Update statistics
             await updateReferralStats();
             
-            // Actualizar rango
+            // Update rank
             updateRankDisplay();
             
-            // Actualizar logros
+            // Update achievements
             updateReferralAchievements();
             
-            // Actualizar árbol de referidos
+            // Update referral tree
             updateReferralTree();
             
-            // Actualizar leaderboard preview
+            // Update leaderboard preview
             updateLeaderboardPreview();
         }
 
@@ -3705,26 +3705,26 @@
             if (monthlyEl) monthlyEl.textContent = 'Loading...';
 
             try {
-                // Obtener datos reales de forma asíncrona
+                // Get real data asynchronously
                 const totalReferrals = await window.advancedReferralSystem.getTotalReferrals();
                 const activeReferrals = await window.advancedReferralSystem.getActiveReferrals();
                 const totalCommissions = await window.advancedReferralSystem.getTotalCommissions();
 
-                // Actualizar elementos con datos reales
+                // Update elements with real data
                 if (totalEl) totalEl.textContent = totalReferrals.toString();
                 if (activeEl) activeEl.textContent = activeReferrals.toString();
                 if (commissionsEl) commissionsEl.textContent = totalCommissions.toFixed(6);
-                if (monthlyEl) monthlyEl.textContent = '0.000000'; // TODO: Calcular mensual
+                if (monthlyEl) monthlyEl.textContent = '0.000000'; // TODO: Calculate monthly
                 
-                console.log('✅ Estadísticas de referidos actualizadas:', {
+                console.log('✅ Referral statistics updated:', {
                     total: totalReferrals,
                     active: activeReferrals,
                     commissions: totalCommissions
                 });
             } catch (error) {
-                console.error('❌ Error actualizando estadísticas de referidos:', error);
+                console.error('❌ Error updating referral statistics:', error);
                 
-                // Mostrar ceros en caso de error
+                // Show zeros in case of error
                 if (totalEl) totalEl.textContent = '0';
                 if (activeEl) activeEl.textContent = '0';
                 if (commissionsEl) commissionsEl.textContent = '0.000000';
@@ -3748,13 +3748,13 @@
                 legendary: '👑'
             };
 
-            // Actualizar badge del título
+            // Update title badge
             const rankBadge = document.getElementById('referralRankBadge');
             if (rankBadge && currentRank) {
                 rankBadge.textContent = currentRank.name;
             }
 
-            // Actualizar display de rango
+            // Update rank display
             const rankIcon = document.querySelector('.rank-icon');
             const rankName = document.querySelector('.rank-name');
             const rankMultiplier = document.querySelector('.rank-multiplier');
@@ -3774,11 +3774,11 @@
                     const remaining = nextRank.min - totalReferrals;
 
                     if (progressFill) progressFill.style.width = Math.min(progress, 100) + '%';
-                    if (progressText) progressText.textContent = `${totalReferrals}/${nextRank.min} para ${nextRank.name}`;
+                    if (progressText) progressText.textContent = `${totalReferrals}/${nextRank.min} to ${nextRank.name}`;
                 } else {
-                    // Rango máximo alcanzado
+                    // Maximum rank reached
                     if (progressFill) progressFill.style.width = '100%';
-                    if (progressText) progressText.textContent = 'Rango máximo alcanzado!';
+                    if (progressText) progressText.textContent = 'Maximum rank reached!';
                 }
             }
         }
@@ -3911,7 +3911,7 @@
                 `;
             });
 
-            // Agregar información de la competencia
+            // Add competition information
             html += `
                 <div class="competition-info">
                     <div class="prize-info">
@@ -3945,7 +3945,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <!-- Información de la competencia -->
+                        <!-- Competition information -->
                         <div class="competition-banner">
                             <div class="competition-title">
                                 <h3>🏆 60-Day Competition</h3>
@@ -3983,7 +3983,7 @@
 
                         <!-- Leaderboard completo -->
                         <div class="full-leaderboard">
-                            <h4>🏅 Clasificación Actual</h4>
+                            <h4>🏅 Current Ranking</h4>
                             <div class="leaderboard-list-full">
                                 ${leaderboard.map(user => `
                                     <div class="leaderboard-item-full ${user.isCurrentUser ? 'current-user' : ''}">
@@ -4000,8 +4000,8 @@
                                             </div>
                                         </div>
                                         <div class="user-badges">
-                                            ${user.rank === 1 ? '<span class="badge leader">👑 Líder</span>' : ''}
-                                            ${user.referralsCount >= (competitionInfo.minReferrals || 5) ? '<span class="badge qualified">✅ Calificado</span>' : ''}
+                                            ${user.rank === 1 ? '<span class="badge leader">👑 Leader</span>' : ''}
+                                            ${user.referralsCount >= (competitionInfo.minReferrals || 5) ? '<span class="badge qualified">✅ Qualified</span>' : ''}
                                         </div>
                                     </div>
                                 `).join('')}
@@ -4044,28 +4044,28 @@
         // ===== REFERRAL SYSTEM FUNCTIONS REMOVED =====
         /*
         function initializeReferralSystem() {
-            console.log('🔗 Inicializando sistema de referidos...');
+            console.log('🔗 Initializing referral system...');
             
-            // Configurar event listeners para referidos
+            // Set up event listeners for referrals
             setupReferralEventListeners();
             
-            // Cargar datos de referidos del usuario
+            // Load user referral data
             loadReferralData();
             
-            // Verificar si hay código de referido en la URL
+            // Check if there's a referral code in the URL
             checkReferralCodeFromURL();
             
-            console.log('✅ Sistema de referidos inicializado');
+            console.log('✅ Referral system initialized');
         }
 
         function setupReferralEventListeners() {
-            // Botón copiar código de referido
+            // Copy referral code button
             const copyReferralCodeBtn = document.getElementById('copyReferralCode');
             if (copyReferralCodeBtn) {
                 copyReferralCodeBtn.addEventListener('click', copyReferralCode);
             }
 
-            // Botón copiar enlace de referido
+            // Copy referral link button
             const copyReferralLinkBtn = document.getElementById('copyReferralLink');
             if (copyReferralLinkBtn) {
                 copyReferralLinkBtn.addEventListener('click', copyReferralLink);
@@ -4085,7 +4085,7 @@
             try {
                 const user = window.supabaseIntegration.getCurrentUser();
                 if (user && user.referralCode) {
-                    // Actualizar código de referido
+                    // Update referral code
                     const referralCodeDisplay = document.getElementById('referralCodeDisplay');
                     const referralLink = document.getElementById('referralLink');
                     
@@ -4098,26 +4098,26 @@
                         referralLink.value = `${baseUrl}?ref=${user.referralCode}`;
                     }
                     
-                    // Cargar estadísticas de referidos (simuladas por ahora)
+                    // Load referral statistics (simulated for now)
                     loadReferralStats(user);
                     
-                    console.log(`✅ Datos de referidos cargados: ${user.referralCode}`);
+                    console.log(`✅ Referral data loaded: ${user.referralCode}`);
                 } else {
-                    console.log('⚠️ Usuario no autenticado o sin código de referido');
+                    console.log('⚠️ User not authenticated or no referral code');
                 }
             } catch (error) {
-                console.error('❌ Error cargando datos de referidos:', error);
+                console.error('❌ Error loading referral data:', error);
             }
         }
 
         async function loadReferralStats(user) {
             try {
-                console.log('📊 Cargando estadísticas reales de referidos...');
+                console.log('📊 Loading real referral statistics...');
                 
-                // Obtener datos reales de Supabase
+                // Get real data from Supabase
                 const referralStats = await getReferralStatsFromSupabase(user.id);
                 
-                // Actualizar estadísticas en la UI
+                // Update statistics in UI
                 const totalReferralsEl = document.getElementById('totalReferrals');
                 const totalCommissionsEl = document.getElementById('totalCommissions');
                 const referralLevelEl = document.getElementById('referralLevel');
@@ -4134,14 +4134,14 @@
                     referralLevelEl.textContent = referralStats.referralLevel;
                 }
                 
-                // Cargar historial real
+                // Load real history
                 await loadReferralHistoryFromSupabase(user.id);
                 
-                console.log('✅ Estadísticas reales cargadas:', referralStats);
+                console.log('✅ Real statistics loaded:', referralStats);
             } catch (error) {
-                console.error('❌ Error cargando estadísticas de referidos:', error);
+                console.error('❌ Error loading referral statistics:', error);
                 
-                // Fallback a datos simulados si hay error
+                // Fallback to simulated data if there's an error
                 const mockData = {
                     totalReferrals: 0,
                     totalCommissions: 0,
@@ -4156,7 +4156,7 @@
 
         async function getReferralStatsFromSupabase(userId) {
             try {
-                // Obtener número de referidos
+                // Get number of referrals
                 const referralsResponse = await window.supabaseIntegration.makeRequest('GET', 
                     `/rest/v1/referrals?referrer_id=eq.${userId}&select=count`);
                 
@@ -4173,7 +4173,7 @@
                     totalCommissions = transactions.reduce((sum, tx) => sum + parseFloat(tx.amount), 0);
                 }
                 
-                // Calcular nivel de referido (basado en número de referidos)
+                // Calculate referral level (based on number of referrals)
                 const referralLevel = Math.min(3, Math.floor(totalReferrals / 5) + 1);
                 
                 return {
@@ -4182,7 +4182,7 @@
                     referralLevel
                 };
             } catch (error) {
-                console.error('Error obteniendo estadísticas de Supabase:', error);
+                console.error('Error getting statistics from Supabase:', error);
                 throw error;
             }
         }
@@ -4209,7 +4209,7 @@
             referralList.innerHTML = '';
             
             if (referrals.length === 0) {
-                referralList.innerHTML = '<div class="referral-item"><div class="referral-info"><div class="referral-name">No hay referidos aún</div><div class="referral-date">Comparte tu código para empezar a ganar</div></div></div>';
+                referralList.innerHTML = '<div class="referral-item"><div class="referral-info"><div class="referral-name">No referrals yet</div><div class="referral-date">Share your code to start earning</div></div></div>';
                 return;
             }
             
@@ -4239,11 +4239,11 @@
             const diff = now - date;
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             
-            if (days === 0) return 'Hoy';
-            if (days === 1) return 'Ayer';
-            if (days < 7) return `Hace ${days} días`;
-            if (days < 30) return `Hace ${Math.floor(days / 7)} semanas`;
-            return `Hace ${Math.floor(days / 30)} meses`;
+            if (days === 0) return 'Today';
+            if (days === 1) return 'Yesterday';
+            if (days < 7) return `${days} days ago`;
+            if (days < 30) return `${Math.floor(days / 7)} weeks ago`;
+            return `${Math.floor(days / 30)} months ago`;
         }
 
         function checkReferralCodeFromURL() {
@@ -4251,15 +4251,15 @@
             const referralCode = urlParams.get('ref');
             
             if (referralCode) {
-                console.log(`🎁 Código de referido detectado: ${referralCode}`);
+                console.log(`🎁 Referral code detected: ${referralCode}`);
                 
-                // Mostrar notificación
-                showNotification(`¡Código de referido detectado: ${referralCode}!`, 'success');
+                // Show notification
+                showNotification(`Referral code detected: ${referralCode}!`, 'success');
                 
-                // Guardar código de referido para usar en el registro
+                // Save referral code to use in registration
                 localStorage.setItem('rsc_pending_referral', referralCode);
                 
-                // Actualizar el campo de código de referido en el formulario de registro
+                // Update the referral code field in the registration form
                 const referralCodeInput = document.getElementById('referralCode');
                 if (referralCodeInput) {
                     referralCodeInput.value = referralCode;
@@ -4310,7 +4310,7 @@
             if (!referralLink) return;
             
             const link = referralLink.value;
-            const message = `¡Únete a la minería cuántica RSC! Usa mi código de referido y gana tokens juntos. ${link}`;
+            const message = `Join RSC quantum mining! Use my referral code and earn tokens together. ${link}`;
             
             let shareUrl = '';
             
@@ -4347,11 +4347,11 @@
         }
 
         function updateReferralHistory() {
-            // Simular historial de referidos (en producción vendría de Supabase)
+            // Simulate referral history (in production would come from Supabase)
             const mockHistory = [
                 {
-                    name: 'Usuario123',
-                    date: 'Hace 2 días',
+                    name: 'User123',
+                    date: '2 days ago',
                     commission: '0.500000',
                     status: 'active'
                 },

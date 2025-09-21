@@ -1,0 +1,67 @@
+/* ===== DESACTIVAR EFECTOS HOVER EN TEXTOS ===== */
+/* Elimina todos los efectos de hover en textos para evitar bugs */
+
+/* Desactivar hover en títulos y textos principales */
+h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover,
+p:hover, span:hover, strong:hover, em:hover, b:hover, i:hover {
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  scale: 1 !important;
+  filter: none !important;
+  color: inherit !important;
+  text-shadow: inherit !important;
+}
+
+/* Desactivar hover en elementos de texto específicos */
+.quantum-title:hover,
+.title-line:hover,
+.title-highlight:hover,
+.highlight-text:hover,
+.quantum-description:hover,
+.hero-text-section *:hover {
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  scale: 1 !important;
+  filter: none !important;
+  color: inherit !important;
+}
+
+/* Desactivar hover en enlaces de texto (mantener solo color) */
+a:hover:not(.btn):not(.quantum-btn):not(.mobile-menu-link):not(.mobile-menu-action) {
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  scale: 1 !important;
+  filter: none !important;
+  text-shadow: inherit !important;
+}
+
+/* Desactivar hover en elementos de texto del hero */
+.quantum-hero span:not(.quantum-btn):not(.stat-card):not(.quantum-node):hover,
+.quantum-hero strong:hover,
+.quantum-hero p:not(.quantum-btn):hover,
+.quantum-hero h1:hover,
+.quantum-hero h2:hover,
+.quantum-hero h3:hover {
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  scale: 1 !important;
+  filter: none !important;
+}
+
+/* Desactivar hover en textos de tarjetas */
+.tech-card h3:hover,
+.tech-card p:hover,
+.ecosystem-card h3:hover,
+.ecosystem-card p:hover,
+.performance-card h3:hover,
+.performance-card p:hover {
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  scale: 1 !important;
+  filter: none !important;
+}

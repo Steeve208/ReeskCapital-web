@@ -45,6 +45,8 @@
   <link rel="stylesheet" href="styles/mobile-fixes.css?v=1.0">
   <link rel="stylesheet" href="styles/mobile-responsive-fixes.css?v=1.0">
   <link rel="stylesheet" href="styles/mobile-viewport-fixes.css?v=1.0">
+  <link rel="stylesheet" href="styles/disable-text-hover-effects.css?v=1.0">
+  <link rel="stylesheet" href="styles/simple-mobile-menu.css?v=1.0">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/img/rsc-logo-quantum.svg">
@@ -130,85 +132,91 @@
     </div>
   </nav>
 
-  <!-- Mobile Navbar -->
-  <nav class="mobile-navbar">
-    <div class="mobile-nav-container">
-      <!-- Logo Section -->
-      <div class="mobile-logo">
-        <div class="mobile-logo-container">
-          <img src="assets/img/rsc-logo-quantum.svg" alt="RSC Chain" class="mobile-logo-img">
-        </div>
-        <div class="mobile-logo-title">RSC CHAIN</div>
-      </div>
-      
-      <!-- Hamburger Button -->
-      <button class="mobile-hamburger" id="mobileHamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
-
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-      <div class="mobile-menu-logo">
-        <div class="mobile-menu-logo-container">
-          <img src="assets/img/rsc-logo-quantum.svg" alt="RSC Chain" class="mobile-menu-logo-img">
-        </div>
-        <div class="mobile-menu-logo-title">RSC CHAIN</div>
-      </div>
-      <button class="mobile-close" id="mobileClose">×</button>
-    </div>
-    
+    <div class="mobile-menu-overlay"></div>
     <div class="mobile-menu-content">
-      <!-- Navigation Section -->
-      <div class="mobile-menu-section">
-        <h3 class="mobile-menu-title">Navigation</h3>
-        <div class="mobile-menu-links">
-          <a href="index.html" class="mobile-menu-link active">
-            <span class="mobile-menu-icon">🏠</span>
-            <span>Home</span>
-          </a>
-          <a href="pages/about.html" class="mobile-menu-link">
-            <span class="mobile-menu-icon">ℹ️</span>
-            <span>About</span>
-          </a>
-          <a href="pages/mine.html" class="mobile-menu-link">
-            <span class="mobile-menu-icon">⛏️</span>
-            <span>Mine</span>
-          </a>
-          <a href="pages/staking.html" class="mobile-menu-link">
-            <span class="mobile-menu-icon">💰</span>
-            <span>Staking</span>
-          </a>
-          <a href="pages/explorer.html" class="mobile-menu-link">
-            <span class="mobile-menu-icon">🔍</span>
-            <span>Explorer</span>
-          </a>
-          <a href="pages/docs.html" class="mobile-menu-link">
-            <span class="mobile-menu-icon">📚</span>
-            <span>Docs</span>
-          </a>
+      <div class="mobile-menu-header">
+        <div class="mobile-menu-logo">
+          <img src="assets/img/rsc-logo-quantum.svg" alt="RSC Chain" class="mobile-menu-logo-img">
+          <span class="mobile-menu-logo-text">RSC CHAIN</span>
         </div>
+        <button class="mobile-menu-close" id="mobileMenuClose">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
       
-      <!-- Actions Section -->
-      <div class="mobile-menu-section">
-        <h3 class="mobile-menu-title">Actions</h3>
-        <div class="mobile-menu-actions">
-          <a href="pages/login.html" class="mobile-menu-action">
-            <span class="mobile-menu-icon">🔐</span>
-            <span>Login</span>
-          </a>
-        </div>
+      <div class="mobile-menu-body">
+        <nav class="mobile-menu-nav">
+          <div class="mobile-nav-section">
+            <h4 class="mobile-nav-title">Main</h4>
+            <a href="#home" class="mobile-nav-link">
+              <i class="fas fa-home"></i>
+              <span>Home</span>
+            </a>
+            <a href="#technology" class="mobile-nav-link">
+              <i class="fas fa-microchip"></i>
+              <span>Technology</span>
+            </a>
+            <a href="#ecosystem" class="mobile-nav-link">
+              <i class="fas fa-network-wired"></i>
+              <span>Ecosystem</span>
+            </a>
+            <a href="#performance" class="mobile-nav-link">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>Performance</span>
+            </a>
+          </div>
+          
+          <div class="mobile-nav-section">
+            <h4 class="mobile-nav-title">Platform</h4>
+            <a href="pages/mine.html" class="mobile-nav-link">
+              <i class="fas fa-coins"></i>
+              <span>Mining</span>
+            </a>
+            <a href="pages/wallet.html" class="mobile-nav-link">
+              <i class="fas fa-wallet"></i>
+              <span>Wallet</span>
+            </a>
+            <a href="pages/staking.html" class="mobile-nav-link">
+              <i class="fas fa-lock"></i>
+              <span>Staking</span>
+            </a>
+            <a href="pages/p2p.html" class="mobile-nav-link">
+              <i class="fas fa-exchange-alt"></i>
+              <span>P2P Trading</span>
+            </a>
+            <a href="pages/bank.html" class="mobile-nav-link">
+              <i class="fas fa-university"></i>
+              <span>Bank</span>
+            </a>
+            <a href="pages/explorer.html" class="mobile-nav-link">
+              <i class="fas fa-search"></i>
+              <span>Explorer</span>
+            </a>
+          </div>
+          
+          <div class="mobile-nav-section">
+            <h4 class="mobile-nav-title">Connect</h4>
+            <div class="mobile-social-links">
+              <a href="https://t.me/rscchain" class="mobile-social-link" target="_blank">
+                <i class="fab fa-telegram"></i>
+              </a>
+              <a href="https://x.com/rscchain" class="mobile-social-link" target="_blank">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="https://discord.gg/rscchain" class="mobile-social-link" target="_blank">
+                <i class="fab fa-discord"></i>
+              </a>
+              <a href="https://github.com/rscchain" class="mobile-social-link" target="_blank">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+        </nav>
       </div>
     </div>
   </div>
-
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
 
   <!-- Main Content -->
@@ -987,15 +995,15 @@
                 <div class="marker-pulse"></div>
               </div>
               <div class="timeline-content">
-                <div class="timeline-phase">Fase 0</div>
-                <div class="timeline-title">Ideología y Base</div>
-                <div class="timeline-status completed">Completada</div>
+                <div class="timeline-phase">Phase 0</div>
+                <div class="timeline-title">Ideology and Foundation</div>
+                <div class="timeline-status completed">Completed</div>
                 <div class="timeline-description">
-                  <p><strong>Manifiesto RSC:</strong> libertad sin fronteras, sin bancos, sin KYC.</p>
+                  <p><strong>RSC Manifesto:</strong> freedom without borders, without banks, without KYC.</p>
                   <ul>
-                    <li>Blockchain Layer 1 con PoW + PoS + IA</li>
-                    <li>Seguridad avanzada (PQC)</li>
-                    <li>Módulos génesis, halving, mempool, logs, CLI, oráculos</li>
+                    <li>Layer 1 Blockchain with PoW + PoS + AI</li>
+                    <li>Advanced security (PQC)</li>
+                    <li>Genesis modules, halving, mempool, logs, CLI, oracles</li>
                   </ul>
                 </div>
               </div>
@@ -1009,15 +1017,15 @@
                 <div class="marker-pulse"></div>
               </div>
               <div class="timeline-content">
-                <div class="timeline-phase">Fase 1</div>
-                <div class="timeline-title">Distribución Justa</div>
+                <div class="timeline-phase">Phase 1</div>
+                <div class="timeline-title">Fair Distribution</div>
                 <div class="timeline-status active">2025</div>
                 <div class="timeline-description">
-                  <p><strong>Web Mining →</strong> distribución inicial sin ICO.</p>
+                  <p><strong>Web Mining →</strong> initial distribution without ICO.</p>
                   <ul>
-                    <li>Gamificación comunitaria → tareas diarias, referidos, misiones sociales</li>
-                    <li>P2P Market simulado → precio creado por la comunidad antes del CEX</li>
-                    <li>DAO inicial para decisiones tempranas (roles, tareas, incentivos)</li>
+                    <li>Community gamification → daily tasks, referrals, social missions</li>
+                    <li>Simulated P2P Market → price created by community before CEX</li>
+                    <li>Initial DAO for early decisions (roles, tasks, incentives)</li>
                   </ul>
                 </div>
               </div>
@@ -1031,16 +1039,16 @@
                 <div class="marker-pulse"></div>
               </div>
               <div class="timeline-content">
-                <div class="timeline-phase">Fase 2</div>
-                <div class="timeline-title">Infraestructura Ecosistema</div>
+                <div class="timeline-phase">Phase 2</div>
+                <div class="timeline-title">Ecosystem Infrastructure</div>
                 <div class="timeline-status">Q4 2025 – Q1 2026</div>
                 <div class="timeline-description">
-                  <p><strong>Wallet completa</strong> (banco cripto en tu bolsillo).</p>
+                  <p><strong>Complete Wallet</strong> (crypto bank in your pocket).</p>
                   <ul>
-                    <li>RSC Bank Alpha → pagos QR con conversión instantánea cripto → fiat</li>
-                    <li>NFT Validator Licenses → primeros 500 nodos especiales</li>
-                    <li>Bridge v1 → RSC ↔ BNB (liquidez retail)</li>
-                    <li>Explorer avanzado con IA y telemetría (auditoría pública)</li>
+                    <li>RSC Bank Alpha → QR payments with instant crypto → fiat conversion</li>
+                    <li>NFT Validator Licenses → first 500 special nodes</li>
+                    <li>Bridge v1 → RSC ↔ BNB (retail liquidity)</li>
+                    <li>Advanced Explorer with AI and telemetry (public audit)</li>
                   </ul>
                 </div>
               </div>
@@ -1054,19 +1062,19 @@
                 <div class="marker-pulse"></div>
               </div>
               <div class="timeline-content">
-                <div class="timeline-phase">Fase 3</div>
-                <div class="timeline-title">Innovación Multichain</div>
+                <div class="timeline-phase">Phase 3</div>
+                <div class="timeline-title">Multichain Innovation</div>
                 <div class="timeline-status">2026</div>
                 <div class="timeline-description">
-                  <p><strong>Puentes adicionales:</strong></p>
+                  <p><strong>Additional Bridges:</strong></p>
                   <ul>
-                    <li>Ethereum (credibilidad)</li>
-                    <li>TON (comunidad masiva en Telegram)</li>
-                    <li>Solana (hype retail)</li>
-                    <li>Cardano / Sui (branding tecnológico)</li>
-                    <li>DEX nativo en RSC con 10M TPS (aprovechando IA y sharding)</li>
-                    <li>Oráculos avanzados para datos externos seguros</li>
-                    <li>P2P Market on-chain → escrows descentralizados, reputación, disputas</li>
+                    <li>Ethereum (credibility)</li>
+                    <li>TON (massive Telegram community)</li>
+                    <li>Solana (retail hype)</li>
+                    <li>Cardano / Sui (technological branding)</li>
+                    <li>Native DEX on RSC with 10M TPS (leveraging AI and sharding)</li>
+                    <li>Advanced oracles for secure external data</li>
+                    <li>On-chain P2P Market → decentralized escrows, reputation, disputes</li>
                   </ul>
                 </div>
               </div>
@@ -1080,16 +1088,16 @@
                 <div class="marker-pulse"></div>
               </div>
               <div class="timeline-content">
-                <div class="timeline-phase">Fase 4</div>
-                <div class="timeline-title">Adopción Masiva</div>
+                <div class="timeline-phase">Phase 4</div>
+                <div class="timeline-title">Mass Adoption</div>
                 <div class="timeline-status">2026–2027</div>
                 <div class="timeline-description">
-                  <p><strong>RSC Bank global →</strong> pagos sin bancos, sin KYC.</p>
+                  <p><strong>Global RSC Bank →</strong> payments without banks, without KYC.</p>
                   <ul>
-                    <li>Conversión directa cripto → fiat dentro del banco, sin depender de ZeroHash</li>
-                    <li>Partnerships regionales → LatAm, África, Asia, con rampas de pago locales</li>
-                    <li>Hackathons y Grants → miles de devs construyendo en RSC</li>
-                    <li>Gobernanza avanzada → DAO global con sub-DAOs regionales</li>
+                    <li>Direct crypto → fiat conversion within the bank, without depending on ZeroHash</li>
+                    <li>Regional partnerships → LatAm, Africa, Asia, with local payment ramps</li>
+                    <li>Hackathons and Grants → thousands of devs building on RSC</li>
+                    <li>Advanced governance → global DAO with regional sub-DAOs</li>
                   </ul>
                 </div>
               </div>
@@ -1103,17 +1111,17 @@
                 <div class="marker-pulse"></div>
               </div>
               <div class="timeline-content">
-                <div class="timeline-phase">Fase 5</div>
-                <div class="timeline-title">RSC como Infraestructura Mundial</div>
+                <div class="timeline-phase">Phase 5</div>
+                <div class="timeline-title">RSC as Global Infrastructure</div>
                 <div class="timeline-status">2027–2028</div>
                 <div class="timeline-description">
                   <p><strong>Advanced Web:</strong></p>
                   <ul>
-                    <li>Backtesting avanzado gratuito para traders</li>
-                    <li>Optimización avanzada para empresas</li>
-                    <li>Nodos offline → online sync → adopción en lugares sin Internet estable</li>
-                    <li>Integración en comercio global → plugins bancarios y APIs abiertas</li>
-                    <li>DEX + Bank + Wallet interconectados como un único ecosistema RSC</li>
+                    <li>Free advanced backtesting for traders</li>
+                    <li>Advanced optimization for companies</li>
+                    <li>Offline nodes → online sync → adoption in places without stable Internet</li>
+                    <li>Global commerce integration → banking plugins and open APIs</li>
+                    <li>DEX + Bank + Wallet interconnected as a single RSC ecosystem</li>
                   </ul>
                 </div>
               </div>
@@ -2038,7 +2046,7 @@
               </a>
               <a href="https://t.me/Rscspanish" target="_blank" rel="noopener noreferrer" class="quantum-link">
                 <i class="fab fa-telegram"></i>
-                <span>Hispanic Community</span>
+                <span>Spanish Community</span>
                 <div class="link-glow"></div>
               </a>
             </div>
@@ -2191,7 +2199,7 @@
 
   <!-- Scripts -->
   <script>
-    // Forzar recarga de CSS para evitar problemas de cache
+    // Force CSS reload to avoid cache issues
     function forceReloadCSS() {
       const links = document.querySelectorAll('link[rel="stylesheet"]');
       links.forEach(link => {
@@ -2200,22 +2208,22 @@
       });
     }
     
-    // Forzar recarga completa de la página si es necesario
+    // Force complete page reload if necessary
     function checkForUpdates() {
       const lastUpdate = localStorage.getItem('rsc_last_update');
       const currentUpdate = '2024-01-15-v3';
       
       if (lastUpdate !== currentUpdate) {
         localStorage.setItem('rsc_last_update', currentUpdate);
-        // Forzar recarga solo si es necesario
+        // Force reload only if necessary
         if (performance.navigation.type === 1) {
-          // Solo recargar si es una navegación normal
+          // Only reload if it's a normal navigation
           window.location.reload(true);
         }
       }
     }
     
-    // Ejecutar cuando la página esté cargada
+    // Execute when page is loaded
     window.addEventListener('load', () => {
       forceReloadCSS();
       checkForUpdates();
@@ -2251,21 +2259,21 @@
       }
       
       nextSlide() {
-        // Remover clase active del slide actual
+        // Remove active class from current slide
         this.slides[this.currentSlide].classList.remove('active');
         
-        // Avanzar al siguiente slide
+        // Advance to next slide
         this.currentSlide = (this.currentSlide + 1) % this.slides.length;
         
-        // Añadir clase active al nuevo slide
+        // Add active class to new slide
         this.slides[this.currentSlide].classList.add('active');
         
-        // Resetear progress bar
+        // Reset progress bar
         this.resetProgressBar();
       }
       
       setupEventListeners() {
-        // Botón de cerrar
+        // Close button
         const closeBtn = document.getElementById('adCloseBtn');
         if (closeBtn) {
           closeBtn.addEventListener('click', () => {
@@ -2273,7 +2281,7 @@
           });
         }
         
-        // Botón CTA
+        // CTA button
         const ctaBtn = document.querySelector('.ad-cta-btn');
         if (ctaBtn) {
           ctaBtn.addEventListener('click', () => {
@@ -2281,7 +2289,7 @@
           });
         }
         
-        // Pausar al hacer hover
+        // Pause on hover
         const bannerSection = document.querySelector('.ad-banner-section');
         if (bannerSection) {
           bannerSection.addEventListener('mouseenter', () => {
@@ -2321,16 +2329,16 @@
             this.stopRotation();
           }, 500);
           
-          // Guardar preferencia en localStorage
+          // Save preference in localStorage
           localStorage.setItem('rsc_ad_banner_closed', 'true');
         }
       }
       
       handleCTAClick() {
-        // Aquí puedes personalizar la acción del CTA
+        // Here you can customize the CTA action
         console.log('🎯 Ad CTA clicked - Redirecting to explore...');
         
-        // Ejemplo: redirigir a la página de minería
+        // Example: redirect to mining page
         window.location.href = 'pages/mine.html';
       }
       
@@ -2341,7 +2349,7 @@
         }
       }
       
-      // Método para añadir nuevos anuncios dinámicamente
+      // Method to add new ads dynamically
       addAd(highlight, message) {
         const rotator = document.querySelector('.ad-rotator');
         if (rotator) {
@@ -2353,12 +2361,12 @@
           `;
           rotator.appendChild(newSlide);
           
-          // Actualizar slides
+          // Update slides
           this.slides = document.querySelectorAll('.ad-slide');
         }
       }
       
-      // Método para actualizar el contenido del banner
+      // Method to update banner content
       updateBannerContent(title, description) {
         const titleEl = document.querySelector('.ad-text h3');
         const descEl = document.querySelector('.ad-text p');
@@ -2368,9 +2376,9 @@
       }
     }
     
-    // Inicializar cuando el DOM esté listo
+    // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
-      // FORZAR MOSTRAR BANNER PARA DEBUG
+      // FORCE SHOW BANNER FOR DEBUG
       const bannerSection = document.querySelector('.ad-banner-section');
       if (bannerSection) {
         bannerSection.style.display = 'block !important';
@@ -2383,18 +2391,18 @@
         console.error('❌ Ad Banner Section NOT FOUND!');
       }
       
-      // Verificar si el banner fue cerrado previamente
+      // Check if banner was previously closed
       const wasClosed = localStorage.getItem('rsc_ad_banner_closed');
       if (!wasClosed) {
         new RSCAdBanner();
       } else {
         console.log('⚠️ Banner was previously closed, but showing for debug');
-        // Mostrar banner de todas formas para debug
+        // Show banner anyway for debug
         new RSCAdBanner();
       }
     });
     
-    // Hacer disponible globalmente para administración
+    // Make globally available for administration
     window.RSCAdBanner = RSCAdBanner;
   </script>
   <!-- RSC Loader - Sistema de carga unificado -->
@@ -2420,11 +2428,14 @@
   <!-- Mobile Responsive System -->
   <script src="scripts/mobile-responsive.js?v=1.0"></script>
   
-  <!-- Script básico para funcionalidad esencial -->
+  <!-- Simple Mobile Menu System -->
+  <script src="scripts/simple-mobile-menu.js?v=1.0"></script>
+  
+  <!-- Basic script for essential functionality -->
   <script>
-    // Funcionalidad básica sin interferir con los cambios
+    // Basic functionality without interfering with changes
     document.addEventListener('DOMContentLoaded', function() {
-      // Mobile menu básico
+      // Basic mobile menu
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileMenu = document.getElementById('mobileMenu');
       const mobileClose = document.getElementById('mobileClose');
@@ -2451,7 +2462,7 @@
         });
       }
       
-      // Smooth scrolling básico
+      // Basic smooth scrolling
       const navLinks = document.querySelectorAll('a[href^="#"]');
       navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -2471,7 +2482,7 @@
         });
       });
       
-      // Animación de contadores en hero stats
+      // Counter animation in hero stats
       const statValues = document.querySelectorAll('.stat-value');
       const observerOptions = {
         threshold: 0.5,
