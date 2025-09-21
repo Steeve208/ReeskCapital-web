@@ -80,6 +80,24 @@ class SupabaseIntegration {
                 }
             }
             
+            // Buscar el ID del usuario referidor si se proporciona un código de referido
+            let referrerId = null;
+            if (referralCode) {
+                console.log('🔍 Buscando usuario con código de referido:', referralCode);
+                const referrerResponse = await this.makeRequest('GET', `/rest/v1/users?referral_code=eq.${referralCode}&select=id`);
+                if (referrerResponse.ok) {
+                    const referrers = await referrerResponse.json();
+                    if (referrers.length > 0) {
+                        referrerId = referrers[0].id;
+                        console.log('✅ Usuario referidor encontrado:', referrerId);
+                    } else {
+                        throw new Error('Código de referido inválido. Verifica que el código sea correcto.');
+                    }
+                } else {
+                    throw new Error('Error validando código de referido');
+                }
+            }
+            
             // Hash simple de la contraseña (en producción usar bcrypt)
             const hashedPassword = btoa(password); // Base64 encoding simple
             
@@ -89,7 +107,7 @@ class SupabaseIntegration {
                 password: hashedPassword,
                 balance: 0,
                 referral_code: this.generateReferralCode(),
-                referred_by: referralCode || null
+                referred_by: referrerId
             });
 
             if (response.ok || response.status === 201) {
