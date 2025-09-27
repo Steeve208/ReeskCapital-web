@@ -235,10 +235,15 @@ class AlgorithmSystem {
 
     calculateMiningRate() {
         const activeAlgorithm = this.getActiveAlgorithm();
-        if (!activeAlgorithm) return 0;
+        if (!activeAlgorithm) {
+            // Fallback rate: 3-7.5 RSC per day
+            const baseFallbackRate = 5.25 / (24 * 60); // 0.00364583 RSC/min promedio
+            const variability = 0.57 + (Math.random() * 0.86); // Entre 3-7.5 RSC/day
+            return baseFallbackRate * variability;
+        }
 
-        // Tasa base de minería (0.00694 RSC por minuto = 10 RSC por día)
-        const baseRate = 0.00694;
+        // Tasa base de minería: 3-7.5 RSC por día (promedio 5.25)
+        const baseRatePerMinute = 5.25 / (24 * 60); // 0.00364583 RSC/min
         
         // Aplicar multiplicador del algoritmo
         const algorithmMultiplier = activeAlgorithm.miningRateMultiplier;
@@ -249,7 +254,13 @@ class AlgorithmSystem {
         // Aplicar multiplicador de eficiencia
         const efficiencyMultiplier = activeAlgorithm.currentEfficiency / 100;
         
-        return baseRate * algorithmMultiplier * levelMultiplier * efficiencyMultiplier;
+        // Variabilidad para mantener rango 3-7.5 RSC/day
+        const variability = 0.57 + (Math.random() * 0.86); // Entre 0.57 y 1.43
+        
+        const finalRate = baseRatePerMinute * algorithmMultiplier * levelMultiplier * efficiencyMultiplier * variability;
+        
+        // Asegurar que no exceda 7.5 RSC/day (0.00520833 RSC/min)
+        return Math.min(finalRate, 0.00520833);
     }
 
     calculateHashRate() {

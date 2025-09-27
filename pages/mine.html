@@ -1655,6 +1655,9 @@
             setupAuthEventListeners();
             setupMiningEventListeners();
             
+            // 🔧 SETUP BALANCE UPDATE LISTENER
+            setupBalanceUpdateListener();
+            
             // Initialize advanced systems
             initializeAdvancedSystems();
             
@@ -1677,11 +1680,115 @@
             }
             
             console.log('✅ RSC Mining Platform - READY');
-            
-            // Initialize auth features
-            initializeAuthFeatures();
         }
-        
+
+        /**
+         * 🔧 VALIDACIÓN ROBUSTA DE DEPENDENCIAS DE MINERÍA
+         * Valida y calcula la minería usando sistemas avanzados con fallback seguro
+         */
+        function validateAndCalculateMining() {
+            const result = {
+                tokensMined: 0,
+                hashRate: 0,
+                efficiency: 0,
+                systemsUsed: [],
+                warnings: []
+            };
+
+            try {
+                // 1. Validar AlgorithmSystem
+                if (window.algorithmSystem && typeof window.algorithmSystem.calculateMiningRate === 'function') {
+                    try {
+                        result.tokensMined = window.algorithmSystem.calculateMiningRate() * 5; // 5 seconds
+                        result.hashRate = window.algorithmSystem.calculateHashRate();
+                        result.efficiency = window.algorithmSystem.calculateEfficiency();
+                        result.systemsUsed.push('AlgorithmSystem');
+                        console.log('✅ AlgorithmSystem validado y funcionando');
+                    } catch (error) {
+                        result.warnings.push(`AlgorithmSystem error: ${error.message}`);
+                        console.warn('⚠️ Error en AlgorithmSystem:', error);
+                    }
+                } else {
+                    result.warnings.push('AlgorithmSystem no disponible o incompleto');
+                    console.warn('⚠️ AlgorithmSystem no disponible');
+                }
+
+                // 2. Validar LevelSystem para multiplicadores
+                if (window.levelSystem && typeof window.levelSystem.getCurrentMultiplier === 'function') {
+                    try {
+                        const levelMultiplier = window.levelSystem.getCurrentMultiplier();
+                        result.tokensMined *= levelMultiplier;
+                        result.systemsUsed.push('LevelSystem');
+                        console.log(`✅ LevelSystem multiplicador aplicado: ${levelMultiplier}x`);
+                    } catch (error) {
+                        result.warnings.push(`LevelSystem error: ${error.message}`);
+                        console.warn('⚠️ Error en LevelSystem:', error);
+                    }
+                } else {
+                    result.warnings.push('LevelSystem no disponible para multiplicadores');
+                    console.warn('⚠️ LevelSystem no disponible');
+                }
+
+                // 3. Validar EventSystem para eventos activos
+                if (window.eventSystem && typeof window.eventSystem.getEventMultiplier === 'function') {
+                    try {
+                        const eventMultiplier = window.eventSystem.getEventMultiplier('double_xp');
+                        result.tokensMined *= eventMultiplier;
+                        result.systemsUsed.push('EventSystem');
+                        console.log(`✅ EventSystem multiplicador aplicado: ${eventMultiplier}x`);
+                    } catch (error) {
+                        result.warnings.push(`EventSystem error: ${error.message}`);
+                        console.warn('⚠️ Error en EventSystem:', error);
+                    }
+                } else {
+                    result.warnings.push('EventSystem no disponible para eventos');
+                    console.warn('⚠️ EventSystem no disponible');
+                }
+
+                // 4. Fallback seguro si no hay sistemas avanzados
+                if (result.systemsUsed.length === 0) {
+                    console.log('🔄 Usando minería básica como fallback');
+                    result.tokensMined = Math.random() * 0.0002 + 0.0001;
+                    result.hashRate = Math.random() * 900 + 100;
+                    result.efficiency = Math.random() * 20 + 80;
+                    result.warnings.push('Usando minería básica - sistemas avanzados no disponibles');
+                }
+
+                // 5. Validar valores mínimos
+                result.tokensMined = Math.max(0, result.tokensMined);
+                result.hashRate = Math.max(100, result.hashRate);
+                result.efficiency = Math.max(50, Math.min(100, result.efficiency));
+
+                // 6. Mostrar advertencias al usuario si es necesario
+                if (result.warnings.length > 0) {
+                    const warningMessage = `Sistemas avanzados: ${result.warnings.length} advertencia(s) - ${result.systemsUsed.length} sistema(s) activo(s)`;
+                    console.warn('⚠️', warningMessage);
+                    
+                    // Mostrar notificación solo si hay muchas advertencias
+                    if (result.warnings.length >= 2) {
+                        showNotification(`⚠️ ${warningMessage}`, 'warning');
+                    }
+                }
+
+            console.log(`⛏️ Minería calculada: ${result.tokensMined.toFixed(6)} RSC, ${result.hashRate.toFixed(0)} H/s, ${result.efficiency.toFixed(1)}%`);
+            console.log(`🔧 Sistemas utilizados: ${result.systemsUsed.join(', ') || 'Ninguno'}`);
+
+        } catch (error) {
+            console.error('❌ Error crítico en validación de minería:', error);
+            result.warnings.push(`Error crítico: ${error.message}`);
+            
+            // Fallback de emergencia
+            result.tokensMined = Math.random() * 0.0001 + 0.00005;
+            result.hashRate = Math.random() * 500 + 50;
+            result.efficiency = Math.random() * 10 + 70;
+            
+            showNotification('❌ Error en sistemas de minería - usando modo seguro', 'error');
+        }
+
+        console.log('📤 Devolviendo resultado de minería:', result);
+        return result;
+        }
+
         function initializeAuthFeatures() {
             // Password strength indicator
             const passwordInput = document.getElementById('registerPassword');
@@ -2058,6 +2165,31 @@
             console.log('🎉 Event system listeners configurados');
         }
 
+        /**
+         * 🔧 CONFIGURAR LISTENER DE ACTUALIZACIÓN DE BALANCE
+         * Escucha eventos de actualización de balance para actualizar la UI inmediatamente
+         */
+        function setupBalanceUpdateListener() {
+            console.log('🔧 Configurando listener de actualización de balance...');
+            
+            // Listener para el evento personalizado de actualización de balance
+            window.addEventListener('balanceUpdated', function(event) {
+                console.log('💰 Balance actualizado via evento:', event.detail.balance);
+                updateBalanceDisplay();
+            });
+            
+            // 🎯 LISTENER PARA ACTUALIZACIONES DE NIVEL
+            window.addEventListener('levelUpdated', function(event) {
+                console.log('🎯 Nivel actualizado via evento:', event.detail.level, 'XP:', event.detail.totalXp);
+                updateLevelUI();
+            });
+            
+            // Hacer updateBalanceDisplay disponible globalmente para que Supabase Integration pueda llamarla
+            window.updateBalanceDisplay = updateBalanceDisplay;
+            
+            console.log('✅ Balance update listener configurado');
+        }
+
         async function checkAndRestoreMiningSession() {
             try {
                 console.log('🔍 Checking mining session...');
@@ -2119,15 +2251,41 @@
                 const userBalance = document.getElementById('userBalance');
                 const userBalanceDisplay = document.getElementById('userBalanceDisplay');
                 const totalMinedDisplay = document.getElementById('totalMinedDisplay');
+                const currentBalance = document.getElementById('currentBalance');
+                
+                const balanceText = user.balance.toFixed(6) + ' RSC';
                 
                 if (userBalance) {
-                    userBalance.textContent = user.balance.toFixed(6) + ' RSC';
+                    userBalance.textContent = balanceText;
+                    // Add visual feedback for balance update
+                    userBalance.style.color = '#00ff88';
+                    setTimeout(() => {
+                        userBalance.style.color = '';
+                    }, 1000);
                 }
                 if (userBalanceDisplay) {
-                    userBalanceDisplay.textContent = user.balance.toFixed(6) + ' RSC';
+                    userBalanceDisplay.textContent = balanceText;
+                    // Add visual feedback for balance update
+                    userBalanceDisplay.style.color = '#00ff88';
+                    setTimeout(() => {
+                        userBalanceDisplay.style.color = '';
+                    }, 1000);
                 }
                 if (totalMinedDisplay) {
-                    totalMinedDisplay.textContent = user.balance.toFixed(6) + ' RSC';
+                    totalMinedDisplay.textContent = balanceText;
+                    // Add visual feedback for balance update
+                    totalMinedDisplay.style.color = '#00ff88';
+                    setTimeout(() => {
+                        totalMinedDisplay.style.color = '';
+                    }, 1000);
+                }
+                if (currentBalance) {
+                    currentBalance.textContent = balanceText;
+                    // Add visual feedback for balance update
+                    currentBalance.style.color = '#00ff88';
+                    setTimeout(() => {
+                        currentBalance.style.color = '';
+                    }, 1000);
                 }
                 
                 console.log(`💰 Balance actualizado en UI: ${user.balance.toFixed(6)} RSC`);
@@ -2336,16 +2494,23 @@
         }
 
         async function handleLogin() {
+            console.log('🔐 Iniciando proceso de login...');
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             
+            console.log('📧 Email:', email);
+            console.log('🔑 Password length:', password ? password.length : 0);
+            
             if (!email || !password) {
+                console.log('❌ Campos vacíos');
                 showNotification('Please enter your email and password', 'error');
                 return;
             }
 
             try {
+                console.log('🔄 Llamando a supabaseIntegration.loginUser...');
                 const userData = await window.supabaseIntegration.loginUser(email, password);
+                console.log('✅ Login exitoso:', userData);
                 showNotification('Session started successfully', 'success');
                 showMiningDashboard();
                 
@@ -2354,6 +2519,7 @@
                     await checkAndRestoreMiningSession();
                 }, 500);
             } catch (error) {
+                console.error('❌ Error en login:', error);
                 showNotification('Error starting session: ' + error.message, 'error');
             }
         }
@@ -2532,6 +2698,14 @@
             const progressInterval = setInterval(() => {
                 updateMiningProgress();
                 
+                // 🔧 FORZAR ACTUALIZACIÓN DE BALANCE CADA SEGUNDO DURANTE MINERÍA
+                updateBalanceDisplay();
+                
+                // 🔧 TAMBIÉN FORZAR ACTUALIZACIÓN DIRECTA DE ELEMENTOS
+                if (window.supabaseIntegration) {
+                    window.supabaseIntegration.updateBalanceElements();
+                }
+                
                 // Check if session expired
                 if (window.supabaseIntegration.isSessionExpired()) {
                     console.log('⏰ 24-hour session completed automatically');
@@ -2543,7 +2717,7 @@
             }, 1000);
             
             // Simulate mining every 5 seconds
-            miningInterval = setInterval(() => {
+            miningInterval = setInterval(async () => {
                 // Check if session is still active
                 const currentSession = window.supabaseIntegration.getMiningSession();
                 if (!currentSession.isActive) {
@@ -2569,11 +2743,18 @@
                     efficiency = Math.random() * 20 + 80;
                 }
                 
-                // Update stats in Supabase (includes balance automatically)
-                window.supabaseIntegration.updateMiningStats(tokensMined, hashRate, efficiency);
+                try {
+                    // Update stats in Supabase (includes balance automatically)
+                    await window.supabaseIntegration.updateMiningStats(tokensMined, hashRate, efficiency);
+                } catch (error) {
+                    console.error('❌ Error updating mining stats:', error);
+                }
                 
                 // Update UI
                 updateMiningUI(tokensMined, hashRate, efficiency);
+                
+                // Simple logging to verify mining is working
+                console.log(`⛏️ Mining: ${tokensMined.toFixed(6)} RSC, ${hashRate.toFixed(0)} H/s, ${efficiency.toFixed(1)}%`);
             }, 5000);
             
             // Save reference to progress interval to be able to stop it
@@ -2750,6 +2931,7 @@
             // Update advanced systems
             updateAdvancedUI();
         }
+
 
         function updateAdvancedUI() {
             updateLevelUI();
@@ -3443,6 +3625,11 @@
         function updateMiningProgress() {
             const session = window.supabaseIntegration.getMiningSession();
             if (!session.isActive) return;
+            
+            // 🔧 MOSTRAR PROGRESO DEL FONDO GLOBAL OCASIONALMENTE
+            if (Math.random() < 0.1) { // 10% de probabilidad cada actualización
+                window.supabaseIntegration.checkGlobalMiningLimit();
+            }
             
             // Calcular tiempo transcurrido
             const now = new Date();

@@ -103,7 +103,16 @@ class LevelSystem {
         this.saveLevelData();
         this.checkAchievements();
 
-        console.log(`+${amount} XP (${source}) - Nivel ${this.userLevel.level}`);
+        // Sync with Supabase
+        this.syncLevelToSupabase();
+
+        console.log(`🎯 +${amount} XP (${source}) | Total: ${this.userLevel.totalXp} XP | Level: ${this.userLevel.level}`);
+        
+        // 🔧 FORZAR ACTUALIZACIÓN DE UI SI HAY CAMBIOS
+        if (newLevel > oldLevel || amount > 0) {
+            this.forceUIUpdate();
+        }
+
         return {
             xpGained: amount,
             newLevel: this.userLevel.level,
@@ -384,6 +393,68 @@ class LevelSystem {
         } catch (error) {
             console.error('❌ Error sincronizando nivel:', error);
         }
+    }
+
+    /**
+     * 🔧 FORZAR ACTUALIZACIÓN DE UI
+     * Fuerza la actualización inmediata de los elementos de nivel en la UI
+     */
+    forceUIUpdate() {
+        try {
+            // Disparar evento personalizado para que otras partes de la app puedan reaccionar
+            if (typeof window !== 'undefined' && window.dispatchEvent) {
+                const event = new CustomEvent('levelUpdated', {
+                    detail: {
+                        level: this.userLevel.level,
+                        xp: this.userLevel.xp,
+                        totalXp: this.userLevel.totalXp,
+                        timestamp: new Date().toISOString()
+                    }
+                });
+                window.dispatchEvent(event);
+            }
+            
+            // Actualizar elementos de nivel directamente
+            this.updateLevelElements();
+            
+        } catch (error) {
+            console.error('❌ Error forzando actualización de UI de nivel:', error);
+        }
+    }
+
+    /**
+     * 🎯 ACTUALIZAR ELEMENTOS DE NIVEL DIRECTAMENTE
+     * Actualiza directamente los elementos DOM de nivel más comunes
+     */
+    updateLevelElements() {
+        const levelElementIds = [
+            'userLevel',
+            'currentLevel',
+            'levelDisplay',
+            'xpDisplay',
+            'totalXpDisplay'
+        ];
+        
+        levelElementIds.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                if (id.includes('xp') || id.includes('Xp')) {
+                    element.textContent = this.userLevel.totalXp.toLocaleString() + ' XP';
+                } else {
+                    element.textContent = `Nivel ${this.userLevel.level}`;
+                }
+                
+                // Agregar efecto visual para mostrar que se actualizó
+                element.style.color = '#00ff88';
+                element.style.fontWeight = 'bold';
+                setTimeout(() => {
+                    element.style.color = '';
+                    element.style.fontWeight = '';
+                }, 1000);
+            }
+        });
+        
+        console.log(`🔄 Level UI actualizado: Nivel ${this.userLevel.level} (${this.userLevel.totalXp} XP)`);
     }
 }
 
