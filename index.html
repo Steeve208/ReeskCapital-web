@@ -445,69 +445,20 @@
       </div>
     </section>
 
-    <!-- ===== REVOLUTIONARY AD BANNER ===== -->
-    <section class="ad-banner-section" style="display: block !important; background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important; color: white !important; padding: 20px !important; text-align: center !important; font-size: 24px !important; font-weight: bold !important; box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4) !important; border: 2px solid #00ff88 !important;">
+    <!-- ===== A-ADS BANNER ===== -->
+    <section class="ad-banner-section" style="display: block !important; background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important; color: white !important; padding: 20px !important; text-align: center !important; box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4) !important; border: 2px solid #00ff88 !important;">
       <div class="ad-banner-container">
-        <!-- Ad Banner Content -->
-        <div class="ad-banner-content">
-          <div class="ad-banner-left">
-            <div class="ad-icon">
-              <i class="fas fa-rocket"></i>
-            </div>
-            <div class="ad-text">
-              <h3>🌟 FOLLOW US ON SOCIAL MEDIA!</h3>
-              <p>Join our global community </p>
-            </div>
+        <!-- A-Ads Banner Content -->
+        <div class="a-ads-banner-content">
+          <div id="frame" style="width: 728px;margin: auto;z-index: 99998;height: auto">
+            <iframe data-aa='2411654' src='//ad.a-ads.com/2411654/?size=728x90'
+                              style='border:0; padding:0; width:728px; height:90px; overflow:hidden;display: block;margin: auto'></iframe>
           </div>
           
-          <div class="ad-banner-center">
-            <div class="ad-rotator">
-              <div class="ad-slide active">
-                <span class="ad-highlight">💬 DISCORD:</span>
-                <span class="ad-message"> active members - 24/7 support - Join now!</span>
-              </div>
-              <div class="ad-slide">
-                <span class="ad-highlight">📱 TELEGRAM:</span>
-                <span class="ad-message">subscribers - Real-time news - Follow us!</span>
-              </div>
-              <div class="ad-slide">
-                <span class="ad-highlight">💻 GITHUB:</span>
-                <span class="ad-message">/ repositories - 1.2K stars - Contribute to code!</span>
-              </div>
-              <div class="ad-slide">
-                <span class="ad-highlight">🐦 TWITTER:</span>
-                <span class="ad-message">Daily updates - Market analysis - Follow us!</span>
-              </div>
-              <div class="ad-slide">
-                <span class="ad-highlight">🎯 YOUTUBE:</span>
-                <span class="ad-message">Mining tutorials - Live demos - Subscribe!</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="ad-banner-right">
-            <button class="ad-cta-btn">
-              <span>JOIN NOW!</span>
-              <i class="fas fa-rocket"></i>
-            </button>
-            <button class="ad-close-btn" id="adCloseBtn">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Ad Banner Progress Bar -->
-        <div class="ad-progress-bar">
-          <div class="ad-progress-fill"></div>
-        </div>
-        
-        <!-- Ad Banner Particles -->
-        <div class="ad-particles">
-          <div class="ad-particle"></div>
-          <div class="ad-particle"></div>
-          <div class="ad-particle"></div>
-          <div class="ad-particle"></div>
-          <div class="ad-particle"></div>
+          <!-- Close Button -->
+          <button class="ad-close-btn" id="adCloseBtn" style="position: absolute; top: 5px; right: 5px; background: rgba(0, 255, 136, 0.8); border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; z-index: 99999;">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
       </div>
     </section>
@@ -2229,47 +2180,15 @@
       checkForUpdates();
     });
     
-    // ===== REVOLUTIONARY AD BANNER SYSTEM =====
+    // ===== A-ADS BANNER SYSTEM =====
     class RSCAdBanner {
       constructor() {
-        this.slides = document.querySelectorAll('.ad-slide');
-        this.currentSlide = 0;
-        this.slideInterval = null;
-        this.slideDuration = 4000; // 4 segundos por slide
-        this.isPaused = false;
-        
         this.init();
       }
       
       init() {
-        this.startRotation();
         this.setupEventListeners();
-        this.setupProgressBar();
-        console.log('🚀 RSC Ad Banner System initialized');
-      }
-      
-      startRotation() {
-        if (this.slides.length === 0) return;
-        
-        this.slideInterval = setInterval(() => {
-          if (!this.isPaused) {
-            this.nextSlide();
-          }
-        }, this.slideDuration);
-      }
-      
-      nextSlide() {
-        // Remove active class from current slide
-        this.slides[this.currentSlide].classList.remove('active');
-        
-        // Advance to next slide
-        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
-        
-        // Add active class to new slide
-        this.slides[this.currentSlide].classList.add('active');
-        
-        // Reset progress bar
-        this.resetProgressBar();
+        console.log('🚀 RSC A-Ads Banner System initialized');
       }
       
       setupEventListeners() {
@@ -2279,42 +2198,6 @@
           closeBtn.addEventListener('click', () => {
             this.closeBanner();
           });
-        }
-        
-        // CTA button
-        const ctaBtn = document.querySelector('.ad-cta-btn');
-        if (ctaBtn) {
-          ctaBtn.addEventListener('click', () => {
-            this.handleCTAClick();
-          });
-        }
-        
-        // Pause on hover
-        const bannerSection = document.querySelector('.ad-banner-section');
-        if (bannerSection) {
-          bannerSection.addEventListener('mouseenter', () => {
-            this.isPaused = true;
-          });
-          
-          bannerSection.addEventListener('mouseleave', () => {
-            this.isPaused = false;
-          });
-        }
-      }
-      
-      setupProgressBar() {
-        const progressFill = document.querySelector('.ad-progress-fill');
-        if (progressFill) {
-          this.progressFill = progressFill;
-          this.resetProgressBar();
-        }
-      }
-      
-      resetProgressBar() {
-        if (this.progressFill) {
-          this.progressFill.style.animation = 'none';
-          this.progressFill.offsetHeight; // Trigger reflow
-          this.progressFill.style.animation = `adProgressFill ${this.slideDuration}ms linear`;
         }
       }
       
@@ -2326,69 +2209,40 @@
           
           setTimeout(() => {
             bannerSection.style.display = 'none';
-            this.stopRotation();
           }, 500);
           
           // Save preference in localStorage
           localStorage.setItem('rsc_ad_banner_closed', 'true');
+          console.log('🚫 A-Ads Banner closed by user');
         }
       }
       
-      handleCTAClick() {
-        // Here you can customize the CTA action
-        console.log('🎯 Ad CTA clicked - Redirecting to explore...');
-        
-        // Example: redirect to mining page
-        window.location.href = 'pages/mine.html';
-      }
-      
-      stopRotation() {
-        if (this.slideInterval) {
-          clearInterval(this.slideInterval);
-          this.slideInterval = null;
+      // Method to show banner (for admin purposes)
+      showBanner() {
+        const bannerSection = document.querySelector('.ad-banner-section');
+        if (bannerSection) {
+          bannerSection.style.display = 'block';
+          bannerSection.style.transform = 'translateY(0)';
+          bannerSection.style.opacity = '1';
+          localStorage.removeItem('rsc_ad_banner_closed');
+          console.log('✅ A-Ads Banner shown');
         }
-      }
-      
-      // Method to add new ads dynamically
-      addAd(highlight, message) {
-        const rotator = document.querySelector('.ad-rotator');
-        if (rotator) {
-          const newSlide = document.createElement('div');
-          newSlide.className = 'ad-slide';
-          newSlide.innerHTML = `
-            <span class="ad-highlight">${highlight}</span>
-            <span class="ad-message">${message}</span>
-          `;
-          rotator.appendChild(newSlide);
-          
-          // Update slides
-          this.slides = document.querySelectorAll('.ad-slide');
-        }
-      }
-      
-      // Method to update banner content
-      updateBannerContent(title, description) {
-        const titleEl = document.querySelector('.ad-text h3');
-        const descEl = document.querySelector('.ad-text p');
-        
-        if (titleEl) titleEl.textContent = title;
-        if (descEl) descEl.textContent = description;
       }
     }
     
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
-      // FORCE SHOW BANNER FOR DEBUG
+      // FORCE SHOW A-ADS BANNER FOR DEBUG
       const bannerSection = document.querySelector('.ad-banner-section');
       if (bannerSection) {
         bannerSection.style.display = 'block !important';
         bannerSection.style.visibility = 'visible !important';
         bannerSection.style.opacity = '1 !important';
         bannerSection.style.height = 'auto !important';
-        bannerSection.style.minHeight = '80px !important';
-        console.log('🚀 Ad Banner Section found and forced to show');
+        bannerSection.style.minHeight = '130px !important';
+        console.log('🚀 A-Ads Banner Section found and forced to show');
       } else {
-        console.error('❌ Ad Banner Section NOT FOUND!');
+        console.error('❌ A-Ads Banner Section NOT FOUND!');
       }
       
       // Check if banner was previously closed
