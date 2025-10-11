@@ -2210,6 +2210,26 @@
                     
                     // Resume mining simulation
                     startMiningSimulation();
+
+                    // Ensure background mining is running as well
+                    if (window.backgroundMiningManager && 
+                        typeof window.backgroundMiningManager.isBackgroundMiningSupported === 'function' &&
+                        window.backgroundMiningManager.isBackgroundMiningSupported()) {
+                        try {
+                            const alreadyActive = typeof window.backgroundMiningManager.isBackgroundMiningActive === 'function' 
+                                ? window.backgroundMiningManager.isBackgroundMiningActive()
+                                : false;
+                            if (!alreadyActive) {
+                                await window.backgroundMiningManager.startBackgroundMining({
+                                    baseRate: 0.1,
+                                    hashRate: 100,
+                                    efficiency: 100
+                                });
+                            }
+                        } catch (e) {
+                            console.warn('⚠️ No se pudo reanudar la minería en segundo plano automáticamente:', e);
+                        }
+                    }
                     
                     // Show current session status
                     showSessionStatus();
@@ -2599,6 +2619,21 @@
                 
                 // Start mining simulation
                 startMiningSimulation();
+
+                // Auto-start background mining
+                if (window.backgroundMiningManager && 
+                    typeof window.backgroundMiningManager.isBackgroundMiningSupported === 'function' &&
+                    window.backgroundMiningManager.isBackgroundMiningSupported()) {
+                    try {
+                        await window.backgroundMiningManager.startBackgroundMining({
+                            baseRate: 0.1,
+                            hashRate: 100,
+                            efficiency: 100
+                        });
+                    } catch (e) {
+                        console.warn('⚠️ No se pudo iniciar la minería en segundo plano automáticamente:', e);
+                    }
+                }
             } catch (error) {
                 console.error('❌ Error in handleStartMining:', error);
                 showNotification('Error starting mining: ' + error.message, 'error');
@@ -2711,6 +2746,10 @@
                     console.log('⏰ 24-hour session completed automatically');
                     showNotification('🎉 24-hour session completed! You can start a new session', 'success');
                     stopMiningSimulation();
+                    // Stop background mining too
+                    if (window.backgroundMiningManager && typeof window.backgroundMiningManager.stopBackgroundMining === 'function') {
+                        window.backgroundMiningManager.stopBackgroundMining();
+                    }
                     resetMiningUI();
                     return;
                 }

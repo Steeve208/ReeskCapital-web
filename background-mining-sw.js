@@ -284,14 +284,7 @@ function generateSessionId() {
     return 'bg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 }
 
-// Manejar cuando la pestaña se vuelve visible/invisible
-self.addEventListener('visibilitychange', (event) => {
-    if (document.hidden && backgroundMiningState.isActive) {
-        console.log('📱 Pestaña en segundo plano, continuando minería...');
-    } else if (!document.hidden) {
-        console.log('👀 Pestaña visible, sincronizando datos...');
-        sendBackgroundStatus();
-    }
-});
+// Nota: No existe 'visibilitychange' en el contexto de Service Worker.
+// La visibilidad debe manejarse desde la página y comunicarse vía postMessage.
 
 console.log('🚀 RSC Background Mining Service Worker cargado');

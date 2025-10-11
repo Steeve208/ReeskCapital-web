@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,8 +37,10 @@
   <link rel="stylesheet" href="styles/app.css?v=4.0">
   <link rel="stylesheet" href="styles/mobile-navbar.css?v=4.0">
   <link rel="stylesheet" href="styles/roadmap-tokenomics.css?v=4.0">
+  <link rel="stylesheet" href="styles/roadmap-modern.css">
   <link rel="stylesheet" href="styles/quantum-override.css?v=4.0">
   <link rel="stylesheet" href="styles/quantum-hero.css?v=4.0">
+  <link rel="stylesheet" href="styles/hero-top.css">
   <link rel="stylesheet" href="styles/quantum-technology.css?v=4.0">
   <link rel="stylesheet" href="styles/quantum-footer.css?v=4.0">
   <link rel="stylesheet" href="styles/mobile-fixes.css?v=1.0">
@@ -53,395 +54,256 @@
   <link rel="shortcut icon" type="image/svg+xml" href="assets/img/rsc-logo-quantum.svg">
 </head>
 <body>
-  <!-- Advanced Technology Navbar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <!-- Logo Section -->
-      <a href="#home" class="nav-logo">
-        <div class="logo-container">
-          <img src="assets/img/rsc-logo-quantum.svg" alt="RSC Chain" class="nav-logo-img">
-        </div>
-        <div class="logo-info">
-          <h1 class="logo-title">RSC CHAIN</h1>
-          <p class="logo-subtitle">
-            <i class="fas fa-atom"></i>
-            Advanced Technology Blockchain
-          </p>
-        </div>
-      </a>
-      
-      <!-- Navigation Menu -->
-      <div class="nav-menu">
-        <a href="#home" class="nav-link active">
-          <div class="nav-icon">
-            <i class="fas fa-home"></i>
-          </div>
-          <span class="nav-text">Home</span>
-        </a>
-        
-        <a href="pages/explorer.html" class="nav-link">
-          <div class="nav-icon">
-            <i class="fas fa-search"></i>
-          </div>
-          <span class="nav-text">Explorer</span>
-        </a>
-        
-        <a href="pages/mine.html" class="nav-link">
-          <div class="nav-icon">
-            <i class="fas fa-coins"></i>
-          </div>
-          <span class="nav-text">Mine</span>
-        </a>
-        
-        <a href="pages/staking.html" class="nav-link">
-          <div class="nav-icon">
-            <i class="fas fa-lock"></i>
-          </div>
-          <span class="nav-text">Staking</span>
-        </a>
-        
-        <a href="pages/about.html" class="nav-link">
-          <div class="nav-icon">
-            <i class="fas fa-info-circle"></i>
-          </div>
-          <span class="nav-text">About</span>
-        </a>
+  <!-- Navbar tipo ArgusVPN -->
+  <nav class="argus-navbar">
+    <div class="argus-navbar-inner">
+      <!-- Logo -->
+      <div class="argusnav-logo">
+        <img src="assets/img/rsc-logo-quantum.svg" class="argusnav-logo-img" alt="RSC Chain" />
+        <span class="argusnav-logo-text">RSC CHAIN</span>
       </div>
       
-      <!-- Utility Section -->
-      <div class="nav-utility">
-        <button class="utility-btn" id="searchBtn" data-tooltip="Search">
-          <i class="fas fa-search"></i>
-        </button>
-        
-        <button class="utility-btn" id="notificationsBtn" data-tooltip="Notifications">
-          <i class="fas fa-bell"></i>
-        </button>
-        
-        <button class="utility-btn" id="settingsBtn" data-tooltip="Settings">
-          <i class="fas fa-cog"></i>
-        </button>
-        
-        <!-- Mobile Menu Button -->
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+      <!-- Menu Links (centrado) -->
+      <ul class="argusnav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#technology">Technology</a></li>
+        <li><a href="pages/mine.html">Mining</a></li>
+        <li><a href="pages/staking.html">Staking</a></li>
+        <li><a href="pages/about.html">About</a></li>
+        <li><a href="pages/explorer.html">Explorer</a></li>
+      </ul>
+      
+      <!-- Utilidades derecha -->
+      <div class="argusnav-utilities">
+        <button class="argusnav-lang">EN</button>
+        <button class="argusnav-login">Login</button>
+        <a href="pages/mine.html" class="argusnav-cta">Start Mining RSC</a>
+        <button id="argusnav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
+    </div>
+    <!-- Menú móvil colapsable -->
+    <div class="argusnav-mobile-menu" id="argusnav-mobile-menu">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#technology">Technology</a></li>
+        <li><a href="pages/mine.html">Mining</a></li>
+        <li><a href="pages/staking.html">Staking</a></li>
+        <li><a href="pages/about.html">About</a></li>
+        <li><a href="pages/mine.html" class="argusnav-cta-mobile">Start Mining</a></li>
+      </ul>
     </div>
   </nav>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-overlay"></div>
-    <div class="mobile-menu-content">
-      <div class="mobile-menu-header">
-        <div class="mobile-menu-logo">
-          <img src="assets/img/rsc-logo-quantum.svg" alt="RSC Chain" class="mobile-menu-logo-img">
-          <span class="mobile-menu-logo-text">RSC CHAIN</span>
-        </div>
-        <button class="mobile-menu-close" id="mobileMenuClose">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      
-      <div class="mobile-menu-body">
-        <nav class="mobile-menu-nav">
-          <div class="mobile-nav-section">
-            <h4 class="mobile-nav-title">Main</h4>
-            <a href="#home" class="mobile-nav-link">
-              <i class="fas fa-home"></i>
-              <span>Home</span>
-            </a>
-            <a href="#technology" class="mobile-nav-link">
-              <i class="fas fa-microchip"></i>
-              <span>Technology</span>
-            </a>
-            <a href="#ecosystem" class="mobile-nav-link">
-              <i class="fas fa-network-wired"></i>
-              <span>Ecosystem</span>
-            </a>
-            <a href="#performance" class="mobile-nav-link">
-              <i class="fas fa-tachometer-alt"></i>
-              <span>Performance</span>
-            </a>
-          </div>
-          
-          <div class="mobile-nav-section">
-            <h4 class="mobile-nav-title">Platform</h4>
-            <a href="pages/mine.html" class="mobile-nav-link">
-              <i class="fas fa-coins"></i>
-              <span>Mining</span>
-            </a>
-            <a href="pages/wallet.html" class="mobile-nav-link">
-              <i class="fas fa-wallet"></i>
-              <span>Wallet</span>
-            </a>
-            <a href="pages/staking.html" class="mobile-nav-link">
-              <i class="fas fa-lock"></i>
-              <span>Staking</span>
-            </a>
-            <a href="pages/p2p.html" class="mobile-nav-link">
-              <i class="fas fa-exchange-alt"></i>
-              <span>P2P Trading</span>
-            </a>
-            <a href="pages/bank.html" class="mobile-nav-link">
-              <i class="fas fa-university"></i>
-              <span>Bank</span>
-            </a>
-            <a href="pages/explorer.html" class="mobile-nav-link">
-              <i class="fas fa-search"></i>
-              <span>Explorer</span>
-            </a>
-          </div>
-          
-          <div class="mobile-nav-section">
-            <h4 class="mobile-nav-title">Connect</h4>
-            <div class="mobile-social-links">
-              <a href="https://t.me/rscchain" class="mobile-social-link" target="_blank">
-                <i class="fab fa-telegram"></i>
-              </a>
-              <a href="https://x.com/rscchain" class="mobile-social-link" target="_blank">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="https://discord.gg/rscchain" class="mobile-social-link" target="_blank">
-                <i class="fab fa-discord"></i>
-              </a>
-              <a href="https://github.com/rscchain" class="mobile-social-link" target="_blank">
-                <i class="fab fa-github"></i>
-              </a>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </div>
-  </div>
-
+<script>// Mobile menu toggle
+  const burger = document.getElementById('argusnav-hamburger');
+  const mobileMenu = document.getElementById('argusnav-mobile-menu');
+  burger.onclick = () => {
+    mobileMenu.classList.toggle('open');
+    burger.classList.toggle('open');
+  };
+</script>
 
   <!-- Main Content -->
   <main>
-        <!-- ===== QUANTUM HERO SECTION ===== -->
-    <section id="home" class="quantum-hero">
-      <!-- Quantum Background Layers -->
-      <div class="quantum-bg">
-        <div class="quantum-particles"></div>
-        <div class="quantum-grid"></div>
-        <div class="quantum-waves"></div>
-        <div class="quantum-rings"></div>
-        <div class="quantum-nexus"></div>
-        <div class="quantum-data-stream"></div>
+    <!-- ===== HERO SECTION - REDESIGNED TOP ===== -->
+    <section class="hero-top">
+      <!-- Background Effects -->
+      <div class="hero-top-bg">
+        <!-- Animated Gradient Mesh -->
+        <div class="hero-gradient-mesh"></div>
+        
+        <!-- Floating Orbs -->
+        <div class="hero-orb orb-1"></div>
+        <div class="hero-orb orb-2"></div>
+        <div class="hero-orb orb-3"></div>
+        
+        <!-- Grid Pattern -->
+        <div class="hero-grid-pattern"></div>
+        
+        <!-- Light Beams -->
+        <div class="hero-light-beam beam-1"></div>
+        <div class="hero-light-beam beam-2"></div>
+        
+        <!-- Particles Canvas -->
+        <canvas id="heroParticles" class="hero-particles-canvas"></canvas>
       </div>
-      
-      <!-- Blockchain Visualization -->
-      <div class="blockchain-core">
-        <div class="core-hologram">
-          <div class="hologram-layer layer-1"></div>
-          <div class="hologram-layer layer-2"></div>
-          <div class="hologram-layer layer-3"></div>
-          <div class="core-center">
-            <div class="quantum-logo">
-              <div class="logo-ring ring-1"></div>
-              <div class="logo-ring ring-2"></div>
-              <div class="logo-ring ring-3"></div>
-              <div class="logo-center">
-                <i class="fas fa-atom"></i>
+
+      <!-- Content -->
+      <div class="hero-top-container">
+        <!-- Main Content -->
+        <div class="hero-top-content">
+          <!-- Badge -->
+          <div class="hero-badge">
+            <div class="hero-badge-glow"></div>
+            <i class="fas fa-rocket"></i>
+            <span>QUANTUM BLOCKCHAIN REVOLUTION</span>
+          </div>
+
+          <!-- Main Title with 3D Effect -->
+          <h1 class="hero-main-title">
+            <span class="title-line">
+              <span class="title-word highlight" data-text="RSC">RSC</span>
+              <span class="title-word" data-text="CHAIN">CHAIN</span>
+            </span>
+            <span class="title-line">
+              <span class="title-word" data-text="QUANTUM">QUANTUM</span>
+            </span>
+            <span class="title-line">
+              <span class="title-word highlight" data-text="BLOCKCHAIN">BLOCKCHAIN</span>
+            </span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="hero-subtitle">
+            Experience lightning-fast transactions, quantum-resistant security, and true decentralization. 
+            Join the next generation of blockchain technology with RSC Chain.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="hero-cta-group">
+            <a href="pages/mine.html" class="hero-btn-primary">
+              <span class="btn-content">
+                <i class="fas fa-play-circle"></i>
+                <span>Start Mining Now</span>
+              </span>
+              <div class="btn-particles">
+                <span></span><span></span><span></span><span></span>
               </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Network Nodes -->
-        <div class="network-nodes">
-          <div class="node quantum-node node-1" data-tech="AI">
-            <div class="node-glow"></div>
-            <div class="node-icon">
-              <i class="fas fa-brain"></i>
-            </div>
-            <div class="node-label">AI Engine</div>
-            <div class="node-pulse"></div>
-          </div>
-          
-          <div class="node quantum-node node-2" data-tech="Crypto">
-            <div class="node-glow"></div>
-            <div class="node-icon">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <div class="node-label">Quantum Crypto</div>
-            <div class="node-pulse"></div>
-          </div>
-          
-          <div class="node quantum-node node-3" data-tech="Consensus">
-            <div class="node-glow"></div>
-            <div class="node-icon">
-              <i class="fas fa-cogs"></i>
-            </div>
-            <div class="node-label">Hybrid Consensus</div>
-            <div class="node-pulse"></div>
-          </div>
-          
-          <div class="node quantum-node node-4" data-tech="Mining">
-            <div class="node-glow"></div>
-            <div class="node-icon">
-              <i class="fas fa-coins"></i>
-            </div>
-            <div class="node-label">Quantum Mining</div>
-            <div class="node-pulse"></div>
-          </div>
-          
-          <div class="node quantum-node node-5" data-tech="VRF">
-            <div class="node-glow"></div>
-            <div class="node-icon">
-              <i class="fas fa-dice"></i>
-            </div>
-            <div class="node-label">VRF Random</div>
-            <div class="node-pulse"></div>
-          </div>
-          
-          <div class="node quantum-node node-6" data-tech="DeFi">
-            <div class="node-glow"></div>
-            <div class="node-icon">
-              <i class="fas fa-university"></i>
-            </div>
-            <div class="node-label">DeFi Protocol</div>
-            <div class="node-pulse"></div>
-          </div>
-        </div>
-        
-        <!-- Quantum Connections -->
-        <div class="quantum-connections">
-          <div class="connection quantum-connection conn-1"></div>
-          <div class="connection quantum-connection conn-2"></div>
-          <div class="connection quantum-connection conn-3"></div>
-          <div class="connection quantum-connection conn-4"></div>
-          <div class="connection quantum-connection conn-5"></div>
-          <div class="connection quantum-connection conn-6"></div>
-        </div>
-        
-        <!-- Data Flow Particles -->
-        <div class="data-flow">
-          <div class="quantum-particle particle-1"></div>
-          <div class="quantum-particle particle-2"></div>
-          <div class="quantum-particle particle-3"></div>
-          <div class="quantum-particle particle-4"></div>
-          <div class="quantum-particle particle-5"></div>
-          <div class="quantum-particle particle-6"></div>
-        </div>
-      </div>
-      
-      <!-- Hero Content -->
-      <div class="container">
-        <div class="hero-content">
-          <!-- Main Hero Text -->
-          <div class="hero-text">
-            <div class="hero-badge">
-              <i class="fas fa-rocket"></i>
-              <span>Next-Gen Blockchain</span>
-            </div>
+            </a>
             
-            <h1 class="hero-title">
-              The Future of
-              <span class="title-gradient">Decentralized Finance</span>
-              is Here
-            </h1>
-            
-            <p class="hero-description">
-              RSC Chain delivers <strong>lightning-fast transactions</strong>, 
-              <strong>enterprise-grade security</strong>, and 
-              <strong>zero-fee trading</strong> in a truly decentralized ecosystem. 
-              Built for the next generation of Web3 applications.
-            </p>
-            
-            <!-- Key Features -->
-            <div class="hero-features">
-              <div class="feature-item">
+            <a href="pages/docs.html" class="hero-btn-secondary">
+              <i class="fas fa-file-alt"></i>
+              <span>Learn More</span>
+            </a>
+          </div>
+
+          <!-- Stats Bar -->
+          <div class="hero-stats-bar">
+            <div class="hero-stat-item">
+              <div class="stat-icon">
                 <i class="fas fa-bolt"></i>
-                <span>Lightning Fast</span>
               </div>
-              <div class="feature-item">
-                <i class="fas fa-shield-alt"></i>
-                <span>Ultra Secure</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-dollar-sign"></i>
-                <span>Zero Fees</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-globe"></i>
-                <span>Global Access</span>
+              <div class="stat-data">
+                <span class="stat-value">10,000+</span>
+                <span class="stat-label">TPS</span>
               </div>
             </div>
-            
-            <!-- Action Buttons -->
-            <div class="hero-actions">
-              <a href="pages/mine.html" class="btn btn-primary">
-                <i class="fas fa-rocket"></i>
-                Start Mining
-              </a>
-              
-              <a href="pages/explorer.html" class="btn btn-secondary">
-                <i class="fas fa-search"></i>
-                Explore Network
-              </a>
-              
-              <a href="pages/staking.html" class="btn btn-outline">
-                <i class="fas fa-lock"></i>
-                Stake & Earn
-              </a>
+
+            <div class="stat-divider"></div>
+
+            <div class="hero-stat-item">
+              <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="stat-data">
+                <span class="stat-value">1.8s</span>
+                <span class="stat-label">Finality</span>
+              </div>
+            </div>
+
+            <div class="stat-divider"></div>
+
+            <div class="hero-stat-item">
+              <div class="stat-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-data">
+                <span class="stat-value">50K+</span>
+                <span class="stat-label">Users</span>
+              </div>
+            </div>
+
+            <div class="stat-divider"></div>
+
+            <div class="hero-stat-item">
+              <div class="stat-icon">
+                <i class="fas fa-network-wired"></i>
+              </div>
+              <div class="stat-data">
+                <span class="stat-value">99.99%</span>
+                <span class="stat-label">Uptime</span>
+              </div>
             </div>
           </div>
-          
-          <!-- Right Visual Section -->
-          <div class="hero-visual">
-            <div class="visual-container">
-              <!-- Animated Blockchain Blocks -->
-              <div class="blockchain-animation">
-                <div class="block-chain">
-                  <div class="block"></div>
-                  <div class="block"></div>
-                  <div class="block"></div>
-                  <div class="block"></div>
-                  <div class="block"></div>
-                </div>
-                <div class="connection-lines">
-                  <div class="line"></div>
-                  <div class="line"></div>
-                  <div class="line"></div>
-                  <div class="line"></div>
-                </div>
-              </div>
-              
-              <!-- Floating Elements -->
-              <div class="floating-elements">
-                <div class="float-icon icon-1">
-                  <i class="fas fa-bolt"></i>
-                </div>
-                <div class="float-icon icon-2">
-                  <i class="fas fa-shield-alt"></i>
-                  <div class="icon-glow"></div>
-                </div>
-                <div class="float-icon icon-3">
-                  <i class="fas fa-dollar-sign"></i>
-                </div>
-                <div class="float-icon icon-4">
-                  <i class="fas fa-globe"></i>
-                </div>
-              </div>
-              
-              <!-- Background Glow -->
-              <div class="background-glow"></div>
+
+          <!-- Trust Badges -->
+          <div class="hero-trust-badges">
+            <div class="trust-badge">
+              <i class="fas fa-shield-alt"></i>
+              <span>Quantum Secure</span>
             </div>
+            <div class="trust-badge">
+              <i class="fas fa-code-branch"></i>
+              <span>Open Source</span>
+            </div>
+            <div class="trust-badge">
+              <i class="fas fa-globe"></i>
+              <span>Decentralized</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual Element - 3D Blockchain -->
+        <div class="hero-visual">
+          <div class="visual-container">
+            <!-- Central Sphere -->
+            <div class="hero-sphere">
+              <div class="sphere-inner">
+                <div class="sphere-ring ring-1"></div>
+                <div class="sphere-ring ring-2"></div>
+                <div class="sphere-ring ring-3"></div>
+                <div class="sphere-core">
+                  <img src="assets/img/rsc-logo-quantum.svg" alt="RSC" class="sphere-logo">
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating Cards -->
+            <div class="floating-card card-1">
+              <div class="card-icon">
+                <i class="fas fa-cube"></i>
+              </div>
+              <div class="card-content">
+                <span class="card-value">1,247,892</span>
+                <span class="card-label">Blocks</span>
+              </div>
+            </div>
+
+            <div class="floating-card card-2">
+              <div class="card-icon">
+                <i class="fas fa-exchange-alt"></i>
+              </div>
+              <div class="card-content">
+                <span class="card-value">2.5M+</span>
+                <span class="card-label">Transactions</span>
+              </div>
+            </div>
+
+            <div class="floating-card card-3">
+              <div class="card-icon">
+                <i class="fas fa-coins"></i>
+              </div>
+              <div class="card-content">
+                <span class="card-value">2.1M</span>
+                <span class="card-label">Total Supply</span>
+              </div>
+            </div>
+
+            <!-- Connection Lines -->
+            <svg class="connection-lines" viewBox="0 0 400 400">
+              <line x1="200" y1="200" x2="100" y2="100" class="connection-line" />
+              <line x1="200" y1="200" x2="300" y2="100" class="connection-line" />
+              <line x1="200" y1="200" x2="300" y2="300" class="connection-line" />
+            </svg>
           </div>
         </div>
       </div>
-      
+
       <!-- Scroll Indicator -->
-      <div class="scroll-indicator">
-        <div class="scroll-line"></div>
-        <div class="scroll-text">Scroll to explore</div>
-        <div class="scroll-arrow">
-          <i class="fas fa-chevron-down"></i>
+      <div class="hero-scroll-indicator">
+        <div class="scroll-mouse">
+          <div class="scroll-wheel"></div>
         </div>
+        <span>Scroll to explore</span>
       </div>
     </section>
 
@@ -463,1400 +325,949 @@
       </div>
     </section>
 
-    <!-- ===== QUANTUM TECHNOLOGY SECTION ===== -->
-    <section id="technology" class="quantum-technology">
-      <!-- Quantum Background -->
-      <div class="quantum-tech-bg">
-        <div class="tech-particles"></div>
-        <div class="tech-grid-pattern"></div>
-        <div class="tech-energy-waves"></div>
+    <!-- ===== QUANTUM TECHNOLOGY SECTION - ARGUS STYLE ===== -->
+    <section id="technology" class="quantum-technology-argus">
+      <!-- Argus Background Effects -->
+      <div class="quantum-argus-bg">
+        <!-- Light leaks diagonales -->
+        <div class="argus-light-leak argus-light-leak-left"></div>
+        <div class="argus-light-leak argus-light-leak-right"></div>
+
+        <!-- Arco blanco superior -->
+        <svg class="argus-white-arc" viewBox="0 0 2000 300" width="100%" height="300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="arcGlowTech" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="blur1"/>
+              <feGaussianBlur stdDeviation="6" result="blur2"/>
+              <feGaussianBlur stdDeviation="12" result="blur3"/>
+              <feGaussianBlur stdDeviation="24" result="blur4"/>
+              <feMerge>
+                <feMergeNode in="blur4"/>
+                <feMergeNode in="blur3"/>
+                <feMergeNode in="blur2"/>
+                <feMergeNode in="blur1"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path d="M 50 280 Q 500 20, 1000 20 Q 1500 20, 1950 280"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                fill="none"
+                filter="url(#arcGlowTech)"
+                opacity="1"/>
+        </svg>
       </div>
-      
-      <div class="container">
-        <!-- Enhanced Section Header -->
-        <div class="quantum-section-header">
-          <div class="quantum-section-badge">
-            <div class="badge-energy"></div>
-            <div class="badge-icon">
-              <i class="fas fa-atom"></i>
+
+      <div class="quantum-argus-container">
+        <!-- Título principal -->
+        <h1 class="quantum-argus-title">Quantum-Powered Security</h1>
+
+        <!-- Subtítulo explicativo -->
+        <p class="quantum-argus-subtitle">
+          RSC Chain delivers next-generation blockchain security through advanced quantum technologies
+          that ensure complete protection against current and future threats.
+        </p>
+
+        <!-- Grid de 5 características -->
+        <div class="quantum-features-grid">
+          <!-- Característica 1: Quantum Security -->
+          <div class="quantum-feature-card">
+            <div class="feature-icon-container">
+              <div class="feature-icon-bg"></div>
+              <i class="fas fa-shield-alt feature-icon"></i>
             </div>
-            <span class="badge-text">QUANTUM BLOCKCHAIN TECHNOLOGY</span>
-            <div class="badge-orbit"></div>
+            <h3 class="feature-title">Quantum Security</h3>
           </div>
-          
-          <h2 class="quantum-section-title">
-            <span class="title-primary">Revolutionary</span>
-            <span class="title-highlight">Quantum Technologies</span>
-          </h2>
-          
-          <p class="quantum-section-description">
-            Experience the next generation of blockchain innovation with RSC Chain's 
-            <span class="tech-highlight">quantum-powered technology stack</span> that sets new 
-            industry standards and redefines what's possible in decentralized systems.
+
+          <!-- Característica 2: AI Intelligence -->
+          <div class="quantum-feature-card">
+            <div class="feature-icon-container">
+              <div class="feature-icon-bg"></div>
+              <i class="fas fa-brain feature-icon"></i>
+            </div>
+            <h3 class="feature-title">AI Intelligence</h3>
+          </div>
+
+          <!-- Característica 3: Hybrid Consensus -->
+          <div class="quantum-feature-card">
+            <div class="feature-icon-container">
+              <div class="feature-icon-bg"></div>
+              <i class="fas fa-cogs feature-icon"></i>
+            </div>
+            <h3 class="feature-title">Hybrid Consensus</h3>
+          </div>
+
+          <!-- Característica 4: Post-Quantum Crypto -->
+          <div class="quantum-feature-card">
+            <div class="feature-icon-container">
+              <div class="feature-icon-bg"></div>
+              <i class="fas fa-key feature-icon"></i>
+            </div>
+            <h3 class="feature-title">Post-Quantum Crypto</h3>
+          </div>
+
+          <!-- Característica 5: Decentralized Network -->
+          <div class="quantum-feature-card">
+            <div class="feature-icon-container">
+              <div class="feature-icon-bg"></div>
+              <i class="fas fa-network-wired feature-icon"></i>
+            </div>
+            <h3 class="feature-title">Decentralized Network</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ROADMAP SECTION - REDESIGNED TOP ===== -->
+    <section id="roadmap" class="roadmap-modern">
+      <!-- Background -->
+      <div class="roadmap-bg">
+        <div class="roadmap-glow-1"></div>
+        <div class="roadmap-glow-2"></div>
+        <div class="roadmap-grid"></div>
+      </div>
+
+      <div class="roadmap-container">
+        <!-- Header -->
+        <div class="roadmap-header">
+          <div class="roadmap-tag">
+            <i class="fas fa-route"></i>
+            OUR JOURNEY
+          </div>
+          <h2 class="roadmap-title">Development Roadmap</h2>
+          <p class="roadmap-subtitle">
+            From foundational ideology to global blockchain infrastructure. 
+            Follow our strategic path to revolutionize decentralized finance.
           </p>
-          
-          <!-- Technology Stats Overview -->
-          <div class="tech-overview-stats">
-            <div class="overview-stat">
-              <div class="stat-icon">
-                <i class="fas fa-microchip"></i>
-              </div>
-              <div class="stat-content">
-                <span class="stat-number">4</span>
-                <span class="stat-label">Core Technologies</span>
+        </div>
+
+        <!-- Timeline -->
+        <div class="roadmap-timeline">
+            <!-- Phase 0 -->
+            <div class="roadmap-phase completed">
+              <div class="phase-number">01</div>
+              <div class="phase-card">
+                <div class="phase-status-badge completed">
+                  <i class="fas fa-check-circle"></i>
+                  Completed
+                </div>
+                <h3 class="phase-title">Ideology & Foundation</h3>
+                <p class="phase-period">2024</p>
+                <p class="phase-description">
+                  RSC Manifesto: freedom without borders, without banks, without KYC.
+                </p>
+                <ul class="phase-features">
+                  <li><i class="fas fa-check"></i> Layer 1 Blockchain (PoW + PoS + AI)</li>
+                  <li><i class="fas fa-check"></i> Advanced security (PQC)</li>
+                  <li><i class="fas fa-check"></i> Genesis modules & core infrastructure</li>
+                </ul>
               </div>
             </div>
-            <div class="overview-stat">
-              <div class="stat-icon">
+            
+            <!-- Phase 1 -->
+            <div class="roadmap-phase active">
+              <div class="phase-number">02</div>
+              <div class="phase-card">
+                <div class="phase-status-badge active">
+                  <i class="fas fa-rocket"></i>
+                  In Progress
+                </div>
+                <h3 class="phase-title">Fair Distribution</h3>
+                <p class="phase-period">2025</p>
+                <p class="phase-description">
+                  Web Mining initial distribution without ICO.
+                </p>
+                <ul class="phase-features">
+                  <li><i class="fas fa-spinner fa-spin"></i> Community gamification & daily tasks</li>
+                  <li><i class="fas fa-spinner fa-spin"></i> Simulated P2P Market</li>
+                  <li><i class="fas fa-spinner fa-spin"></i> Initial DAO governance</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="roadmap-phase">
+              <div class="phase-number">03</div>
+              <div class="phase-card">
+                <div class="phase-status-badge upcoming">
+                  <i class="fas fa-clock"></i>
+                  Upcoming
+                </div>
+                <h3 class="phase-title">Ecosystem Infrastructure</h3>
+                <p class="phase-period">Q4 2025 – Q1 2026</p>
+                <p class="phase-description">
+                  Complete Wallet - crypto bank in your pocket.
+                </p>
+                <ul class="phase-features">
+                  <li><i class="fas fa-circle"></i> RSC Bank Alpha with QR payments</li>
+                  <li><i class="fas fa-circle"></i> NFT Validator Licenses (500 nodes)</li>
+                  <li><i class="fas fa-circle"></i> Bridge v1 (RSC ↔ BNB)</li>
+                  <li><i class="fas fa-circle"></i> Advanced Explorer with AI</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="roadmap-phase">
+              <div class="phase-number">04</div>
+              <div class="phase-card">
+                <div class="phase-status-badge upcoming">
+                  <i class="fas fa-clock"></i>
+                  Upcoming
+                </div>
+                <h3 class="phase-title">Multichain Innovation</h3>
+                <p class="phase-period">2026</p>
+                <p class="phase-description">
+                  Multiple bridges and native DEX with 10M TPS.
+                </p>
+                <ul class="phase-features">
+                  <li><i class="fas fa-circle"></i> Ethereum, TON, Solana bridges</li>
+                  <li><i class="fas fa-circle"></i> Native DEX on RSC (10M TPS)</li>
+                  <li><i class="fas fa-circle"></i> Advanced oracles</li>
+                  <li><i class="fas fa-circle"></i> On-chain P2P Market</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="roadmap-phase">
+              <div class="phase-number">05</div>
+              <div class="phase-card">
+                <div class="phase-status-badge upcoming">
+                  <i class="fas fa-clock"></i>
+                  Upcoming
+                </div>
+                <h3 class="phase-title">Mass Adoption</h3>
+                <p class="phase-period">2026–2027</p>
+                <p class="phase-description">
+                  Global RSC Bank - payments without banks, without KYC.
+                </p>
+                <ul class="phase-features">
+                  <li><i class="fas fa-circle"></i> Direct crypto → fiat conversion</li>
+                  <li><i class="fas fa-circle"></i> Regional partnerships (LatAm, Africa, Asia)</li>
+                  <li><i class="fas fa-circle"></i> Hackathons & Grants program</li>
+                  <li><i class="fas fa-circle"></i> Advanced global DAO</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Phase 5 -->
+            <div class="roadmap-phase">
+              <div class="phase-number">06</div>
+              <div class="phase-card">
+                <div class="phase-status-badge upcoming">
+                  <i class="fas fa-clock"></i>
+                  Upcoming
+                </div>
+                <h3 class="phase-title">Global Infrastructure</h3>
+                <p class="phase-period">2027–2028</p>
+                <p class="phase-description">
+                  RSC as the backbone of global decentralized commerce.
+                </p>
+                <ul class="phase-features">
+                  <li><i class="fas fa-circle"></i> Advanced backtesting for traders</li>
+                  <li><i class="fas fa-circle"></i> Offline nodes for unstable internet</li>
+                  <li><i class="fas fa-circle"></i> Global commerce integration</li>
+                  <li><i class="fas fa-circle"></i> Unified RSC ecosystem</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TOKENOMICS SECTION - PREMIUM MODERN ===== -->
+    <section id="tokenomics" class="tokenomics-modern">
+      <div class="tokenomics-bg-effects">
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+        <div class="bg-particles"></div>
+      </div>
+
+      <div class="tokenomics-container">
+        <!-- Header Section -->
+        <div class="tokenomics-header">
+          <div class="section-tag">TOKENOMICS</div>
+          <h2 class="tokenomics-title">RSC Token Distribution</h2>
+          <p class="tokenomics-subtitle">Fair, transparent, and sustainable token economy designed for long-term value creation</p>
+        </div>
+
+        <!-- Main Stats -->
+        <div class="tokenomics-main-stats">
+          <div class="main-stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-coins"></i>
+            </div>
+            <div class="stat-value">2.1M</div>
+            <div class="stat-label">Total Supply</div>
+          </div>
+          <div class="main-stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-fire-alt"></i>
+            </div>
+            <div class="stat-value">50%</div>
+            <div class="stat-label">Already Burned</div>
+          </div>
+          <div class="main-stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-value">1.05M</div>
+            <div class="stat-label">Circulating Supply</div>
+          </div>
+        </div>
+
+        <!-- Distribution Chart -->
+        <div class="tokenomics-distribution">
+          <div class="distribution-chart-container">
+            <canvas id="tokenomicsChart" width="400" height="400"></canvas>
+            <div class="chart-center-info">
+              <div class="chart-center-title">RSC</div>
+              <div class="chart-center-subtitle">Token</div>
+            </div>
+          </div>
+
+          <div class="distribution-legend">
+            <div class="legend-item" data-color="#00d4ff">
+              <div class="legend-color"></div>
+              <div class="legend-info">
+                <div class="legend-percentage">40%</div>
+                <div class="legend-label">Mining Rewards</div>
+                <div class="legend-amount">840,000 RSC</div>
+              </div>
+            </div>
+            <div class="legend-item" data-color="#7c3aed">
+              <div class="legend-color"></div>
+              <div class="legend-info">
+                <div class="legend-percentage">30%</div>
+                <div class="legend-label">Staking Rewards</div>
+                <div class="legend-amount">630,000 RSC</div>
+              </div>
+            </div>
+            <div class="legend-item" data-color="#10b981">
+              <div class="legend-color"></div>
+              <div class="legend-info">
+                <div class="legend-percentage">20%</div>
+                <div class="legend-label">Ecosystem Development</div>
+                <div class="legend-amount">420,000 RSC</div>
+              </div>
+            </div>
+            <div class="legend-item" data-color="#f59e0b">
+              <div class="legend-color"></div>
+              <div class="legend-info">
+                <div class="legend-percentage">10%</div>
+                <div class="legend-label">Reserve Fund</div>
+                <div class="legend-amount">210,000 RSC</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Features -->
+        <div class="tokenomics-features">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>No ICO/Presale</h3>
+            <p>100% fair launch with no pre-mine or private sales</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-cut"></i>
+            </div>
+            <h3>Halving Mechanism</h3>
+            <p>Mining rewards halve every 4 years for sustainable supply</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h3>Deflationary Model</h3>
+            <p>Transaction fees burned to reduce circulating supply</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Community Driven</h3>
+            <p>Governance controlled by RSC token holders</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PERFORMANCE SECTION - REDESIGNED TOP ===== -->
+    <section class="performance-modern">
+      <!-- Background -->
+      <div class="performance-bg">
+        <div class="performance-glow-top"></div>
+        <div class="performance-glow-bottom"></div>
+      </div>
+
+      <div class="performance-container">
+        <!-- Header -->
+        <div class="performance-header">
+          <div class="perf-tag">
+            <div class="tag-dot"></div>
+            LIVE METRICS
+          </div>
+          <h2 class="perf-title">Real-Time Performance</h2>
+          <p class="perf-subtitle">
+            Live blockchain metrics updated every second. Monitor RSC Chain's performance in real-time.
+          </p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="perf-stats-grid">
+          <!-- Big Stat 1 - TPS -->
+          <div class="perf-big-card">
+            <div class="perf-card-bg"></div>
+            <div class="perf-card-content">
+              <div class="perf-icon-wrapper">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <div class="perf-metric-value" data-target="10000">0</div>
+              <div class="perf-metric-label">Transactions Per Second</div>
+              <div class="perf-trend">
+                <span class="trend-badge trend-up">
+                  <i class="fas fa-arrow-up"></i>
+                  +15%
+                </span>
+                <span class="trend-text">vs last hour</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Big Stat 2 - Block Height -->
+          <div class="perf-big-card">
+            <div class="perf-card-bg"></div>
+            <div class="perf-card-content">
+              <div class="perf-icon-wrapper">
+                <i class="fas fa-cubes"></i>
+              </div>
+              <div class="perf-metric-value" data-target="1247892">0</div>
+              <div class="perf-metric-label">Current Block Height</div>
+              <div class="perf-mini-viz">
+                <div class="block-pulse"></div>
+                <div class="block-pulse"></div>
+                <div class="block-pulse"></div>
+                <div class="block-pulse"></div>
+              </div>
+              <div class="perf-info-text">
+                <i class="fas fa-clock"></i>
+                New block every 1.8s
+              </div>
+            </div>
+          </div>
+
+          <!-- Small Stats Row 1 -->
+          <div class="perf-small-card">
+            <div class="perf-card-bg"></div>
+            <div class="perf-small-content">
+              <div class="perf-small-icon">
+                <i class="fas fa-globe"></i>
+              </div>
+              <div class="perf-small-value" data-target="2847">0</div>
+              <div class="perf-small-label">Active Nodes</div>
+              <div class="perf-small-viz">
+                <div class="node-dot"></div>
+                <div class="node-dot"></div>
+                <div class="node-dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="perf-small-card">
+            <div class="perf-card-bg"></div>
+            <div class="perf-small-content">
+              <div class="perf-small-icon">
+                <i class="fas fa-network-wired"></i>
+              </div>
+              <div class="perf-small-value">99.9%</div>
+              <div class="perf-small-label">Network Uptime</div>
+              <div class="perf-progress-bar">
+                <div class="perf-progress-fill" style="width: 99.9%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="perf-small-card">
+            <div class="perf-card-bg"></div>
+            <div class="perf-small-content">
+              <div class="perf-small-icon">
                 <i class="fas fa-shield-alt"></i>
               </div>
-              <div class="stat-content">
-                <span class="stat-number">100%</span>
-                <span class="stat-label">Quantum Secure</span>
-              </div>
-            </div>
-            <div class="overview-stat">
-              <div class="stat-icon">
-                <i class="fas fa-bolt"></i>
-              </div>
-              <div class="stat-content">
-                <span class="stat-number">99.9%</span>
-                <span class="stat-label">Uptime</span>
+              <div class="perf-small-value">512-bit</div>
+              <div class="perf-small-label">Security Level</div>
+              <div class="perf-shield-viz">
+                <i class="fas fa-check-circle"></i>
+                Quantum Safe
               </div>
             </div>
           </div>
-        </div>
-        
-        <!-- Enhanced Technology Grid -->
-        <div class="quantum-tech-grid">
-          <!-- AI Technology Card -->
-          <div class="quantum-tech-card" data-tech="ai">
-            <div class="tech-card-bg">
-              <div class="card-energy-field"></div>
-              <div class="card-particle-system"></div>
-            </div>
-            
-            <div class="tech-card-header">
-              <div class="tech-icon-container">
-                <div class="tech-icon-bg"></div>
-                <div class="tech-icon">
-                  <i class="fas fa-brain"></i>
-                </div>
-                <div class="tech-icon-pulse"></div>
-                <div class="tech-icon-orbit"></div>
-              </div>
-              
-              <div class="tech-header-content">
-                <h3 class="tech-title">Quantum AI Engine</h3>
-                <div class="tech-subtitle">Neural Blockchain Intelligence</div>
-                <div class="tech-status-indicator">
-                  <div class="status-dot active"></div>
-                  <span class="status-text">Active</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="tech-card-content">
-              <p class="tech-description">
-                Advanced quantum-enhanced neural networks optimize every aspect of the blockchain, 
-                from consensus mechanisms to security protocols with unprecedented intelligence and adaptability.
-              </p>
-              
-              <div class="tech-features-grid">
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-cog"></i>
-                  </div>
-                  <span class="feature-text">Intelligent Consensus</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-eye"></i>
-                  </div>
-                  <span class="feature-text">Anomaly Detection</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
-                  </div>
-                  <span class="feature-text">Performance Optimization</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-network-wired"></i>
-                  </div>
-                  <span class="feature-text">Federated Learning</span>
-                </div>
-              </div>
-              
-              <div class="tech-metrics">
-                <div class="metric-item">
-                  <div class="metric-value">99.9%</div>
-                  <div class="metric-label">Accuracy</div>
-                  <div class="metric-bar">
-                    <div class="metric-fill" style="width: 99.9%;"></div>
-                  </div>
-                </div>
-                <div class="metric-item">
-                  <div class="metric-value">0.5ms</div>
-                  <div class="metric-label">Response Time</div>
-                  <div class="metric-bar">
-                    <div class="metric-fill" style="width: 95%;"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="tech-card-footer">
-              <button class="tech-learn-more">
-                <span>Learn More</span>
-                <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-          
-          <!-- Cryptography Technology Card -->
-          <div class="quantum-tech-card" data-tech="crypto">
-            <div class="tech-card-bg">
-              <div class="card-energy-field"></div>
-              <div class="card-particle-system"></div>
-            </div>
-            
-            <div class="tech-card-header">
-              <div class="tech-icon-container">
-                <div class="tech-icon-bg"></div>
-                <div class="tech-icon">
-                  <i class="fas fa-shield-alt"></i>
-                </div>
-                <div class="tech-icon-pulse"></div>
-                <div class="tech-icon-orbit"></div>
-              </div>
-              
-              <div class="tech-header-content">
-                <h3 class="tech-title">Quantum Cryptography</h3>
-                <div class="tech-subtitle">Post-Quantum Security</div>
-                <div class="tech-status-indicator">
-                  <div class="status-dot active"></div>
-                  <span class="status-text">Active</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="tech-card-content">
-              <p class="tech-description">
-                Quantum-resistant algorithms that guarantee the future security of all transactions 
-                against emerging quantum computing threats and advanced cryptographic attacks.
-              </p>
-              
-              <div class="tech-features-grid">
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-key"></i>
-                  </div>
-                  <span class="feature-text">XMSS Signatures</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-lock"></i>
-                  </div>
-                  <span class="feature-text">Lattice Cryptography</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-shield-virus"></i>
-                  </div>
-                  <span class="feature-text">Attack Resistance</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-sync-alt"></i>
-                  </div>
-                  <span class="feature-text">Auto Key Migration</span>
-                </div>
-              </div>
-              
-              <div class="tech-metrics">
-                <div class="metric-item">
-                  <div class="metric-value">512-bit</div>
-                  <div class="metric-label">Security Level</div>
-                  <div class="metric-bar">
-                    <div class="metric-fill" style="width: 100%;"></div>
-                  </div>
-                </div>
-                <div class="metric-item">
-                  <div class="metric-value">∞</div>
-                  <div class="metric-label">Future-Proof</div>
-                  <div class="metric-bar">
-                    <div class="metric-fill" style="width: 100%;"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="tech-card-footer">
-              <button class="tech-learn-more">
-                <span>Learn More</span>
-                <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-          
-          <!-- Consensus Technology Card -->
-          <div class="quantum-tech-card" data-tech="consensus">
-            <div class="tech-card-bg">
-              <div class="card-energy-field"></div>
-              <div class="card-particle-system"></div>
-            </div>
-            
-            <div class="tech-card-header">
-              <div class="tech-icon-container">
-                <div class="tech-icon-bg"></div>
-                <div class="tech-icon">
-                  <i class="fas fa-cogs"></i>
-                </div>
-                <div class="tech-icon-pulse"></div>
-                <div class="tech-icon-orbit"></div>
-              </div>
-              
-              <div class="tech-header-content">
-                <h3 class="tech-title">Hybrid Consensus</h3>
-                <div class="tech-subtitle">PoW/PoS/VRF Fusion</div>
-                <div class="tech-status-indicator">
-                  <div class="status-dot active"></div>
-                  <span class="status-text">Active</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="tech-card-content">
-              <p class="tech-description">
-                Revolutionary combination of multiple consensus mechanisms for maximum security, 
-                efficiency, and decentralization with quantum-enhanced randomness and validation.
-              </p>
-              
-              <div class="tech-features-grid">
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-hammer"></i>
-                  </div>
-                  <span class="feature-text">Optimized PoW</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-coins"></i>
-                  </div>
-                  <span class="feature-text">Secure PoS</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-dice"></i>
-                  </div>
-                  <span class="feature-text">VRF Randomness</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-clock"></i>
-                  </div>
-                  <span class="feature-text">Instant Finality</span>
-                </div>
-              </div>
-              
-              <div class="tech-metrics">
-                <div class="metric-item">
-                  <div class="metric-value">0.8s</div>
-                  <div class="metric-label">Finality Time</div>
-                  <div class="metric-bar">
-                    <div class="metric-fill" style="width: 98%;"></div>
-                  </div>
-                </div>
-                <div class="metric-item">
-                  <div class="metric-value">99.99%</div>
-                  <div class="metric-label">Uptime</div>
-                  <div class="metric-bar">
-                    <div class="metric-fill" style="width: 99.99%;"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="tech-card-footer">
-              <button class="tech-learn-more">
-                <span>Learn More</span>
-                <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-          
-          <!-- Network Technology Card -->
-          <div class="quantum-tech-card" data-tech="network">
-            <div class="tech-card-bg">
-              <div class="card-energy-field"></div>
-              <div class="card-particle-system"></div>
-            </div>
-            
-            <div class="tech-card-header">
-              <div class="tech-icon-container">
-                <div class="tech-icon-bg"></div>
-                <div class="tech-icon">
-                  <i class="fas fa-network-wired"></i>
-                </div>
-                <div class="tech-icon-pulse"></div>
-                <div class="tech-icon-orbit"></div>
-              </div>
-              
-              <div class="tech-header-content">
-                <h3 class="tech-title">Quantum Network</h3>
-                <div class="tech-subtitle">Intelligent P2P Architecture</div>
-                <div class="tech-status-indicator">
-                  <div class="status-dot active"></div>
-                  <span class="status-text">Active</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="tech-card-content">
-              <p class="tech-description">
-                Distributed quantum network architecture with intelligent geographic analysis, 
-                automatic route optimization, and quantum-enhanced communication protocols.
-              </p>
-              
-              <div class="tech-features-grid">
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-sitemap"></i>
-                  </div>
-                  <span class="feature-text">Quantum DHT</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-comments"></i>
-                  </div>
-                  <span class="feature-text">Gossip Protocol</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-globe"></i>
-                  </div>
-                  <span class="feature-text">Geo-Optimization</span>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">
-                    <i class="fas fa-balance-scale"></i>
-                  </div>
-                  <span class="feature-text">Load Balancing</span>
-                </div>
-              </div>
-              
-              <div class="tech-metrics">
-                <div class="metric-item">
-                  <div class="metric-value">25ms</div>
-                  <div class="metric-label">Avg Latency</div>
-                  <div class="metric-bar">
-                    <div class="metric-fill" style="width: 92%;"></div>
-                  </div>
-                </div>
-                <div class="metric-item">
-                  <div class="metric-value">50K+</div>
-                  <div class="metric-label">Global Nodes</div>
-                  <div class="metric-bar">
-                    <div class="metric-fill" style="width: 85%;"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="tech-card-footer">
-              <button class="tech-learn-more">
-                <span>Learn More</span>
-                <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Technology Comparison Chart -->
-        <div class="tech-comparison-section">
-          <h3 class="comparison-title">Technology Performance Comparison</h3>
-          <div class="comparison-chart">
-            <div class="chart-category">
-              <div class="category-label">Security Level</div>
-              <div class="chart-bars">
-                <div class="chart-bar rsc">
-                  <div class="bar-fill" data-percentage="100"></div>
-                  <span class="bar-label">RSC Chain</span>
-                </div>
-                <div class="chart-bar competitor">
-                  <div class="bar-fill" data-percentage="75"></div>
-                  <span class="bar-label">Traditional Blockchain</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="chart-category">
-              <div class="category-label">Performance</div>
-              <div class="chart-bars">
-                <div class="chart-bar rsc">
-                  <div class="bar-fill" data-percentage="98"></div>
-                  <span class="bar-label">RSC Chain</span>
-                </div>
-                <div class="chart-bar competitor">
-                  <div class="bar-fill" data-percentage="60"></div>
-                  <span class="bar-label">Traditional Blockchain</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="chart-category">
-              <div class="category-label">Scalability</div>
-              <div class="chart-bars">
-                <div class="chart-bar rsc">
-                  <div class="bar-fill" data-percentage="95"></div>
-                  <span class="bar-label">RSC Chain</span>
-                </div>
-                <div class="chart-bar competitor">
-                  <div class="bar-fill" data-percentage="45"></div>
-                  <span class="bar-label">Traditional Blockchain</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Roadmap Section -->
-    <section id="roadmap" class="roadmap">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-badge">
-            <i class="fas fa-road"></i>
-            <span>STRATEGIC ROADMAP</span>
-          </div>
-          <h2>RSC Chain Development Roadmap</h2>
-          <p>Our comprehensive roadmap outlines the evolution of RSC Chain from its foundational ideology to becoming a global blockchain infrastructure</p>
-        </div>
-        
-        <div class="roadmap-container">
-          <div class="roadmap-timeline">
-            <div class="timeline-item completed">
-              <div class="timeline-marker">
-                <div class="marker-icon">
-                  <i class="fas fa-check"></i>
-                </div>
-                <div class="marker-pulse"></div>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-phase">Phase 0</div>
-                <div class="timeline-title">Ideology and Foundation</div>
-                <div class="timeline-status completed">Completed</div>
-                <div class="timeline-description">
-                  <p><strong>RSC Manifesto:</strong> freedom without borders, without banks, without KYC.</p>
-                  <ul>
-                    <li>Layer 1 Blockchain with PoW + PoS + AI</li>
-                    <li>Advanced security (PQC)</li>
-                    <li>Genesis modules, halving, mempool, logs, CLI, oracles</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <div class="timeline-item active">
-              <div class="timeline-marker">
-                <div class="marker-icon">
-                  <i class="fas fa-rocket"></i>
-                </div>
-                <div class="marker-pulse"></div>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-phase">Phase 1</div>
-                <div class="timeline-title">Fair Distribution</div>
-                <div class="timeline-status active">2025</div>
-                <div class="timeline-description">
-                  <p><strong>Web Mining →</strong> initial distribution without ICO.</p>
-                  <ul>
-                    <li>Community gamification → daily tasks, referrals, social missions</li>
-                    <li>Simulated P2P Market → price created by community before CEX</li>
-                    <li>Initial DAO for early decisions (roles, tasks, incentives)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <div class="timeline-item">
-              <div class="timeline-marker">
-                <div class="marker-icon">
-                  <i class="fas fa-building"></i>
-                </div>
-                <div class="marker-pulse"></div>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-phase">Phase 2</div>
-                <div class="timeline-title">Ecosystem Infrastructure</div>
-                <div class="timeline-status">Q4 2025 – Q1 2026</div>
-                <div class="timeline-description">
-                  <p><strong>Complete Wallet</strong> (crypto bank in your pocket).</p>
-                  <ul>
-                    <li>RSC Bank Alpha → QR payments with instant crypto → fiat conversion</li>
-                    <li>NFT Validator Licenses → first 500 special nodes</li>
-                    <li>Bridge v1 → RSC ↔ BNB (retail liquidity)</li>
-                    <li>Advanced Explorer with AI and telemetry (public audit)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <div class="timeline-item">
-              <div class="timeline-marker">
-                <div class="marker-icon">
-                  <i class="fas fa-link"></i>
-                </div>
-                <div class="marker-pulse"></div>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-phase">Phase 3</div>
-                <div class="timeline-title">Multichain Innovation</div>
-                <div class="timeline-status">2026</div>
-                <div class="timeline-description">
-                  <p><strong>Additional Bridges:</strong></p>
-                  <ul>
-                    <li>Ethereum (credibility)</li>
-                    <li>TON (massive Telegram community)</li>
-                    <li>Solana (retail hype)</li>
-                    <li>Cardano / Sui (technological branding)</li>
-                    <li>Native DEX on RSC with 10M TPS (leveraging AI and sharding)</li>
-                    <li>Advanced oracles for secure external data</li>
-                    <li>On-chain P2P Market → decentralized escrows, reputation, disputes</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <div class="timeline-item">
-              <div class="timeline-marker">
-                <div class="marker-icon">
-                  <i class="fas fa-globe"></i>
-                </div>
-                <div class="marker-pulse"></div>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-phase">Phase 4</div>
-                <div class="timeline-title">Mass Adoption</div>
-                <div class="timeline-status">2026–2027</div>
-                <div class="timeline-description">
-                  <p><strong>Global RSC Bank →</strong> payments without banks, without KYC.</p>
-                  <ul>
-                    <li>Direct crypto → fiat conversion within the bank, without depending on ZeroHash</li>
-                    <li>Regional partnerships → LatAm, Africa, Asia, with local payment ramps</li>
-                    <li>Hackathons and Grants → thousands of devs building on RSC</li>
-                    <li>Advanced governance → global DAO with regional sub-DAOs</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <div class="timeline-item">
-              <div class="timeline-marker">
-                <div class="marker-icon">
-                  <i class="fas fa-infinity"></i>
-                </div>
-                <div class="marker-pulse"></div>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-phase">Phase 5</div>
-                <div class="timeline-title">RSC as Global Infrastructure</div>
-                <div class="timeline-status">2027–2028</div>
-                <div class="timeline-description">
-                  <p><strong>Advanced Web:</strong></p>
-                  <ul>
-                    <li>Free advanced backtesting for traders</li>
-                    <li>Advanced optimization for companies</li>
-                    <li>Offline nodes → online sync → adoption in places without stable Internet</li>
-                    <li>Global commerce integration → banking plugins and open APIs</li>
-                    <li>DEX + Bank + Wallet interconnected as a single RSC ecosystem</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tokenomics Section -->
-    <section id="tokenomics" class="tokenomics">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-badge">
-            <i class="fas fa-coins"></i>
-            <span>ADVANCED TOKENOMICS</span>
-          </div>
-          <h2>RSC Token Economics</h2>
-          <p>Revolutionary tokenomics designed for sustainable growth, fair distribution, and long-term value creation</p>
-        </div>
-        
-        <div class="tokenomics-grid">
-          <div class="tokenomics-card tokenomics-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-chart-pie"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>Token Distribution</h3>
-                <p>Fair and transparent allocation</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="distribution-chart">
-                <div class="chart-item">
-                  <div class="chart-label">
-                    <span class="label-color mining"></span>
-                    <span>Mining Rewards</span>
-                  </div>
-                  <div class="chart-percentage">40%</div>
-                </div>
-                <div class="chart-item">
-                  <div class="chart-label">
-                    <span class="label-color staking"></span>
-                    <span>Staking Rewards</span>
-                  </div>
-                  <div class="chart-percentage">25%</div>
-                </div>
-                <div class="chart-item">
-                  <div class="chart-label">
-                    <span class="label-color ecosystem"></span>
-                    <span>Ecosystem Development</span>
-                  </div>
-                  <div class="chart-percentage">20%</div>
-                </div>
-                <div class="chart-item">
-                  <div class="chart-label">
-                    <span class="label-color team"></span>
-                    <span>Team & Advisors</span>
-                  </div>
-                  <div class="chart-percentage">10%</div>
-                </div>
-                <div class="chart-item">
-                  <div class="chart-label">
-                    <span class="label-color reserve"></span>
-                    <span>Reserve Fund</span>
-                  </div>
-                  <div class="chart-percentage">5%</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tokenomics-card tokenomics-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-bolt"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>Mining Economics</h3>
-                <p>Advanced reward mechanisms</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="economics-features">
-                <div class="feature-item">
-                  <i class="fas fa-check-circle"></i>
-                  <span>Dynamic difficulty adjustment</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-check-circle"></i>
-                  <span>Halving every 4 years</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-check-circle"></i>
-                  <span>AI-optimized rewards</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-check-circle"></i>
-                  <span>Referral bonus system</span>
-                </div>
-              </div>
-              <div class="economics-stats">
-                <div class="stat">
-                  <span class="stat-value">2.1M</span>
-                  <span class="stat-label">Max Supply</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">1.8s</span>
-                  <span class="stat-label">Block Time</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tokenomics-card tokenomics-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-lock"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>Staking Rewards</h3>
-                <p>Secure and profitable staking</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="staking-tiers">
-                <div class="tier">
-                  <div class="tier-name">Basic</div>
-                  <div class="tier-apy">8% APY</div>
-                  <div class="tier-requirement">Min: 100 RSC</div>
-                </div>
-                <div class="tier">
-                  <div class="tier-name">Premium</div>
-                  <div class="tier-apy">12% APY</div>
-                  <div class="tier-requirement">Min: 1,000 RSC</div>
-                </div>
-                <div class="tier">
-                  <div class="tier-name">Elite</div>
-                  <div class="tier-apy">15% APY</div>
-                  <div class="tier-requirement">Min: 10,000 RSC</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tokenomics-card tokenomics-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-chart-line"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>Utility & Use Cases</h3>
-                <p>Real-world applications</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="utility-list">
-                <div class="utility-item">
-                  <i class="fas fa-university"></i>
-                  <span>DeFi Banking Services</span>
-                </div>
-                <div class="utility-item">
-                  <i class="fas fa-exchange-alt"></i>
-                  <span>Cross-chain Bridges</span>
-                </div>
-                <div class="utility-item">
-                  <i class="fas fa-vote-yea"></i>
-                  <span>Governance Voting</span>
-                </div>
-                <div class="utility-item">
-                  <i class="fas fa-gas-pump"></i>
-                  <span>Transaction Fees</span>
-                </div>
-                <div class="utility-item">
-                  <i class="fas fa-gift"></i>
-                  <span>Reward Programs</span>
-                </div>
-                <div class="utility-item">
-                  <i class="fas fa-shield-alt"></i>
-                  <span>Security Deposits</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Performance Section -->
-    <section class="performance">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-badge">
-            <i class="fas fa-chart-line"></i>
-            <span>LIVE PERFORMANCE</span>
-          </div>
-          <h2>Exceptional Performance</h2>
-          <p>Real-time metrics that demonstrate RSC Chain's superiority and cutting-edge capabilities</p>
-        </div>
-        
-        <div class="performance-grid">
-          <div class="performance-card performance-card-large">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-bolt"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>Transactions per Second</h3>
-                <p>Peak throughput capacity</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="metric-display">
-                <div class="metric-value" id="tpsValue">10,000</div>
-                <div class="metric-unit">TPS</div>
-              </div>
-              <div class="card-trend">
-                <i class="fas fa-arrow-up"></i>
-                <span class="trend-value">+15% from last hour</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="performance-card performance-card-large">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-link"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>Block Height</h3>
-                <p>Current blockchain position</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="metric-display">
-                <div class="metric-value" id="blockHeight">1,247,892</div>
-                <div class="metric-unit">Blocks</div>
-              </div>
-              <div class="block-visualization">
-                <div class="block-chain">
-                  <div class="block-item active"></div>
-                  <div class="block-item"></div>
-                  <div class="block-item"></div>
-                  <div class="block-item"></div>
-                  <div class="block-item"></div>
-                </div>
-              </div>
-              <div class="card-trend">
-                <i class="fas fa-clock"></i>
-                <span class="trend-value">New block every 1.8s</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="performance-card">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
+          <!-- Small Stats Row 2 -->
+          <div class="perf-small-card">
+            <div class="perf-card-bg"></div>
+            <div class="perf-small-content">
+              <div class="perf-small-icon">
                 <i class="fas fa-coins"></i>
-                <div class="icon-pulse"></div>
               </div>
-              <h3>RSC Price</h3>
-            </div>
-            <div class="card-content">
-              <div class="metric-display">
-                <div class="metric-value">$0.00</div>
-                <div class="metric-unit">USD</div>
-              </div>
-              <div class="price-indicator">
-                <div class="indicator-dot"></div>
-                <span>Pre-Launch</span>
-              </div>
+              <div class="perf-small-value">$0.00</div>
+              <div class="perf-small-label">RSC Price</div>
+              <div class="perf-status-badge">Pre-Launch</div>
             </div>
           </div>
-          
-          <div class="performance-card">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-chart-bar"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <h3>Market Cap</h3>
-            </div>
-            <div class="card-content">
-              <div class="metric-display">
-                <div class="metric-value">$0</div>
-                <div class="metric-unit">USD</div>
-              </div>
-              <div class="price-indicator">
-                <div class="indicator-dot"></div>
-                <span>Pre-Launch</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="performance-card">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-globe"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <h3>Active Nodes</h3>
-            </div>
-            <div class="card-content">
-              <div class="metric-display">
-                <div class="metric-value" id="nodeCount">2,847</div>
-                <div class="metric-unit">Nodes</div>
-              </div>
-              <div class="network-visualization">
-                <div class="network-dots">
-                  <div class="dot"></div>
-                  <div class="dot"></div>
-                  <div class="dot"></div>
-                  <div class="dot"></div>
-                  <div class="dot"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="performance-card">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-lock"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <h3>Supply Staked</h3>
-            </div>
-            <div class="card-content">
-              <div class="metric-display">
-                <div class="metric-value">0%</div>
-                <div class="metric-unit">Staked</div>
-              </div>
-              <div class="stake-progress">
-                <div class="progress-ring">
-                  <div class="progress-fill" style="--progress: 0%"></div>
-                </div>
-                <span class="progress-text">Pre-Launch</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Ecosystem Section -->
-    <section id="ecosystem" class="ecosystem">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-badge">
-            <i class="fas fa-cube"></i>
-            <span>COMPLETE ECOSYSTEM</span>
-          </div>
-          <h2>Complete Ecosystem</h2>
-          <p>Everything you need to participate in the blockchain revolution with our comprehensive suite of tools and services</p>
-        </div>
-        
-        <div class="ecosystem-grid">
-          <div class="ecosystem-card ecosystem-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-hammer"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>Advanced Mining</h3>
-                <p>Participate in consensus and earn rewards</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="card-features">
-                <div class="feature-item">
-                  <i class="fas fa-rocket"></i>
-                  <span>AI-powered distributed mining</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-bolt"></i>
-                  <span>Automatic optimization</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-coins"></i>
-                  <span>Real-time rewards</span>
-                </div>
-              </div>
-              <div class="card-stats">
-                <div class="stat">
-                  <span class="stat-value">15%</span>
-                  <span class="stat-label">APY</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">24/7</span>
-                  <span class="stat-label">Mining</span>
-                </div>
-              </div>
-            </div>
-            <a href="pages/mine.html" class="card-action">
-              <span>Start Mining</span>
-              <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-          
-          <div class="ecosystem-card ecosystem-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-lock"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>Elite Staking</h3>
-                <p>Delegate and earn passive rewards</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="card-features">
-                <div class="feature-item">
-                  <i class="fas fa-trophy"></i>
-                  <span>Verified validators</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-chart-line"></i>
-                  <span>Up to 15% APY</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-shield-alt"></i>
-                  <span>Slashing protection</span>
-                </div>
-              </div>
-              <div class="card-stats">
-                <div class="stat">
-                  <span class="stat-value">15%</span>
-                  <span class="stat-label">Max APY</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">0%</span>
-                  <span class="stat-label">Fees</span>
-                </div>
-              </div>
-            </div>
-            <a href="pages/staking.html" class="card-action">
-              <span>Start Staking</span>
-              <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-          
-          <div class="ecosystem-card ecosystem-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
+          <div class="perf-small-card">
+            <div class="perf-card-bg"></div>
+            <div class="perf-small-content">
+              <div class="perf-small-icon">
                 <i class="fas fa-chart-line"></i>
-                <div class="icon-pulse"></div>
               </div>
-              <div class="card-title">
-                <h3>Analytics Dashboard</h3>
-                <p>Real-time blockchain insights and metrics</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="card-features">
-                <div class="feature-item">
-                  <i class="fas fa-chart-bar"></i>
-                  <span>Live metrics</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-bolt"></i>
-                  <span>Real-time data</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-cog"></i>
-                  <span>Customizable views</span>
-                </div>
-              </div>
-              <div class="card-stats">
-                <div class="stat">
-                  <span class="stat-value">100+</span>
-                  <span class="stat-label">Metrics</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">1s</span>
-                  <span class="stat-label">Update</span>
-                </div>
-              </div>
-            </div>
-            <a href="pages/explorer.html" class="card-action">
-              <span>View Analytics</span>
-              <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-          
-          <div class="ecosystem-card ecosystem-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-university"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>DeFi Banking</h3>
-                <p>Decentralized financial services</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="card-features">
-                <div class="feature-item">
-                  <i class="fas fa-credit-card"></i>
-                  <span>Collateral-free loans</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-chart-bar"></i>
-                  <span>Yield farming</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-sync-alt"></i>
-                  <span>Automatic liquidity</span>
-                </div>
-              </div>
-              <div class="card-stats">
-                <div class="stat">
-                  <span class="stat-value">25%</span>
-                  <span class="stat-label">Max APY</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">0%</span>
-                  <span class="stat-label">Collateral</span>
-                </div>
-              </div>
-            </div>
-            <div class="card-action disabled">
-              <span>Coming Soon</span>
-              <i class="fas fa-clock"></i>
+              <div class="perf-small-value">$0</div>
+              <div class="perf-small-label">Market Cap</div>
+              <div class="perf-status-badge">Pre-Launch</div>
             </div>
           </div>
-          
-          <div class="ecosystem-card ecosystem-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-code"></i>
-                <div class="icon-pulse"></div>
+
+          <div class="perf-small-card">
+            <div class="perf-card-bg"></div>
+            <div class="perf-small-content">
+              <div class="perf-small-icon">
+                <i class="fas fa-fire-alt"></i>
               </div>
-              <div class="card-title">
-                <h3>Developer Tools</h3>
-                <p>Comprehensive SDK and API for developers</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="card-features">
-                <div class="feature-item">
-                  <i class="fas fa-code-branch"></i>
-                  <span>RESTful API</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-book"></i>
-                  <span>Documentation</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-tools"></i>
-                  <span>SDK & Libraries</span>
-                </div>
-              </div>
-              <div class="card-stats">
-                <div class="stat">
-                  <span class="stat-value">50+</span>
-                  <span class="stat-label">Languages</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">99.9%</span>
-                  <span class="stat-label">Uptime</span>
-                </div>
+              <div class="perf-small-value">50%</div>
+              <div class="perf-small-label">Supply Burned</div>
+              <div class="perf-fire-viz">
+                <i class="fas fa-fire"></i>
+                1.05M RSC
               </div>
             </div>
-            <a href="pages/docs.html" class="card-action">
-              <span>View Docs</span>
-              <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-          
-          <div class="ecosystem-card ecosystem-card-premium">
-            <div class="card-glow"></div>
-            <div class="card-header">
-              <div class="card-icon">
-                <i class="fas fa-search"></i>
-                <div class="icon-pulse"></div>
-              </div>
-              <div class="card-title">
-                <h3>Block Explorer</h3>
-                <p>Explore the blockchain in real-time</p>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="card-features">
-                <div class="feature-item">
-                  <i class="fas fa-chart-bar"></i>
-                  <span>Advanced analytics</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-search"></i>
-                  <span>Intelligent search</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-chart-line"></i>
-                  <span>Live metrics</span>
-                </div>
-              </div>
-              <div class="card-stats">
-                <div class="stat">
-                  <span class="stat-value">1M+</span>
-                  <span class="stat-label">Blocks</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">10K+</span>
-                  <span class="stat-label">TX/s</span>
-                </div>
-              </div>
-            </div>
-            <a href="pages/explorer.html" class="card-action">
-              <span>Explore Blockchain</span>
-              <i class="fas fa-arrow-right"></i>
-            </a>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Community Section -->
-    <section id="community" class="community">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-badge">
+        <!-- Bottom Info Bar -->
+        <div class="perf-info-bar">
+          <div class="perf-info-item">
+            <i class="fas fa-database"></i>
+            <span>Total Supply: <strong>2.1M RSC</strong></span>
+          </div>
+          <div class="perf-info-item">
+            <i class="fas fa-exchange-alt"></i>
+            <span>24h Volume: <strong>$0</strong></span>
+          </div>
+          <div class="perf-info-item">
             <i class="fas fa-users"></i>
-            <span>GLOBAL COMMUNITY</span>
-          </div>
-          <h2>Global Community</h2>
-          <p>Join thousands of developers, miners and RSC Chain enthusiasts from around the world</p>
-        </div>
-        
-        <div class="community-stats">
-          <div class="stat-card stat-card-premium">
-            <div class="card-glow"></div>
-            <div class="stat-icon">
-              <i class="fas fa-users"></i>
-              <div class="icon-pulse"></div>
-            </div>
-            <div class="stat-content">
-              <div class="stat-value" id="communityCount">12,847</div>
-              <div class="stat-label">Active Members</div>
-              <div class="stat-trend">
-                <i class="fas fa-arrow-up"></i>
-                <span>+15% this month</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="stat-card stat-card-premium">
-            <div class="card-glow"></div>
-            <div class="stat-icon">
-              <i class="fas fa-globe"></i>
-              <div class="icon-pulse"></div>
-            </div>
-            <div class="stat-content">
-              <div class="stat-value">150+</div>
-              <div class="stat-label">Countries</div>
-              <div class="stat-trend">
-                <i class="fas fa-globe-americas"></i>
-                <span>Worldwide reach</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="stat-card stat-card-premium">
-            <div class="card-glow"></div>
-            <div class="stat-icon">
-              <i class="fas fa-comments"></i>
-              <div class="icon-pulse"></div>
-            </div>
-            <div class="stat-content">
-              <div class="stat-value">2,847</div>
-              <div class="stat-label">Daily Messages</div>
-              <div class="stat-trend">
-                <i class="fas fa-arrow-up"></i>
-                <span>+25% engagement</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="stat-card stat-card-premium">
-            <div class="card-glow"></div>
-            <div class="stat-icon">
-              <i class="fas fa-code"></i>
-              <div class="icon-pulse"></div>
-            </div>
-            <div class="stat-content">
-              <div class="stat-value">847</div>
-              <div class="stat-label">Contributors</div>
-              <div class="stat-trend">
-                <i class="fas fa-star"></i>
-                <span>Open source</span>
-              </div>
-            </div>
+            <span>Community: <strong>10K+ Members</strong></span>
           </div>
         </div>
-        
       </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-      <div class="cta-background">
-        <div class="cta-particles"></div>
-        <div class="cta-grid"></div>
-        <div class="cta-glow"></div>
+    <!-- ===== ECOSYSTEM SECTION - ARGUS STYLE ===== -->
+    <section id="ecosystem" class="ecosystem-argus">
+      <!-- Background Effects -->
+      <div class="ecosystem-bg-effects">
+        <div class="ecosystem-glow ecosystem-glow-left"></div>
+        <div class="ecosystem-glow ecosystem-glow-right"></div>
+        <div class="ecosystem-grid-pattern"></div>
       </div>
-      <div class="container">
-        <div class="cta-content">
-          <div class="cta-badge">
+
+      <div class="ecosystem-container">
+        <!-- Content Split Layout -->
+        <div class="ecosystem-content-wrapper">
+          <!-- Left Side - Text Content -->
+          <div class="ecosystem-text-content">
+            <h1 class="ecosystem-title">
+              <span class="title-line">Fast.</span>
+              <span class="title-line">Reliable.</span>
+              <span class="title-line">Safe.</span>
+            </h1>
+            <p class="ecosystem-subtitle">
+              RSC Chain is available on desktop and mobile devices with full mining and staking capabilities
+            </p>
+            <div class="ecosystem-cta-group">
+              <a href="pages/mine.html" class="ecosystem-cta-button">Start Mining RSC</a>
+              <div class="ecosystem-guarantee">30-days money back guarantee</div>
+            </div>
+          </div>
+
+          <!-- Right Side - Phone Mockup -->
+          <div class="ecosystem-phone-mockup">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="phone-header">
+                  <div class="phone-status-left">
+                    <i class="fas fa-circle"></i>
+                  </div>
+                  <div class="phone-logo">RSC CHAIN</div>
+                  <div class="phone-status-right">
+                    <i class="fas fa-star"></i>
+                  </div>
+                </div>
+                
+                <div class="phone-timer">00:00:05</div>
+                <div class="phone-location">Argentina</div>
+                
+                <canvas id="ecosystemPlanetCanvas" width="300" height="300"></canvas>
+                
+                <div class="phone-connection-btn">Connected</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COMMUNITY SECTION - REDESIGNED TOP ===== -->
+    <section id="community" class="community-modern">
+      <!-- Background -->
+      <div class="community-bg">
+        <div class="community-glow-left"></div>
+        <div class="community-glow-right"></div>
+        <div class="community-grid-pattern"></div>
+      </div>
+
+      <div class="community-container">
+        <!-- Header -->
+        <div class="community-header">
+          <div class="comm-tag">
+            <i class="fas fa-users"></i>
+            JOIN THE COMMUNITY
+          </div>
+          <h2 class="comm-title">Connect With RSC Chain</h2>
+          <p class="comm-subtitle">
+            Join our vibrant global community of developers, miners, and blockchain enthusiasts.
+            Get support, share ideas, and stay updated with the latest news.
+          </p>
+        </div>
+
+        <!-- Social Networks Grid -->
+        <div class="comm-social-grid">
+          <!-- Discord -->
+          <a href="#" class="comm-social-card discord-card">
+            <div class="social-card-bg"></div>
+            <div class="social-icon">
+              <i class="fab fa-discord"></i>
+            </div>
+            <h3 class="social-title">Discord</h3>
+            <p class="social-members">12.5K+ Members</p>
+            <div class="social-status">
+              <div class="status-dot"></div>
+              <span>8.2K Online</span>
+            </div>
+            <div class="social-cta">
+              Join Server
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
+
+          <!-- Telegram -->
+          <a href="#" class="comm-social-card telegram-card">
+            <div class="social-card-bg"></div>
+            <div class="social-icon">
+              <i class="fab fa-telegram-plane"></i>
+            </div>
+            <h3 class="social-title">Telegram</h3>
+            <p class="social-members">15.8K+ Members</p>
+            <div class="social-status">
+              <div class="status-dot"></div>
+              <span>10.5K Online</span>
+            </div>
+            <div class="social-cta">
+              Join Channel
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
+
+          <!-- Twitter -->
+          <a href="#" class="comm-social-card twitter-card">
+            <div class="social-card-bg"></div>
+            <div class="social-icon">
+              <i class="fab fa-twitter"></i>
+            </div>
+            <h3 class="social-title">Twitter</h3>
+            <p class="social-members">22.3K+ Followers</p>
+            <div class="social-activity">
+              <i class="fas fa-fire"></i>
+              <span>High Activity</span>
+            </div>
+            <div class="social-cta">
+              Follow Us
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
+
+          <!-- GitHub -->
+          <a href="#" class="comm-social-card github-card">
+            <div class="social-card-bg"></div>
+            <div class="social-icon">
+              <i class="fab fa-github"></i>
+            </div>
+            <h3 class="social-title">GitHub</h3>
+            <p class="social-members">3.2K+ Stars</p>
+            <div class="social-activity">
+              <i class="fas fa-code-branch"></i>
+              <span>847 Contributors</span>
+            </div>
+            <div class="social-cta">
+              Star Repo
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
+
+          <!-- Reddit -->
+          <a href="#" class="comm-social-card reddit-card">
+            <div class="social-card-bg"></div>
+            <div class="social-icon">
+              <i class="fab fa-reddit-alien"></i>
+            </div>
+            <h3 class="social-title">Reddit</h3>
+            <p class="social-members">8.5K+ Members</p>
+            <div class="social-activity">
+              <i class="fas fa-comments"></i>
+              <span>Very Active</span>
+            </div>
+            <div class="social-cta">
+              Join Subreddit
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
+
+          <!-- YouTube -->
+          <a href="#" class="comm-social-card youtube-card">
+            <div class="social-card-bg"></div>
+            <div class="social-icon">
+              <i class="fab fa-youtube"></i>
+            </div>
+            <h3 class="social-title">YouTube</h3>
+            <p class="social-members">5.7K+ Subscribers</p>
+            <div class="social-activity">
+              <i class="fas fa-video"></i>
+              <span>Weekly Videos</span>
+            </div>
+            <div class="social-cta">
+              Subscribe
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Community Stats -->
+        <div class="comm-stats-banner">
+          <div class="comm-stat-item">
+            <div class="stat-icon-wrapper">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-number" data-target="50000">0</div>
+              <div class="stat-label">Total Members</div>
+            </div>
+          </div>
+
+          <div class="comm-stat-item">
+            <div class="stat-icon-wrapper">
+              <i class="fas fa-globe-americas"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-number" data-target="150">0</div>
+              <div class="stat-label">Countries</div>
+            </div>
+          </div>
+
+          <div class="comm-stat-item">
+            <div class="stat-icon-wrapper">
+              <i class="fas fa-comments"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-number" data-target="25000">0</div>
+              <div class="stat-label">Messages Daily</div>
+            </div>
+          </div>
+
+          <div class="comm-stat-item">
+            <div class="stat-icon-wrapper">
+              <i class="fas fa-heart"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-number">98%</div>
+              <div class="stat-label">Satisfaction Rate</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Box -->
+        <div class="comm-cta-box">
+          <div class="cta-box-icon">
             <i class="fas fa-rocket"></i>
-            <span>JOIN THE REVOLUTION</span>
           </div>
-          <h2>Ready for the Blockchain Revolution?</h2>
-          <p>Join thousands of users who are already experiencing the future of decentralized finance with RSC Chain's cutting-edge technology</p>
-          
-          <div class="cta-stats">
-            <div class="cta-stat">
-              <span class="stat-value">10,000+</span>
-              <span class="stat-label">TPS</span>
-            </div>
-            <div class="cta-stat">
-              <span class="stat-value">1.8s</span>
-              <span class="stat-label">Finality</span>
-            </div>
-            <div class="cta-stat">
-              <span class="stat-value">99.99%</span>
-              <span class="stat-label">Uptime</span>
-            </div>
+          <div class="cta-box-content">
+            <h3>Ready to Join?</h3>
+            <p>Connect with thousands of RSC Chain enthusiasts and get instant support from our community</p>
+          </div>
+          <a href="#" class="cta-box-button">
+            Get Started
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA SECTION - REDESIGNED TOP ===== -->
+    <section class="cta-modern">
+      <!-- Background -->
+      <div class="cta-bg">
+        <div class="cta-glow-center"></div>
+        <div class="cta-rays"></div>
+        <div class="cta-particles-wrapper">
+          <div class="cta-particle"></div>
+          <div class="cta-particle"></div>
+          <div class="cta-particle"></div>
+          <div class="cta-particle"></div>
+          <div class="cta-particle"></div>
+        </div>
+      </div>
+
+      <div class="cta-container">
+        <!-- Main Content -->
+        <div class="cta-main-content">
+          <div class="cta-badge-modern">
+            <div class="badge-dot"></div>
+            START YOUR JOURNEY
           </div>
           
-          <div class="cta-actions">
-            <a href="pages/mine.html" class="btn btn-primary btn-large btn-premium">
-              <i class="fas fa-rocket"></i>
-              <span>Start Now</span>
-              <div class="btn-glow"></div>
-            </a>
-            <a href="pages/docs.html" class="btn btn-secondary btn-large btn-premium">
-              <i class="fas fa-book"></i>
-              <span>Read Documentation</span>
-              <div class="btn-glow"></div>
-            </a>
-          </div>
+          <h2 class="cta-title">Ready to Experience the Future?</h2>
           
-          <div class="cta-features">
-            <div class="feature">
-              <span class="feature-icon">
+          <p class="cta-description">
+            Join thousands of innovators who are already building on RSC Chain. 
+            Start mining, staking, and earning rewards today with our quantum-resistant blockchain technology.
+          </p>
+
+          <!-- Stats Cards -->
+          <div class="cta-stats-grid">
+            <div class="cta-stat-card">
+              <div class="stat-card-icon">
                 <i class="fas fa-bolt"></i>
-              </span>
-              <span>Setup in 5 minutes</span>
+              </div>
+              <div class="stat-card-value">10,000+</div>
+              <div class="stat-card-label">TPS</div>
             </div>
-            <div class="feature">
-              <span class="feature-icon">
-                <i class="fas fa-lock"></i>
-              </span>
-              <span>100% secure and decentralized</span>
+
+            <div class="cta-stat-card">
+              <div class="stat-card-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="stat-card-value">1.8s</div>
+              <div class="stat-card-label">Finality</div>
             </div>
-            <div class="feature">
-              <span class="feature-icon">
-                <i class="fas fa-coins"></i>
-              </span>
-              <span>No hidden costs</span>
+
+            <div class="cta-stat-card">
+              <div class="stat-card-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="stat-card-value">99.99%</div>
+              <div class="stat-card-label">Uptime</div>
+            </div>
+
+            <div class="cta-stat-card">
+              <div class="stat-card-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-card-value">50K+</div>
+              <div class="stat-card-label">Users</div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="cta-actions-modern">
+            <a href="pages/mine.html" class="cta-btn-primary">
+              <span>Start Mining Now</span>
+              <i class="fas fa-arrow-right"></i>
+              <div class="btn-shine"></div>
+            </a>
+            
+            <a href="pages/docs.html" class="cta-btn-secondary">
+              <i class="fas fa-book"></i>
+              <span>Documentation</span>
+            </a>
+          </div>
+
+          <!-- Features List -->
+          <div class="cta-features-list">
+            <div class="cta-feature-item">
+              <i class="fas fa-check-circle"></i>
+              <span>No technical knowledge required</span>
+            </div>
+            <div class="cta-feature-item">
+              <i class="fas fa-check-circle"></i>
+              <span>Start earning in minutes</span>
+            </div>
+            <div class="cta-feature-item">
+              <i class="fas fa-check-circle"></i>
+              <span>24/7 community support</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Panel -->
+        <div class="cta-side-panel">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <div class="panel-icon">
+                <i class="fas fa-gift"></i>
+              </div>
+              <h3>Special Launch Offer</h3>
+            </div>
+            
+            <div class="panel-card-body">
+              <div class="offer-item">
+                <i class="fas fa-star"></i>
+                <div class="offer-text">
+                  <strong>Double Rewards</strong>
+                  <span>For early miners</span>
+                </div>
+              </div>
+              
+              <div class="offer-item">
+                <i class="fas fa-fire"></i>
+                <div class="offer-text">
+                  <strong>Zero Fees</strong>
+                  <span>First 3 months</span>
+                </div>
+              </div>
+              
+              <div class="offer-item">
+                <i class="fas fa-trophy"></i>
+                <div class="offer-text">
+                  <strong>Exclusive NFTs</strong>
+                  <span>For top contributors</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-card-footer">
+              <div class="countdown-label">Offer ends in:</div>
+              <div class="countdown-timer">
+                <div class="time-unit">
+                  <span class="time-value">07</span>
+                  <span class="time-label">Days</span>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-unit">
+                  <span class="time-value">12</span>
+                  <span class="time-label">Hours</span>
+                </div>
+                <div class="time-separator">:</div>
+                <div class="time-unit">
+                  <span class="time-value">34</span>
+                  <span class="time-label">Mins</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1864,286 +1275,144 @@
     </section>
   </main>
 
-  <!-- ===== QUANTUM FOOTER ===== -->
-  <footer class="quantum-footer">
-    <!-- Quantum Background -->
-    <div class="footer-quantum-bg">
-      <div class="footer-particles"></div>
-      <div class="footer-waves"></div>
+  <!-- ===== FOOTER - REDESIGNED TOP ===== -->
+  <footer class="footer-modern">
+    <!-- Background -->
+    <div class="footer-bg">
+      <div class="footer-glow-top"></div>
+      <div class="footer-glow-bottom"></div>
       <div class="footer-grid"></div>
-      <div class="footer-energy-lines"></div>
     </div>
-    
-    <div class="container">
+
+    <div class="footer-container">
       <!-- Main Footer Content -->
-      <div class="footer-main-content">
-        <!-- Brand Section Enhanced -->
-        <div class="footer-brand-section">
-          <div class="quantum-brand">
-            <div class="brand-logo-container">
-              <div class="logo-quantum-ring"></div>
-              <div class="logo-energy-field"></div>
-              <div class="footer-logo">
-                <img src="assets/img/rsc-logo-quantum.svg" alt="RSC Chain" class="logo">
-              </div>
-              <div class="logo-pulse-ring"></div>
+      <div class="footer-main">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <img src="assets/img/rsc-logo-quantum.svg" alt="RSC Chain" class="logo-img">
+          </div>
+          <h3 class="brand-name">RSC Chain</h3>
+          <p class="brand-tagline">Next-Generation Quantum Blockchain Technology</p>
+          
+          <!-- Social Links -->
+          <div class="social-links">
+            <a href="https://x.com/Reeskcap" target="_blank" class="social-btn twitter-btn">
+              <i class="fab fa-x-twitter"></i>
+            </a>
+            <a href="https://t.me/RSCchain" target="_blank" class="social-btn telegram-btn">
+              <i class="fab fa-telegram-plane"></i>
+            </a>
+            <a href="#" class="social-btn discord-btn">
+              <i class="fab fa-discord"></i>
+            </a>
+            <a href="#" class="social-btn github-btn">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+          
+          <!-- Live Stats -->
+          <div class="footer-stats">
+            <div class="footer-stat-item">
+              <div class="stat-dot"></div>
+              <span>Network Online</span>
             </div>
-            
-            <div class="brand-content">
-              <h2 class="brand-title">
-                <span class="title-main">RSC</span>
-                <span class="title-highlight">CHAIN</span>
-              </h2>
-              <p class="brand-tagline">The Future of Quantum Blockchain Technology</p>
-              
-              <!-- Live Network Stats -->
-              <div class="network-stats">
-                <div class="stat-item">
-                  <div class="stat-icon">
-                    <i class="fas fa-cube"></i>
-                  </div>
-                  <div class="stat-content">
-                    <span class="stat-value" id="networkBlocks">1,247,832</span>
-                    <span class="stat-label">Blocks</span>
-                  </div>
-                </div>
-                
-                <div class="stat-item">
-                  <div class="stat-icon">
-                    <i class="fas fa-bolt"></i>
-                  </div>
-                  <div class="stat-content">
-                    <span class="stat-value" id="networkTps">2,847</span>
-                    <span class="stat-label">TPS</span>
-                  </div>
-                </div>
-                
-                <div class="stat-item">
-                  <div class="stat-icon">
-                    <i class="fas fa-users"></i>
-                  </div>
-                  <div class="stat-content">
-                    <span class="stat-value" id="activeNodes">15,632</span>
-                    <span class="stat-label">Nodes</span>
-                  </div>
-                </div>
-              </div>
+            <div class="footer-stat-item">
+              <i class="fas fa-cube"></i>
+              <span id="footerBlocks">1,247,892</span>
+            </div>
+            <div class="footer-stat-item">
+              <i class="fas fa-users"></i>
+              <span>15.6K Nodes</span>
             </div>
           </div>
         </div>
-        
-        <!-- Links Grid Enhanced -->
-        <div class="footer-links-grid">
-          <!-- Products Section -->
-          <div class="link-column">
-            <div class="column-header">
-              <div class="header-icon">
-                <i class="fas fa-rocket"></i>
-              </div>
-              <h4 class="column-title">Products</h4>
-            </div>
-            <div class="links-list">
-              <a href="pages/mine.html" class="quantum-link">
-                <i class="fas fa-pickaxe"></i>
-                <span>Quantum Mining</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="pages/staking.html" class="quantum-link">
-                <i class="fas fa-coins"></i>
-                <span>Staking Rewards</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="pages/explorer.html" class="quantum-link">
-                <i class="fas fa-search"></i>
-                <span>Block Explorer</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="pages/about.html" class="quantum-link">
-                <i class="fas fa-info-circle"></i>
-                <span>About RSC</span>
-                <div class="link-glow"></div>
-              </a>
-            </div>
+
+        <!-- Links Columns -->
+        <div class="footer-links-wrapper">
+          <!-- Products -->
+          <div class="footer-column">
+            <h4 class="footer-column-title">Products</h4>
+            <ul class="footer-links">
+              <li><a href="pages/mine.html">Mining Platform</a></li>
+              <li><a href="pages/staking.html">Staking</a></li>
+              <li><a href="pages/explorer.html">Explorer</a></li>
+              <li><a href="pages/about.html">About</a></li>
+            </ul>
           </div>
-          
-          <!-- Community Section -->
-          <div class="link-column">
-            <div class="column-header">
-              <div class="header-icon">
-                <i class="fas fa-users"></i>
-              </div>
-              <h4 class="column-title">Community</h4>
-            </div>
-            <div class="links-list">
-              <a href="https://reeskcapital.co" target="_blank" rel="noopener noreferrer" class="quantum-link">
-                <i class="fas fa-globe"></i>
-                <span>Official Website</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="https://x.com/Reeskcap" target="_blank" rel="noopener noreferrer" class="quantum-link">
-                <i class="fab fa-x-twitter"></i>
-                <span>X (Twitter)</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="https://t.me/RSCchain" target="_blank" rel="noopener noreferrer" class="quantum-link">
-                <i class="fab fa-telegram"></i>
-                <span>Global Group</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="https://t.me/RscCommunity" target="_blank" rel="noopener noreferrer" class="quantum-link">
-                <i class="fab fa-telegram"></i>
-                <span>News Channel</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="https://t.me/Rscspanish" target="_blank" rel="noopener noreferrer" class="quantum-link">
-                <i class="fab fa-telegram"></i>
-                <span>Spanish Community</span>
-                <div class="link-glow"></div>
-              </a>
-            </div>
+
+          <!-- Developers -->
+          <div class="footer-column">
+            <h4 class="footer-column-title">Developers</h4>
+            <ul class="footer-links">
+              <li><a href="pages/docs.html">Documentation</a></li>
+              <li><a href="#">API Reference</a></li>
+              <li><a href="#">SDK & Tools</a></li>
+              <li><a href="#">GitHub</a></li>
+            </ul>
           </div>
-          
-          <!-- Developers Section -->
-          <div class="link-column">
-            <div class="column-header">
-              <div class="header-icon">
-                <i class="fas fa-code"></i>
-              </div>
-              <h4 class="column-title">Developers</h4>
-            </div>
-            <div class="links-list">
-              <a href="pages/docs.html" class="quantum-link">
-                <i class="fas fa-book"></i>
-                <span>Documentation</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="#" class="quantum-link">
-                <i class="fas fa-plug"></i>
-                <span>API Reference</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="#" class="quantum-link">
-                <i class="fas fa-cube"></i>
-                <span>SDK & Tools</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="#" class="quantum-link">
-                <i class="fas fa-newspaper"></i>
-                <span>Tech Blog</span>
-                <div class="link-glow"></div>
-              </a>
-            </div>
+
+          <!-- Community -->
+          <div class="footer-column">
+            <h4 class="footer-column-title">Community</h4>
+            <ul class="footer-links">
+              <li><a href="https://reeskcapital.co" target="_blank">Official Website</a></li>
+              <li><a href="https://t.me/RscCommunity" target="_blank">News Channel</a></li>
+              <li><a href="https://t.me/Rscspanish" target="_blank">Spanish Group</a></li>
+              <li><a href="#">Forum</a></li>
+            </ul>
           </div>
-          
-          <!-- Support Section -->
-          <div class="link-column">
-            <div class="column-header">
-              <div class="header-icon">
-                <i class="fas fa-life-ring"></i>
-              </div>
-              <h4 class="column-title">Support</h4>
-            </div>
-            <div class="links-list">
-              <a href="#" class="quantum-link">
-                <i class="fas fa-question-circle"></i>
-                <span>Help Center</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="#" class="quantum-link">
-                <i class="fas fa-comments"></i>
-                <span>Contact Us</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="#" class="quantum-link">
-                <i class="fas fa-bug"></i>
-                <span>Bug Reports</span>
-                <div class="link-glow"></div>
-              </a>
-              <a href="#" class="quantum-link">
-                <i class="fas fa-shield-alt"></i>
-                <span>Security</span>
-                <div class="link-glow"></div>
-              </a>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Newsletter Section Enhanced -->
-        <div class="footer-newsletter-section">
-          <div class="newsletter-container">
-            <div class="newsletter-header">
-              <div class="newsletter-icon">
-                <i class="fas fa-satellite-dish"></i>
-              </div>
-              <h4 class="newsletter-title">Stay Connected</h4>
-              <p class="newsletter-subtitle">Get the latest updates from the quantum blockchain</p>
-            </div>
-            
-            <form class="quantum-newsletter-form">
-              <div class="form-container">
-                <div class="input-container">
-                  <input type="email" placeholder="Enter your email address" required>
-                  <div class="input-glow"></div>
-                </div>
-                <button type="submit" class="quantum-subscribe-btn">
-                  <span class="btn-text">Subscribe</span>
-                  <i class="fas fa-paper-plane"></i>
-                  <div class="btn-energy"></div>
-                </button>
-              </div>
-              <div class="form-features">
-                <div class="feature-item">
-                  <i class="fas fa-check"></i>
-                  <span>Weekly Tech Updates</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-check"></i>
-                  <span>Network Announcements</span>
-                </div>
-                <div class="feature-item">
-                  <i class="fas fa-check"></i>
-                  <span>Exclusive Insights</span>
-                </div>
-              </div>
-            </form>
+
+          <!-- Support -->
+          <div class="footer-column">
+            <h4 class="footer-column-title">Support</h4>
+            <ul class="footer-links">
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Bug Reports</a></li>
+              <li><a href="#">Security</a></li>
+            </ul>
           </div>
         </div>
       </div>
-      
-      <!-- Footer Bottom Enhanced -->
-      <div class="footer-bottom-section">
-        <div class="footer-divider">
-          <div class="divider-line"></div>
-          <div class="divider-glow"></div>
+
+      <!-- Newsletter Section -->
+      <div class="footer-newsletter">
+        <div class="newsletter-content">
+          <div class="newsletter-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="newsletter-text">
+            <h4>Stay Updated</h4>
+            <p>Subscribe to get the latest news and updates</p>
+          </div>
+        </div>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">
+            Subscribe
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-left">
+          <p class="copyright">
+            © 2024 <strong>RSC chain</strong> - RSC Chain. All rights reserved.
+          </p>
+          <div class="legal-links">
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+            <a href="#">Cookies</a>
+          </div>
         </div>
         
-        <div class="footer-bottom-content">
-          <div class="copyright-section">
-            <div class="copyright-text">
-              © 2024 <span class="highlight">ReeskCapital.co</span> - RSC Chain. All rights reserved.
-            </div>
-            <div class="build-info">
-              Built with <i class="fas fa-heart quantum-heart"></i> using Quantum Technology
-            </div>
-          </div>
-          
-          <div class="legal-section">
-            <div class="legal-links">
-              <a href="#" class="legal-link">Terms of Service</a>
-              <a href="#" class="legal-link">Privacy Policy</a>
-              <a href="#" class="legal-link">Cookie Policy</a>
-              <a href="#" class="legal-link">Disclaimer</a>
-            </div>
-          </div>
-          
-          <div class="back-to-top-section">
-            <button class="back-to-top-btn" id="backToTop">
-              <i class="fas fa-chevron-up"></i>
-              <span>Top</span>
-              <div class="btn-quantum-glow"></div>
-            </button>
-          </div>
-        </div>
+        <button class="back-to-top" id="backToTop">
+          <i class="fas fa-arrow-up"></i>
+          <span>Top</span>
+        </button>
       </div>
     </div>
   </footer>
@@ -2369,5 +1638,20 @@
       }
     });
   </script>
+  
+  <!-- Tokenomics Chart -->
+  <script src="scripts/tokenomics-chart.js"></script>
+  
+  <!-- Ecosystem Planet -->
+  <script src="scripts/ecosystem-planet.js"></script>
+  
+  <!-- Performance Counters -->
+  <script src="scripts/performance-counters.js"></script>
+  
+  <!-- Footer -->
+  <script src="scripts/footer.js"></script>
+  
+  <!-- Hero Particles -->
+  <script src="scripts/hero-particles.js"></script>
 </body>
 </html>

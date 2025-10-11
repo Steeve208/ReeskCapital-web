@@ -1026,26 +1026,92 @@ class SupabaseIntegration {
         if (this.miningUpdateTimer) {
             clearInterval(this.miningUpdateTimer);
         }
+        if (this.miningRAFTimer) {
+            cancelAnimationFrame(this.miningRAFTimer);
+        }
 
-        // Crear nuevo timer que se ejecute cada 30 segundos
+        // 🔧 SISTEMA HÍBRIDO: setInterval + requestAnimationFrame + localStorage timestamp
+        // Esto asegura que el minado continue incluso si el navegador pausa los timers
+        
+        // Guardar timestamp de última actualización
+        this.lastMiningUpdate = Date.now();
+        localStorage.setItem('rsc_last_mining_update', this.lastMiningUpdate.toString());
+        
+        // Timer principal (setInterval) - cada 30 segundos
         this.miningUpdateTimer = setInterval(async () => {
+            await this.executeMiningUpdate();
+        }, 30000); // 30 segundos
+        
+        // Timer de respaldo (requestAnimationFrame) - cada minuto
+        const rafUpdate = async () => {
             if (this.miningSession.isActive) {
-                try {
-                    // Forzar actualización de minería
-                    const currentHashRate = this.miningSession.hashRate || 100;
-                    const currentEfficiency = this.miningSession.efficiency || 100;
-                    
-                    // Actualizar stats (esto recalculará tokens basado en tiempo transcurrido)
-                    await this.updateMiningStats(0, currentHashRate, currentEfficiency);
-                    
-                    console.log('🔄 Actualización automática de minería ejecutada');
-                } catch (error) {
-                    console.error('❌ Error en actualización automática:', error);
+                const now = Date.now();
+                const timeSinceLastUpdate = now - this.lastMiningUpdate;
+                
+                // Si han pasado más de 60 segundos desde la última actualización, forzar una
+                if (timeSinceLastUpdate > 60000) {
+                    console.log('⚠️ Timer principal pausado - Ejecutando actualización de respaldo');
+                    await this.executeMiningUpdate();
+                }
+                
+                // Continuar el loop RAF
+                this.miningRAFTimer = requestAnimationFrame(rafUpdate);
+            }
+        };
+        this.miningRAFTimer = requestAnimationFrame(rafUpdate);
+        
+        // 🔧 Page Visibility API - Detectar cuando la página vuelve a ser visible
+        this.setupVisibilityHandler();
+        
+        console.log('🔄 Sistema de minado continuo iniciado (Timer + RAF + Visibility)');
+    }
+    
+    async executeMiningUpdate() {
+        if (this.miningSession.isActive) {
+            try {
+                // Actualizar timestamp
+                this.lastMiningUpdate = Date.now();
+                localStorage.setItem('rsc_last_mining_update', this.lastMiningUpdate.toString());
+                
+                // Forzar actualización de minería
+                const currentHashRate = this.miningSession.hashRate || 100;
+                const currentEfficiency = this.miningSession.efficiency || 100;
+                
+                // Actualizar stats (esto recalculará tokens basado en tiempo transcurrido)
+                await this.updateMiningStats(0, currentHashRate, currentEfficiency);
+                
+                console.log('🔄 Actualización automática de minería ejecutada');
+            } catch (error) {
+                console.error('❌ Error en actualización automática:', error);
+            }
+        }
+    }
+    
+    setupVisibilityHandler() {
+        // Remover handler anterior si existe
+        if (this.visibilityHandler) {
+            document.removeEventListener('visibilitychange', this.visibilityHandler);
+        }
+        
+        // Crear nuevo handler
+        this.visibilityHandler = async () => {
+            if (!document.hidden && this.miningSession.isActive) {
+                console.log('👀 Página visible - Verificando progreso de minería...');
+                
+                // Calcular tiempo desde última actualización
+                const lastUpdate = parseInt(localStorage.getItem('rsc_last_mining_update') || '0');
+                const now = Date.now();
+                const elapsed = now - lastUpdate;
+                
+                // Si ha pasado tiempo significativo, forzar actualización
+                if (elapsed > 30000) { // Más de 30 segundos
+                    console.log(`⏱️ Han pasado ${Math.floor(elapsed / 1000)}s - Actualizando minería...`);
+                    await this.executeMiningUpdate();
                 }
             }
-        }, 30000); // 30 segundos
-
-        console.log('⏰ Timer de actualización automática iniciado (30s)');
+        };
+        
+        document.addEventListener('visibilitychange', this.visibilityHandler);
     }
 
     // Detener timer de actualización
@@ -1053,8 +1119,16 @@ class SupabaseIntegration {
         if (this.miningUpdateTimer) {
             clearInterval(this.miningUpdateTimer);
             this.miningUpdateTimer = null;
-            console.log('⏹️ Timer de actualización automática detenido');
         }
+        if (this.miningRAFTimer) {
+            cancelAnimationFrame(this.miningRAFTimer);
+            this.miningRAFTimer = null;
+        }
+        if (this.visibilityHandler) {
+            document.removeEventListener('visibilitychange', this.visibilityHandler);
+            this.visibilityHandler = null;
+        }
+        console.log('⏹️ Sistema de minado continuo detenido');
     }
 
     /**
