@@ -528,30 +528,114 @@
             </div>
         </section>
 
-        <!-- Recent Activity -->
-        <section class="activity-section">
+        <!-- Referral System -->
+        <section class="referral-section">
             <div class="container">
-                <div class="activity-card">
+                <div class="referral-card">
                     <div class="card-header">
                         <h3>
-                            <i class="fas fa-history"></i>
-                            Recent Activity
+                            <i class="fas fa-users"></i>
+                            Sistema de Referidos
                         </h3>
-                        <div class="header-actions">
-                            <button class="btn-icon" id="refreshActivity">
-                                <i class="fas fa-sync-alt"></i>
-                            </button>
+                        <div class="referral-stats">
+                            <span class="stat-item">
+                                <i class="fas fa-user-plus"></i>
+                                <span id="totalReferrals">0</span> Referidos
+                            </span>
+                            <span class="stat-item">
+                                <i class="fas fa-coins"></i>
+                                <span id="totalCommissions">0.000000</span> RSC Ganados
+                            </span>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="activity-list" id="activityList">
-                            <div class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-info-circle"></i>
+                        <div class="referral-content">
+                            <!-- Tu código de referido -->
+                            <div class="referral-code-section">
+                                <h4>Tu Código de Referido</h4>
+                                <div class="code-display">
+                                    <input type="text" id="referralCode" readonly>
+                                    <button class="copy-btn" id="copyReferralCode">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
                                 </div>
-                                <div class="activity-content">
-                                    <span class="activity-text">Start mining to see your activity</span>
-                                    <span class="activity-time">--</span>
+                                <p class="code-description">
+                                    Comparte este código para invitar amigos y ganar 10% de sus ganancias de minería
+                                </p>
+                            </div>
+                            
+                            <!-- Link de referido -->
+                            <div class="referral-link-section">
+                                <h4>Link de Referido</h4>
+                                <div class="link-display">
+                                    <input type="text" id="referralLink" readonly>
+                                    <button class="copy-btn" id="copyReferralLink">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Estadísticas detalladas -->
+                            <div class="referral-stats-detailed">
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <div class="stat-info">
+                                            <span class="stat-label">Total Referidos</span>
+                                            <span class="stat-value" id="detailedTotalReferrals">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <div class="stat-info">
+                                            <span class="stat-label">Comisiones Totales</span>
+                                            <span class="stat-value" id="detailedTotalCommissions">0.000000 RSC</span>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-percentage"></i>
+                                        </div>
+                                        <div class="stat-info">
+                                            <span class="stat-label">Tasa de Comisión</span>
+                                            <span class="stat-value">10%</span>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-calendar-day"></i>
+                                        </div>
+                                        <div class="stat-info">
+                                            <span class="stat-label">Comisiones Hoy</span>
+                                            <span class="stat-value" id="todayCommissions">0.000000 RSC</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Lista de referidos -->
+                            <div class="referrals-list-section">
+                                <h4>Mis Referidos</h4>
+                                <div class="referrals-list" id="referralsList">
+                                    <div class="no-referrals">
+                                        <i class="fas fa-user-plus"></i>
+                                        <p>Aún no tienes referidos. ¡Comparte tu código para empezar a ganar!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Historial de comisiones -->
+                            <div class="commissions-history-section">
+                                <h4>Historial de Comisiones</h4>
+                                <div class="commissions-list" id="commissionsList">
+                                    <div class="no-commissions">
+                                        <i class="fas fa-coins"></i>
+                                        <p>No hay comisiones aún. Las comisiones aparecerán cuando tus referidos minen.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -979,6 +979,253 @@ body {
     font-family: 'JetBrains Mono', monospace;
 }
 
+/* Referral System */
+.referral-section {
+    padding: 40px 0;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.referral-card {
+    background: var(--color-card);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.referral-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+}
+
+.referral-card .card-header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-text-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.referral-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-light);
+}
+
+.stat-item i {
+    color: var(--color-primary);
+}
+
+.referral-content {
+    padding: 30px;
+}
+
+.referral-code-section,
+.referral-link-section,
+.referral-stats-detailed,
+.referrals-list-section,
+.commissions-history-section {
+    margin-bottom: 30px;
+}
+
+.referral-code-section h4,
+.referral-link-section h4,
+.referrals-list-section h4,
+.commissions-history-section h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    color: var(--color-text-light);
+}
+
+.code-display,
+.link-display {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.code-display input,
+.link-display input {
+    flex: 1;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--color-text-light);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.copy-btn {
+    padding: 12px 16px;
+    background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+}
+
+.copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
+}
+
+.code-description {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.stat-card {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    border-color: rgba(0, 255, 136, 0.2);
+    transform: translateY(-2px);
+}
+
+.stat-card .stat-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.stat-card .stat-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-card .stat-label {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.stat-card .stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text-light);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.referrals-list,
+.commissions-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.referral-item,
+.commission-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
+}
+
+.referral-item:hover,
+.commission-item:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.referral-info,
+.commission-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.referral-name,
+.commission-description {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-light);
+}
+
+.referral-date,
+.commission-date {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+.referral-earnings,
+.commission-amount {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.no-referrals,
+.no-commissions {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
+.no-referrals i,
+.no-commissions i {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--color-text-muted);
+}
+
+.no-referrals p,
+.no-commissions p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
 /* Activity Section */
 .activity-section {
     padding: 40px 0 80px;

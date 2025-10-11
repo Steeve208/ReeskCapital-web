@@ -205,9 +205,15 @@
                 updateUIState(false);
             }
             
-            // Cargar stats
-            updateMetrics();
-        }
+        // Cargar stats
+        updateMetrics();
+        
+        // Cargar sistema de referidos
+        loadReferralSystem();
+        
+        // Verificar código de referido en URL
+        checkReferralCodeFromURL();
+    }
         
         function updateUIState(isMining) {
             // Botones
@@ -615,11 +621,13 @@
                 const username = modal.querySelector('#registerUsername').value;
                 const email = modal.querySelector('#registerEmail').value;
                 const password = modal.querySelector('#registerPassword').value;
-                const referralCode = modal.querySelector('#registerReferral').value || null;
+                const referralCodeInput = modal.querySelector('#registerReferral');
+                const referralCode = referralCodeInput.value || getStoredReferralCode() || null;
                 
                 try {
                     showAuthLoading(true);
                     await supabase.registerUser(email, username, password, referralCode);
+                    clearStoredReferralCode(); // Limpiar código después del registro
                     closeAuthModal(modal);
                     loadInitialState();
                     showNotification('¡Cuenta creada exitosamente!', 'success');
@@ -629,6 +637,12 @@
                     showAuthLoading(false);
                 }
             });
+            
+            // Auto-completar código de referido si está disponible
+            const storedReferralCode = getStoredReferralCode();
+            if (storedReferralCode && modal.querySelector('#registerReferral')) {
+                modal.querySelector('#registerReferral').value = storedReferralCode;
+            }
             
             // Setup test user button
             const testUserBtn = modal.querySelector('#createTestUserBtn');
@@ -676,6 +690,283 @@
         function closeAuthModal(modal) {
             modal.classList.remove('show');
             setTimeout(() => modal.remove(), 300);
+        }
+        
+        // Sistema de Referidos
+        function loadReferralSystem() {
+            if (!supabase.user.isAuthenticated) return;
+            
+            // Cargar código de referido
+            loadReferralCode();
+            
+            // Cargar estadísticas de referidos
+            loadReferralStats();
+            
+            // Cargar lista de referidos
+            loadReferralsList();
+            
+            // Cargar historial de comisiones
+            loadCommissionsHistory();
+            
+            // Setup event listeners para referidos
+            setupReferralEventListeners();
+        }
+        
+        function loadReferralCode() {
+            const referralCodeInput = document.getElementById('referralCode');
+            const referralLinkInput = document.getElementById('referralLink');
+            
+            if (referralCodeInput && supabase.user.referralCode) {
+                referralCodeInput.value = supabase.user.referralCode;
+            }
+            
+            if (referralLinkInput && supabase.user.referralCode) {
+                const baseUrl = window.location.origin + window.location.pathname.replace('/pages/mine.html', '');
+                referralLinkInput.value = `${baseUrl}?ref=${supabase.user.referralCode}`;
+            }
+        }
+        
+        async function loadReferralStats() {
+            try {
+                // Obtener estadísticas de referidos desde la API
+                const response = await fetch(`${supabase.config.url}/rest/v1/users?referred_by=eq.${supabase.user.id}&select=count`, {
+                    headers: {
+                        'apikey': supabase.config.anonKey,
+                        'Authorization': `Bearer ${supabase.config.anonKey}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const totalReferrals = data.length || 0;
+                    
+                    // Actualizar UI
+                    updateReferralStatsUI(totalReferrals);
+                }
+                
+                // Obtener comisiones desde transacciones
+                await loadCommissionsFromTransactions();
+                
+            } catch (error) {
+                console.error('Error loading referral stats:', error);
+            }
+        }
+        
+        async function loadCommissionsFromTransactions() {
+            try {
+                const response = await fetch(`${supabase.config.url}/rest/v1/transactions?user_id=eq.${supabase.user.id}&type=eq.referral_commission&select=amount,created_at`, {
+                    headers: {
+                        'apikey': supabase.config.anonKey,
+                        'Authorization': `Bearer ${supabase.config.anonKey}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const transactions = await response.json();
+                    const totalCommissions = transactions.reduce((sum, tx) => sum + parseFloat(tx.amount || 0), 0);
+                    
+                    // Calcular comisiones de hoy
+                    const today = new Date().toDateString();
+                    const todayCommissions = transactions
+                        .filter(tx => new Date(tx.created_at).toDateString() === today)
+                        .reduce((sum, tx) => sum + parseFloat(tx.amount || 0), 0);
+                    
+                    updateCommissionsUI(totalCommissions, todayCommissions);
+                }
+            } catch (error) {
+                console.error('Error loading commissions:', error);
+            }
+        }
+        
+        function updateReferralStatsUI(totalReferrals) {
+            const elements = [
+                'totalReferrals',
+                'detailedTotalReferrals'
+            ];
+            
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = totalReferrals;
+                }
+            });
+        }
+        
+        function updateCommissionsUI(totalCommissions, todayCommissions) {
+            const totalElements = [
+                'totalCommissions',
+                'detailedTotalCommissions'
+            ];
+            
+            totalElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = totalCommissions.toFixed(6);
+                }
+            });
+            
+            const todayElement = document.getElementById('todayCommissions');
+            if (todayElement) {
+                todayElement.textContent = todayCommissions.toFixed(6) + ' RSC';
+            }
+        }
+        
+        async function loadReferralsList() {
+            try {
+                const response = await fetch(`${supabase.config.url}/rest/v1/users?referred_by=eq.${supabase.user.id}&select=username,created_at,balance&order=created_at.desc`, {
+                    headers: {
+                        'apikey': supabase.config.anonKey,
+                        'Authorization': `Bearer ${supabase.config.anonKey}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const referrals = await response.json();
+                    displayReferralsList(referrals);
+                }
+            } catch (error) {
+                console.error('Error loading referrals list:', error);
+            }
+        }
+        
+        function displayReferralsList(referrals) {
+            const referralsList = document.getElementById('referralsList');
+            if (!referralsList) return;
+            
+            if (referrals.length === 0) {
+                referralsList.innerHTML = `
+                    <div class="no-referrals">
+                        <i class="fas fa-user-plus"></i>
+                        <p>Aún no tienes referidos. ¡Comparte tu código para empezar a ganar!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            referralsList.innerHTML = referrals.map(referral => `
+                <div class="referral-item">
+                    <div class="referral-info">
+                        <div class="referral-name">${referral.username}</div>
+                        <div class="referral-date">Se unió el ${new Date(referral.created_at).toLocaleDateString()}</div>
+                    </div>
+                    <div class="referral-earnings">${parseFloat(referral.balance || 0).toFixed(6)} RSC</div>
+                </div>
+            `).join('');
+        }
+        
+        async function loadCommissionsHistory() {
+            try {
+                const response = await fetch(`${supabase.config.url}/rest/v1/transactions?user_id=eq.${supabase.user.id}&type=eq.referral_commission&select=amount,description,created_at&order=created_at.desc&limit=10`, {
+                    headers: {
+                        'apikey': supabase.config.anonKey,
+                        'Authorization': `Bearer ${supabase.config.anonKey}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const commissions = await response.json();
+                    displayCommissionsHistory(commissions);
+                }
+            } catch (error) {
+                console.error('Error loading commissions history:', error);
+            }
+        }
+        
+        function displayCommissionsHistory(commissions) {
+            const commissionsList = document.getElementById('commissionsList');
+            if (!commissionsList) return;
+            
+            if (commissions.length === 0) {
+                commissionsList.innerHTML = `
+                    <div class="no-commissions">
+                        <i class="fas fa-coins"></i>
+                        <p>No hay comisiones aún. Las comisiones aparecerán cuando tus referidos minen.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            commissionsList.innerHTML = commissions.map(commission => `
+                <div class="commission-item">
+                    <div class="commission-info">
+                        <div class="commission-description">${commission.description || 'Comisión de referido'}</div>
+                        <div class="commission-date">${new Date(commission.created_at).toLocaleDateString()}</div>
+                    </div>
+                    <div class="commission-amount">+${parseFloat(commission.amount || 0).toFixed(6)} RSC</div>
+                </div>
+            `).join('');
+        }
+        
+        function setupReferralEventListeners() {
+            // Copy referral code
+            const copyReferralCodeBtn = document.getElementById('copyReferralCode');
+            if (copyReferralCodeBtn) {
+                copyReferralCodeBtn.addEventListener('click', () => {
+                    const referralCodeInput = document.getElementById('referralCode');
+                    if (referralCodeInput) {
+                        referralCodeInput.select();
+                        document.execCommand('copy');
+                        showNotification('Código de referido copiado!', 'success');
+                    }
+                });
+            }
+            
+            // Copy referral link
+            const copyReferralLinkBtn = document.getElementById('copyReferralLink');
+            if (copyReferralLinkBtn) {
+                copyReferralLinkBtn.addEventListener('click', () => {
+                    const referralLinkInput = document.getElementById('referralLink');
+                    if (referralLinkInput) {
+                        referralLinkInput.select();
+                        document.execCommand('copy');
+                        showNotification('Link de referido copiado!', 'success');
+                    }
+                });
+            }
+        }
+        
+        // Función para procesar comisiones automáticamente cuando alguien mina
+        function processReferralCommission(miningAmount) {
+            if (!supabase.user.referredBy) return;
+            
+            const commissionRate = 0.10; // 10%
+            const commissionAmount = miningAmount * commissionRate;
+            
+            // Aquí se procesaría la comisión en el backend
+            // Por ahora solo mostramos la notificación
+            if (commissionAmount > 0) {
+                showNotification(`¡Comisión ganada: ${commissionAmount.toFixed(6)} RSC!`, 'success');
+                addActivity(`Comisión de referido: +${commissionAmount.toFixed(6)} RSC`, 'success');
+            }
+        }
+        
+        // Verificar código de referido en la URL
+        function checkReferralCodeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const referralCode = urlParams.get('ref');
+            
+            if (referralCode) {
+                // Guardar código de referido para usar en el registro
+                localStorage.setItem('rsc_referral_code', referralCode);
+                
+                // Mostrar notificación
+                showNotification(`Código de referido detectado: ${referralCode}`, 'info');
+                addActivity(`Código de referido detectado: ${referralCode}`, 'info');
+                
+                // Limpiar URL
+                const newUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+            }
+        }
+        
+        // Función para obtener código de referido guardado (para usar en registro)
+        function getStoredReferralCode() {
+            return localStorage.getItem('rsc_referral_code');
+        }
+        
+        // Función para limpiar código de referido después del registro
+        function clearStoredReferralCode() {
+            localStorage.removeItem('rsc_referral_code');
         }
         
         console.log('✅ Mining Platform Adapter inicializado');
