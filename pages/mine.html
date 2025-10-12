@@ -29,6 +29,7 @@
     <!-- Navigation -->
     <nav class="mining-navbar">
         <div class="nav-container">
+            <!-- Logo -->
             <div class="nav-logo">
                 <a href="../index.html" class="logo-link">
                     <div class="logo-icon">
@@ -41,41 +42,64 @@
                 </a>
             </div>
             
-            <div class="nav-menu">
-                <a href="../index.html" class="nav-link">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-                <a href="mine.html" class="nav-link active">
-                    <i class="fas fa-hammer"></i>
-                    <span>Mine</span>
-                </a>
-                <a href="about.html" class="nav-link">
-                    <i class="fas fa-info-circle"></i>
-                    <span>About</span>
-                </a>
-                <a href="technology.html" class="nav-link">
-                    <i class="fas fa-cogs"></i>
-                    <span>Technology</span>
-                </a>
-                <a href="explorer.html" class="nav-link">
-                    <i class="fas fa-search"></i>
-                    <span>Explorer</span>
-                </a>
-            </div>
-            
-            <div class="nav-actions">
-                <div class="network-status">
+            <!-- Desktop Menu -->
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="mine.html" class="nav-link active">
+                            <i class="fas fa-hammer"></i>
+                            <span>Mine</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="technology.html" class="nav-link">
+                            <i class="fas fa-cogs"></i>
+                            <span>Technology</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="explorer.html" class="nav-link">
+                            <i class="fas fa-search"></i>
+                            <span>Explorer</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Mobile Network Status -->
+                <div class="mobile-network-status">
                     <div class="status-dot"></div>
                     <span class="status-text">Connected</span>
                 </div>
-                <div class="nav-toggle" id="mobile-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+            </div>
+            
+            <!-- Right Side Actions -->
+            <div class="nav-actions">
+                <div class="network-status desktop-only">
+                    <div class="status-dot"></div>
+                    <span class="status-text">Connected</span>
                 </div>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                    <div class="hamburger-box">
+                        <div class="hamburger-inner"></div>
+                    </div>
+                </button>
             </div>
         </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div class="nav-overlay" id="navOverlay"></div>
     </nav>
 
     <!-- Main Content -->

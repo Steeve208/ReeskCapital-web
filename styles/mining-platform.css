@@ -54,102 +54,312 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(10, 10, 10, 0.95);
+    background: rgba(15, 15, 20, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    height: 70px;
 }
 
 .mining-navbar .nav-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
-    max-width: 1400px;
+    height: 100%;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+}
+
+/* Logo */
+.nav-logo {
+    flex-shrink: 0;
 }
 
 .nav-logo .logo-link {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     text-decoration: none;
+    transition: var(--transition);
+}
+
+.nav-logo .logo-link:hover {
+    transform: translateY(-1px);
 }
 
 .logo-icon {
-    width: 35px;
-    height: 35px;
-    background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: var(--transition);
+}
+
+.logo-icon:hover {
+    transform: rotate(5deg);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
 }
 
 .logo-icon img {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     filter: brightness(0) invert(1);
 }
 
 .logo-text {
     display: flex;
     flex-direction: column;
-    line-height: 1;
+    gap: 2px;
 }
 
 .logo-main {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.2rem;
     font-weight: 700;
     color: var(--color-text-light);
+    line-height: 1;
 }
 
 .logo-sub {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 0.7rem;
     font-weight: 500;
-    color: var(--color-primary);
+    color: var(--color-text-secondary);
+    line-height: 1;
     letter-spacing: 1px;
 }
 
+/* Desktop Menu */
 .nav-menu {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-list {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-network-status {
+    display: none;
+}
+
+.nav-item {
+    position: relative;
 }
 
 .nav-link {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
+    gap: 8px;
+    padding: 12px 16px;
     color: var(--color-text-secondary);
     text-decoration: none;
-    border-radius: 20px;
-    transition: var(--transition);
     font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
-.nav-link:hover {
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+    opacity: 0;
+    transition: var(--transition);
+    border-radius: 8px;
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+    opacity: 1;
+}
+
+.nav-link:hover,
+.nav-link.active {
     color: var(--color-text-light);
-    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
 }
 
 .nav-link.active {
     color: var(--color-primary);
-    background: rgba(0, 255, 136, 0.1);
+    font-weight: 600;
 }
 
 .nav-link i {
     font-size: 0.9rem;
+    transition: var(--transition);
 }
 
+.nav-link:hover i,
+.nav-link.active i {
+    transform: scale(1.1);
+}
+
+/* Right Side Actions */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+/* Network Status */
 .network-status {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
+    padding: 8px 12px;
     background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.2);
     border-radius: 20px;
+    transition: var(--transition);
+}
+
+.network-status:hover {
+    background: rgba(0, 255, 136, 0.15);
+    border-color: rgba(0, 255, 136, 0.3);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.status-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Hamburger Menu Button */
+.hamburger {
+    display: none;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    position: relative;
+    transition: var(--transition);
+}
+
+.hamburger:hover {
+    transform: scale(1.1);
+}
+
+.hamburger-box {
+    width: 28px;
+    height: 24px;
+    display: inline-block;
+    position: relative;
+}
+
+.hamburger-inner {
+    display: block;
+    top: 50%;
+    margin-top: -2px;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+    width: 28px;
+    height: 3px;
+    background-color: var(--color-text-light);
+    border-radius: 4px;
+    position: absolute;
+    transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), 
+                opacity 0.3s ease,
+                background-color 0.3s ease;
+}
+
+.hamburger-inner::before,
+.hamburger-inner::after {
+    content: "";
+    display: block;
+}
+
+.hamburger-inner::before {
+    top: -9px;
+}
+
+.hamburger-inner::after {
+    bottom: -9px;
+}
+
+/* Hamburger Animation - X Transform */
+.hamburger.is-active .hamburger-inner {
+    transform: rotate(45deg);
+    background-color: var(--color-primary);
+}
+
+.hamburger.is-active .hamburger-inner::before {
+    top: 0;
+    opacity: 0;
+}
+
+.hamburger.is-active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(-90deg);
+    background-color: var(--color-primary);
+}
+
+.hamburger:hover .hamburger-inner,
+.hamburger:hover .hamburger-inner::before,
+.hamburger:hover .hamburger-inner::after {
+    background-color: var(--color-primary);
+}
+
+/* Mobile Menu Overlay */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+/* Desktop Only */
+.desktop-only {
+    display: flex;
 }
 
 .status-dot {
@@ -1573,88 +1783,1178 @@ body {
 }
 
 /* Responsive Design */
+
+/* Large Tablets and Small Desktops */
 @media (max-width: 1200px) {
     .control-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
     
     .header-content {
         flex-direction: column;
         align-items: flex-start;
+        gap: 20px;
     }
     
     .header-stats {
         width: 100%;
         overflow-x: auto;
-    }
-}
-
-@media (max-width: 768px) {
-    .nav-toggle {
-        display: flex;
-    }
-    
-    .nav-menu {
-        display: none;
-    }
-    
-    .logo-text {
-        display: none;
+        padding-bottom: 10px;
     }
     
     .charts-grid {
         grid-template-columns: 1fr;
     }
     
-    .calculator-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .result-grid {
-        grid-template-columns: 1fr;
-    }
-    
     .pool-stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+/* Tablets and Mobile */
+@media (max-width: 768px) {
+    .mining-navbar {
+        height: 65px;
     }
     
-    .mining-visual {
+    .mining-platform {
+        padding-top: 65px;
+    }
+    
+    /* Show Hamburger */
+    .hamburger {
+        display: inline-block;
+    }
+    
+    /* Hide Desktop Network Status */
+    .desktop-only {
+        display: none !important;
+    }
+    
+    /* Show Mobile Network Status */
+    .mobile-network-status {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 15px 20px;
+        margin-top: 20px;
+        background: rgba(0, 255, 136, 0.1);
+        border: 1px solid rgba(0, 255, 136, 0.2);
+        border-radius: 12px;
+    }
+    
+    .mobile-network-status .status-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--color-primary);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+    
+    .mobile-network-status .status-text {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--color-primary);
+        font-family: 'JetBrains Mono', monospace;
+    }
+    
+    /* Mobile Menu Styles */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 280px;
+        max-width: 85%;
+        background: rgba(15, 15, 20, 0.98);
+        backdrop-filter: blur(20px);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        padding: 80px 20px 20px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+    
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+    
+    /* Mobile Menu List */
+    .nav-list {
         flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+    }
+    
+    .nav-item {
+        width: 100%;
+    }
+    
+    .nav-menu.active .nav-item {
+        animation: slideInRight 0.4s ease forwards;
+    }
+    
+    .nav-menu.active .nav-item:nth-child(1) { animation-delay: 0.1s; }
+    .nav-menu.active .nav-item:nth-child(2) { animation-delay: 0.15s; }
+    .nav-menu.active .nav-item:nth-child(3) { animation-delay: 0.2s; }
+    .nav-menu.active .nav-item:nth-child(4) { animation-delay: 0.25s; }
+    .nav-menu.active .nav-item:nth-child(5) { animation-delay: 0.3s; }
+    
+    .nav-link {
+        padding: 16px 20px;
+        font-size: 1rem;
+        font-weight: 600;
+        width: 100%;
+        text-align: left;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .nav-link::before {
+        display: none;
+    }
+    
+    .nav-link:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(0, 255, 136, 0.3);
+        transform: translateX(5px);
+    }
+    
+    .nav-link.active {
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+        border-color: rgba(0, 255, 136, 0.5);
+        color: var(--color-primary);
+        transform: translateX(5px);
+    }
+    
+    .nav-link i {
+        font-size: 1.2rem;
+        width: 24px;
+        text-align: center;
+    }
+    
+    /* Hide Logo Text on Mobile */
+    .logo-text {
+        display: none;
+    }
+    
+    .logo-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .logo-icon img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Animations for Mobile Menu */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+    
+    .logo-icon img {
+        width: 18px;
+        height: 18px;
     }
     
     .header-title h1 {
         font-size: 2rem;
     }
     
+    .header-title p {
+        font-size: 0.9rem;
+    }
+    
     .quick-stat {
         flex-direction: column;
         text-align: center;
+        gap: 8px;
+        padding: 12px 16px;
+    }
+    
+    .quick-stat .stat-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .mining-visual {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .mining-core {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .core-ring.ring-1 {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .core-ring.ring-2 {
+        width: 85px;
+        height: 85px;
+    }
+    
+    .core-ring.ring-3 {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .core-center {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+    
+    .control-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .btn-mining-start,
+    .btn-mining-stop,
+    .btn-mining-settings {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .metrics-grid {
+        gap: 12px;
+    }
+    
+    .metric-item {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .metric-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .earnings-summary {
+        padding: 15px 0;
+    }
+    
+    .amount-value {
+        font-size: 2rem;
+    }
+    
+    .amount-currency {
+        font-size: 1rem;
+    }
+    
+    .earnings-breakdown {
+        gap: 10px;
+    }
+    
+    .breakdown-item {
+        padding: 8px 0;
+    }
+    
+    .calculator-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .result-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .result-item {
+        padding: 12px;
+    }
+    
+    .result-value {
+        font-size: 1.1rem;
+    }
+    
+    .pool-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .stat-card .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .stat-card .stat-value {
+        font-size: 1.1rem;
+    }
+    
+    /* Referral System Mobile */
+    .referral-card .card-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .referral-stats {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    .stat-item {
+        justify-content: center;
+        padding: 10px 16px;
+    }
+    
+    .referral-content {
+        padding: 20px;
+    }
+    
+    .referral-code-section,
+    .referral-link-section,
+    .referral-stats-detailed,
+    .referrals-list-section,
+    .commissions-history-section {
+        margin-bottom: 25px;
+    }
+    
+    .code-display,
+    .link-display {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .code-display input,
+    .link-display input {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+    
+    .copy-btn {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .referrals-list,
+    .commissions-list {
+        max-height: 250px;
+    }
+    
+    .referral-item,
+    .commission-item {
+        padding: 12px 15px;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    
+    .referral-earnings,
+    .commission-amount {
+        align-self: flex-end;
+        font-size: 0.9rem;
+    }
+    
+    .no-referrals,
+    .no-commissions {
+        padding: 30px 15px;
+    }
+    
+    .no-referrals i,
+    .no-commissions i {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .no-referrals p,
+    .no-commissions p {
+        font-size: 0.85rem;
     }
 }
 
+/* Mobile Devices */
 @media (max-width: 480px) {
     .container {
-        padding: 0 15px;
+        padding: 0 12px;
+    }
+    
+    .mining-navbar .nav-container {
+        padding: 0 12px;
+        height: 55px;
+    }
+    
+    .logo-icon {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .logo-icon img {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .nav-toggle span {
+        width: 18px;
+        height: 2px;
+    }
+    
+    .mining-platform {
+        padding-top: 55px;
     }
     
     .dashboard-header {
-        padding: 20px 0;
+        padding: 15px 0;
+    }
+    
+    .header-title h1 {
+        font-size: 1.8rem;
+        margin-bottom: 6px;
+    }
+    
+    .header-title p {
+        font-size: 0.85rem;
+    }
+    
+    .header-stats {
+        gap: 8px;
+    }
+    
+    .quick-stat {
+        padding: 10px 12px;
+        gap: 6px;
+    }
+    
+    .quick-stat .stat-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem;
+    }
+    
+    .stat-value {
+        font-size: 0.95rem;
     }
     
     .control-panel,
     .charts-section,
     .calculator-section,
     .pool-stats-section,
+    .referral-section,
     .activity-section {
-        padding: 20px 0;
+        padding: 15px 0;
     }
     
-    .control-actions {
-        flex-direction: column;
+    .card-header {
+        padding: 15px;
+    }
+    
+    .card-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+    
+    .mining-core {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .core-ring.ring-1 {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .core-ring.ring-2 {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .core-ring.ring-3 {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .core-center {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .mining-stats {
+        gap: 8px;
+    }
+    
+    .stat-row {
+        padding: 8px 0;
+    }
+    
+    .stat-row .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    .stat-row .stat-value {
+        font-size: 0.9rem;
+    }
+    
+    .btn-mining-start,
+    .btn-mining-stop,
+    .btn-mining-settings {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+    
+    .metric-item {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .metric-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+    
+    .metric-label {
+        font-size: 0.8rem;
+    }
+    
+    .metric-value {
+        font-size: 1rem;
+    }
+    
+    .earnings-summary {
+        padding: 12px 0;
+    }
+    
+    .amount-value {
+        font-size: 1.8rem;
+    }
+    
+    .amount-currency {
+        font-size: 0.9rem;
+    }
+    
+    .earnings-usd {
+        font-size: 0.9rem;
+    }
+    
+    .breakdown-item {
+        padding: 6px 0;
+    }
+    
+    .breakdown-label {
+        font-size: 0.8rem;
+    }
+    
+    .breakdown-value {
+        font-size: 0.9rem;
+    }
+    
+    .chart-card canvas {
+        max-height: 250px;
+    }
+    
+    .chart-controls {
+        gap: 3px;
+    }
+    
+    .btn-chart-range {
+        padding: 3px 8px;
+        font-size: 0.75rem;
+    }
+    
+    .calculator-card .card-header {
+        padding: 20px;
+    }
+    
+    .calculator-card .card-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .calculator-card .card-header p {
+        font-size: 0.85rem;
+    }
+    
+    .calculator-inputs {
+        gap: 15px;
+    }
+    
+    .input-group {
+        gap: 6px;
+    }
+    
+    .input-group label {
+        font-size: 0.85rem;
+    }
+    
+    .form-group input,
+    .form-group select {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .btn-calculate {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .calculator-results h4 {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+    
+    .result-item {
+        padding: 10px;
+    }
+    
+    .result-label {
+        font-size: 0.8rem;
+    }
+    
+    .result-value {
+        font-size: 1rem;
+    }
+    
+    .result-usd {
+        font-size: 0.8rem;
+    }
+    
+    .result-breakdown {
+        gap: 8px;
+        padding-top: 15px;
+    }
+    
+    .breakdown-row {
+        padding: 6px 0;
+    }
+    
+    .breakdown-row.profit {
+        padding-top: 12px;
+        margin-top: 8px;
+    }
+    
+    .breakdown-row.profit .breakdown-value {
+        font-size: 1.1rem;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    .section-header p {
+        font-size: 0.9rem;
+    }
+    
+    .stat-card {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .stat-card .stat-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .stat-card .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    .stat-card .stat-value {
+        font-size: 1rem;
+    }
+    
+    .stat-card .stat-change {
+        font-size: 0.75rem;
+    }
+    
+    /* Referral System Mobile */
+    .referral-card .card-header {
+        padding: 15px;
+    }
+    
+    .referral-card .card-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .referral-content {
+        padding: 15px;
+    }
+    
+    .referral-code-section h4,
+    .referral-link-section h4,
+    .referrals-list-section h4,
+    .commissions-history-section h4 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    .code-description {
+        font-size: 0.8rem;
+    }
+    
+    .referrals-list,
+    .commissions-list {
+        max-height: 200px;
+    }
+    
+    .referral-item,
+    .commission-item {
+        padding: 10px 12px;
+    }
+    
+    .referral-name,
+    .commission-description {
+        font-size: 0.85rem;
+    }
+    
+    .referral-date,
+    .commission-date {
+        font-size: 0.75rem;
+    }
+    
+    .referral-earnings,
+    .commission-amount {
+        font-size: 0.85rem;
+    }
+    
+    .no-referrals,
+    .no-commissions {
+        padding: 25px 12px;
+    }
+    
+    .no-referrals i,
+    .no-commissions i {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+    }
+    
+    .no-referrals p,
+    .no-commissions p {
+        font-size: 0.8rem;
+    }
+    
+    .activity-item {
+        padding: 12px 15px;
+        gap: 12px;
+    }
+    
+    .activity-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .activity-text {
+        font-size: 0.85rem;
+    }
+    
+    .activity-time {
+        font-size: 0.75rem;
+    }
+    
+    /* Modal Mobile */
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 10px;
+    }
+    
+    .modal-header {
+        padding: 15px;
+    }
+    
+    .modal-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .modal-body {
+        padding: 15px;
+    }
+    
+    .settings-group {
+        margin-bottom: 20px;
+    }
+    
+    .settings-group h4 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    .setting-item {
+        padding: 12px 0;
+    }
+    
+    .setting-item label {
+        font-size: 0.9rem;
+    }
+    
+    .setting-control input[type="range"] {
+        width: 120px;
+    }
+    
+    .setting-control select,
+    .setting-control input[type="text"] {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+    
+    .setting-value {
+        font-size: 0.9rem;
+    }
+    
+    .toggle-switch {
+        width: 45px;
+        height: 24px;
+    }
+    
+    .toggle-slider::before {
+        width: 18px;
+        height: 18px;
+        top: 3px;
+        left: 3px;
+    }
+    
+    .toggle-switch input:checked + .toggle-slider::before {
+        transform: translateX(21px);
+    }
+    
+    .modal-footer {
+        padding: 15px;
+        gap: 8px;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    
+    /* Footer Mobile */
+    .mining-footer {
+        padding: 30px 0 15px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    .footer-section p {
+        font-size: 0.85rem;
+    }
+    
+    .footer-section ul li {
+        margin-bottom: 8px;
+    }
+    
+    .footer-section ul li a {
+        font-size: 0.85rem;
+    }
+    
+    .social-links {
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .social-links a {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .footer-bottom {
+        padding-top: 15px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra Small Devices */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .header-title h1 {
+        font-size: 1.6rem;
+    }
+    
+    .quick-stat {
+        padding: 8px 10px;
+    }
+    
+    .quick-stat .stat-icon {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .mining-core {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .core-ring.ring-1 {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .core-ring.ring-2 {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .core-ring.ring-3 {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .core-center {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+    
+    .amount-value {
+        font-size: 1.6rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .modal-content {
+        width: 98%;
+        margin: 5px;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+    .btn-mining-start,
+    .btn-mining-stop,
+    .btn-mining-settings,
+    .btn-calculate,
+    .copy-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .nav-toggle {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .quick-stat {
+        min-height: 44px;
+    }
+    
+    .metric-item {
+        min-height: 44px;
+    }
+    
+    .stat-card {
+        min-height: 44px;
+    }
+    
+    .referral-item,
+    .commission-item,
+    .activity-item {
+        min-height: 44px;
+    }
+    
+    .toggle-switch {
+        min-height: 44px;
+        min-width: 60px;
+    }
+    
+    .form-group input,
+    .form-group select {
+        min-height: 44px;
+    }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+    .mining-platform {
+        padding-top: 50px;
+    }
+    
+    .dashboard-header {
+        padding: 10px 0;
+    }
+    
+    .header-title h1 {
+        font-size: 1.5rem;
     }
     
     .header-stats {
-        flex-direction: column;
-        gap: 10px;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 8px;
+    }
+    
+    .quick-stat {
+        flex-direction: row;
+        min-width: 120px;
+    }
+    
+    .mining-visual {
+        flex-direction: row;
+        gap: 15px;
+    }
+    
+    .mining-core {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .core-ring.ring-1 {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .core-ring.ring-2 {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .core-ring.ring-3 {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .core-center {
+        width: 25px;
+        height: 25px;
+        font-size: 0.8rem;
+    }
+    
+    .control-actions {
+        flex-direction: row;
+        gap: 8px;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .metric-item {
+        padding: 8px;
+    }
+    
+    .chart-card canvas {
+        max-height: 200px;
+    }
+    
+    .modal-content {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .logo-icon img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    .mining-core,
+    .core-ring,
+    .core-center {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .mining-notification {
+        background: rgba(0, 0, 0, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .auth-modal {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    .auth-modal-content {
+        background: var(--color-card);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .mining-core,
+    .core-ring,
+    .core-center {
+        animation: none;
+    }
+    
+    .mining-notification {
+        animation: none;
+    }
+    
+    .nav-menu {
+        transition: none;
     }
 }

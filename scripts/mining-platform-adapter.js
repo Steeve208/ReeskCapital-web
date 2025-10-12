@@ -91,6 +91,9 @@
         // Configurar event listeners
         setupEventListeners();
         
+        // Setup mobile menu
+        setupMobileMenu();
+        
         // Cargar estado inicial
         loadInitialState();
         
@@ -694,7 +697,14 @@
         
         // Sistema de Referidos
         function loadReferralSystem() {
-            if (!supabase.user.isAuthenticated) return;
+            if (!supabase.user.isAuthenticated) {
+                console.log('Usuario no autenticado, saltando carga de referidos');
+                return;
+            }
+            
+            console.log('Usuario autenticado:', supabase.user);
+            console.log('ID del usuario:', supabase.user.id);
+            console.log('Código de referido:', supabase.user.referralCode);
             
             // Cargar código de referido
             loadReferralCode();
@@ -710,6 +720,9 @@
             
             // Setup event listeners para referidos
             setupReferralEventListeners();
+            
+            // Debug para verificar datos
+            debugReferralData();
         }
         
         function loadReferralCode() {
@@ -729,7 +742,7 @@
         async function loadReferralStats() {
             try {
                 // Obtener estadísticas de referidos desde la API
-                const response = await fetch(`${supabase.config.url}/rest/v1/users?referred_by=eq.${supabase.user.id}&select=count`, {
+                const response = await fetch(`${supabase.config.url}/rest/v1/users?referred_by=eq.${supabase.user.id}&select=id`, {
                     headers: {
                         'apikey': supabase.config.anonKey,
                         'Authorization': `Bearer ${supabase.config.anonKey}`
@@ -740,8 +753,12 @@
                     const data = await response.json();
                     const totalReferrals = data.length || 0;
                     
+                    console.log('Referidos encontrados:', totalReferrals, data);
+                    
                     // Actualizar UI
                     updateReferralStatsUI(totalReferrals);
+                } else {
+                    console.error('Error en la respuesta:', response.status, response.statusText);
                 }
                 
                 // Obtener comisiones desde transacciones
@@ -822,7 +839,10 @@
                 
                 if (response.ok) {
                     const referrals = await response.json();
+                    console.log('Lista de referidos:', referrals);
                     displayReferralsList(referrals);
+                } else {
+                    console.error('Error cargando lista de referidos:', response.status, response.statusText);
                 }
             } catch (error) {
                 console.error('Error loading referrals list:', error);
@@ -967,6 +987,179 @@
         // Función para limpiar código de referido después del registro
         function clearStoredReferralCode() {
             localStorage.removeItem('rsc_referral_code');
+        }
+        
+        // Función de debug para verificar datos de referidos
+        async function debugReferralData() {
+            if (!supabase.user.isAuthenticated) {
+                console.log('No se puede hacer debug - usuario no autenticado');
+                return;
+            }
+            
+            console.log('=== DEBUG REFERRAL DATA ===');
+            console.log('Usuario ID:', supabase.user.id);
+            console.log('Usuario referral code:', supabase.user.referralCode);
+            
+            try {
+                // Verificar usuarios que me han referido
+                const referredByResponse = await fetch(`${supabase.config.url}/rest/v1/users?id=eq.${supabase.user.id}&select=referred_by`, {
+                    headers: {
+                        'apikey': supabase.config.anonKey,
+                        'Authorization': `Bearer ${supabase.config.anonKey}`
+                    }
+                });
+                
+                if (referredByResponse.ok) {
+                    const referredByData = await referredByResponse.json();
+                    console.log('Usuario actual referido por:', referredByData);
+                }
+                
+                // Verificar usuarios que he referido
+                const myReferralsResponse = await fetch(`${supabase.config.url}/rest/v1/users?referred_by=eq.${supabase.user.id}&select=id,username,created_at`, {
+                    headers: {
+                        'apikey': supabase.config.anonKey,
+                        'Authorization': `Bearer ${supabase.config.anonKey}`
+                    }
+                });
+                
+                if (myReferralsResponse.ok) {
+                    const myReferralsData = await myReferralsResponse.json();
+                    console.log('Usuarios que he referido:', myReferralsData);
+                }
+                
+                // Verificar todas las transacciones de comisiones
+                const commissionsResponse = await fetch(`${supabase.config.url}/rest/v1/transactions?user_id=eq.${supabase.user.id}&type=eq.referral_commission&select=*`, {
+                    headers: {
+                        'apikey': supabase.config.anonKey,
+                        'Authorization': `Bearer ${supabase.config.anonKey}`
+                    }
+                });
+                
+                if (commissionsResponse.ok) {
+                    const commissionsData = await commissionsResponse.json();
+                    console.log('Comisiones de referidos:', commissionsData);
+                }
+                
+            } catch (error) {
+                console.error('Error en debug:', error);
+            }
+            
+            console.log('=== END DEBUG ===');
+        }
+        
+        // ============================================
+        // MOBILE MENU SYSTEM - Complete Redesign
+        // ============================================
+        function setupMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            if (!hamburger || !navMenu || !navOverlay) {
+                console.warn('⚠️ Mobile menu elements not found');
+                return;
+            }
+            
+            console.log('✅ Mobile menu initialized');
+            
+            // State
+            let isMenuOpen = false;
+            
+            // Toggle Menu Function
+            function toggleMenu() {
+                isMenuOpen = !isMenuOpen;
+                
+                if (isMenuOpen) {
+                    openMenu();
+                } else {
+                    closeMenu();
+                }
+            }
+            
+            // Open Menu
+            function openMenu() {
+                hamburger.classList.add('is-active');
+                navMenu.classList.add('active');
+                navOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                hamburger.setAttribute('aria-expanded', 'true');
+                isMenuOpen = true;
+                
+                console.log('📱 Menu opened');
+            }
+            
+            // Close Menu
+            function closeMenu() {
+                hamburger.classList.remove('is-active');
+                navMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                hamburger.setAttribute('aria-expanded', 'false');
+                isMenuOpen = false;
+                
+                console.log('📱 Menu closed');
+            }
+            
+            // Event Listeners
+            
+            // 1. Hamburger Click
+            hamburger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMenu();
+            });
+            
+            // 2. Overlay Click
+            navOverlay.addEventListener('click', () => {
+                closeMenu();
+            });
+            
+            // 3. Nav Links Click
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Don't prevent navigation, just close menu
+                    closeMenu();
+                });
+            });
+            
+            // 4. Escape Key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isMenuOpen) {
+                    closeMenu();
+                }
+            });
+            
+            // 5. Window Resize
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    if (window.innerWidth > 768 && isMenuOpen) {
+                        closeMenu();
+                    }
+                }, 250);
+            });
+            
+            // 6. Prevent Body Scroll on Menu Drag (Mobile)
+            let touchStartY = 0;
+            navMenu.addEventListener('touchstart', (e) => {
+                touchStartY = e.touches[0].clientY;
+            });
+            
+            navMenu.addEventListener('touchmove', (e) => {
+                const touchY = e.touches[0].clientY;
+                const scrollTop = navMenu.scrollTop;
+                const scrollHeight = navMenu.scrollHeight;
+                const clientHeight = navMenu.clientHeight;
+                
+                // Prevent overscroll
+                if ((scrollTop === 0 && touchY > touchStartY) || 
+                    (scrollTop + clientHeight >= scrollHeight && touchY < touchStartY)) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            console.log('✅ Mobile menu system ready');
         }
         
         console.log('✅ Mining Platform Adapter inicializado');
