@@ -108,6 +108,7 @@
                     try {
                         await supabase.startMiningSession();
                         updateUIState(true);
+                        initializeEarnings(); // Reinicializar earnings para nueva sesión
                         addActivity('Mining iniciado', 'success');
                         showNotification('¡Minería iniciada!', 'success');
                     } catch (error) {
@@ -200,6 +201,9 @@
                 elements.miningBalance.textContent = supabase.user.balance.toFixed(6) + ' RSC';
             }
             
+            // Inicializar earnings
+            initializeEarnings();
+            
             // Verificar si hay sesión activa
             if (supabase.miningSession.isActive) {
                 updateUIState(true);
@@ -216,7 +220,335 @@
         
         // Verificar código de referido en URL
         checkReferralCodeFromURL();
-    }
+        
+        // Escuchar eventos de actualización de balance
+        setupBalanceUpdateListener();
+        
+        // Inicializar gráficos históricos
+        initializeHistoryCharts();
+        }
+        
+        function setupBalanceUpdateListener() {
+            // Escuchar eventos de actualización de balance desde Supabase
+            window.addEventListener('balanceUpdated', (event) => {
+                console.log('💰 Balance actualizado:', event.detail);
+                // Actualizar earnings cuando el balance cambie
+                initializeEarnings();
+                // Actualizar balance en la UI
+                if (elements.miningBalance) {
+                    elements.miningBalance.textContent = event.detail.balance.toFixed(6) + ' RSC';
+                }
+            });
+            
+            // También escuchar cambios en la sesión de minería
+            const checkMiningSession = () => {
+                if (supabase.miningSession.isActive) {
+                    const tokensMined = supabase.miningSession.tokensMined || 0;
+                    if (elements.periodEarnings) {
+                        elements.periodEarnings.textContent = tokensMined.toFixed(6) + ' RSC';
+                    }
+                    if (elements.minedAmount) {
+                        elements.minedAmount.textContent = tokensMined.toFixed(6) + ' RSC';
+                    }
+                }
+            };
+            
+            // Verificar cada 5 segundos
+            setInterval(checkMiningSession, 5000);
+        }
+        
+        // Variables para los gráficos
+        let hashrateChart = null;
+        let earningsChart = null;
+        let historyData = {
+            hashrate: [],
+            earnings: []
+        };
+        
+        function initializeHistoryCharts() {
+            // Inicializar datos históricos
+            loadHistoryData();
+            
+            // Configurar event listeners para los botones de rango de tiempo
+            setupChartRangeButtons();
+            
+            // Inicializar gráficos
+            initializeCharts();
+            
+            // Actualizar datos cada 30 segundos
+            setInterval(updateHistoryData, 30000);
+        }
+        
+        function setupChartRangeButtons() {
+            const rangeButtons = document.querySelectorAll('.btn-chart-range');
+            rangeButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Remover clase active de todos los botones
+                    rangeButtons.forEach(btn => btn.classList.remove('active'));
+                    // Agregar clase active al botón clickeado
+                    e.target.classList.add('active');
+                    
+                    const range = e.target.dataset.range;
+                    updateChartsForRange(range);
+                });
+            });
+        }
+        
+        function loadHistoryData() {
+            // Generar datos históricos simulados basados en la sesión actual
+            const now = new Date();
+            const sessionStart = supabase.miningSession.startTime ? new Date(supabase.miningSession.startTime) : new Date(now - 24 * 60 * 60 * 1000);
+            
+            // Generar datos cada 5 minutos para las últimas 24 horas
+            const dataPoints = [];
+            const startTime = Math.max(sessionStart.getTime(), now.getTime() - 24 * 60 * 60 * 1000);
+            
+            for (let i = 0; i < 288; i++) { // 24 horas * 12 puntos por hora (cada 5 min)
+                const timestamp = startTime + (i * 5 * 60 * 1000);
+                if (timestamp <= now.getTime()) {
+                    // Hashrate con variación realista
+                    const baseHashrate = supabase.miningSession.hashRate || 100;
+                    const hashrateVariation = 0.8 + (Math.random() * 0.4); // ±20%
+                    const hashrate = baseHashrate * hashrateVariation;
+                    
+                    // Earnings acumulados
+                    const timeElapsed = (timestamp - startTime) / (1000 * 60); // minutos
+                    const baseRatePerMinute = 5.25 / (24 * 60); // RSC por minuto
+                    const earnings = timeElapsed * baseRatePerMinute;
+                    
+                    dataPoints.push({
+                        timestamp: timestamp,
+                        hashrate: hashrate,
+                        earnings: earnings
+                    });
+                }
+            }
+            
+            historyData.hashrate = dataPoints.map(point => ({
+                x: point.timestamp,
+                y: point.hashrate
+            }));
+            
+            historyData.earnings = dataPoints.map(point => ({
+                x: point.timestamp,
+                y: point.earnings
+            }));
+            
+            console.log('📊 Datos históricos cargados:', dataPoints.length, 'puntos');
+        }
+        
+        function initializeCharts() {
+            // Verificar si Chart.js está disponible
+            if (typeof Chart === 'undefined') {
+                console.error('❌ Chart.js no está cargado');
+                return;
+            }
+            
+            // Configuración común para ambos gráficos
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            displayFormats: {
+                                hour: 'HH:mm',
+                                day: 'MMM dd'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    }
+                }
+            };
+            
+            // Gráfico de Hashrate
+            const hashrateCtx = document.getElementById('hashrateChart');
+            if (hashrateCtx) {
+                hashrateChart = new Chart(hashrateCtx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: 'Hashrate',
+                            data: historyData.hashrate,
+                            borderColor: '#00ff88',
+                            backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        scales: {
+                            ...commonOptions.scales,
+                            y: {
+                                ...commonOptions.scales.y,
+                                title: {
+                                    display: true,
+                                    text: 'H/s',
+                                    color: '#ffffff'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Earnings
+            const earningsCtx = document.getElementById('earningsChart');
+            if (earningsCtx) {
+                earningsChart = new Chart(earningsCtx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: 'Earnings',
+                            data: historyData.earnings,
+                            borderColor: '#00d4ff',
+                            backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        scales: {
+                            ...commonOptions.scales,
+                            y: {
+                                ...commonOptions.scales.y,
+                                title: {
+                                    display: true,
+                                    text: 'RSC',
+                                    color: '#ffffff'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        function updateChartsForRange(range) {
+            const now = new Date();
+            let startTime;
+            
+            switch(range) {
+                case '1h':
+                    startTime = now.getTime() - 60 * 60 * 1000;
+                    break;
+                case '6h':
+                    startTime = now.getTime() - 6 * 60 * 60 * 1000;
+                    break;
+                case '24h':
+                    startTime = now.getTime() - 24 * 60 * 60 * 1000;
+                    break;
+                case '7d':
+                    startTime = now.getTime() - 7 * 24 * 60 * 60 * 1000;
+                    break;
+                default:
+                    startTime = now.getTime() - 60 * 60 * 1000;
+            }
+            
+            // Filtrar datos según el rango seleccionado
+            const filteredHashrate = historyData.hashrate.filter(point => point.x >= startTime);
+            const filteredEarnings = historyData.earnings.filter(point => point.x >= startTime);
+            
+            // Actualizar gráficos
+            if (hashrateChart) {
+                hashrateChart.data.datasets[0].data = filteredHashrate;
+                hashrateChart.update('none');
+            }
+            
+            if (earningsChart) {
+                earningsChart.data.datasets[0].data = filteredEarnings;
+                earningsChart.update('none');
+            }
+            
+            console.log(`📊 Gráficos actualizados para rango: ${range}`);
+        }
+        
+        function updateHistoryData() {
+            // Agregar nuevo punto de datos basado en el estado actual
+            const now = new Date().getTime();
+            const currentHashrate = supabase.miningSession.hashRate || 100;
+            const currentEarnings = supabase.miningSession.tokensMined || 0;
+            
+            // Agregar datos actuales
+            historyData.hashrate.push({
+                x: now,
+                y: currentHashrate
+            });
+            
+            historyData.earnings.push({
+                x: now,
+                y: currentEarnings
+            });
+            
+            // Mantener solo los últimos 1000 puntos para rendimiento
+            if (historyData.hashrate.length > 1000) {
+                historyData.hashrate = historyData.hashrate.slice(-1000);
+            }
+            if (historyData.earnings.length > 1000) {
+                historyData.earnings = historyData.earnings.slice(-1000);
+            }
+            
+            // Actualizar gráficos si están activos
+            const activeRange = document.querySelector('.btn-chart-range.active')?.dataset.range || '1h';
+            updateChartsForRange(activeRange);
+        }
+        
+        function initializeEarnings() {
+            // Obtener tokens minados de la sesión actual o del balance del usuario
+            const tokensMined = supabase.miningSession.tokensMined || 0;
+            
+            // Actualizar earnings total
+            if (elements.periodEarnings) {
+                elements.periodEarnings.textContent = tokensMined.toFixed(6) + ' RSC';
+            }
+            
+            // Actualizar USD (por ahora 0 ya que RSC no tiene precio)
+            if (elements.earningsUSD) {
+                elements.earningsUSD.textContent = '≈ $0.00 USD';
+            }
+            
+            // Actualizar valores individuales
+            if (elements.minedAmount) {
+                elements.minedAmount.textContent = tokensMined.toFixed(6) + ' RSC';
+            }
+            
+            // Calcular estimaciones basadas en hashrate actual
+            const hashrate = supabase.miningSession.currentHashrate || 1000; // Default 1000 H/s
+            const ratePerHour = (hashrate / 1000) * 0.36; // 0.36 RSC por 1000 H/s por hora
+            
+            if (elements.miningRate) {
+                elements.miningRate.textContent = ratePerHour.toFixed(6) + ' RSC';
+            }
+            if (elements.dailyEst) {
+                elements.dailyEst.textContent = (ratePerHour * 24).toFixed(6) + ' RSC';
+            }
+            if (elements.monthlyEst) {
+                elements.monthlyEst.textContent = (ratePerHour * 24 * 30).toFixed(6) + ' RSC';
+            }
+        }
         
         function updateUIState(isMining) {
             // Botones
@@ -286,6 +618,11 @@
             const tokensMined = supabase.miningSession.tokensMined || 0;
             if (elements.minedAmount) {
                 elements.minedAmount.textContent = tokensMined.toFixed(6) + ' RSC';
+            }
+            
+            // Actualizar earnings total
+            if (elements.periodEarnings) {
+                elements.periodEarnings.textContent = tokensMined.toFixed(6) + ' RSC';
             }
             
             // CPU Usage (simulado)
