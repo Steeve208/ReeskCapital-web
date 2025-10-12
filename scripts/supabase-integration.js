@@ -349,20 +349,25 @@ class SupabaseIntegration {
                     this.miningSession.endTime = sessionData.endTime;
                     this.miningSession.hashRate = sessionData.hashRate || 500;
                     this.miningSession.efficiency = sessionData.efficiency || 100;
+                    this.miningSession.tokensMined = sessionData.tokensMined || 0;
                     
-                    // Calcular tokens minados basado en tiempo transcurrido (minería en segundo plano)
-                    const expectedTokens = this.calculateOfflineMining(elapsed);
-                    this.miningSession.tokensMined = Math.max(sessionData.tokensMined || 0, expectedTokens);
+                    // 🔧 CALCULAR SOLO LOS TOKENS NUEVOS DESDE LA ÚLTIMA ACTUALIZACIÓN
+                    const lastUpdateTime = sessionData.lastUpdateTime ? new Date(sessionData.lastUpdateTime) : startTime;
+                    const timeSinceLastUpdate = now - lastUpdateTime;
                     
-                    // Actualizar balance del usuario con la minería offline
-                    const tokensToAdd = this.miningSession.tokensMined - (sessionData.tokensMined || 0);
-                    if (tokensToAdd > 0) {
-                        this.user.balance += tokensToAdd;
-                        this.saveUserToStorage();
-                        console.log(`⛏️ Minería offline: +${tokensToAdd.toFixed(6)} RSC`);
+                    // Solo calcular tokens nuevos si ha pasado más de 1 minuto desde la última actualización
+                    if (timeSinceLastUpdate > 60000) { // 60 segundos
+                        const newTokens = this.calculateOfflineMining(timeSinceLastUpdate);
+                        
+                        if (newTokens > 0) {
+                            this.miningSession.tokensMined += newTokens;
+                            this.user.balance += newTokens;
+                            this.saveUserToStorage();
+                            console.log(`⛏️ Minería offline: +${newTokens.toFixed(6)} RSC (${Math.floor(timeSinceLastUpdate / 60000)} min)`);
+                        }
                     }
                     
-                    // Guardar sesión actualizada
+                    // Guardar sesión actualizada con timestamp de última actualización
                     this.saveMiningSession();
                     
                     // Iniciar sincronización automática con el backend
@@ -565,7 +570,8 @@ class SupabaseIntegration {
             tokensMined: this.miningSession.tokensMined,
             hashRate: this.miningSession.hashRate,
             efficiency: this.miningSession.efficiency,
-            isActive: this.miningSession.isActive
+            isActive: this.miningSession.isActive,
+            lastUpdateTime: new Date().toISOString() // 🔧 Guardar timestamp de última actualización
         };
         
         localStorage.setItem('rsc_mining_session', JSON.stringify(sessionData));
@@ -675,39 +681,10 @@ class SupabaseIntegration {
                     console.log('✅ Balance actualizado correctamente');
                 }
             } else {
-                // Si no se pasan tokens, usar cálculo basado en tiempo (para minería offline)
-                const now = new Date();
-                const startTime = new Date(this.miningSession.startTime);
-                const elapsed = now - startTime;
-                const expectedTokens = this.calculateOfflineMining(elapsed);
-                
-                // Solo actualizar si el cálculo offline es mayor (para no perder progreso)
-                if (expectedTokens > this.miningSession.tokensMined) {
-                    const tokensToAdd = expectedTokens - this.miningSession.tokensMined;
-                    this.miningSession.tokensMined = expectedTokens;
-                    
-                    // Aplicar multiplicadores de sistemas avanzados
-                    const finalTokensToAdd = this.applyAdvancedMultipliers(tokensToAdd);
-                    
-                    // Actualizar balance del usuario
-                    const oldBalance = this.user.balance;
-                    this.user.balance += finalTokensToAdd;
-                    this.saveUserToStorage();
-                    
-                    // 🔧 FORZAR ACTUALIZACIÓN DE UI INMEDIATAMENTE
-                    this.forceUIUpdate();
-                    
-                    // 🔧 SINCRONIZAR CON BASE DE DATOS CON MANEJO DE ERRORES VISIBLE
-                    this.syncBalanceToBackend().catch(error => {
-                        console.error('❌ Error sincronizando balance:', error);
-                        this.handleSyncError(error, 'balance');
-                    });
-                    
-                    // Actualizar sistemas avanzados
-                    this.updateAdvancedSystems(finalTokensToAdd, hashRate, efficiency);
-                    
-                    console.log(`💰 Minería offline: +${finalTokensToAdd.toFixed(6)} RSC | Balance: ${oldBalance.toFixed(6)} → ${this.user.balance.toFixed(6)} RSC`);
-                }
+                // 🔧 CÁLCULO CORRECTO: Solo tokens desde la última actualización, no desde el inicio
+                // NO calcular automáticamente aquí - esto se maneja en checkMiningSession
+                // Esta rama solo se ejecuta si se llama updateMiningStats sin tokens
+                console.log('⚠️ updateMiningStats llamado sin tokens - actualizando solo métricas');
             }
             
             // Guardar sesión automáticamente
