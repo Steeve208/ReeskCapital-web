@@ -109,11 +109,11 @@
                         await supabase.startMiningSession();
                         updateUIState(true);
                         initializeEarnings(); // Reinicializar earnings para nueva sesión
-                        addActivity('Mining iniciado', 'success');
-                        showNotification('¡Minería iniciada!', 'success');
+                        addActivity('Mining started', 'success');
+                        showNotification('Mining started!', 'success');
                     } catch (error) {
                         console.error('Error starting mining:', error);
-                        showNotification('Error al iniciar minería: ' + error.message, 'error');
+                        showNotification('Error starting mining: ' + error.message, 'error');
                         elements.startMiningBtn.disabled = false;
                     }
                 });
@@ -126,11 +126,11 @@
                     try {
                         await supabase.stopMiningSession();
                         updateUIState(false);
-                        addActivity('Mining detenido', 'info');
-                        showNotification('Minería detenida', 'info');
+                        addActivity('Mining stopped', 'info');
+                        showNotification('Mining stopped', 'info');
                     } catch (error) {
                         console.error('Error stopping mining:', error);
-                        showNotification('Error al detener minería: ' + error.message, 'error');
+                        showNotification('Error stopping mining: ' + error.message, 'error');
                         elements.stopMiningBtn.disabled = false;
                     }
                 });
@@ -189,9 +189,9 @@
         }
         
         function loadInitialState() {
-            // Verificar si el usuario está autenticado
+            // Check if user is authenticated
             if (!supabase.user.isAuthenticated) {
-                // Mostrar modal de login/registro
+                // Show login/register modal
                 showAuthModal();
                 return;
             }
@@ -207,7 +207,7 @@
             // Verificar si hay sesión activa
             if (supabase.miningSession.isActive) {
                 updateUIState(true);
-                addActivity('Sesión de minería activa', 'success');
+                addActivity('Active mining session', 'success');
             } else {
                 updateUIState(false);
             }
@@ -240,7 +240,7 @@
                 }
             });
             
-            // También escuchar cambios en la sesión de minería
+            // Also listen for changes in mining session
             const checkMiningSession = () => {
                 if (supabase.miningSession.isActive) {
                     const tokensMined = supabase.miningSession.tokensMined || 0;
@@ -295,7 +295,7 @@
         }
         
         function loadHistoryData() {
-            // Generar datos históricos simulados basados en la sesión actual
+            // Generate simulated historical data based on current session
             const now = new Date();
             const sessionStart = supabase.miningSession.startTime ? new Date(supabase.miningSession.startTime) : new Date(now - 24 * 60 * 60 * 1000);
             
@@ -334,13 +334,13 @@
                 y: point.earnings
             }));
             
-            console.log('📊 Datos históricos cargados:', dataPoints.length, 'puntos');
+            console.log('📊 Historical data loaded:', dataPoints.length, 'points');
         }
         
         function initializeCharts() {
             // Verificar si Chart.js está disponible
             if (typeof Chart === 'undefined') {
-                console.error('❌ Chart.js no está cargado');
+                console.error('❌ Chart.js is not loaded');
                 return;
             }
             
@@ -483,7 +483,7 @@
                 earningsChart.update('none');
             }
             
-            console.log(`📊 Gráficos actualizados para rango: ${range}`);
+            console.log(`📊 Charts updated for range: ${range}`);
         }
         
         function updateHistoryData() {
@@ -517,7 +517,7 @@
         }
         
         function initializeEarnings() {
-            // Obtener tokens minados de la sesión actual o del balance del usuario
+            // Get mined tokens from current session or user balance
             const tokensMined = supabase.miningSession.tokensMined || 0;
             
             // Actualizar earnings total
@@ -839,12 +839,12 @@
                 <div class="auth-modal-overlay"></div>
                 <div class="auth-modal-content">
                     <div class="auth-modal-header">
-                        <h2>Bienvenido a RSC Mining</h2>
-                        <p>Inicia sesión o regístrate para comenzar a minar</p>
+                        <h2>Welcome to RSC Mining</h2>
+                        <p>Login or register to start mining</p>
                     </div>
                     <div class="auth-tabs">
-                        <button class="auth-tab active" data-tab="login">Iniciar Sesión</button>
-                        <button class="auth-tab" data-tab="register">Registrarse</button>
+                        <button class="auth-tab active" data-tab="login">Login</button>
+                        <button class="auth-tab" data-tab="register">Register</button>
                     </div>
                     <div class="auth-forms">
                         <!-- Login Form -->
@@ -865,12 +865,12 @@
                             </div>
                             <button type="submit" class="auth-submit-btn">
                                 <i class="fas fa-sign-in-alt"></i>
-                                Iniciar Sesión
+                                Login
                             </button>
                             <div class="auth-demo">
                                 <button type="button" class="auth-demo-btn" id="createTestUserBtn">
                                     <i class="fas fa-vial"></i>
-                                    Crear Usuario de Prueba
+                                    Create Test User
                                 </button>
                             </div>
                         </form>
@@ -880,7 +880,7 @@
                             <div class="form-group">
                                 <label for="registerUsername">
                                     <i class="fas fa-user"></i>
-                                    Usuario
+                                    Username
                                 </label>
                                 <input type="text" id="registerUsername" required placeholder="tu_usuario">
                             </div>
@@ -946,7 +946,7 @@
                     await supabase.loginUser(email, password);
                     closeAuthModal(modal);
                     loadInitialState();
-                    showNotification('¡Bienvenido de vuelta!', 'success');
+                    showNotification('Welcome back!', 'success');
                 } catch (error) {
                     showAuthError(modal, error.message);
                 } finally {
@@ -967,10 +967,10 @@
                 try {
                     showAuthLoading(true);
                     await supabase.registerUser(email, username, password, referralCode);
-                    clearStoredReferralCode(); // Limpiar código después del registro
+                    clearStoredReferralCode(); // Clear code after registration
                     closeAuthModal(modal);
                     loadInitialState();
-                    showNotification('¡Cuenta creada exitosamente!', 'success');
+                    showNotification('Account created successfully!', 'success');
                 } catch (error) {
                     showAuthError(modal, error.message);
                 } finally {
@@ -994,7 +994,7 @@
                         // El createTestUser ya hace auto-login
                         closeAuthModal(modal);
                         loadInitialState();
-                        showNotification('¡Usuario de prueba creado!', 'success');
+                        showNotification('Test user created!', 'success');
                     } catch (error) {
                         showAuthError(modal, error.message);
                     } finally {
@@ -1035,13 +1035,13 @@
         // Sistema de Referidos
         function loadReferralSystem() {
             if (!supabase.user.isAuthenticated) {
-                console.log('Usuario no autenticado, saltando carga de referidos');
+                console.log('User not authenticated, skipping referral load');
                 return;
             }
             
-            console.log('Usuario autenticado:', supabase.user);
+            console.log('Authenticated user:', supabase.user);
             console.log('ID del usuario:', supabase.user.id);
-            console.log('Código de referido:', supabase.user.referralCode);
+            console.log('Referral code:', supabase.user.referralCode);
             
             // Cargar código de referido
             loadReferralCode();
@@ -1095,7 +1095,7 @@
                     // Actualizar UI
                     updateReferralStatsUI(totalReferrals);
                 } else {
-                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    console.error('Error in response:', response.status, response.statusText);
                 }
                 
                 // Obtener comisiones desde transacciones
@@ -1179,7 +1179,7 @@
                     console.log('Lista de referidos:', referrals);
                     displayReferralsList(referrals);
                 } else {
-                    console.error('Error cargando lista de referidos:', response.status, response.statusText);
+                    console.error('Error loading referrals list:', response.status, response.statusText);
                 }
             } catch (error) {
                 console.error('Error loading referrals list:', error);
@@ -1303,7 +1303,7 @@
             const referralCode = urlParams.get('ref');
             
             if (referralCode) {
-                // Guardar código de referido para usar en el registro
+                // Save referral code to use in registration
                 localStorage.setItem('rsc_referral_code', referralCode);
                 
                 // Mostrar notificación
@@ -1316,12 +1316,12 @@
             }
         }
         
-        // Función para obtener código de referido guardado (para usar en registro)
+        // Function to get stored referral code (to use in registration)
         function getStoredReferralCode() {
             return localStorage.getItem('rsc_referral_code');
         }
         
-        // Función para limpiar código de referido después del registro
+        // Function to clear referral code after registration
         function clearStoredReferralCode() {
             localStorage.removeItem('rsc_referral_code');
         }
@@ -1329,12 +1329,12 @@
         // Función de debug para verificar datos de referidos
         async function debugReferralData() {
             if (!supabase.user.isAuthenticated) {
-                console.log('No se puede hacer debug - usuario no autenticado');
+                console.log('Cannot debug - user not authenticated');
                 return;
             }
             
             console.log('=== DEBUG REFERRAL DATA ===');
-            console.log('Usuario ID:', supabase.user.id);
+            console.log('User ID:', supabase.user.id);
             console.log('Usuario referral code:', supabase.user.referralCode);
             
             try {
@@ -1348,10 +1348,10 @@
                 
                 if (referredByResponse.ok) {
                     const referredByData = await referredByResponse.json();
-                    console.log('Usuario actual referido por:', referredByData);
+                    console.log('Current user referred by:', referredByData);
                 }
                 
-                // Verificar usuarios que he referido
+                // Check users I have referred
                 const myReferralsResponse = await fetch(`${supabase.config.url}/rest/v1/users?referred_by=eq.${supabase.user.id}&select=id,username,created_at`, {
                     headers: {
                         'apikey': supabase.config.anonKey,
@@ -1361,7 +1361,7 @@
                 
                 if (myReferralsResponse.ok) {
                     const myReferralsData = await myReferralsResponse.json();
-                    console.log('Usuarios que he referido:', myReferralsData);
+                    console.log('Users I have referred:', myReferralsData);
                 }
                 
                 // Verificar todas las transacciones de comisiones
@@ -1378,7 +1378,7 @@
                 }
                 
             } catch (error) {
-                console.error('Error en debug:', error);
+                console.error('Debug error:', error);
             }
             
             console.log('=== END DEBUG ===');
