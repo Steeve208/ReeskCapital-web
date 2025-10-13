@@ -3,9 +3,9 @@
 ================================ */
 
 /**
- * 🔗 INTEGRACIÓN SIMPLE CON SUPABASE
+ * 🔗 SIMPLE SUPABASE INTEGRATION
  * 
- * Se integra con el sistema existente de la página de minería
+ * Integrates with the existing mining page system
  */
 
 class SupabaseIntegration {
@@ -42,7 +42,7 @@ class SupabaseIntegration {
 
     async init() {
         try {
-            console.log('🔗 Inicializando integración con Supabase...');
+            console.log('🔗 Initializing Supabase integration...');
             await this.checkConnection();
             await this.loadStoredUser();
             await this.checkMiningSession();
@@ -56,10 +56,10 @@ class SupabaseIntegration {
         try {
             const response = await this.makeRequest('GET', '/rest/v1/users?select=count&limit=1');
             if (response.ok) {
-                console.log('✅ Conexión con Supabase establecida');
+                console.log('✅ Supabase connection established');
                 return true;
             } else {
-                throw new Error('Error de conexión con Supabase');
+                throw new Error('Supabase connection error');
             }
         } catch (error) {
             console.error('❌ Error conectando con Supabase:', error);
@@ -76,29 +76,29 @@ class SupabaseIntegration {
             if (checkResponse.ok) {
                 const existingUsers = await checkResponse.json();
                 if (existingUsers.length > 0) {
-                    throw new Error('Este email ya está registrado. Inicia sesión en su lugar.');
+                    throw new Error('This email is already registered. Please login instead.');
                 }
             }
             
-            // Buscar el ID del usuario referidor si se proporciona un código de referido
+            // Find the referrer user ID if a referral code is provided
             let referrerId = null;
             if (referralCode) {
-                console.log('🔍 Buscando usuario con código de referido:', referralCode);
+                console.log('🔍 Searching for user with referral code:', referralCode);
                 const referrerResponse = await this.makeRequest('GET', `/rest/v1/users?referral_code=eq.${referralCode}&select=id`);
                 if (referrerResponse.ok) {
                     const referrers = await referrerResponse.json();
                     if (referrers.length > 0) {
                         referrerId = referrers[0].id;
-                        console.log('✅ Usuario referidor encontrado:', referrerId);
+                        console.log('✅ Referrer user found:', referrerId);
                     } else {
-                        throw new Error('Código de referido inválido. Verifica que el código sea correcto.');
+                        throw new Error('Invalid referral code. Please verify the code is correct.');
                     }
                 } else {
-                    throw new Error('Error validando código de referido');
+                    throw new Error('Error validating referral code');
                 }
             }
             
-            // Hash simple de la contraseña (en producción usar bcrypt)
+            // Simple password hash (use bcrypt in production)
             const hashedPassword = btoa(password); // Base64 encoding simple
             
             const response = await this.makeRequest('POST', '/rest/v1/users', {
@@ -150,9 +150,9 @@ class SupabaseIntegration {
      */
     async createTestUser() {
         try {
-            console.log('🧪 Creando usuario de prueba...');
+            console.log('🧪 Creating test user...');
             
-            // Generar username único con timestamp
+            // Generate unique username with timestamp
             const timestamp = Date.now().toString().slice(-6);
             const testUser = {
                 email: `test${timestamp}@rsc.com`,
@@ -241,16 +241,16 @@ class SupabaseIntegration {
 
     async loginUser(email, password) {
         try {
-            console.log('🔐 Iniciando sesión:', email);
-            console.log('🔧 Configuración Supabase:', this.config);
+            console.log('🔐 Logging in:', email);
+            console.log('🔧 Supabase configuration:', this.config);
             
             // Validar entrada
             if (!email || !password) {
-                throw new Error('Email y contraseña son requeridos');
+                throw new Error('Email and password are required');
             }
             
             if (!email.includes('@')) {
-                throw new Error('Email no válido');
+                throw new Error('Invalid email');
             }
             
             const response = await this.makeRequest('GET', `/rest/v1/users?email=eq.${encodeURIComponent(email)}&select=*`);
@@ -262,19 +262,19 @@ class SupabaseIntegration {
                 
                 if (users.length > 0) {
                     const userData = users[0];
-                    console.log('👤 Datos del usuario:', userData);
+                    console.log('👤 User data:', userData);
                     
-                    // Verificar contraseña
+                    // Verify password
                     const storedPassword = userData.password;
                     const hashedInputPassword = btoa(password);
                     
-                    console.log('🔑 Verificando contraseña...');
+                    console.log('🔑 Verifying password...');
                     console.log('🔑 Stored password:', storedPassword);
                     console.log('🔑 Input password hash:', hashedInputPassword);
                     
                     if (storedPassword !== hashedInputPassword) {
-                        console.log('❌ Contraseña incorrecta');
-                        throw new Error('Contraseña incorrecta');
+                        console.log('❌ Incorrect password');
+                        throw new Error('Incorrect password');
                     }
                     
                     this.user.id = userData.id;
@@ -288,11 +288,11 @@ class SupabaseIntegration {
                     console.log('💾 Guardando usuario en storage...');
                     this.saveUserToStorage();
                     
-                    console.log('✅ Sesión iniciada correctamente');
+                    console.log('✅ Session started successfully');
                     return userData;
                 } else {
-                    console.log('❌ Email no registrado');
-                    throw new Error('Email no registrado. Regístrate primero.');
+                    console.log('❌ Email not registered');
+                    throw new Error('Email not registered. Please register first.');
                 }
             } else {
                 let errorMessage = 'Error del servidor';
@@ -309,7 +309,7 @@ class SupabaseIntegration {
                 throw new Error(errorMessage);
             }
         } catch (error) {
-            console.error('❌ Error iniciando sesión:', error);
+            console.error('❌ Error logging in:', error);
             throw error;
         }
     }
@@ -324,7 +324,7 @@ class SupabaseIntegration {
         this.user.referredBy = null;
         
         localStorage.removeItem('rsc_user_data');
-        console.log('ℹ️ Sesión cerrada');
+        console.log('ℹ️ Session closed');
     }
 
     async checkMiningSession() {
@@ -337,12 +337,12 @@ class SupabaseIntegration {
                 const elapsed = now - startTime;
                 const duration = 24 * 60 * 60 * 1000; // 24 horas
                 
-                console.log(`🔍 Verificando sesión existente...`);
-                console.log(`📅 Inicio: ${startTime.toLocaleString()}`);
-                console.log(`⏱️ Tiempo transcurrido: ${Math.floor(elapsed / 1000 / 60)} minutos`);
+                console.log(`🔍 Checking existing session...`);
+                console.log(`📅 Start: ${startTime.toLocaleString()}`);
+                console.log(`⏱️ Elapsed time: ${Math.floor(elapsed / 1000 / 60)} minutes`);
                 
                 if (elapsed < duration) {
-                    // La sesión aún está activa - restaurar todos los datos
+                    // Session is still active - restore all data
                     this.miningSession.isActive = true;
                     this.miningSession.sessionId = sessionData.sessionId;
                     this.miningSession.startTime = sessionData.startTime;
@@ -351,11 +351,11 @@ class SupabaseIntegration {
                     this.miningSession.efficiency = sessionData.efficiency || 100;
                     this.miningSession.tokensMined = sessionData.tokensMined || 0;
                     
-                    // 🔧 CALCULAR SOLO LOS TOKENS NUEVOS DESDE LA ÚLTIMA ACTUALIZACIÓN
+                    // 🔧 CALCULATE ONLY NEW TOKENS SINCE LAST UPDATE
                     const lastUpdateTime = sessionData.lastUpdateTime ? new Date(sessionData.lastUpdateTime) : startTime;
                     const timeSinceLastUpdate = now - lastUpdateTime;
                     
-                    // Solo calcular tokens nuevos si ha pasado más de 1 minuto desde la última actualización
+                    // Only calculate new tokens if more than 1 minute has passed since last update
                     if (timeSinceLastUpdate > 60000) { // 60 segundos
                         const newTokens = this.calculateOfflineMining(timeSinceLastUpdate);
                         
@@ -363,27 +363,27 @@ class SupabaseIntegration {
                             this.miningSession.tokensMined += newTokens;
                             this.user.balance += newTokens;
                             this.saveUserToStorage();
-                            console.log(`⛏️ Minería offline: +${newTokens.toFixed(6)} RSC (${Math.floor(timeSinceLastUpdate / 60000)} min)`);
+                            console.log(`⛏️ Offline mining: +${newTokens.toFixed(6)} RSC (${Math.floor(timeSinceLastUpdate / 60000)} min)`);
                         }
                     }
                     
-                    // Guardar sesión actualizada con timestamp de última actualización
+                    // Save updated session with last update timestamp
                     this.saveMiningSession();
                     
-                    // Iniciar sincronización automática con el backend
+                    // Start automatic synchronization with backend
                     this.startBackgroundSync();
                     
-                    // 🔧 INICIAR TIMER DE ACTUALIZACIÓN AUTOMÁTICA
+                    // 🔧 START AUTOMATIC UPDATE TIMER
                     this.startMiningUpdateTimer();
                     
-                    console.log('✅ Sesión de minería activa restaurada');
-                    console.log(`💰 Tokens minados: ${this.miningSession.tokensMined.toFixed(6)} RSC`);
-                    console.log(`⏰ Tiempo restante: ${this.getRemainingTime()} horas`);
+                    console.log('✅ Active mining session restored');
+                    console.log(`💰 Mined tokens: ${this.miningSession.tokensMined.toFixed(6)} RSC`);
+                    console.log(`⏰ Time remaining: ${this.getRemainingTime()} hours`);
                     
                     return true;
                 } else {
-                    // La sesión expiró - procesar recompensas y limpiar
-                    console.log('⏰ Sesión de 24 horas completada - Procesando recompensas...');
+                    // Session expired - process rewards and cleanup
+                    console.log('⏰ 24-hour session completed - Processing rewards...');
                     
                     const tokensMined = sessionData.tokensMined || 0;
                     if (tokensMined > 0 && this.user.isAuthenticated) {
@@ -392,7 +392,7 @@ class SupabaseIntegration {
                         console.log(`💰 Recompensas finales procesadas: +${tokensMined.toFixed(6)} RSC`);
                     }
                     
-                    // Limpiar sesión expirada
+                    // Clean expired session
                     localStorage.removeItem('rsc_mining_session');
                     this.miningSession.isActive = false;
                     
@@ -433,7 +433,7 @@ class SupabaseIntegration {
                 const duration = 24 * 60 * 60 * 1000; // 24 horas en ms
                 
                 console.log(`📅 Sesión encontrada: ${startTime.toLocaleString()}`);
-                console.log(`⏱️ Tiempo transcurrido: ${Math.floor(elapsed / 1000 / 60)} minutos`);
+                console.log(`⏱️ Elapsed time: ${Math.floor(elapsed / 1000 / 60)} minutes`);
                 
                 // Si la sesión aún es válida (menos de 24 horas)
                 if (elapsed < duration) {
@@ -516,7 +516,7 @@ class SupabaseIntegration {
                         }
                     }
                     
-                    // Limpiar sesión expirada
+                    // Clean expired session
                     localStorage.removeItem('rsc_mining_session');
                     console.log('✅ Sesión expirada procesada y limpiada');
                 }
