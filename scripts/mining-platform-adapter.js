@@ -215,10 +215,10 @@
         // Cargar stats
         updateMetrics();
         
-        // Cargar sistema de referidos
+        // Load referral system
         loadReferralSystem();
         
-        // Verificar código de referido en URL
+        // Check referral code in URL
         checkReferralCodeFromURL();
         
         // Escuchar eventos de actualización de balance
@@ -901,7 +901,7 @@
                             <div class="form-group">
                                 <label for="registerReferral">
                                     <i class="fas fa-users"></i>
-                                    Código de Referido (Opcional)
+                                    Referral Code (Optional)
                                 </label>
                                 <input type="text" id="registerReferral" placeholder="RSC123456">
                             </div>
@@ -978,7 +978,7 @@
                 }
             });
             
-            // Auto-completar código de referido si está disponible
+            // Auto-fill referral code if available
             const storedReferralCode = getStoredReferralCode();
             if (storedReferralCode && modal.querySelector('#registerReferral')) {
                 modal.querySelector('#registerReferral').value = storedReferralCode;
@@ -1032,7 +1032,7 @@
             setTimeout(() => modal.remove(), 300);
         }
         
-        // Sistema de Referidos
+        // Referral System
         function loadReferralSystem() {
             if (!supabase.user.isAuthenticated) {
                 console.log('User not authenticated, skipping referral load');
@@ -1043,19 +1043,19 @@
             console.log('ID del usuario:', supabase.user.id);
             console.log('Referral code:', supabase.user.referralCode);
             
-            // Cargar código de referido
+            // Load referral code
             loadReferralCode();
             
-            // Cargar estadísticas de referidos
+            // Load referral statistics
             loadReferralStats();
             
-            // Cargar lista de referidos
+            // Load referrals list
             loadReferralsList();
             
-            // Cargar historial de comisiones
+            // Load commissions history
             loadCommissionsHistory();
             
-            // Setup event listeners para referidos
+            // Setup event listeners for referrals
             setupReferralEventListeners();
             
             // Debug para verificar datos
@@ -1078,7 +1078,7 @@
         
         async function loadReferralStats() {
             try {
-                // Obtener estadísticas de referidos desde la API
+                // Get referral statistics from API
                 const response = await fetch(`${supabase.config.url}/rest/v1/users?referred_by=eq.${supabase.user.id}&select=id`, {
                     headers: {
                         'apikey': supabase.config.anonKey,
@@ -1090,7 +1090,7 @@
                     const data = await response.json();
                     const totalReferrals = data.length || 0;
                     
-                    console.log('Referidos encontrados:', totalReferrals, data);
+                    console.log('Referrals found:', totalReferrals, data);
                     
                     // Actualizar UI
                     updateReferralStatsUI(totalReferrals);
@@ -1098,7 +1098,7 @@
                     console.error('Error in response:', response.status, response.statusText);
                 }
                 
-                // Obtener comisiones desde transacciones
+                // Get commissions from transactions
                 await loadCommissionsFromTransactions();
                 
             } catch (error) {
@@ -1119,7 +1119,7 @@
                     const transactions = await response.json();
                     const totalCommissions = transactions.reduce((sum, tx) => sum + parseFloat(tx.amount || 0), 0);
                     
-                    // Calcular comisiones de hoy
+                    // Calculate today's commissions
                     const today = new Date().toDateString();
                     const todayCommissions = transactions
                         .filter(tx => new Date(tx.created_at).toDateString() === today)
@@ -1176,7 +1176,7 @@
                 
                 if (response.ok) {
                     const referrals = await response.json();
-                    console.log('Lista de referidos:', referrals);
+                    console.log('Referrals list:', referrals);
                     displayReferralsList(referrals);
                 } else {
                     console.error('Error loading referrals list:', response.status, response.statusText);
@@ -1194,7 +1194,7 @@
                 referralsList.innerHTML = `
                     <div class="no-referrals">
                         <i class="fas fa-user-plus"></i>
-                        <p>Aún no tienes referidos. ¡Comparte tu código para empezar a ganar!</p>
+                        <p>You don't have referrals yet. Share your code to start earning!</p>
                     </div>
                 `;
                 return;
@@ -1237,7 +1237,7 @@
                 commissionsList.innerHTML = `
                     <div class="no-commissions">
                         <i class="fas fa-coins"></i>
-                        <p>No hay comisiones aún. Las comisiones aparecerán cuando tus referidos minen.</p>
+                        <p>No commissions yet. Commissions will appear when your referrals mine.</p>
                     </div>
                 `;
                 return;
@@ -1246,7 +1246,7 @@
             commissionsList.innerHTML = commissions.map(commission => `
                 <div class="commission-item">
                     <div class="commission-info">
-                        <div class="commission-description">${commission.description || 'Comisión de referido'}</div>
+                        <div class="commission-description">${commission.description || 'Referral commission'}</div>
                         <div class="commission-date">${new Date(commission.created_at).toLocaleDateString()}</div>
                     </div>
                     <div class="commission-amount">+${parseFloat(commission.amount || 0).toFixed(6)} RSC</div>
@@ -1263,7 +1263,7 @@
                     if (referralCodeInput) {
                         referralCodeInput.select();
                         document.execCommand('copy');
-                        showNotification('Código de referido copiado!', 'success');
+                        showNotification('Referral code copied!', 'success');
                     }
                 });
             }
@@ -1276,28 +1276,28 @@
                     if (referralLinkInput) {
                         referralLinkInput.select();
                         document.execCommand('copy');
-                        showNotification('Link de referido copiado!', 'success');
+                        showNotification('Referral link copied!', 'success');
                     }
                 });
             }
         }
         
-        // Función para procesar comisiones automáticamente cuando alguien mina
+        // Function to automatically process commissions when someone mines
         function processReferralCommission(miningAmount) {
             if (!supabase.user.referredBy) return;
             
             const commissionRate = 0.10; // 10%
             const commissionAmount = miningAmount * commissionRate;
             
-            // Aquí se procesaría la comisión en el backend
-            // Por ahora solo mostramos la notificación
+            // Here the commission would be processed in the backend
+            // For now we only show the notification
             if (commissionAmount > 0) {
-                showNotification(`¡Comisión ganada: ${commissionAmount.toFixed(6)} RSC!`, 'success');
-                addActivity(`Comisión de referido: +${commissionAmount.toFixed(6)} RSC`, 'success');
+                showNotification(`Commission earned: ${commissionAmount.toFixed(6)} RSC!`, 'success');
+                addActivity(`Referral commission: +${commissionAmount.toFixed(6)} RSC`, 'success');
             }
         }
         
-        // Verificar código de referido en la URL
+        // Check referral code in URL
         function checkReferralCodeFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
             const referralCode = urlParams.get('ref');
@@ -1306,9 +1306,9 @@
                 // Save referral code to use in registration
                 localStorage.setItem('rsc_referral_code', referralCode);
                 
-                // Mostrar notificación
-                showNotification(`Código de referido detectado: ${referralCode}`, 'info');
-                addActivity(`Código de referido detectado: ${referralCode}`, 'info');
+                // Show notification
+                showNotification(`Referral code detected: ${referralCode}`, 'info');
+                addActivity(`Referral code detected: ${referralCode}`, 'info');
                 
                 // Limpiar URL
                 const newUrl = window.location.pathname;
@@ -1326,7 +1326,7 @@
             localStorage.removeItem('rsc_referral_code');
         }
         
-        // Función de debug para verificar datos de referidos
+        // Debug function to verify referral data
         async function debugReferralData() {
             if (!supabase.user.isAuthenticated) {
                 console.log('Cannot debug - user not authenticated');
@@ -1338,7 +1338,7 @@
             console.log('Usuario referral code:', supabase.user.referralCode);
             
             try {
-                // Verificar usuarios que me han referido
+                // Check users who have referred me
                 const referredByResponse = await fetch(`${supabase.config.url}/rest/v1/users?id=eq.${supabase.user.id}&select=referred_by`, {
                     headers: {
                         'apikey': supabase.config.anonKey,
@@ -1364,7 +1364,7 @@
                     console.log('Users I have referred:', myReferralsData);
                 }
                 
-                // Verificar todas las transacciones de comisiones
+                // Check all commission transactions
                 const commissionsResponse = await fetch(`${supabase.config.url}/rest/v1/transactions?user_id=eq.${supabase.user.id}&type=eq.referral_commission&select=*`, {
                     headers: {
                         'apikey': supabase.config.anonKey,
@@ -1374,7 +1374,7 @@
                 
                 if (commissionsResponse.ok) {
                     const commissionsData = await commissionsResponse.json();
-                    console.log('Comisiones de referidos:', commissionsData);
+                    console.log('Referral commissions:', commissionsData);
                 }
                 
             } catch (error) {
