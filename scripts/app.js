@@ -1,14 +1,14 @@
 /* ================================
-   APP.JS — APLICACIÓN PRINCIPAL SIMPLIFICADA
+   APP.JS — SIMPLIFIED MAIN APPLICATION
 ================================ */
 
-// Configuración básica
+// Basic configuration
 const APP_CONFIG = {
-  API_BASE_URL: null, // Backend desconectado - modo offline
+  API_BASE_URL: null, // Backend disconnected - offline mode
   THEME: localStorage.getItem('rsc_theme') || 'dark'
 };
 
-// Aplicación principal
+// Main application
 class RSCApp {
   constructor() {
     this.currentPage = 'home';
@@ -23,7 +23,7 @@ class RSCApp {
       // Configurar tema
       this.setupTheme();
       
-      // Configurar navegación
+      // Configure navigation
       this.setupNavigation();
       
       // Configurar notificaciones
@@ -36,14 +36,14 @@ class RSCApp {
       this.setupEventListeners();
       
       this.isInitialized = true;
-      console.log('✅ RSC Chain inicializado correctamente');
+      console.log('✅ RSC Chain initialized correctly');
       
-      // Mostrar notificación de éxito
-      this.showNotification('success', 'Aplicación Lista', 'RSC Chain cargado correctamente');
+      // Show success notification
+      this.showNotification('success', 'Application Ready', 'RSC Chain loaded successfully');
       
     } catch (error) {
-      console.error('❌ Error inicializando:', error);
-      this.showNotification('error', 'Error de Inicialización', error.message);
+      console.error('❌ Error initializing:', error);
+      this.showNotification('error', 'Initialization Error', error.message);
     }
   }
 
@@ -70,7 +70,7 @@ class RSCApp {
   }
 
   setupNavigation() {
-    // Navegación principal
+    // Main navigation
     const navLinks = document.querySelectorAll('.navbar-links a');
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
@@ -145,7 +145,7 @@ class RSCApp {
   }
 
   updateStats(data) {
-    // Actualizar estadísticas en el footer
+    // Update statistics in footer
     const elements = {
       price: document.getElementById('footerPrice'),
       marketCap: document.getElementById('footerMarketCap'),
@@ -166,7 +166,7 @@ class RSCApp {
       elements.miners.textContent = this.formatNumber(data.miners);
     }
 
-    // Actualizar estadísticas en la página principal
+    // Update statistics on main page
     const statsElements = document.querySelectorAll('.stat-value');
     statsElements.forEach((element, index) => {
       switch (index) {
@@ -184,7 +184,7 @@ class RSCApp {
   }
 
   setupEventListeners() {
-    // Botones de acción
+    // Action buttons
     const actionButtons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-tertiary');
     actionButtons.forEach(button => {
       button.addEventListener('click', (e) => {
@@ -217,20 +217,20 @@ class RSCApp {
       case 'Crear Wallet':
         this.navigateTo('/wallet');
         break;
-      case 'Iniciar Minería':
+      case 'Start Mining':
         this.navigateTo('/mine');
         break;
       case 'Comerciar P2P':
         this.navigateTo('/p2p');
         break;
       default:
-        console.log('Acción no reconocida:', action);
+        console.log('Unrecognized action:', action);
     }
   }
 
   navigateTo(path) {
     try {
-      // Si estamos en el mismo dominio, usar navegación normal
+      // If we're on the same domain, use normal navigation
       if (path.startsWith('/')) {
         window.location.href = path;
       } else {
@@ -239,7 +239,7 @@ class RSCApp {
       }
     } catch (error) {
       console.error('Error navegando a:', path, error);
-      this.showNotification('error', 'Error de Navegación', 'No se pudo cargar la página');
+      this.showNotification('error', 'Navigation Error', 'Could not load the page');
     }
   }
 
@@ -259,7 +259,7 @@ class RSCApp {
 
     container.appendChild(notification);
 
-    // Auto-remover después del tiempo especificado
+    // Auto-remove after specified time
     setTimeout(() => {
       if (notification.parentElement) {
         notification.remove();
@@ -275,7 +275,7 @@ class RSCApp {
   }
 }
 
-// Inicializar cuando el DOM esté listo
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   window.rscApp = new RSCApp();
 });
