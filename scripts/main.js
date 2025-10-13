@@ -57,7 +57,7 @@ function initUtilityButtons() {
     const searchBtn = document.getElementById('searchBtn');
     if (searchBtn) {
         searchBtn.addEventListener('click', () => {
-            showNotification('Función de búsqueda próximamente disponible', 'info');
+            showNotification('Search function coming soon', 'info');
         });
     }
     
@@ -102,7 +102,7 @@ function initUtilityButtons() {
     const settingsBtn = document.getElementById('settingsBtn');
     if (settingsBtn) {
         settingsBtn.addEventListener('click', () => {
-            showNotification('Panel de configuración próximamente disponible', 'info');
+            showNotification('Settings panel coming soon', 'info');
         });
     }
 }

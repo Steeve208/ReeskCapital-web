@@ -16,17 +16,17 @@ class NotificationSystem {
     this.init();
   }
 
-  // Inicialización
+  // Initialization
   init() {
     if (!this.container) {
       console.error('Container de notificaciones no encontrado');
       return;
     }
 
-    // Configurar posición
+    // Configure position
     this.setPosition(this.position);
     
-    // Inicializar audio si está habilitado
+    // Initialize audio if enabled
     if (this.soundEnabled) {
       this.initAudio();
     }
