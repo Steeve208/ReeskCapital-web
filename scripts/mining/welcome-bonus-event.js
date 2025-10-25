@@ -330,18 +330,20 @@ class WelcomeBonusEvent {
 
             console.log('🔍 Verificando autenticación...');
             
-            // Usar la función addBalance de Supabase
-            let success = false;
+            // Siempre agregar balance localmente primero
+            const localSuccess = await this.addBalanceLocal(this.eventData.reward);
             
+            // Si hay Supabase, intentar sincronizar también
             if (window.supabaseIntegration && typeof window.supabaseIntegration.addBalance === 'function') {
-                console.log('🔍 Usando sistema de balance de Supabase...');
-                success = await window.supabaseIntegration.addBalance(this.eventData.reward);
-            } else {
-                console.log('🔍 Supabase no disponible, usando balance local...');
-                success = await this.addBalanceLocal(this.eventData.reward);
+                try {
+                    console.log('🔍 Sincronizando con Supabase...');
+                    await window.supabaseIntegration.addBalance(this.eventData.reward);
+                } catch (error) {
+                    console.warn('⚠️ No se pudo sincronizar con Supabase, pero el balance local se guardó correctamente');
+                }
             }
             
-            if (success) {
+            if (localSuccess) {
                 console.log('🔍 Bonus reclamado exitosamente');
                 
                 // MARCAR COMO RECLAMADO INMEDIATAMENTE (ANTES DE CUALQUIER OTRA COSA)
