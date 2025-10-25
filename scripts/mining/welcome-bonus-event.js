@@ -18,10 +18,10 @@ class WelcomeBonusEvent {
         this.eventData = {
             id: 'welcome_bonus_2024',
             name: 'Welcome Bonus Event',
-            description: 'Recibe 450 RSC gratis al registrarte',
+            description: 'Get 450 RSC free when you register',
             reward: 450,
             maxSlots: 450,
-            duration: 30, // días
+            duration: 30, // days
             startDate: new Date(),
             endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
             claimedSlots: 0,
@@ -46,52 +46,138 @@ class WelcomeBonusEvent {
         console.log('🎉 Inicializando Welcome Bonus Event...');
         console.log('🔍 DOM ready:', document.readyState);
         
-        // Cargar datos del evento
-        this.loadEventData();
-        console.log('🔍 Event data loaded:', this.eventData);
-        
-        // Verificar si el usuario ya vio el banner
-        this.checkBannerStatus();
-        
-        // Inicializar contadores
-        this.initializeCounters();
-        
-        // Configurar eventos
-        this.setupEventListeners();
-        
-        // Verificar elegibilidad del usuario
-        this.checkUserEligibility();
-        
-        // TEMPORAL: Forzar mostrar la sección del evento
-        this.forceShowEventSection();
-        
-        console.log('✅ Welcome Bonus Event inicializado');
+        try {
+            // Verificar que los elementos necesarios existan
+            const eventSection = document.querySelector('.welcome-bonus-event');
+            const bannerOverlay = document.getElementById('welcomeBannerOverlay');
+            
+            if (!eventSection) {
+                console.error('❌ No se encontró la sección .welcome-bonus-event');
+                return;
+            }
+            
+            if (!bannerOverlay) {
+                console.error('❌ No se encontró el banner #welcomeBannerOverlay');
+                return;
+            }
+            
+            console.log('✅ Elementos encontrados, continuando inicialización...');
+            
+            // Cargar datos del evento
+            this.loadEventData();
+            console.log('🔍 Event data loaded:', this.eventData);
+            
+            // Verificar si el evento está activo
+            if (!this.eventData.isActive) {
+                console.log('🔍 Evento inactivo - ocultando sección');
+                this.hideEventSection();
+                return;
+            }
+            
+            // Verificar si el usuario ya vio el banner
+            this.checkBannerStatus();
+            
+            // Inicializar contadores
+            this.initializeCounters();
+            
+            // Configurar eventos
+            this.setupEventListeners();
+            
+            // Verificar elegibilidad del usuario
+            this.checkUserEligibility();
+            
+            // TEMPORAL: Forzar mostrar la sección del evento
+            this.forceShowEventSection();
+            
+            console.log('✅ Welcome Bonus Event inicializado correctamente');
+            
+        } catch (error) {
+            console.error('❌ Error inicializando evento:', error);
+        }
     }
 
     loadEventData() {
+        console.log('🔍 Cargando datos del evento...');
+        
         // Cargar datos del evento desde localStorage
         const storedEventData = localStorage.getItem('rsc_welcome_event');
         if (storedEventData) {
-            const parsed = JSON.parse(storedEventData);
-            this.eventData = { ...this.eventData, ...parsed };
+            try {
+                const parsed = JSON.parse(storedEventData);
+                this.eventData = { ...this.eventData, ...parsed };
+                
+                // Convertir fechas de string a Date si es necesario
+                if (typeof this.eventData.startDate === 'string') {
+                    this.eventData.startDate = new Date(this.eventData.startDate);
+                }
+                if (typeof this.eventData.endDate === 'string') {
+                    this.eventData.endDate = new Date(this.eventData.endDate);
+                }
+                
+                console.log('✅ Datos del evento cargados:', this.eventData);
+            } catch (error) {
+                console.error('❌ Error parseando datos del evento:', error);
+                // Reinicializar con datos por defecto
+                this.initializeDefaultEventData();
+            }
+        } else {
+            console.log('🔍 No hay datos guardados, inicializando por defecto...');
+            this.initializeDefaultEventData();
         }
 
         // Cargar datos del usuario
         const storedUserData = localStorage.getItem('rsc_welcome_user');
         if (storedUserData) {
-            const parsed = JSON.parse(storedUserData);
-            this.userData = { ...this.userData, ...parsed };
+            try {
+                const parsed = JSON.parse(storedUserData);
+                this.userData = { ...this.userData, ...parsed };
+                console.log('✅ Datos del usuario cargados:', this.userData);
+            } catch (error) {
+                console.error('❌ Error parseando datos del usuario:', error);
+            }
         }
 
         // Verificar si el evento sigue activo
-        if (new Date() > this.eventData.endDate) {
+        const now = new Date();
+        if (now > this.eventData.endDate) {
+            console.log('🔍 Evento expirado, marcando como inactivo');
             this.eventData.isActive = false;
         }
+        
+        console.log('🔍 Estado final del evento:', {
+            isActive: this.eventData.isActive,
+            startDate: this.eventData.startDate,
+            endDate: this.eventData.endDate,
+            timeLeft: this.eventData.endDate - now
+        });
     }
-
+    
+    initializeDefaultEventData() {
+        console.log('🔍 Inicializando datos por defecto del evento...');
+        const now = new Date();
+        const endDate = new Date(now.getTime() + (30 * 24 * 60 * 60 * 1000)); // 30 días desde ahora
+        
+        this.eventData = {
+            startDate: now,
+            endDate: endDate,
+            isActive: true,
+            maxSlots: 450,
+            claimedSlots: 0
+        };
+        
+        // Guardar datos por defecto
+        this.saveEventData();
+        console.log('✅ Datos por defecto inicializados:', this.eventData);
+    }
+    
     saveEventData() {
-        localStorage.setItem('rsc_welcome_event', JSON.stringify(this.eventData));
-        localStorage.setItem('rsc_welcome_user', JSON.stringify(this.userData));
+        try {
+            localStorage.setItem('rsc_welcome_event', JSON.stringify(this.eventData));
+            localStorage.setItem('rsc_welcome_user', JSON.stringify(this.userData));
+            console.log('✅ Datos guardados en localStorage');
+        } catch (error) {
+            console.error('❌ Error guardando datos:', error);
+        }
     }
 
     generateDeviceId() {
@@ -218,8 +304,68 @@ class WelcomeBonusEvent {
     }
 
     handleRegisterClick() {
-        // Redirigir a la página de registro
-        window.location.href = 'login.html?welcome_bonus=true';
+        console.log('🔍 Usuario hizo clic en Register Now');
+        
+        // En lugar de redirigir, activar la pestaña de registro en el modal de autenticación
+        try {
+            // Buscar el modal de autenticación
+            const authModal = document.getElementById('authModal');
+            
+            if (authModal) {
+                console.log('✅ Modal de autenticación encontrado');
+                
+                // Buscar la pestaña de registro
+                const registerTab = authModal.querySelector('[data-tab="register"]');
+                
+                if (registerTab) {
+                    console.log('✅ Pestaña de registro encontrada, activándola...');
+                    registerTab.click();
+                    
+                    // Ocultar el banner después de activar el registro
+                    this.hideWelcomeBanner();
+                    
+                    // Scroll suave hacia el modal
+                    setTimeout(() => {
+                        authModal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                    
+                } else {
+                    console.log('❌ No se encontró la pestaña de registro en el modal');
+                    // Mostrar el modal si no está visible
+                    authModal.classList.add('show');
+                }
+                
+            } else {
+                console.log('⚠️ No se encontró el modal de autenticación, creándolo...');
+                
+                // Si no existe el modal, activar la función que lo crea
+                if (typeof showAuthModal === 'function') {
+                    showAuthModal();
+                    
+                    // Después de crear el modal, activar la pestaña de registro
+                    setTimeout(() => {
+                        const newAuthModal = document.getElementById('authModal');
+                        if (newAuthModal) {
+                            const registerTab = newAuthModal.querySelector('[data-tab="register"]');
+                            if (registerTab) {
+                                registerTab.click();
+                                this.hideWelcomeBanner();
+                            }
+                        }
+                    }, 500);
+                    
+                } else {
+                    console.log('❌ Función showAuthModal no disponible, usando fallback');
+                    // Fallback: redirigir a la página principal
+                    window.location.href = '../index.html?show_register=true';
+                }
+            }
+            
+        } catch (error) {
+            console.error('❌ Error activando registro:', error);
+            // Fallback en caso de error
+            window.location.href = '../index.html?show_register=true';
+        }
     }
 
     checkUserEligibility() {
@@ -283,7 +429,7 @@ class WelcomeBonusEvent {
             claimBtn.style.display = 'none';
             eventMessage.innerHTML = `
                 <i class="fas fa-check-circle"></i>
-                <span>¡Ya has recibido tu bonus de bienvenida!</span>
+                <span>You have already received your welcome bonus!</span>
             `;
             eventMessage.style.display = 'flex';
         }
@@ -396,7 +542,7 @@ class WelcomeBonusEvent {
         if (eventMessage) {
             eventMessage.innerHTML = `
                 <i class="fas fa-check-circle"></i>
-                <span>¡Felicidades! Has recibido 450 RSC gratis</span>
+                <span>Congratulations! You have received 450 RSC free</span>
             `;
             eventMessage.style.display = 'flex';
             eventMessage.style.background = 'rgba(76, 175, 80, 0.2)';
@@ -441,7 +587,7 @@ class WelcomeBonusEvent {
         if (eventMessage) {
             eventMessage.innerHTML = `
                 <i class="fas fa-clock"></i>
-                <span>El evento ha terminado. Todos los cupos han sido reclamados.</span>
+                <span>The event has ended. All slots have been claimed.</span>
             `;
             eventMessage.style.display = 'flex';
         }
@@ -464,9 +610,9 @@ class WelcomeBonusEvent {
                     <i class="fas fa-gift"></i>
                 </div>
                 <div class="notification-text">
-                    <h4>🎉 ¡Bonus Reclamado!</h4>
-                    <p>Has recibido <strong>450 RSC</strong> gratis</p>
-                    <small>Tu balance ha sido actualizado</small>
+                    <h4>🎉 Bonus Claimed!</h4>
+                    <p>You have received <strong>450 RSC</strong> free</p>
+                    <small>Your balance has been updated</small>
                 </div>
             </div>
         `;
@@ -536,7 +682,7 @@ class WelcomeBonusEvent {
                 <div class="notification-text">
                     <h4>❌ Error</h4>
                     <p>${message}</p>
-                    <small>Intenta nuevamente en unos momentos</small>
+                    <small>Please try again in a few moments</small>
                 </div>
             </div>
         `;
@@ -568,42 +714,82 @@ class WelcomeBonusEvent {
     }
 
     initializeCounters() {
-        this.updateCountdownTimer();
-        this.updateEventProgress();
+        console.log('🔍 Inicializando contadores...');
         
-        // Actualizar contadores cada segundo
-        this.countdownTimer = setInterval(() => {
+        try {
+            // Limpiar timer anterior si existe
+            if (this.countdownTimer) {
+                clearInterval(this.countdownTimer);
+            }
+            
+            // Actualizar contadores inmediatamente
             this.updateCountdownTimer();
-        }, 1000);
+            this.updateEventProgress();
+            
+            // Configurar actualización cada segundo
+            this.countdownTimer = setInterval(() => {
+                this.updateCountdownTimer();
+            }, 1000);
+            
+            console.log('✅ Contadores inicializados correctamente');
+            
+        } catch (error) {
+            console.error('❌ Error inicializando contadores:', error);
+        }
     }
 
     updateCountdownTimer() {
-        const now = new Date();
-        const timeLeft = this.eventData.endDate - now;
+        try {
+            const now = new Date();
+            
+            // Verificar que endDate sea una fecha válida
+            if (!this.eventData.endDate || isNaN(this.eventData.endDate.getTime())) {
+                console.error('❌ Fecha de fin del evento inválida:', this.eventData.endDate);
+                // Reinicializar datos por defecto
+                this.initializeDefaultEventData();
+                return;
+            }
+            
+            const timeLeft = this.eventData.endDate - now;
 
-        if (timeLeft <= 0) {
-            this.eventData.isActive = false;
-            this.updateEventUI();
-            return;
-        }
+            if (timeLeft <= 0) {
+                console.log('⏰ Event time expired - hiding event');
+                this.eventData.isActive = false;
+                this.hideEventSection();
+                return;
+            }
 
-        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-        const timeString = `${days} días, ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            // Verificar que los cálculos sean válidos
+            if (isNaN(days) || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+                console.error('❌ Cálculo de tiempo inválido:', { days, hours, minutes, seconds });
+                return;
+            }
 
-        // Actualizar en la sección del evento
-        const eventTimeElement = document.getElementById('eventTimeRemaining');
-        if (eventTimeElement) {
-            eventTimeElement.textContent = timeString;
-        }
+            const timeString = `${days} days, ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-        // Actualizar en el banner
-        const bannerTimeElement = document.getElementById('bannerTimeRemaining');
-        if (bannerTimeElement) {
-            bannerTimeElement.textContent = `${days} días restantes`;
+            // Actualizar en la sección del evento
+            const eventTimeElement = document.getElementById('eventTimeRemaining');
+            if (eventTimeElement) {
+                eventTimeElement.textContent = timeString;
+            } else {
+                console.warn('⚠️ No se encontró el elemento #eventTimeRemaining');
+            }
+
+            // Actualizar en el banner
+            const bannerTimeElement = document.getElementById('bannerTimeRemaining');
+            if (bannerTimeElement) {
+                bannerTimeElement.textContent = `${days} days remaining`;
+            } else {
+                console.warn('⚠️ No se encontró el elemento #bannerTimeRemaining');
+            }
+            
+        } catch (error) {
+            console.error('❌ Error actualizando contador:', error);
         }
     }
 
@@ -641,11 +827,8 @@ class WelcomeBonusEvent {
 
     updateEventUI() {
         if (!this.eventData.isActive) {
-            // Ocultar toda la sección del evento
-            const eventSection = document.querySelector('.welcome-bonus-event');
-            if (eventSection) {
-                eventSection.style.display = 'none';
-            }
+            console.log('🔍 Evento inactivo - ocultando sección');
+            this.hideEventSection();
             return;
         }
 
@@ -689,6 +872,20 @@ class WelcomeBonusEvent {
             eventSection.style.visibility = 'visible';
             eventSection.style.opacity = '1';
             console.log('✅ Sección del evento mostrada');
+        } else {
+            console.error('❌ No se encontró la sección .welcome-bonus-event');
+        }
+    }
+
+    // Ocultar la sección del evento cuando expire
+    hideEventSection() {
+        console.log('🔍 Ocultando sección del evento...');
+        const eventSection = document.querySelector('.welcome-bonus-event');
+        if (eventSection) {
+            eventSection.style.display = 'none';
+            eventSection.style.visibility = 'hidden';
+            eventSection.style.opacity = '0';
+            console.log('✅ Sección del evento ocultada');
         } else {
             console.error('❌ No se encontró la sección .welcome-bonus-event');
         }
@@ -789,18 +986,40 @@ class WelcomeBonusEvent {
     }
 }
 
+// Función para inicializar el evento con retraso para asegurar que todos los elementos estén disponibles
+function initializeWelcomeEvent() {
+    console.log('🔍 Inicializando Welcome Bonus Event...');
+    
+    // Verificar que los elementos necesarios existan
+    const eventSection = document.querySelector('.welcome-bonus-event');
+    const bannerOverlay = document.getElementById('welcomeBannerOverlay');
+    
+    if (!eventSection) {
+        console.error('❌ No se encontró la sección .welcome-bonus-event');
+        return;
+    }
+    
+    if (!bannerOverlay) {
+        console.error('❌ No se encontró el banner #welcomeBannerOverlay');
+        return;
+    }
+    
+    console.log('✅ Elementos encontrados, creando instancia...');
+    window.welcomeBonusEvent = new WelcomeBonusEvent();
+}
+
 // Crear instancia global cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔍 DOM Content Loaded - Inicializando Welcome Bonus Event');
-    window.welcomeBonusEvent = new WelcomeBonusEvent();
+    console.log('🔍 DOM Content Loaded - Esperando 500ms para inicializar...');
+    setTimeout(initializeWelcomeEvent, 500);
 });
 
 // También inicializar inmediatamente si el DOM ya está listo
 if (document.readyState === 'loading') {
     console.log('🔍 DOM aún cargando, esperando DOMContentLoaded...');
 } else {
-    console.log('🔍 DOM ya listo, inicializando inmediatamente');
-    window.welcomeBonusEvent = new WelcomeBonusEvent();
+    console.log('🔍 DOM ya listo, esperando 500ms para inicializar...');
+    setTimeout(initializeWelcomeEvent, 500);
 }
 
 console.log('🎉 Welcome Bonus Event System cargado');

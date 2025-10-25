@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix NaN Counter - Welcome Event</title>
+    <link rel="stylesheet" href="styles/welcome-bonus-event.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-title {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .test-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .test-info h3 {
+            margin-top: 0;
+            color: #ffd700;
+        }
+        
+        .test-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .test-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .test-btn.secondary {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+        }
+        
+        .test-btn.success {
+            background: linear-gradient(45deg, #00b894, #00a085);
+        }
+        
+        .test-btn.warning {
+            background: linear-gradient(45deg, #fdcb6e, #e17055);
+        }
+        
+        .current-time {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        .current-time h4 {
+            margin: 0 0 10px 0;
+            color: #ffd700;
+        }
+        
+        .time-display {
+            font-size: 1.5em;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .debug-info {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .debug-info h4 {
+            margin: 0 0 10px 0;
+            color: #ffd700;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-indicator.success {
+            background: #00b894;
+        }
+        
+        .status-indicator.error {
+            background: #e17055;
+        }
+        
+        .status-indicator.warning {
+            background: #fdcb6e;
+        }
+        
+        .status-indicator.info {
+            background: #74b9ff;
+        }
+        
+        .log-output {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            color: #00b894;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .log-output.error {
+            color: #e17055;
+        }
+        
+        .log-output.warning {
+            color: #fdcb6e;
+        }
+        
+        .log-output.info {
+            color: #74b9ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">🔧 Fix NaN Counter</h1>
+        
+        <div class="test-info">
+            <h3>📋 Problem Fixed</h3>
+            <p>The NaN issue in the countdown timer has been fixed. The problem was with date initialization and localStorage handling.</p>
+            <p><strong>What was fixed:</strong></p>
+            <ul>
+                <li>✅ Proper date conversion from localStorage strings</li>
+                <li>✅ Default event data initialization</li>
+                <li>✅ NaN validation in countdown calculations</li>
+                <li>✅ Error handling for invalid dates</li>
+            </ul>
+        </div>
+        
+        <div class="debug-info">
+            <h4>🔍 Current Event Data</h4>
+            <div id="eventDataDisplay">
+                <div><span class="status-indicator info"></span>Loading event data...</div>
+            </div>
+        </div>
+        
+        <div class="current-time">
+            <h4>⏱️ Time Remaining</h4>
+            <div class="time-display" id="timeRemaining">Loading...</div>
+        </div>
+        
+        <div class="test-controls">
+            <button class="test-btn" onclick="clearLocalStorage()">🧹 Clear localStorage</button>
+            <button class="test-btn secondary" onclick="reinitializeEvent()">🔄 Reinitialize Event</button>
+            <button class="test-btn success" onclick="testCountdown()">⏰ Test Countdown</button>
+            <button class="test-btn warning" onclick="showEventData()">📊 Show Event Data</button>
+            <button class="test-btn" onclick="goToMinePage()">🚀 Go to Mine Page</button>
+        </div>
+        
+        <div class="log-output" id="logOutput">Ready to fix NaN counter...\n</div>
+        
+        <!-- Event Section -->
+        <section class="welcome-bonus-event" id="welcomeEventSection">
+            <div class="event-card">
+                <div class="event-header">
+                    <h2>🎉 Welcome Bonus Event</h2>
+                    <p>Get 450 RSC FREE when you register and start mining!</p>
+                </div>
+                
+                <div class="event-content">
+                    <div class="event-info">
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="info-content">
+                                <span class="info-label">Time Remaining</span>
+                                <span class="info-value" id="eventTimeRemaining">30 days, 00:00:00</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-users"></i>
+                            <div class="info-content">
+                                <span class="info-label">Slots Remaining</span>
+                                <span class="info-value" id="eventSlotsRemaining">450</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-coins"></i>
+                            <div class="info-content">
+                                <span class="info-label">Reward</span>
+                                <span class="info-value">450 RSC</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="event-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="eventProgressFill"></div>
+                        </div>
+                        <span class="progress-text" id="eventProgressText">0% Complete</span>
+                    </div>
+                    
+                    <div class="event-actions">
+                        <button class="claim-btn" id="claimBtn">
+                            <i class="fas fa-gift"></i>
+                            Claim 450 RSC
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Welcome Banner Overlay -->
+        <div class="welcome-banner-overlay" id="welcomeBannerOverlay" style="display: none;">
+            <div class="welcome-banner">
+                <button class="banner-close" id="bannerClose">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="banner-content">
+                    <div class="banner-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="banner-text">
+                        <h3>🎉 Special Offer!</h3>
+                        <p>Get <strong>450 RSC FREE</strong> when you register and start mining</p>
+                        <div class="banner-details">
+                            <span class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span id="bannerTimeRemaining">30 days remaining</span>
+                            </span>
+                            <span class="detail-item">
+                                <i class="fas fa-users"></i>
+                                <span id="bannerSlotsRemaining">450 slots available</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-actions">
+                    <button class="btn-banner-primary" id="bannerRegisterBtn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Register Now</span>
+                    </button>
+                    <button class="btn-banner-secondary" id="bannerLaterBtn">
+                        <span>Maybe Later</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/supabase-integration.js"></script>
+    <script src="scripts/mining/welcome-bonus-event.js"></script>
+    
+    <script>
+        let logOutput = document.getElementById('logOutput');
+        let eventDataDisplay = document.getElementById('eventDataDisplay');
+        
+        // Override console.log to capture logs
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}\n`;
+            logOutput.textContent += logEntry;
+            logOutput.scrollTop = logOutput.scrollHeight;
+            
+            if (type === 'error') {
+                logOutput.classList.add('error');
+            } else if (type === 'warning') {
+                logOutput.classList.add('warning');
+            } else if (type === 'info') {
+                logOutput.classList.add('info');
+            }
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addLog(args.join(' '), 'info');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addLog(args.join(' '), 'error');
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addLog(args.join(' '), 'warning');
+        };
+        
+        // Test functions
+        function clearLocalStorage() {
+            addLog('🧹 Clearing localStorage...', 'info');
+            
+            const keysToRemove = [
+                'rsc_welcome_event',
+                'rsc_welcome_user',
+                'rsc_welcome_claimed',
+                'rsc_welcome_claim_date',
+                'rsc_welcome_claim_amount'
+            ];
+            
+            keysToRemove.forEach(key => {
+                localStorage.removeItem(key);
+                addLog(`✅ Removed: ${key}`, 'info');
+            });
+            
+            addLog('✅ localStorage cleared successfully', 'success');
+            updateEventDataDisplay();
+        }
+        
+        function reinitializeEvent() {
+            addLog('🔄 Reinitializing event...', 'info');
+            
+            try {
+                // Clear existing instance
+                if (window.welcomeBonusEvent) {
+                    if (window.welcomeBonusEvent.countdownTimer) {
+                        clearInterval(window.welcomeBonusEvent.countdownTimer);
+                    }
+                }
+                
+                // Create new instance
+                window.welcomeBonusEvent = new WelcomeBonusEvent();
+                addLog('✅ Event reinitialized successfully', 'success');
+                
+                // Update display
+                setTimeout(() => {
+                    updateEventDataDisplay();
+                }, 1000);
+                
+            } catch (error) {
+                addLog(`❌ Reinitialization failed: ${error.message}`, 'error');
+            }
+        }
+        
+        function testCountdown() {
+            addLog('⏰ Testing countdown...', 'info');
+            
+            if (window.welcomeBonusEvent) {
+                const eventData = window.welcomeBonusEvent.eventData;
+                const now = new Date();
+                const timeLeft = eventData.endDate - now;
+                
+                addLog(`Event end date: ${eventData.endDate}`, 'info');
+                addLog(`Current time: ${now}`, 'info');
+                addLog(`Time left: ${timeLeft} ms`, 'info');
+                
+                if (timeLeft > 0) {
+                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    
+                    addLog(`Calculated: ${days} days, ${hours}:${minutes}:${seconds}`, 'info');
+                    
+                    if (isNaN(days) || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+                        addLog('❌ NaN detected in calculations!', 'error');
+                    } else {
+                        addLog('✅ Countdown calculations are valid', 'success');
+                    }
+                } else {
+                    addLog('⚠️ Event has expired', 'warning');
+                }
+            } else {
+                addLog('❌ No event instance found', 'error');
+            }
+        }
+        
+        function showEventData() {
+            addLog('📊 Showing event data...', 'info');
+            
+            if (window.welcomeBonusEvent) {
+                const data = {
+                    eventData: window.welcomeBonusEvent.eventData,
+                    userData: window.welcomeBonusEvent.userData,
+                    countdownTimer: window.welcomeBonusEvent.countdownTimer ? 'Active' : 'Inactive'
+                };
+                
+                addLog(JSON.stringify(data, null, 2), 'info');
+            } else {
+                addLog('❌ No event data available', 'error');
+            }
+        }
+        
+        function goToMinePage() {
+            addLog('🚀 Redirecting to mine page...', 'info');
+            window.location.href = 'pages/mine.html';
+        }
+        
+        function updateEventDataDisplay() {
+            if (window.welcomeBonusEvent) {
+                const eventData = window.welcomeBonusEvent.eventData;
+                const now = new Date();
+                const timeLeft = eventData.endDate - now;
+                
+                eventDataDisplay.innerHTML = `
+                    <div><span class="status-indicator ${eventData.isActive ? 'success' : 'error'}"></span>Event Active: ${eventData.isActive}</div>
+                    <div><span class="status-indicator info"></span>Start Date: ${eventData.startDate}</div>
+                    <div><span class="status-indicator info"></span>End Date: ${eventData.endDate}</div>
+                    <div><span class="status-indicator ${timeLeft > 0 ? 'success' : 'error'}"></span>Time Left: ${timeLeft > 0 ? Math.floor(timeLeft / (1000 * 60 * 60 * 24)) + ' days' : 'Expired'}</div>
+                    <div><span class="status-indicator info"></span>Max Slots: ${eventData.maxSlots}</div>
+                    <div><span class="status-indicator info"></span>Claimed Slots: ${eventData.claimedSlots}</div>
+                `;
+            } else {
+                eventDataDisplay.innerHTML = '<div><span class="status-indicator error"></span>No event data available</div>';
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            addLog('🔧 Fix NaN Counter Page Loaded', 'info');
+            addLog('Ready to fix the NaN counter issue...', 'info');
+            
+            // Update display after a short delay
+            setTimeout(() => {
+                updateEventDataDisplay();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
