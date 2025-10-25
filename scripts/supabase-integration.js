@@ -834,6 +834,78 @@ class SupabaseIntegration {
         }
     }
 
+    // Función para agregar balance (para el sistema de eventos)
+    async addBalance(amount) {
+        try {
+            console.log(`💰 Agregando ${amount} RSC al balance...`);
+            
+            if (!this.user.isAuthenticated) {
+                console.log('🔍 Usuario no autenticado, usando balance local');
+                // Para usuarios no autenticados, usar localStorage
+                const currentBalance = parseFloat(localStorage.getItem('rsc_user_balance') || '0');
+                const newBalance = currentBalance + amount;
+                localStorage.setItem('rsc_user_balance', newBalance.toString());
+                console.log(`✅ Balance local actualizado: ${newBalance}`);
+                return true;
+            }
+
+            // Para usuarios autenticados, actualizar el balance real
+            const oldBalance = this.user.balance;
+            this.user.balance += amount;
+            
+            // Guardar en localStorage
+            this.saveUserToStorage();
+            
+            // Sincronizar con la base de datos
+            const syncSuccess = await this.syncBalanceToDatabase();
+            
+            if (syncSuccess) {
+                console.log(`✅ Balance actualizado: ${oldBalance.toFixed(6)} → ${this.user.balance.toFixed(6)} RSC`);
+                
+                // Actualizar UI
+                this.updateBalanceDisplay();
+                
+                return true;
+            } else {
+                // Si falla la sincronización, revertir el cambio
+                this.user.balance = oldBalance;
+                this.saveUserToStorage();
+                console.error('❌ Error sincronizando balance, cambio revertido');
+                return false;
+            }
+            
+        } catch (error) {
+            console.error('❌ Error agregando balance:', error);
+            return false;
+        }
+    }
+
+    // Actualizar elementos de balance en la UI
+    updateBalanceDisplay() {
+        const balanceElements = [
+            document.getElementById('miningBalance'),
+            document.getElementById('userBalance'),
+            document.getElementById('balance'),
+            document.getElementById('currentBalance'),
+            document.querySelector('.balance-value'),
+            document.querySelector('[data-balance]')
+        ];
+
+        balanceElements.forEach(element => {
+            if (element) {
+                element.textContent = `${this.user.balance.toFixed(6)} RSC`;
+                
+                // Efecto visual
+                element.style.color = '#4caf50';
+                element.style.fontWeight = 'bold';
+                setTimeout(() => {
+                    element.style.color = '';
+                    element.style.fontWeight = '';
+                }, 2000);
+            }
+        });
+    }
+
     async syncBalanceToBackend() {
         try {
             if (!this.user.isAuthenticated || !this.user.id) {

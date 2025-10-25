@@ -25,6 +25,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="../styles/global.css?v=4.0">
     <link rel="stylesheet" href="../styles/mining-platform.css?v=1.0">
+    <link rel="stylesheet" href="../styles/welcome-bonus-event.css?v=1.0">
 </head>
 <body>
     <!-- Navigation -->
@@ -350,6 +351,75 @@
                         </div>
                         <div class="card-body">
                             <canvas id="earningsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Welcome Bonus Event -->
+        <section class="welcome-bonus-event">
+            <div class="container">
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="event-title">
+                            <h2>🎉 Welcome Bonus Event</h2>
+                            <p>¡Recibe 450 RSC gratis al registrarte!</p>
+                        </div>
+                        <div class="event-status">
+                            <span class="status-badge active">
+                                <i class="fas fa-circle"></i> Activo
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="event-content">
+                        <div class="event-info">
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <div class="info-content">
+                                    <span class="info-label">Tiempo Restante</span>
+                                    <span class="info-value" id="eventTimeRemaining">29 días, 23:59:59</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-users"></i>
+                                <div class="info-content">
+                                    <span class="info-label">Cupos Restantes</span>
+                                    <span class="info-value" id="eventSlotsRemaining">450</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-coins"></i>
+                                <div class="info-content">
+                                    <span class="info-label">Recompensa</span>
+                                    <span class="info-value">450 RSC</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-progress">
+                            <div class="progress-header">
+                                <h4>Progreso del Evento</h4>
+                                <span class="progress-text" id="eventProgressText">0/450 usuarios</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="eventProgressFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-actions">
+                            <button class="btn-event-primary" id="claimWelcomeBonus" style="display: none;">
+                                <i class="fas fa-gift"></i>
+                                <span>Reclamar 450 RSC</span>
+                            </button>
+                            <div class="event-message" id="eventMessage">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Regístrate y comienza a minar para recibir tu recompensa</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -823,12 +893,50 @@
         </div>
     </footer>
 
+    <!-- Welcome Bonus Floating Banner -->
+    <div class="welcome-banner-overlay" id="welcomeBannerOverlay" style="display: none;">
+        <div class="welcome-banner">
+            <button class="banner-close" id="bannerClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="banner-content">
+                <div class="banner-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <div class="banner-text">
+                    <h3>🎉 ¡Oferta Especial!</h3>
+                    <p>Recibe <strong>450 RSC GRATIS</strong> al registrarte y comenzar a minar</p>
+                    <div class="banner-details">
+                        <span class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span id="bannerTimeRemaining">30 días restantes</span>
+                        </span>
+                        <span class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span id="bannerSlotsRemaining">450 cupos disponibles</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-actions">
+                <button class="btn-banner-primary" id="bannerRegisterBtn">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Registrarse Ahora</span>
+                </button>
+                <button class="btn-banner-secondary" id="bannerLaterBtn">
+                    <span>Tal vez después</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="../scripts/supabase-integration.js"></script>
     <script src="../scripts/mining/background-mining.js"></script>
     <script src="../scripts/mining/level-system.js"></script>
     <script src="../scripts/mining/achievement-system.js"></script>
     <script src="../scripts/mining/algorithm-system.js"></script>
+    <script src="../scripts/mining/welcome-bonus-event.js"></script>
     <script src="../scripts/mining-platform-adapter.js?v=1.0"></script>
 </body>
 </html>
