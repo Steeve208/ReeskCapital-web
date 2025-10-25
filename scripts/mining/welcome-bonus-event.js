@@ -225,6 +225,15 @@ class WelcomeBonusEvent {
     checkUserEligibility() {
         console.log('🔍 Verificando elegibilidad del usuario...');
         
+        // VERIFICACIÓN CRÍTICA: Verificar si ya reclamó
+        const storedClaimStatus = localStorage.getItem('rsc_welcome_claimed');
+        if (storedClaimStatus === 'true') {
+            console.log('🚫 USUARIO YA RECLAMÓ - OCULTANDO BOTÓN');
+            this.userData.hasClaimedBonus = true;
+            this.showAlreadyClaimedMessage();
+            return;
+        }
+        
         // Verificar si el usuario es elegible para el bonus
         const isAuthenticated = window.supabaseIntegration?.user?.isAuthenticated;
         const isNewUser = this.checkIfNewUser();
@@ -233,7 +242,7 @@ class WelcomeBonusEvent {
         console.log('🔍 isNewUser:', isNewUser);
         console.log('🔍 hasClaimedBonus:', this.userData.hasClaimedBonus);
         
-        // TEMPORAL: Mostrar botón para todos los usuarios para testing
+        // Mostrar botón solo si NO ha reclamado
         if (!this.userData.hasClaimedBonus) {
             console.log('🔍 Mostrando botón de claim');
             this.showClaimButton();
@@ -283,14 +292,31 @@ class WelcomeBonusEvent {
     async claimWelcomeBonus() {
         console.log('🔍 claimWelcomeBonus llamado');
         
-        if (!this.eventData.isActive || this.userData.hasClaimedBonus) {
-            console.log('🔍 No se puede reclamar: evento inactivo o ya reclamado');
+        // VALIDACIÓN CRÍTICA: Verificar si ya reclamó
+        if (this.userData.hasClaimedBonus) {
+            console.log('🚫 USUARIO YA RECLAMÓ - BLOQUEANDO');
+            this.showAlreadyClaimedMessage();
+            return;
+        }
+        
+        if (!this.eventData.isActive) {
+            console.log('🔍 No se puede reclamar: evento inactivo');
+            this.showEventEndedMessage();
             return;
         }
 
         if (this.eventData.claimedSlots >= this.eventData.maxSlots) {
             console.log('🔍 No se puede reclamar: cupos agotados');
             this.showEventEndedMessage();
+            return;
+        }
+        
+        // VALIDACIÓN ADICIONAL: Verificar en localStorage
+        const storedClaimStatus = localStorage.getItem('rsc_welcome_claimed');
+        if (storedClaimStatus === 'true') {
+            console.log('🚫 YA RECLAMADO EN STORAGE - BLOQUEANDO');
+            this.userData.hasClaimedBonus = true;
+            this.showAlreadyClaimedMessage();
             return;
         }
 
@@ -318,12 +344,17 @@ class WelcomeBonusEvent {
             if (success) {
                 console.log('🔍 Bonus reclamado exitosamente');
                 
-                // Actualizar estado del usuario
+                // MARCAR COMO RECLAMADO INMEDIATAMENTE (ANTES DE CUALQUIER OTRA COSA)
                 this.userData.hasClaimedBonus = true;
                 this.userData.claimDate = new Date();
                 this.eventData.claimedSlots++;
 
-                // Guardar datos
+                // GUARDAR INMEDIATAMENTE EN MÚLTIPLES UBICACIONES
+                localStorage.setItem('rsc_welcome_claimed', 'true');
+                localStorage.setItem('rsc_welcome_claim_date', new Date().toISOString());
+                localStorage.setItem('rsc_welcome_claim_amount', '450');
+                
+                // Guardar datos del evento
                 this.saveEventData();
 
                 // Sincronizar con Supabase si está autenticado
@@ -338,6 +369,7 @@ class WelcomeBonusEvent {
                 this.updateEventUI();
 
                 console.log('🎉 ¡Bonus de bienvenida reclamado exitosamente!');
+                console.log('🔒 Usuario marcado como reclamado - NO PODRÁ RECLAMAR DE NUEVO');
             } else {
                 throw new Error('Error al agregar balance');
             }
@@ -683,10 +715,14 @@ class WelcomeBonusEvent {
             localStorage.setItem('rsc_balance_history', JSON.stringify(balanceHistory));
             
             console.log('✅ Balance local actualizado:', newBalance);
+            console.log('🔍 Balance anterior:', currentBalance);
+            console.log('🔍 Balance nuevo:', newBalance);
+            
             return true;
             
         } catch (error) {
             console.error('❌ Error agregando balance local:', error);
+            console.error('❌ Detalles del error:', error.message);
             return false;
         }
     }

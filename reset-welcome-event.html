@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Welcome Bonus Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .reset-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        button {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #d32f2f;
+        }
+        .success {
+            background: #4caf50;
+        }
+        .success:hover {
+            background: #45a049;
+        }
+        .warning {
+            background: #ff9800;
+        }
+        .warning:hover {
+            background: #f57c00;
+        }
+        .log {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔄 Reset Welcome Bonus Event</h1>
+    
+    <div class="reset-section">
+        <h2>⚠️ ADVERTENCIA</h2>
+        <p>Esta herramienta es SOLO para testing. NO usar en producción.</p>
+        <p>Resetea el estado del evento de bienvenida para poder probarlo nuevamente.</p>
+    </div>
+
+    <div class="reset-section">
+        <h2>🔍 Estado Actual</h2>
+        <div id="currentStatus">
+            <p>Verificando estado...</p>
+        </div>
+    </div>
+
+    <div class="reset-section">
+        <h2>🛠️ Acciones</h2>
+        <button onclick="checkStatus()" class="warning">Verificar Estado</button>
+        <button onclick="resetEvent()" class="success">Resetear Evento</button>
+        <button onclick="clearAllStorage()" class="warning">Limpiar Todo Storage</button>
+        <button onclick="simulateClaim()" class="success">Simular Reclamo</button>
+    </div>
+
+    <div class="reset-section">
+        <h2>📝 Logs</h2>
+        <div class="log" id="logs"></div>
+        <button onclick="clearLogs()">Limpiar Logs</button>
+    </div>
+
+    <script>
+        function addLog(message) {
+            const logs = document.getElementById('logs');
+            const timestamp = new Date().toLocaleTimeString();
+            logs.innerHTML += `[${timestamp}] ${message}\n`;
+            logs.scrollTop = logs.scrollHeight;
+        }
+
+        function checkStatus() {
+            addLog('🔍 Verificando estado del evento...');
+            
+            const welcomeClaimed = localStorage.getItem('rsc_welcome_claimed');
+            const welcomeUser = localStorage.getItem('rsc_welcome_user');
+            const welcomeEvent = localStorage.getItem('rsc_welcome_event');
+            const userBalance = localStorage.getItem('rsc_user_balance');
+            
+            addLog(`rsc_welcome_claimed: ${welcomeClaimed}`);
+            addLog(`rsc_welcome_user: ${welcomeUser ? 'Presente' : 'No encontrado'}`);
+            addLog(`rsc_welcome_event: ${welcomeEvent ? 'Presente' : 'No encontrado'}`);
+            addLog(`rsc_user_balance: ${userBalance || '0'}`);
+            
+            // Actualizar estado en pantalla
+            const statusDiv = document.getElementById('currentStatus');
+            statusDiv.innerHTML = `
+                <p><strong>Estado del Reclamo:</strong> ${welcomeClaimed === 'true' ? '✅ YA RECLAMADO' : '❌ NO RECLAMADO'}</p>
+                <p><strong>Balance Actual:</strong> ${userBalance || '0'} RSC</p>
+                <p><strong>Datos del Usuario:</strong> ${welcomeUser ? '✅ Presentes' : '❌ No encontrados'}</p>
+                <p><strong>Datos del Evento:</strong> ${welcomeEvent ? '✅ Presentes' : '❌ No encontrados'}</p>
+            `;
+        }
+
+        function resetEvent() {
+            addLog('🔄 Reseteando evento de bienvenida...');
+            
+            // Limpiar datos específicos del evento
+            localStorage.removeItem('rsc_welcome_claimed');
+            localStorage.removeItem('rsc_welcome_claim_date');
+            localStorage.removeItem('rsc_welcome_claim_amount');
+            
+            // Resetear datos del usuario
+            const userData = {
+                hasSeenBanner: false,
+                hasClaimedBonus: false,
+                deviceId: generateDeviceId(),
+                claimDate: null,
+                isNewUser: true
+            };
+            localStorage.setItem('rsc_welcome_user', JSON.stringify(userData));
+            
+            // Resetear datos del evento
+            const eventData = {
+                id: 'welcome_bonus_2024',
+                name: 'Welcome Bonus Event',
+                description: 'Recibe 450 RSC gratis al registrarte',
+                reward: 450,
+                maxSlots: 450,
+                duration: 30,
+                startDate: new Date(),
+                endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+                claimedSlots: 0,
+                isActive: true
+            };
+            localStorage.setItem('rsc_welcome_event', JSON.stringify(eventData));
+            
+            addLog('✅ Evento reseteado exitosamente');
+            addLog('🔄 Recarga la página para ver los cambios');
+            
+            checkStatus();
+        }
+
+        function clearAllStorage() {
+            addLog('🗑️ Limpiando todo el storage...');
+            
+            // Limpiar todos los datos relacionados
+            const keysToRemove = [
+                'rsc_welcome_claimed',
+                'rsc_welcome_claim_date', 
+                'rsc_welcome_claim_amount',
+                'rsc_welcome_user',
+                'rsc_welcome_event',
+                'rsc_user_balance',
+                'rsc_balance_history'
+            ];
+            
+            keysToRemove.forEach(key => {
+                localStorage.removeItem(key);
+                addLog(`🗑️ Eliminado: ${key}`);
+            });
+            
+            addLog('✅ Storage limpiado completamente');
+            checkStatus();
+        }
+
+        function simulateClaim() {
+            addLog('🧪 Simulando reclamo de bonus...');
+            
+            // Simular el proceso de reclamo
+            localStorage.setItem('rsc_welcome_claimed', 'true');
+            localStorage.setItem('rsc_welcome_claim_date', new Date().toISOString());
+            localStorage.setItem('rsc_welcome_claim_amount', '450');
+            
+            // Simular balance
+            const currentBalance = parseFloat(localStorage.getItem('rsc_user_balance') || '0');
+            const newBalance = currentBalance + 450;
+            localStorage.setItem('rsc_user_balance', newBalance.toString());
+            
+            addLog(`✅ Simulación completada - Balance: ${newBalance}`);
+            checkStatus();
+        }
+
+        function generateDeviceId() {
+            const fingerprint = [
+                navigator.userAgent,
+                navigator.language,
+                screen.width + 'x' + screen.height,
+                new Date().getTimezoneOffset()
+            ].join('|');
+            
+            let hash = 0;
+            for (let i = 0; i < fingerprint.length; i++) {
+                const char = fingerprint.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            
+            return Math.abs(hash).toString(36);
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '';
+        }
+
+        // Inicializar
+        window.addEventListener('load', function() {
+            addLog('🚀 Herramienta de reset cargada');
+            checkStatus();
+        });
+    </script>
+</body>
+</html>
