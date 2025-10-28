@@ -184,6 +184,11 @@
     gap: 1rem;
 }
 
+/* Ocultar solo el texto del contador */
+.welcome-bonus-event .progress-text {
+    display: none !important;
+}
+
 .progress-header {
     display: flex;
     justify-content: space-between;

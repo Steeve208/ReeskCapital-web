@@ -38,11 +38,12 @@ class WelcomeBonusEvent {
 
         this.bannerTimer = null;
         this.countdownTimer = null;
+        this.syncTimer = null;
 
         this.initializeEvent();
     }
 
-    initializeEvent() {
+    async initializeEvent() {
         console.log('🎉 Inicializando Welcome Bonus Event...');
         console.log('🔍 DOM ready:', document.readyState);
         
@@ -63,8 +64,8 @@ class WelcomeBonusEvent {
             
             console.log('✅ Elementos encontrados, continuando inicialización...');
             
-            // Cargar datos del evento
-            this.loadEventData();
+            // Cargar datos del evento (ahora es async)
+            await this.loadEventData();
             console.log('🔍 Event data loaded:', this.eventData);
             
             // Verificar si el evento está activo
@@ -96,7 +97,7 @@ class WelcomeBonusEvent {
         }
     }
 
-    loadEventData() {
+    async loadEventData() {
         console.log('🔍 Cargando datos del evento...');
         
         // Cargar datos del evento desde localStorage
@@ -137,6 +138,9 @@ class WelcomeBonusEvent {
             }
         }
 
+        // SINCRONIZAR CON LA BASE DE DATOS PARA OBTENER EL NÚMERO REAL DE RECLAMACIONES
+        await this.loadRealClaimCountFromDatabase();
+
         // Verificar si el evento sigue activo
         const now = new Date();
         if (now > this.eventData.endDate) {
@@ -148,8 +152,45 @@ class WelcomeBonusEvent {
             isActive: this.eventData.isActive,
             startDate: this.eventData.startDate,
             endDate: this.eventData.endDate,
+            claimedSlots: this.eventData.claimedSlots,
             timeLeft: this.eventData.endDate - now
         });
+    }
+    
+    async loadRealClaimCountFromDatabase() {
+        try {
+            console.log('🔍 Cargando contador real desde la base de datos...');
+            
+            // Intentar obtener el contador desde la base de datos
+            if (window.supabaseIntegration && typeof window.supabaseIntegration.makeRequest === 'function') {
+                // Buscar en la tabla de bonuses los welcome bonus claims
+                const response = await window.supabaseIntegration.makeRequest(
+                    'GET',
+                    `/rest/v1/bonuses?bonus_type=eq.welcome_bonus&is_claimed=eq.true&select=id`
+                );
+                
+                if (response.ok) {
+                    const bonuses = await response.json();
+                    const realCount = bonuses.length || 0;
+                    
+                    console.log(`✅ Contador real desde DB: ${realCount} usuarios`);
+                    
+                    // Actualizar el contador con el valor real
+                    this.eventData.claimedSlots = Math.max(this.eventData.claimedSlots, realCount);
+                    
+                    // Guardar el valor actualizado
+                    this.saveEventData();
+                    
+                } else {
+                    console.warn('⚠️ No se pudo obtener el contador desde la DB, usando valor local');
+                }
+            } else {
+                console.log('⚠️ Supabase no disponible, usando valor local');
+            }
+            
+        } catch (error) {
+            console.error('❌ Error cargando contador desde DB:', error);
+        }
     }
     
     initializeDefaultEventData() {
@@ -731,6 +772,13 @@ class WelcomeBonusEvent {
                 this.updateCountdownTimer();
             }, 1000);
             
+            // Actualizar contador desde la DB cada 30 segundos
+            this.syncTimer = setInterval(() => {
+                this.loadRealClaimCountFromDatabase().then(() => {
+                    this.updateEventProgress();
+                });
+            }, 30000);
+            
             console.log('✅ Contadores inicializados correctamente');
             
         } catch (error) {
@@ -805,13 +853,13 @@ class WelcomeBonusEvent {
 
         const bannerSlotsElement = document.getElementById('bannerSlotsRemaining');
         if (bannerSlotsElement) {
-            bannerSlotsElement.textContent = `${slotsRemaining} cupos disponibles`;
+            bannerSlotsElement.textContent = `${slotsRemaining} slots available`;
         }
 
         // Actualizar progreso
         const progressTextElement = document.getElementById('eventProgressText');
         if (progressTextElement) {
-            progressTextElement.textContent = `${this.eventData.claimedSlots}/450 usuarios`;
+            progressTextElement.textContent = `${this.eventData.claimedSlots}/450 users`;
         }
 
         const progressFillElement = document.getElementById('eventProgressFill');
@@ -842,22 +890,26 @@ class WelcomeBonusEvent {
                 return;
             }
 
-            const eventRecord = {
-                user_id: window.supabaseIntegration.user.id,
-                event_id: this.eventData.id,
-                reward_amount: this.eventData.reward,
-                claimed_at: new Date().toISOString(),
-                device_id: this.userData.deviceId
+            const userId = window.supabaseIntegration.user.id;
+            
+            // Crear registro del bonus en la tabla de bonuses
+            const bonusRecord = {
+                user_id: userId,
+                bonus_type: 'welcome_bonus',
+                amount: this.eventData.reward,
+                multiplier: 1.00,
+                reason: 'Welcome Bonus Event - 450 RSC',
+                is_claimed: true
             };
 
-            // Guardar en Supabase
+            // Guardar en Supabase en la tabla de bonuses
             await window.supabaseIntegration.makeRequest(
                 'POST',
-                '/rest/v1/welcome_bonus_claims',
-                eventRecord
+                '/rest/v1/bonuses',
+                bonusRecord
             );
 
-            console.log('✅ Datos del evento sincronizados con Supabase');
+            console.log('✅ Bonus registrado en la base de datos');
         } catch (error) {
             console.error('❌ Error sincronizando evento:', error);
         }
