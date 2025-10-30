@@ -1268,53 +1268,62 @@ class SupabaseIntegration {
     async processReferralCommissions(tokensEarned) {
         try {
             if (!this.user.referredBy) {
-                console.log('🎯 Usuario sin referidor, sin comisiones que procesar');
+                console.log('🎯 User without a referrer, no commissions to process');
                 return;
             }
-            
-            const commission = tokensEarned * 0.10; // 10% de comisión
-            
-            console.log(`🎯 Procesando comisión de referido: ${commission.toFixed(6)} RSC para referidor`);
-            
-            // Buscar el referidor en la base de datos
-            const referrerResponse = await this.makeRequest('GET', `/rest/v1/users?id=eq.${this.user.referredBy}&select=*`);
-            
-            if (referrerResponse.ok) {
-                const referrers = await referrerResponse.json();
-                if (referrers.length > 0) {
-                    const referrer = referrers[0];
-                    const newReferrerBalance = (parseFloat(referrer.balance) || 0) + commission;
-                    
-                    // Actualizar balance del referidor
-                    const updateResponse = await this.makeRequest('PATCH', `/rest/v1/users?id=eq.${referrer.id}`, {
-                        balance: newReferrerBalance
-                    });
-                    
-                    if (updateResponse.ok) {
-                        // Registrar la transacción de comisión
-                        await this.makeRequest('POST', '/rest/v1/transactions', {
-                            user_id: referrer.id,
-                            amount: commission,
-                            type: 'referral_commission',
-                            description: `Comisión por minería de ${this.user.username}`,
-                            metadata: JSON.stringify({
-                                from_user_id: this.user.id,
-                                from_username: this.user.username,
-                                mining_amount: tokensEarned
-                            })
-                        });
-                        
-                        console.log(`✅ Comisión de ${commission.toFixed(6)} RSC enviada al referidor (${referrer.username})`);
-                    } else {
-                        console.error('❌ Error actualizando balance del referidor');
-                    }
-                } else {
-                    console.warn('⚠️ Referidor no encontrado en base de datos');
-                }
-            } else {
-                console.error('❌ Error obteniendo datos del referidor');
+
+            const miningAmount = Number(tokensEarned) || 0;
+            if (miningAmount <= 0) {
+                console.log('🎯 Minería sin ganancias, no se procesa comisión');
+                return;
             }
-            
+
+            const payload = {
+                referred_user_id: this.user.id,
+                referrer_user_id: this.user.referredBy,
+                mining_amount: miningAmount,
+                commission_level: 1,
+                metadata: {
+                    session_id: this.miningSession.sessionId,
+                    hash_rate: this.miningSession.hashRate,
+                    efficiency: this.miningSession.efficiency,
+                    processed_at: new Date().toISOString()
+                }
+            };
+
+            const endpoint = `${this.config.url}/functions/v1/referral_commission`;
+
+            console.log('🎯 Llamando función edge referral_commission con payload:', payload);
+
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.config.anonKey}`,
+                    'apikey': this.config.anonKey
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error(`❌ Error procesando comisión de referido (HTTP ${response.status}):`, errorText);
+                return;
+            }
+
+            const result = await response.json();
+            console.log('✅ Comisión de referido procesada vía edge function:', result);
+
+            if (result?.success && Number(result.commission_amount) > 0) {
+                window.dispatchEvent(new CustomEvent('rsc:referral-commission-processed', {
+                    detail: {
+                        commissionAmount: Number(result.commission_amount),
+                        totals: result.totals || {},
+                        referrerId: result.referrer_user_id
+                    }
+                }));
+            }
+
         } catch (error) {
             console.error('❌ Error procesando comisiones de referido:', error);
         }

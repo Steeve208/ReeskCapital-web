@@ -1281,6 +1281,21 @@
                 });
             }
         }
+
+        if (!window.__rscReferralCommissionListener) {
+            window.__rscReferralCommissionListener = (event) => {
+                try {
+                    const detail = event?.detail || {};
+                    console.log('🔄 Comisión de referido procesada, actualizando estadísticas:', detail);
+                    loadCommissionsFromTransactions();
+                    loadReferralStats();
+                } catch (error) {
+                    console.error('Error actualizando estadísticas tras comisión de referido:', error);
+                }
+            };
+
+            window.addEventListener('rsc:referral-commission-processed', window.__rscReferralCommissionListener);
+        }
         
         // Function to automatically process commissions when someone mines
         function processReferralCommission(miningAmount) {
