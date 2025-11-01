@@ -24,7 +24,7 @@ class WelcomeBonusEvent {
             duration: 30, // days
             startDate: new Date(),
             endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-            claimedSlots: 0,
+            claimedSlots: 227, // 227 ya reclamados (450 - 223 disponibles)
             isActive: true
         };
 
@@ -203,7 +203,7 @@ class WelcomeBonusEvent {
             endDate: endDate,
             isActive: true,
             maxSlots: 450,
-            claimedSlots: 0
+            claimedSlots: 227 // 227 ya reclamados (450 - 223 disponibles)
         };
         
         // Guardar datos por defecto
