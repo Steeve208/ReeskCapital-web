@@ -821,9 +821,21 @@ class SupabaseIntegration {
             if (response.ok) {
                 const users = await response.json();
                 if (users.length > 0) {
-                    const balance = parseFloat(users[0].balance) || 0;
-                    this.user.balance = balance;
-                    return balance;
+                    const dbBalance = parseFloat(users[0].balance) || 0;
+                    const localBalance = this.user.balance || 0;
+                    
+                    // 🔧 CORRECCIÓN: Usar siempre el mayor para evitar pérdidas durante minería
+                    // No sobreescribir el balance local si está minando activamente
+                    if (this.miningSession.isActive) {
+                        // Durante minería, mantener el mayor de los dos balances
+                        this.user.balance = Math.max(dbBalance, localBalance);
+                        console.log(`💰 getUserBalance durante minería - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Usado: ${this.user.balance.toFixed(6)}`);
+                    } else {
+                        // Sin minería activa, usar el mayor para evitar pérdidas
+                        this.user.balance = Math.max(dbBalance, localBalance);
+                    }
+                    
+                    return this.user.balance;
                 }
             }
             
@@ -913,28 +925,95 @@ class SupabaseIntegration {
                 return false;
             }
 
-            console.log(`🔄 Sincronizando balance: ${this.user.balance.toFixed(6)} RSC`);
+            // 🔧 CORRECCIÓN: Obtener balance actual de la DB primero
+            const dbBalanceResponse = await this.makeRequest('GET', `/rest/v1/users?id=eq.${this.user.id}&select=balance`);
             
-            const response = await this.makeRequest('PATCH', `/rest/v1/users?id=eq.${this.user.id}`, {
-                balance: this.user.balance
-            });
-
-            if (response.ok) {
-                console.log(`✅ Balance sincronizado con backend: ${this.user.balance.toFixed(6)} RSC`);
-                return true;
-            } else {
-                // Obtener detalles del error de la respuesta
-                let errorDetails = 'Error desconocido';
-                try {
-                    const errorData = await response.json();
-                    errorDetails = errorData.message || errorData.error || `HTTP ${response.status}`;
-                } catch (parseError) {
-                    errorDetails = `HTTP ${response.status}: ${response.statusText}`;
-                }
+            if (!dbBalanceResponse.ok) {
+                throw new Error('No se pudo obtener el balance de la base de datos');
+            }
+            
+            const dbUsers = await dbBalanceResponse.json();
+            if (!dbUsers || dbUsers.length === 0) {
+                throw new Error('Usuario no encontrado en la base de datos');
+            }
+            
+            const dbBalance = parseFloat(dbUsers[0].balance) || 0;
+            const localBalance = parseFloat(this.user.balance) || 0;
+            
+            // 🔧 Calcular diferencia (solo tokens minados desde la última sincronización)
+            const tokensToAdd = localBalance - dbBalance;
+            
+            console.log(`🔄 Sincronizando balance:`);
+            console.log(`   Balance DB: ${dbBalance.toFixed(6)} RSC`);
+            console.log(`   Balance Local: ${localBalance.toFixed(6)} RSC`);
+            console.log(`   Diferencia: ${tokensToAdd.toFixed(6)} RSC`);
+            
+            // Solo sincronizar si hay tokens para agregar (evitar pérdidas)
+            if (tokensToAdd > 0) {
+                // 🔧 CORRECCIÓN: Usar función RPC que INCREMENTA el balance en lugar de reemplazarlo
+                const rpcUrl = `${this.config.url}/rest/v1/rpc/update_user_balance_advanced`;
                 
-                const error = new Error(`Error sincronizando balance: ${errorDetails}`);
-                error.status = response.status;
-                throw error;
+                const rpcResponse = await fetch(rpcUrl, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': this.config.anonKey,
+                        'Authorization': `Bearer ${this.config.anonKey}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=representation'
+                    },
+                    body: JSON.stringify({
+                        p_user_id: this.user.id,
+                        p_amount: tokensToAdd,
+                        p_transaction_type: 'mining',
+                        p_description: 'Tokens minados sincronizados',
+                        p_metadata: {
+                            sync_timestamp: new Date().toISOString(),
+                            session_id: this.miningSession.sessionId
+                        }
+                    })
+                });
+
+                if (rpcResponse.ok) {
+                    const result = await rpcResponse.json();
+                    console.log(`✅ Balance sincronizado correctamente: +${tokensToAdd.toFixed(6)} RSC`);
+                    console.log(`   Balance final en DB: ${result.balance_after.toFixed(6)} RSC`);
+                    
+                    // Actualizar balance local con el valor confirmado de la DB
+                    if (result.balance_after !== undefined) {
+                        this.user.balance = parseFloat(result.balance_after);
+                        this.saveUserToStorage();
+                    }
+                    
+                    return true;
+                } else {
+                    // Si falla la función RPC, intentar con PATCH como fallback
+                    console.warn('⚠️ Función RPC no disponible, usando PATCH como fallback');
+                    const response = await this.makeRequest('PATCH', `/rest/v1/users?id=eq.${this.user.id}`, {
+                        balance: localBalance
+                    });
+                    
+                    if (response.ok) {
+                        console.log(`✅ Balance sincronizado con fallback PATCH: ${localBalance.toFixed(6)} RSC`);
+                        return true;
+                    } else {
+                        throw new Error(`Fallback PATCH falló: ${response.status}`);
+                    }
+                }
+            } else if (tokensToAdd < 0) {
+                // 🔧 PROTECCIÓN: Si el balance local es MENOR que el de la DB, hay un problema
+                console.error('⚠️ ADVERTENCIA: Balance local es menor que el de la DB');
+                console.error(`   Esto podría indicar una pérdida de tokens. Balance local: ${localBalance}, DB: ${dbBalance}`);
+                console.error('   No se sincronizará para evitar sobrescribir un balance mayor.');
+                
+                // Actualizar balance local con el valor de la DB (el más alto)
+                this.user.balance = dbBalance;
+                this.saveUserToStorage();
+                
+                return false;
+            } else {
+                // tokensToAdd === 0, ya están sincronizados
+                console.log('✅ Balance ya está sincronizado');
+                return true;
             }
         } catch (error) {
             console.error('❌ Error en syncBalanceToBackend:', error);
@@ -1030,16 +1109,39 @@ class SupabaseIntegration {
                             this.user.email = dbUser.email;
                             this.user.username = dbUser.username;
                             
-                            // Usar el balance local si es mayor que el de la DB (para preservar minería offline)
+                            // 🔧 CORRECCIÓN: Usar siempre el mayor entre DB y local para evitar pérdidas
                             const dbBalance = parseFloat(dbUser.balance) || 0;
                             const localBalance = parseFloat(userData.balance) || 0;
-                            this.user.balance = Math.max(dbBalance, localBalance);
+                            
+                            // Si hay una sesión de minería activa, preferir el balance local (puede tener tokens recientes)
+                            const hasActiveMining = this.miningSession.isActive;
+                            
+                            if (hasActiveMining && localBalance > dbBalance) {
+                                // Durante minería activa, usar el mayor de los dos
+                                this.user.balance = Math.max(dbBalance, localBalance);
+                                console.log(`💰 Balance durante minería activa - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Usado: ${this.user.balance.toFixed(6)}`);
+                                
+                                // Sincronizar la diferencia al backend
+                                const difference = localBalance - dbBalance;
+                                if (difference > 0) {
+                                    console.log(`🔄 Sincronizando diferencia de balance: +${difference.toFixed(6)} RSC`);
+                                    // Sincronizar en background (no esperar)
+                                    this.syncBalanceToBackend().catch(err => {
+                                        console.error('❌ Error sincronizando balance al cargar usuario:', err);
+                                    });
+                                }
+                            } else {
+                                // Sin minería activa, usar siempre el mayor para evitar pérdidas
+                                this.user.balance = Math.max(dbBalance, localBalance);
+                                console.log(`💰 Balance sin minería activa - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Usado: ${this.user.balance.toFixed(6)}`);
+                            }
                             
                             this.user.referralCode = dbUser.referral_code;
                             this.user.referredBy = dbUser.referred_by;
                             this.user.isAuthenticated = true;
                             
-                            console.log(`💰 Balance DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Usado: ${this.user.balance.toFixed(6)}`);
+                            // Guardar el balance corregido
+                            this.saveUserToStorage();
                             
                             console.log('✅ Usuario cargado desde almacenamiento');
                             return true;

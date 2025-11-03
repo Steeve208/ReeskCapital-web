@@ -20,11 +20,11 @@ class WelcomeBonusEvent {
             name: 'Welcome Bonus Event',
             description: 'Get 450 RSC free when you register',
             reward: 450,
-            maxSlots: 450,
+            maxSlots: 3, // 🔧 SOLO 3 CUPOS DISPONIBLES
             duration: 30, // days
             startDate: new Date(),
             endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-            claimedSlots: 227, // 227 ya reclamados (450 - 223 disponibles)
+            claimedSlots: 0, // 🔧 0 reclamados, quedan 3 disponibles
             isActive: true
         };
 
@@ -105,7 +105,28 @@ class WelcomeBonusEvent {
         if (storedEventData) {
             try {
                 const parsed = JSON.parse(storedEventData);
+                
+                // 🔧 FORZAR: Actualizar maxSlots a 3 si hay datos viejos con 450
+                if (parsed.maxSlots && parsed.maxSlots !== 3) {
+                    console.log(`🔧 Actualizando maxSlots de ${parsed.maxSlots} a 3`);
+                    parsed.maxSlots = 3;
+                }
+                
+                // 🔧 FORZAR: Si claimedSlots es mayor que 3, ajustarlo
+                if (parsed.claimedSlots && parsed.claimedSlots > 3) {
+                    console.log(`🔧 Ajustando claimedSlots de ${parsed.claimedSlots} a máximo 3`);
+                    parsed.claimedSlots = Math.min(parsed.claimedSlots, 3);
+                    
+                    // Si hay 3 o más reclamados, cerrar el evento
+                    if (parsed.claimedSlots >= 3) {
+                        parsed.isActive = false;
+                    }
+                }
+                
                 this.eventData = { ...this.eventData, ...parsed };
+                
+                // 🔧 FORZAR: Asegurar que maxSlots siempre sea 3
+                this.eventData.maxSlots = 3;
                 
                 // Convertir fechas de string a Date si es necesario
                 if (typeof this.eventData.startDate === 'string') {
@@ -116,6 +137,10 @@ class WelcomeBonusEvent {
                 }
                 
                 console.log('✅ Datos del evento cargados:', this.eventData);
+                console.log(`📊 maxSlots: ${this.eventData.maxSlots}, claimedSlots: ${this.eventData.claimedSlots}`);
+                
+                // Guardar datos corregidos
+                this.saveEventData();
             } catch (error) {
                 console.error('❌ Error parseando datos del evento:', error);
                 // Reinicializar con datos por defecto
@@ -175,8 +200,16 @@ class WelcomeBonusEvent {
                     
                     console.log(`✅ Contador real desde DB: ${realCount} usuarios`);
                     
-                    // Actualizar el contador con el valor real
-                    this.eventData.claimedSlots = Math.max(this.eventData.claimedSlots, realCount);
+                    // 🔧 ACTUALIZAR: Limitar a máximo 3 cupos y verificar si el evento debe cerrarse
+                    // Si hay 3 o más reclamaciones, el evento está completo
+                    if (realCount >= this.eventData.maxSlots) {
+                        this.eventData.claimedSlots = this.eventData.maxSlots;
+                        this.eventData.isActive = false;
+                        console.log('🔧 Evento completado desde DB - 3 cupos reclamados');
+                    } else {
+                        // Usar el valor real pero no exceder el máximo
+                        this.eventData.claimedSlots = Math.min(realCount, this.eventData.maxSlots);
+                    }
                     
                     // Guardar el valor actualizado
                     this.saveEventData();
@@ -202,8 +235,8 @@ class WelcomeBonusEvent {
             startDate: now,
             endDate: endDate,
             isActive: true,
-            maxSlots: 450,
-            claimedSlots: 227 // 227 ya reclamados (450 - 223 disponibles)
+            maxSlots: 3, // 🔧 SOLO 3 CUPOS DISPONIBLES
+            claimedSlots: 0 // 🔧 0 reclamados, quedan 3 disponibles
         };
         
         // Guardar datos por defecto
@@ -538,6 +571,18 @@ class WelcomeBonusEvent {
                 this.userData.claimDate = new Date();
                 this.eventData.claimedSlots++;
 
+                // 🔧 VERIFICAR SI SE COMPLETARON TODOS LOS CUPOS Y CERRAR EL EVENTO
+                if (this.eventData.claimedSlots >= this.eventData.maxSlots) {
+                    console.log('🎯 ¡Todos los cupos han sido reclamados! Cerrando evento automáticamente...');
+                    this.eventData.isActive = false;
+                    
+                    // Mostrar mensaje de evento cerrado
+                    setTimeout(() => {
+                        this.showEventEndedMessage();
+                        this.hideEventSection();
+                    }, 2000);
+                }
+
                 // GUARDAR INMEDIATAMENTE EN MÚLTIPLES UBICACIONES
                 localStorage.setItem('rsc_welcome_claimed', 'true');
                 localStorage.setItem('rsc_welcome_claim_date', new Date().toISOString());
@@ -558,6 +603,7 @@ class WelcomeBonusEvent {
                 this.updateEventUI();
 
                 console.log('🎉 ¡Bonus de bienvenida reclamado exitosamente!');
+                console.log(`📊 Cupos reclamados: ${this.eventData.claimedSlots}/${this.eventData.maxSlots}`);
                 console.log('🔒 Usuario marcado como reclamado - NO PODRÁ RECLAMAR DE NUEVO');
             } else {
                 throw new Error('Error al agregar balance');
@@ -628,9 +674,12 @@ class WelcomeBonusEvent {
         if (eventMessage) {
             eventMessage.innerHTML = `
                 <i class="fas fa-clock"></i>
-                <span>The event has ended. All slots have been claimed.</span>
+                <span>🎯 Evento cerrado. Los 3 cupos han sido reclamados exitosamente.</span>
             `;
             eventMessage.style.display = 'flex';
+            eventMessage.style.background = 'rgba(255, 152, 0, 0.2)';
+            eventMessage.style.borderColor = 'rgba(255, 152, 0, 0.5)';
+            eventMessage.style.color = '#ff9800';
         }
 
         const claimBtn = document.getElementById('claimWelcomeBonus');
@@ -853,18 +902,26 @@ class WelcomeBonusEvent {
 
         const bannerSlotsElement = document.getElementById('bannerSlotsRemaining');
         if (bannerSlotsElement) {
-            bannerSlotsElement.textContent = `${slotsRemaining} slots available`;
+            bannerSlotsElement.textContent = `${slotsRemaining} slot${slotsRemaining !== 1 ? 's' : ''} available`;
         }
 
         // Actualizar progreso
         const progressTextElement = document.getElementById('eventProgressText');
         if (progressTextElement) {
-            progressTextElement.textContent = `${this.eventData.claimedSlots}/450 users`;
+            progressTextElement.textContent = `${this.eventData.claimedSlots}/${this.eventData.maxSlots} users`; // 🔧 Actualizado para mostrar solo 3 cupos
         }
 
         const progressFillElement = document.getElementById('eventProgressFill');
         if (progressFillElement) {
             progressFillElement.style.width = `${progressPercentage}%`;
+        }
+        
+        // 🔧 Si se completaron todos los cupos, ocultar el evento
+        if (slotsRemaining <= 0 && this.eventData.isActive) {
+            console.log('🔧 Todos los cupos completados - cerrando evento');
+            this.eventData.isActive = false;
+            this.hideEventSection();
+            this.showEventEndedMessage();
         }
     }
 
