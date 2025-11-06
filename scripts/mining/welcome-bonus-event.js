@@ -20,12 +20,12 @@ class WelcomeBonusEvent {
             name: 'Welcome Bonus Event',
             description: 'Get 450 RSC free when you register',
             reward: 450,
-            maxSlots: 3, // 🔧 SOLO 3 CUPOS DISPONIBLES
+            maxSlots: 3, // 🔧 ONLY 3 SLOTS AVAILABLE
             duration: 30, // days
             startDate: new Date(),
             endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-            claimedSlots: 0, // 🔧 0 reclamados, quedan 3 disponibles
-            isActive: true
+            claimedSlots: 3, // 🔧 EVENT FINISHED - All slots claimed
+            isActive: false // 🔧 EVENT CLOSED - No more claims allowed
         };
 
         this.userData = {
@@ -68,26 +68,26 @@ class WelcomeBonusEvent {
             await this.loadEventData();
             console.log('🔍 Event data loaded:', this.eventData);
             
-            // Verificar si el evento está activo
-            if (!this.eventData.isActive) {
-                console.log('🔍 Evento inactivo - ocultando sección');
-                this.hideEventSection();
-                return;
+            // Check if event is active
+            // 🔧 DO NOT hide event even if finished - just show message
+            if (!this.eventData.isActive && this.eventData.claimedSlots >= this.eventData.maxSlots) {
+                console.log('🔍 Event finished - showing closed message but keeping visible');
+                // DO NOT hide, just show finished message
             }
             
-            // Verificar si el usuario ya vio el banner
+            // Check if user already saw the banner
             this.checkBannerStatus();
             
-            // Inicializar contadores
+            // Initialize counters
             this.initializeCounters();
             
-            // Configurar eventos
+            // Setup event listeners
             this.setupEventListeners();
             
-            // Verificar elegibilidad del usuario
+            // Check user eligibility
             this.checkUserEligibility();
             
-            // TEMPORAL: Forzar mostrar la sección del evento
+            // TEMPORARY: Force show event section
             this.forceShowEventSection();
             
             console.log('✅ Welcome Bonus Event inicializado correctamente');
@@ -106,18 +106,18 @@ class WelcomeBonusEvent {
             try {
                 const parsed = JSON.parse(storedEventData);
                 
-                // 🔧 FORZAR: Actualizar maxSlots a 3 si hay datos viejos con 450
+                // 🔧 FORCE: Update maxSlots to 3 if there are old data with 450
                 if (parsed.maxSlots && parsed.maxSlots !== 3) {
-                    console.log(`🔧 Actualizando maxSlots de ${parsed.maxSlots} a 3`);
+                    console.log(`🔧 Updating maxSlots from ${parsed.maxSlots} to 3`);
                     parsed.maxSlots = 3;
                 }
                 
-                // 🔧 FORZAR: Si claimedSlots es mayor que 3, ajustarlo
+                // 🔧 FORCE: If claimedSlots is greater than 3, adjust it
                 if (parsed.claimedSlots && parsed.claimedSlots > 3) {
-                    console.log(`🔧 Ajustando claimedSlots de ${parsed.claimedSlots} a máximo 3`);
+                    console.log(`🔧 Adjusting claimedSlots from ${parsed.claimedSlots} to maximum 3`);
                     parsed.claimedSlots = Math.min(parsed.claimedSlots, 3);
                     
-                    // Si hay 3 o más reclamados, cerrar el evento
+                    // If there are 3 or more claimed, close the event
                     if (parsed.claimedSlots >= 3) {
                         parsed.isActive = false;
                     }
@@ -125,8 +125,13 @@ class WelcomeBonusEvent {
                 
                 this.eventData = { ...this.eventData, ...parsed };
                 
-                // 🔧 FORZAR: Asegurar que maxSlots siempre sea 3
+                // 🔧 FORCE: Ensure maxSlots is always 3
                 this.eventData.maxSlots = 3;
+                
+                // 🔧 FORCE: Finalize the event - All slots have been claimed
+                // But keep visible to show the finished state
+                this.eventData.claimedSlots = 3;
+                this.eventData.isActive = false;
                 
                 // Convertir fechas de string a Date si es necesario
                 if (typeof this.eventData.startDate === 'string') {
@@ -139,11 +144,11 @@ class WelcomeBonusEvent {
                 console.log('✅ Datos del evento cargados:', this.eventData);
                 console.log(`📊 maxSlots: ${this.eventData.maxSlots}, claimedSlots: ${this.eventData.claimedSlots}`);
                 
-                // Guardar datos corregidos
+                // Save corrected data
                 this.saveEventData();
             } catch (error) {
-                console.error('❌ Error parseando datos del evento:', error);
-                // Reinicializar con datos por defecto
+                console.error('❌ Error parsing event data:', error);
+                // Reinitialize with default data
                 this.initializeDefaultEventData();
             }
         } else {
@@ -163,17 +168,17 @@ class WelcomeBonusEvent {
             }
         }
 
-        // SINCRONIZAR CON LA BASE DE DATOS PARA OBTENER EL NÚMERO REAL DE RECLAMACIONES
+        // SYNC WITH DATABASE TO GET REAL NUMBER OF CLAIMS
         await this.loadRealClaimCountFromDatabase();
 
-        // Verificar si el evento sigue activo
+        // Check if event is still active
         const now = new Date();
         if (now > this.eventData.endDate) {
-            console.log('🔍 Evento expirado, marcando como inactivo');
+            console.log('🔍 Event expired, marking as inactive');
             this.eventData.isActive = false;
         }
         
-        console.log('🔍 Estado final del evento:', {
+        console.log('🔍 Final event state:', {
             isActive: this.eventData.isActive,
             startDate: this.eventData.startDate,
             endDate: this.eventData.endDate,
@@ -184,11 +189,11 @@ class WelcomeBonusEvent {
     
     async loadRealClaimCountFromDatabase() {
         try {
-            console.log('🔍 Cargando contador real desde la base de datos...');
+            console.log('🔍 Loading real count from database...');
             
-            // Intentar obtener el contador desde la base de datos
+            // Try to get counter from database
             if (window.supabaseIntegration && typeof window.supabaseIntegration.makeRequest === 'function') {
-                // Buscar en la tabla de bonuses los welcome bonus claims
+                // Search in bonuses table for welcome bonus claims
                 const response = await window.supabaseIntegration.makeRequest(
                     'GET',
                     `/rest/v1/bonuses?bonus_type=eq.welcome_bonus&is_claimed=eq.true&select=id`
@@ -198,20 +203,20 @@ class WelcomeBonusEvent {
                     const bonuses = await response.json();
                     const realCount = bonuses.length || 0;
                     
-                    console.log(`✅ Contador real desde DB: ${realCount} usuarios`);
+                    console.log(`✅ Real count from DB: ${realCount} users`);
                     
-                    // 🔧 ACTUALIZAR: Limitar a máximo 3 cupos y verificar si el evento debe cerrarse
-                    // Si hay 3 o más reclamaciones, el evento está completo
+                    // 🔧 UPDATE: Limit to maximum 3 slots and check if event should close
+                    // If there are 3 or more claims, the event is complete
                     if (realCount >= this.eventData.maxSlots) {
                         this.eventData.claimedSlots = this.eventData.maxSlots;
                         this.eventData.isActive = false;
-                        console.log('🔧 Evento completado desde DB - 3 cupos reclamados');
+                        console.log('🔧 Event completed from DB - 3 slots claimed');
                     } else {
-                        // Usar el valor real pero no exceder el máximo
+                        // Use real value but don't exceed maximum
                         this.eventData.claimedSlots = Math.min(realCount, this.eventData.maxSlots);
                     }
                     
-                    // Guardar el valor actualizado
+                    // Save updated value
                     this.saveEventData();
                     
                 } else {
@@ -234,14 +239,15 @@ class WelcomeBonusEvent {
         this.eventData = {
             startDate: now,
             endDate: endDate,
-            isActive: true,
-            maxSlots: 3, // 🔧 SOLO 3 CUPOS DISPONIBLES
-            claimedSlots: 0 // 🔧 0 reclamados, quedan 3 disponibles
+            isActive: false, // 🔧 EVENT CLOSED - No more claims allowed
+            maxSlots: 3, // 🔧 ONLY 3 SLOTS AVAILABLE
+            claimedSlots: 3 // 🔧 EVENT FINISHED - All slots claimed
         };
         
-        // Guardar datos por defecto
+        // Save default data
         this.saveEventData();
         console.log('✅ Datos por defecto inicializados:', this.eventData);
+        console.log('🔒 Event finished - 3/3 slots claimed - Event visible but not claimable');
     }
     
     saveEventData() {
@@ -282,10 +288,17 @@ class WelcomeBonusEvent {
     }
 
     checkBannerStatus() {
-        // TEMPORAL: Mostrar siempre para debugging
+        // TEMPORARY: Always show for debugging
         console.log('🔍 Debug: Verificando estado del banner...');
         console.log('🔍 hasSeenBanner:', this.userData.hasSeenBanner);
         console.log('🔍 hasClaimedBonus:', this.userData.hasClaimedBonus);
+        console.log('🔍 Event finished:', this.eventData.claimedSlots >= this.eventData.maxSlots);
+        
+        // 🔧 DO NOT show banner if event is finished (all slots claimed)
+        if (this.eventData.claimedSlots >= this.eventData.maxSlots) {
+            console.log('🔍 Banner not shown: event finished - all slots claimed');
+            return;
+        }
         
         // Si el usuario ya vio el banner o ya reclamó el bonus, no mostrar
         if (this.userData.hasSeenBanner || this.userData.hasClaimedBonus) {
@@ -304,9 +317,11 @@ class WelcomeBonusEvent {
         console.log('🔍 showWelcomeBanner llamado');
         console.log('🔍 eventData.isActive:', this.eventData.isActive);
         console.log('🔍 userData.hasClaimedBonus:', this.userData.hasClaimedBonus);
+        console.log('🔍 claimedSlots:', this.eventData.claimedSlots, '/', this.eventData.maxSlots);
         
-        if (!this.eventData.isActive || this.userData.hasClaimedBonus) {
-            console.log('🔍 Banner no mostrado: evento inactivo o ya reclamado');
+        // 🔧 DO NOT show banner if event is finished (all slots claimed)
+        if (!this.eventData.isActive || this.userData.hasClaimedBonus || this.eventData.claimedSlots >= this.eventData.maxSlots) {
+            console.log('🔍 Banner not shown: event finished, inactive or already claimed');
             return;
         }
 
@@ -445,7 +460,7 @@ class WelcomeBonusEvent {
     checkUserEligibility() {
         console.log('🔍 Verificando elegibilidad del usuario...');
         
-        // VERIFICACIÓN CRÍTICA: Verificar si ya reclamó
+        // CRITICAL CHECK: Verify if already claimed
         const storedClaimStatus = localStorage.getItem('rsc_welcome_claimed');
         if (storedClaimStatus === 'true') {
             console.log('🚫 USUARIO YA RECLAMÓ - OCULTANDO BOTÓN');
@@ -454,7 +469,7 @@ class WelcomeBonusEvent {
             return;
         }
         
-        // Verificar si el usuario es elegible para el bonus
+        // Check if user is eligible for the bonus
         const isAuthenticated = window.supabaseIntegration?.user?.isAuthenticated;
         const isNewUser = this.checkIfNewUser();
         
@@ -473,10 +488,10 @@ class WelcomeBonusEvent {
     }
 
     checkIfNewUser() {
-        // Verificar si es un usuario nuevo basado en:
-        // 1. Si no tiene balance previo
-        // 2. Si es la primera vez que visita
-        // 3. Si no tiene historial de minería
+        // Check if it's a new user based on:
+        // 1. If no previous balance
+        // 2. If it's the first visit
+        // 3. If no mining history
         
         const hasBalance = window.supabaseIntegration?.user?.balance > 0;
         const hasMiningHistory = localStorage.getItem('rsc_mining_history');
@@ -553,13 +568,13 @@ class WelcomeBonusEvent {
             // Siempre agregar balance localmente primero
             const localSuccess = await this.addBalanceLocal(this.eventData.reward);
             
-            // Si hay Supabase, intentar sincronizar también
+            // If Supabase is available, try to sync as well
             if (window.supabaseIntegration && typeof window.supabaseIntegration.addBalance === 'function') {
                 try {
                     console.log('🔍 Sincronizando con Supabase...');
                     await window.supabaseIntegration.addBalance(this.eventData.reward);
                 } catch (error) {
-                    console.warn('⚠️ No se pudo sincronizar con Supabase, pero el balance local se guardó correctamente');
+                    console.warn('⚠️ Could not sync with Supabase, but local balance was saved correctly');
                 }
             }
             
@@ -571,27 +586,27 @@ class WelcomeBonusEvent {
                 this.userData.claimDate = new Date();
                 this.eventData.claimedSlots++;
 
-                // 🔧 VERIFICAR SI SE COMPLETARON TODOS LOS CUPOS Y CERRAR EL EVENTO
+                // 🔧 CHECK IF ALL SLOTS ARE COMPLETED AND CLOSE THE EVENT
                 if (this.eventData.claimedSlots >= this.eventData.maxSlots) {
-                    console.log('🎯 ¡Todos los cupos han sido reclamados! Cerrando evento automáticamente...');
+                    console.log('🎯 All slots have been claimed! Closing event automatically...');
                     this.eventData.isActive = false;
                     
-                    // Mostrar mensaje de evento cerrado
+                    // Show event closed message
                     setTimeout(() => {
                         this.showEventEndedMessage();
                         this.hideEventSection();
                     }, 2000);
                 }
 
-                // GUARDAR INMEDIATAMENTE EN MÚLTIPLES UBICACIONES
+                // SAVE IMMEDIATELY IN MULTIPLE LOCATIONS
                 localStorage.setItem('rsc_welcome_claimed', 'true');
                 localStorage.setItem('rsc_welcome_claim_date', new Date().toISOString());
                 localStorage.setItem('rsc_welcome_claim_amount', '450');
                 
-                // Guardar datos del evento
+                // Save event data
                 this.saveEventData();
 
-                // Sincronizar con Supabase si está autenticado
+                // Sync with Supabase if authenticated
                 if (window.supabaseIntegration?.user?.isAuthenticated) {
                     await this.syncEventDataToSupabase();
                 }
@@ -674,7 +689,7 @@ class WelcomeBonusEvent {
         if (eventMessage) {
             eventMessage.innerHTML = `
                 <i class="fas fa-clock"></i>
-                <span>🎯 Evento cerrado. Los 3 cupos han sido reclamados exitosamente.</span>
+                <span>🎯 Event closed. All 3 slots have been successfully claimed.</span>
             `;
             eventMessage.style.display = 'flex';
             eventMessage.style.background = 'rgba(255, 152, 0, 0.2)';
@@ -816,7 +831,7 @@ class WelcomeBonusEvent {
             this.updateCountdownTimer();
             this.updateEventProgress();
             
-            // Configurar actualización cada segundo
+            // Setup update every second
             this.countdownTimer = setInterval(() => {
                 this.updateCountdownTimer();
             }, 1000);
@@ -842,7 +857,7 @@ class WelcomeBonusEvent {
             // Verificar que endDate sea una fecha válida
             if (!this.eventData.endDate || isNaN(this.eventData.endDate.getTime())) {
                 console.error('❌ Fecha de fin del evento inválida:', this.eventData.endDate);
-                // Reinicializar datos por defecto
+                // Reinitialize default data
                 this.initializeDefaultEventData();
                 return;
             }
@@ -908,7 +923,7 @@ class WelcomeBonusEvent {
         // Actualizar progreso
         const progressTextElement = document.getElementById('eventProgressText');
         if (progressTextElement) {
-            progressTextElement.textContent = `${this.eventData.claimedSlots}/${this.eventData.maxSlots} users`; // 🔧 Actualizado para mostrar solo 3 cupos
+            progressTextElement.textContent = `${this.eventData.claimedSlots}/${this.eventData.maxSlots} users`; // 🔧 Updated to show only 3 slots
         }
 
         const progressFillElement = document.getElementById('eventProgressFill');
@@ -916,11 +931,14 @@ class WelcomeBonusEvent {
             progressFillElement.style.width = `${progressPercentage}%`;
         }
         
-        // 🔧 Si se completaron todos los cupos, ocultar el evento
-        if (slotsRemaining <= 0 && this.eventData.isActive) {
-            console.log('🔧 Todos los cupos completados - cerrando evento');
-            this.eventData.isActive = false;
-            this.hideEventSection();
+        // 🔧 If all slots are completed, mark as finished but keep visible
+        if (slotsRemaining <= 0) {
+            if (this.eventData.isActive) {
+                console.log('🔧 All slots completed - marking as finished');
+                this.eventData.isActive = false;
+                this.saveEventData();
+            }
+            // DO NOT hide section, just show finished message
             this.showEventEndedMessage();
         }
     }
@@ -931,14 +949,17 @@ class WelcomeBonusEvent {
     }
 
     updateEventUI() {
-        if (!this.eventData.isActive) {
-            console.log('🔍 Evento inactivo - ocultando sección');
-            this.hideEventSection();
-            return;
-        }
-
+        // 🔧 DO NOT hide event even if finished - keep visible
+        // Just update UI to show finished state
+        
         this.updateEventProgress();
-        this.checkUserEligibility();
+        
+        // If event is finished, show message but don't hide
+        if (!this.eventData.isActive && this.eventData.claimedSlots >= this.eventData.maxSlots) {
+            this.showEventEndedMessage();
+        } else {
+            this.checkUserEligibility();
+        }
     }
 
     async syncEventDataToSupabase() {
@@ -959,7 +980,7 @@ class WelcomeBonusEvent {
                 is_claimed: true
             };
 
-            // Guardar en Supabase en la tabla de bonuses
+            // Save in Supabase bonuses table
             await window.supabaseIntegration.makeRequest(
                 'POST',
                 '/rest/v1/bonuses',
@@ -972,7 +993,7 @@ class WelcomeBonusEvent {
         }
     }
 
-    // TEMPORAL: Forzar mostrar la sección del evento para debugging
+    // TEMPORARY: Force show event section for debugging
     forceShowEventSection() {
         console.log('🔍 Forzando mostrar sección del evento...');
         const eventSection = document.querySelector('.welcome-bonus-event');
@@ -1009,10 +1030,10 @@ class WelcomeBonusEvent {
             const currentBalance = parseFloat(localStorage.getItem('rsc_user_balance') || '0');
             const newBalance = currentBalance + amount;
             
-            // Guardar nuevo balance
+            // Save new balance
             localStorage.setItem('rsc_user_balance', newBalance.toString());
             
-            // También guardar en un formato más detallado
+            // Also save in a more detailed format
             const balanceHistory = JSON.parse(localStorage.getItem('rsc_balance_history') || '[]');
             balanceHistory.push({
                 type: 'welcome_bonus',
@@ -1095,7 +1116,7 @@ class WelcomeBonusEvent {
     }
 }
 
-// Función para inicializar el evento con retraso para asegurar que todos los elementos estén disponibles
+// Function to initialize event with delay to ensure all elements are available
 function initializeWelcomeEvent() {
     console.log('🔍 Inicializando Welcome Bonus Event...');
     
@@ -1119,11 +1140,11 @@ function initializeWelcomeEvent() {
 
 // Crear instancia global cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔍 DOM Content Loaded - Esperando 500ms para inicializar...');
+    console.log('🔍 DOM Content Loaded - Waiting 500ms to initialize...');
     setTimeout(initializeWelcomeEvent, 500);
 });
 
-// También inicializar inmediatamente si el DOM ya está listo
+// Also initialize immediately if DOM is already ready
 if (document.readyState === 'loading') {
     console.log('🔍 DOM aún cargando, esperando DOMContentLoaded...');
 } else {
