@@ -357,17 +357,17 @@
             </div>
         </section>
 
-        <!-- Welcome Bonus Event -->
+        <!-- Follow Bonus Event -->
         <section class="welcome-bonus-event">
             <div class="container">
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">
-                            <i class="fas fa-gift"></i>
+                            <i class="fas fa-bullhorn"></i>
                         </div>
                         <div class="event-title">
-                            <h2>🎉 Welcome Bonus Event</h2>
-                            <p>Get 450 RSC free when you register!</p>
+                            <h2>🚀 Welcome Bonus v2.0 – Earn 50 RSK</h2>
+                            <p>Visit our communities with a single click and claim your reward instantly. No forms, no waiting.</p>
                         </div>
                         <div class="event-status">
                             <span class="status-badge active">
@@ -375,50 +375,68 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="event-content">
-                        <div class="event-info">
-                            <div class="info-item">
-                                <i class="fas fa-clock"></i>
-                                <div class="info-content">
-                                    <span class="info-label">Time Remaining</span>
-                                    <span class="info-value" id="eventTimeRemaining">30 days, 00:00:00</span>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-users"></i>
-                                <div class="info-content">
-                                    <span class="info-label">Slots Remaining</span>
-                                    <span class="info-value" id="eventSlotsRemaining">3</span>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-coins"></i>
-                                <div class="info-content">
-                                    <span class="info-label">Reward</span>
-                                    <span class="info-value">450 RSC</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="event-progress">
-                            <div class="progress-header">
-                                <h4>Event Progress</h4>
-                                <span class="progress-text" id="eventProgressText">0/3 users</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="eventProgressFill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        
                         <div class="event-actions">
+                            <div class="social-action-buttons">
+                                <button class="btn-event-primary btn-social-twitter" data-action="follow_twitter" type="button">
+                                    <i class="fab fa-twitter"></i>
+                                    <div class="btn-text">
+                                        <span class="btn-title">Follow us on X</span>
+                                        <small>@Reeskcap</small>
+                                    </div>
+                                    <span class="btn-status" data-action-status>Click to follow on X</span>
+                                </button>
+                                <button class="btn-event-primary btn-social-telegram" data-action="join_telegram" type="button">
+                                    <i class="fab fa-telegram-plane"></i>
+                                    <div class="btn-text">
+                                        <span class="btn-title">Join our Telegram</span>
+                                        <small>Community updates &amp; support</small>
+                                    </div>
+                                    <span class="btn-status" data-action-status>Click to join Telegram</span>
+                                </button>
+                            </div>
+
                             <button class="btn-event-primary" id="claimWelcomeBonus" style="display: none;">
                                 <i class="fas fa-gift"></i>
-                                <span>Claim 450 RSC</span>
+                                <span>🎉 Claim Your 50 RSK Reward!</span>
                             </button>
-                            <div class="event-message" id="eventMessage">
-                                <i class="fas fa-info-circle"></i>
-                                <span>Register and start mining to receive your reward</span>
+
+                            <div class="event-progress">
+                                <h4>Progress</h4>
+                                <div id="welcomeProgressBar"></div>
+                                <p id="welcomeProgressText">0/2 actions completed</p>
+                            </div>
+
+                            <div id="welcomeStats" class="event-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Time Left</span>
+                                    <span class="stat-value">Loading...</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Rewards Claimed</span>
+                                    <span class="stat-value">0/50,000</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Your Reward</span>
+                                    <span class="stat-value">50 RSK</span>
+                                </div>
+                            </div>
+
+                            <div class="event-message">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Tip: Complete both actions, come back to this tab and grab your 50 RSK instantly.</span>
+                            </div>
+
+                            <div class="event-rules">
+                                <h4>Event Rules</h4>
+                                <ul>
+                                    <li>Each person may claim the bonus once. Multiple accounts will be disqualified.</li>
+                                    <li>Keep the claim tab open after visiting X/Telegram so the buttons can record your action.</li>
+                                    <li>We monitor global follower growth: if total followers do not match the claimed rewards, all rewards for the event are voided.</li>
+                                    <li>Accounts created solely to farm rewards or that unfollow immediately may be excluded.</li>
+                                    <li>We reserve the right to pause or cancel the event if suspicious activity is detected.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -901,19 +919,19 @@
             </button>
             <div class="banner-content">
                 <div class="banner-icon">
-                    <i class="fas fa-gift"></i>
+                    <i class="fas fa-bullhorn"></i>
                 </div>
                 <div class="banner-text">
-                    <h3>🎉 Special Offer!</h3>
-                    <p>Get <strong>450 RSC FREE</strong> when you register and start mining</p>
+                    <h3>🚀 Welcome Bonus v2.0 – Earn 50 RSK</h3>
+                    <p>Visit our X and Telegram communities and grab <strong>50 RSK</strong> instantly. No verification needed.</p>
                     <div class="banner-details">
                         <span class="detail-item">
                             <i class="fas fa-clock"></i>
                             <span id="bannerTimeRemaining">30 days remaining</span>
                         </span>
                         <span class="detail-item">
-                            <i class="fas fa-users"></i>
-                            <span id="bannerSlotsRemaining">3 slots available</span>
+                            <i class="fas fa-gift"></i>
+                            <span id="bannerSlotsRemaining">50,000 rewards available</span>
                         </span>
                     </div>
                 </div>

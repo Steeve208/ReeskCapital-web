@@ -1044,15 +1044,16 @@ class SupabaseIntegration {
         }
     }
 
-    async makeRequest(method, endpoint, body = null) {
+    async makeRequest(method, endpoint, body = null, customHeaders = {}) {
         const url = `${this.config.url}${endpoint}`;
         console.log(`🌐 Haciendo request: ${method} ${url}`);
-        
+
         const headers = {
             'apikey': this.config.anonKey,
             'Authorization': `Bearer ${this.config.anonKey}`,
             'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
+            'Prefer': 'return=representation',
+            ...customHeaders
         };
 
         const options = {

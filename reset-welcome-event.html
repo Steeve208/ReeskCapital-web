@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+¿p.<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -59,24 +59,24 @@
     <h1>🔄 Reset Welcome Bonus Event</h1>
     
     <div class="reset-section">
-        <h2>⚠️ ADVERTENCIA</h2>
-        <p>Esta herramienta es SOLO para testing. NO usar en producción.</p>
-        <p>Resetea el estado del evento de bienvenida para poder probarlo nuevamente.</p>
+        <h2>⚠️ WARNING</h2>
+        <p>This tool is for testing only. Do not use it in production.</p>
+        <p>It resets the Follow Bonus event state so it can be tested again.</p>
     </div>
 
     <div class="reset-section">
-        <h2>🔍 Estado Actual</h2>
+        <h2>🔍 Current Status</h2>
         <div id="currentStatus">
-            <p>Verificando estado...</p>
+            <p>Checking status...</p>
         </div>
     </div>
 
     <div class="reset-section">
-        <h2>🛠️ Acciones</h2>
-        <button onclick="checkStatus()" class="warning">Verificar Estado</button>
-        <button onclick="resetEvent()" class="success">Resetear Evento</button>
-        <button onclick="clearAllStorage()" class="warning">Limpiar Todo Storage</button>
-        <button onclick="simulateClaim()" class="success">Simular Reclamo</button>
+        <h2>🛠️ Actions</h2>
+        <button onclick="checkStatus()" class="warning">Check Status</button>
+        <button onclick="resetEvent()" class="success">Reset Event</button>
+        <button onclick="clearAllStorage()" class="warning">Clear Local Storage</button>
+        <button onclick="simulateClaim()" class="success">Simulate Claim</button>
     </div>
 
     <div class="reset-section">
@@ -94,104 +94,106 @@
         }
 
         function checkStatus() {
-            addLog('🔍 Verificando estado del evento...');
+            addLog('🔍 Checking Follow Bonus status...');
             
-            const welcomeClaimed = localStorage.getItem('rsc_welcome_claimed');
-            const welcomeUser = localStorage.getItem('rsc_welcome_user');
-            const welcomeEvent = localStorage.getItem('rsc_welcome_event');
+            const followClaimed = localStorage.getItem('rsc_follow_claimed');
+            const followUser = localStorage.getItem('rsc_follow_user');
+            const followEvent = localStorage.getItem('rsc_follow_event');
             const userBalance = localStorage.getItem('rsc_user_balance');
             
-            addLog(`rsc_welcome_claimed: ${welcomeClaimed}`);
-            addLog(`rsc_welcome_user: ${welcomeUser ? 'Presente' : 'No encontrado'}`);
-            addLog(`rsc_welcome_event: ${welcomeEvent ? 'Presente' : 'No encontrado'}`);
+            addLog(`rsc_follow_claimed: ${followClaimed}`);
+            addLog(`rsc_follow_user: ${followUser ? 'Present' : 'Not found'}`);
+            addLog(`rsc_follow_event: ${followEvent ? 'Present' : 'Not found'}`);
             addLog(`rsc_user_balance: ${userBalance || '0'}`);
             
-            // Actualizar estado en pantalla
             const statusDiv = document.getElementById('currentStatus');
             statusDiv.innerHTML = `
-                <p><strong>Estado del Reclamo:</strong> ${welcomeClaimed === 'true' ? '✅ YA RECLAMADO' : '❌ NO RECLAMADO'}</p>
-                <p><strong>Balance Actual:</strong> ${userBalance || '0'} RSC</p>
-                <p><strong>Datos del Usuario:</strong> ${welcomeUser ? '✅ Presentes' : '❌ No encontrados'}</p>
-                <p><strong>Datos del Evento:</strong> ${welcomeEvent ? '✅ Presentes' : '❌ No encontrados'}</p>
+                <p><strong>Claim Status:</strong> ${followClaimed === 'true' ? '✅ CLAIMED' : '❌ NOT CLAIMED'}</p>
+                <p><strong>Current Balance:</strong> ${userBalance || '0'} RSK</p>
+                <p><strong>User Data:</strong> ${followUser ? '✅ Present' : '❌ Missing'}</p>
+                <p><strong>Event Data:</strong> ${followEvent ? '✅ Present' : '❌ Missing'}</p>
             `;
         }
 
         function resetEvent() {
-            addLog('🔄 Reseteando evento de bienvenida...');
+            addLog('🔄 Resetting Follow Bonus event...');
             
-            // Limpiar datos específicos del evento
-            localStorage.removeItem('rsc_welcome_claimed');
-            localStorage.removeItem('rsc_welcome_claim_date');
-            localStorage.removeItem('rsc_welcome_claim_amount');
+            localStorage.removeItem('rsc_follow_claimed');
+            localStorage.removeItem('rsc_follow_claim_date');
+            localStorage.removeItem('rsc_follow_claim_amount');
             
-            // Resetear datos del usuario
             const userData = {
                 hasSeenBanner: false,
                 hasClaimedBonus: false,
                 deviceId: generateDeviceId(),
                 claimDate: null,
+                twitterVerified: false,
+                telegramVerified: false,
+                verificationRequested: false,
                 isNewUser: true
             };
-            localStorage.setItem('rsc_welcome_user', JSON.stringify(userData));
+            localStorage.setItem('rsc_follow_user', JSON.stringify(userData));
             
-            // Resetear datos del evento
             const eventData = {
-                id: 'welcome_bonus_2024',
-                name: 'Welcome Bonus Event',
-                description: 'Recibe 450 RSC gratis al registrarte',
-                reward: 450,
-                maxSlots: 3, // 🔧 SOLO 3 CUPOS DISPONIBLES
-                duration: 30,
+                id: 'follow_bonus_2025',
+                name: 'Follow & Earn 100 RSK',
+                description: 'Follow on X and join Telegram to receive 100 RSK',
+                reward: 100,
+                rewardCurrency: 'RSK',
+                supabaseBonusType: 'follow_bonus',
+                maxSlots: 20000,
+                duration: 14,
                 startDate: new Date(),
-                endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+                endDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
                 claimedSlots: 0,
-                isActive: true
+                isActive: true,
+                requiredActions: {
+                    twitterFollow: true,
+                    telegramJoin: true
+                }
             };
-            localStorage.setItem('rsc_welcome_event', JSON.stringify(eventData));
+            localStorage.setItem('rsc_follow_event', JSON.stringify(eventData));
             
-            addLog('✅ Evento reseteado exitosamente');
-            addLog('🔄 Recarga la página para ver los cambios');
+            addLog('✅ Follow Bonus reset successfully.');
+            addLog('🔄 Reload the page to see the changes.');
             
             checkStatus();
         }
 
         function clearAllStorage() {
-            addLog('🗑️ Limpiando todo el storage...');
+            addLog('🗑️ Clearing storage keys related to the Follow Bonus...');
             
-            // Limpiar todos los datos relacionados
             const keysToRemove = [
-                'rsc_welcome_claimed',
-                'rsc_welcome_claim_date', 
-                'rsc_welcome_claim_amount',
-                'rsc_welcome_user',
-                'rsc_welcome_event',
+                'rsc_follow_claimed',
+                'rsc_follow_claim_date', 
+                'rsc_follow_claim_amount',
+                'rsc_follow_user',
+                'rsc_follow_event',
                 'rsc_user_balance',
                 'rsc_balance_history'
             ];
             
             keysToRemove.forEach(key => {
                 localStorage.removeItem(key);
-                addLog(`🗑️ Eliminado: ${key}`);
+                addLog(`🗑️ Removed: ${key}`);
             });
             
-            addLog('✅ Storage limpiado completamente');
+            addLog('✅ Storage cleared.');
             checkStatus();
         }
 
         function simulateClaim() {
-            addLog('🧪 Simulando reclamo de bonus...');
+            addLog('🧪 Simulating follow bonus claim...');
             
-            // Simular el proceso de reclamo
-            localStorage.setItem('rsc_welcome_claimed', 'true');
-            localStorage.setItem('rsc_welcome_claim_date', new Date().toISOString());
-            localStorage.setItem('rsc_welcome_claim_amount', '450');
+            localStorage.setItem('rsc_follow_claimed', 'true');
+            localStorage.setItem('rsc_follow_claim_date', new Date().toISOString());
+            localStorage.setItem('rsc_follow_claim_amount', '100');
             
-            // Simular balance
             const currentBalance = parseFloat(localStorage.getItem('rsc_user_balance') || '0');
-            const newBalance = currentBalance + 450;
+            const newBalance = currentBalance + 100;
             localStorage.setItem('rsc_user_balance', newBalance.toString());
             
-            addLog(`✅ Simulación completada - Balance: ${newBalance}`);
+            addLog(`✅ Simulation completed - Balance: ${newBalance}`);
             checkStatus();
         }
 
@@ -219,7 +221,7 @@
 
         // Inicializar
         window.addEventListener('load', function() {
-            addLog('🚀 Herramienta de reset cargada');
+            addLog('🚀 Reset utility ready');
             checkStatus();
         });
     </script>

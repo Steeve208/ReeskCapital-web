@@ -48,6 +48,8 @@
   <link rel="stylesheet" href="styles/mobile-viewport-fixes.css?v=1.0">
   <link rel="stylesheet" href="styles/disable-text-hover-effects.css?v=1.0">
   <link rel="stylesheet" href="styles/simple-mobile-menu.css?v=1.0">
+  <link rel="stylesheet" href="styles/chatbot-button.css?v=1.0">
+  <link rel="stylesheet" href="styles/chatbot-window.css?v=1.0">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/img/rsc-logo-quantum.svg">
@@ -76,7 +78,7 @@
       <!-- Utilidades derecha -->
       <div class="argusnav-utilities">
         <button class="argusnav-lang">EN</button>
-        <button class="argusnav-login">Login</button>
+        <a class="argusnav-login" href="pages/admin-login.html">Admin Login</a>
         <a href="pages/mine.html" class="argusnav-cta">Start Mining RSC</a>
         <button id="argusnav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
@@ -1653,5 +1655,64 @@
   
   <!-- Hero Particles -->
   <script src="scripts/hero-particles.js"></script>
+  
+  <!-- Bot de Atención Flotante -->
+  <div class="chatbot-floating-button" id="chatbotButton" aria-label="Abrir chat de atención">
+    <i class="fas fa-comments"></i>
+  </div>
+  
+  <!-- Ventana de Chat -->
+  <div class="chatbot-window" id="chatbotWindow">
+    <!-- Header -->
+    <div class="chatbot-header">
+      <div class="chatbot-header-info">
+        <div class="chatbot-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="chatbot-header-text">
+          <h3 class="chatbot-title">Soporte RSC</h3>
+          <div class="chatbot-status">
+            <span class="chatbot-status-dot"></span>
+            <span>En línea</span>
+          </div>
+        </div>
+      </div>
+      <button class="chatbot-close" id="chatbotClose" aria-label="Cerrar chat">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <!-- Área de Mensajes -->
+    <div class="chatbot-messages" id="chatbotMessages">
+      <!-- Mensaje de bienvenida -->
+      <div class="chatbot-welcome" id="chatbotWelcome">
+        <div class="chatbot-welcome-icon">
+          <i class="fas fa-comments"></i>
+        </div>
+        <h3 class="chatbot-welcome-title">¡Hola! 👋</h3>
+        <p class="chatbot-welcome-text">
+          Soy el asistente de atención de RSC Chain. ¿En qué puedo ayudarte hoy?
+        </p>
+      </div>
+    </div>
+    
+    <!-- Área de Entrada -->
+    <div class="chatbot-input-area">
+      <div class="chatbot-input-wrapper">
+        <textarea 
+          class="chatbot-input" 
+          id="chatbotInput" 
+          placeholder="Escribe tu mensaje..."
+          rows="1"
+        ></textarea>
+        <button class="chatbot-send" id="chatbotSend" aria-label="Enviar mensaje">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Script del Chatbot -->
+  <script src="scripts/chatbot.js?v=1.0"></script>
 </body>
 </html>

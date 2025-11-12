@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: rsc-admin-postgres
+    environment:
+      POSTGRES_DB: rsc_admin
+      POSTGRES_USER: rsc_admin
+      POSTGRES_PASSWORD: rsc_admin_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./apps/admin-api/prisma/migrations:/docker-entrypoint-initdb.d/migrations
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rsc_admin -d rsc_admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: rsc-admin-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  admin-api:
+    build:
+      context: .
+      dockerfile: apps/admin-api/Dockerfile
+    container_name: rsc-admin-api
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://rsc_admin:rsc_admin_password@postgres:5432/rsc_admin
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=rsc_admin_jwt_secret_development_only
+      - ADMIN_JWT_SECRET=rsc_admin_jwt_secret_development_only
+      - CORS_ORIGIN=http://localhost:3000
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./apps/admin-api:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  admin-frontend:
+    build:
+      context: .
+      dockerfile: apps/admin-frontend/Dockerfile
+    container_name: rsc-admin-frontend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
+      - NEXTAUTH_SECRET=rsc_admin_nextauth_secret_development_only
+      - NEXTAUTH_URL=http://localhost:3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - admin-api
+    volumes:
+      - ./apps/admin-frontend:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+
+volumes:
+  postgres_data:
+  redis_data:

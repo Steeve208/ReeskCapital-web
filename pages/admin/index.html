@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSC Admin Dashboard</title>
+    <link rel="stylesheet" href="../../styles/admin/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dymI4x3j1X0dX0G2G7n2AFD+a83H8XTur2qxGn8pY/+bexdFv+I5jBqFa9UcRgxN6E466+vWXT14FRrM8r9Ykg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="admin-bg" aria-hidden="true">
+        <div class="bg-grid"></div>
+        <span class="bg-orb orb-primary"></span>
+        <span class="bg-orb orb-secondary"></span>
+        <span class="bg-orb orb-tertiary"></span>
+        <div class="bg-gradient"></div>
+    </div>
+
+    <div class="admin-app" id="adminApp">
+        <header class="admin-header">
+            <div class="admin-header__title">
+                <div class="admin-chip">RSC INTERNAL</div>
+                <h1>Mission Control</h1>
+                <p>Monitor community campaigns, approve incentives, and keep the ecosystem thriving.</p>
+            </div>
+            <div class="admin-header__actions">
+                <div class="admin-connection" id="adminConnectionStatus">Connecting…</div>
+                <div class="admin-user" id="adminUserInfo"></div>
+                <button class="admin-logout" id="adminLogoutBtn" title="Sign out">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="admin-main">
+            <section class="admin-guard" id="adminGuard">
+                <div class="guard-card">
+                    <i class="fas fa-lock"></i>
+                    <h2>Restricted Area</h2>
+                    <p>This page is available only to RSC staff. Please sign in with an approved account.</p>
+                    <button id="adminOpenLogin" class="btn-primary">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Sign in</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="admin-content hidden" id="adminContent">
+                <section class="admin-overview" id="adminOverview">
+                    <article class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="overview-body">
+                            <span class="overview-label">Live campaign</span>
+                            <strong>Follow &amp; Earn 100 RSK</strong>
+                            <p>Manual verification ensures high-quality supporters join the community.</p>
+                        </div>
+                    </article>
+                    <article class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="overview-body">
+                            <span class="overview-label">Team focus</span>
+                            <strong>Trust &amp; Safety</strong>
+                            <p>Reward only genuine participants. Review, approve or reject with confidence.</p>
+                        </div>
+                    </article>
+                    <article class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="overview-body">
+                            <span class="overview-label">Next-gen tooling</span>
+                            <strong>Real-time dashboards</strong>
+                            <p>Integrated with Supabase, auto-logs every action, ready for multi-event expansion.</p>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="admin-experience" id="adminExperience">
+                    <div class="quick-actions" id="quickActions">
+                        <header>
+                            <div>
+                                <h3>Quick actions</h3>
+                                <p>Trigger high-impact workflows without leaving the dashboard.</p>
+                            </div>
+                            <button id="openCommandPalette" class="btn-tertiary">
+                                <i class="fas fa-terminal"></i>
+                                <span>Command palette</span>
+                                <kbd>⌘ K</kbd>
+                            </button>
+                        </header>
+                        <div class="quick-actions__grid">
+                            <button class="quick-action" data-action="approveNext">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Approve next pending</strong>
+                                    <span>Prioritize speed — review oldest submission.</span>
+                                </div>
+                            </button>
+                            <button class="quick-action" data-action="rejectNext">
+                                <i class="fas fa-ban"></i>
+                                <div>
+                                    <strong>Reject as duplicate</strong>
+                                    <span>Auto-reject oldest pending entry as suspected duplicate.</span>
+                                </div>
+                            </button>
+                            <button class="quick-action" data-action="openProof">
+                                <i class="fas fa-eye"></i>
+                                <div>
+                                    <strong>Open proof gallery</strong>
+                                    <span>Review attachments of the most recent submission.</span>
+                                </div>
+                            </button>
+                            <button class="quick-action" data-action="refresh">
+                                <i class="fas fa-sync"></i>
+                                <div>
+                                    <strong>Refresh queue</strong>
+                                    <span>Pull the latest data from Supabase instantly.</span>
+                                </div>
+                            </button>
+                            <button class="quick-action" data-action="exportCsv">
+                                <i class="fas fa-file-export"></i>
+                                <div>
+                                    <strong>Export CSV</strong>
+                                    <span>Download current queue as a spreadsheet snapshot.</span>
+                                </div>
+                            </button>
+                            <button class="quick-action" data-action="copySummary">
+                                <i class="fas fa-clipboard-list"></i>
+                                <div>
+                                    <strong>Copy summary</strong>
+                                    <span>Copy approval stats to clipboard for internal updates.</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <aside class="live-feed" id="liveFeed">
+                        <header>
+                            <div>
+                                <h3>Live activity</h3>
+                                <p>Latest approvals, rejections and submissions.</p>
+                            </div>
+                            <span class="live-indicator"><span></span>Live</span>
+                        </header>
+                        <ul class="live-feed__timeline" id="liveFeedTimeline">
+                            <li class="timeline-empty">No activity recorded yet.</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <nav class="admin-tabs" id="adminTabs">
+                    <button class="admin-tab active" data-tab="followBonus">
+                        <i class="fas fa-gift"></i>
+                        <span>Follow Bonus Requests</span>
+                    </button>
+                    <button class="admin-tab" data-tab="events">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Events</span>
+                        <small>Coming soon</small>
+                    </button>
+                    <button class="admin-tab" data-tab="users">
+                        <i class="fas fa-users-cog"></i>
+                        <span>User Flags</span>
+                        <small>Coming soon</small>
+                    </button>
+                </nav>
+
+                <section class="admin-panel" data-panel="followBonus">
+                    <header class="panel-header">
+                        <div>
+                            <h2>Follow Bonus Verification Queue</h2>
+                            <p>Review manual submissions for the “Follow &amp; Earn 100 RSK” campaign.</p>
+                        </div>
+                        <div class="panel-actions">
+                            <div class="filter-group" id="followBonusFilters">
+                                <button class="filter-btn active" data-filter="pending">Pending</button>
+                                <button class="filter-btn" data-filter="approved">Approved</button>
+                                <button class="filter-btn" data-filter="rejected">Rejected</button>
+                                <button class="filter-btn" data-filter="all">All</button>
+                            </div>
+                            <button class="btn-secondary" id="refreshFollowBonus">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Refresh</span>
+                            </button>
+                        </div>
+                    </header>
+
+                    <div class="summary-grid" id="followBonusSummary">
+                        <article class="summary-card" data-summary-card="pending">
+                            <div class="summary-card__icon"><i class="fas fa-hourglass-half"></i></div>
+                            <span class="summary-label">Pending</span>
+                            <strong data-summary="pending">0</strong>
+                            <div class="summary-progress" data-progress="pending">
+                                <div class="summary-progress__bar"></div>
+                            </div>
+                        </article>
+                        <article class="summary-card" data-summary-card="approved">
+                            <div class="summary-card__icon"><i class="fas fa-check-double"></i></div>
+                            <span class="summary-label">Approved</span>
+                            <strong data-summary="approved">0</strong>
+                            <div class="summary-progress" data-progress="approved">
+                                <div class="summary-progress__bar"></div>
+                            </div>
+                        </article>
+                        <article class="summary-card" data-summary-card="rejected">
+                            <div class="summary-card__icon"><i class="fas fa-times-circle"></i></div>
+                            <span class="summary-label">Rejected</span>
+                            <strong data-summary="rejected">0</strong>
+                            <div class="summary-progress" data-progress="rejected">
+                                <div class="summary-progress__bar"></div>
+                            </div>
+                        </article>
+                        <article class="summary-card" data-summary-card="total">
+                            <div class="summary-card__icon"><i class="fas fa-database"></i></div>
+                            <span class="summary-label">Total</span>
+                            <strong data-summary="total">0</strong>
+                            <div class="summary-progress" data-progress="total">
+                                <div class="summary-progress__bar"></div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="metric-grid" id="followBonusMetrics">
+                        <article class="metric-card">
+                            <span class="metric-label">Approval rate</span>
+                            <strong data-metric="approvalRate">0%</strong>
+                            <span class="metric-sub">Approved / Total</span>
+                        </article>
+                        <article class="metric-card">
+                            <span class="metric-label">Rejection rate</span>
+                            <strong data-metric="rejectionRate">0%</strong>
+                            <span class="metric-sub">Rejected / Total</span>
+                        </article>
+                        <article class="metric-card">
+                            <span class="metric-label">Avg. proofs per request</span>
+                            <strong data-metric="averageProofs">0.0</strong>
+                            <span class="metric-sub">Attachments uploaded</span>
+                        </article>
+                        <article class="metric-card">
+                            <span class="metric-label">Last submission</span>
+                            <strong data-metric="lastSubmission">—</strong>
+                            <span class="metric-sub">Local time</span>
+                        </article>
+                    </div>
+
+                    <div class="panel-table" id="followBonusTableWrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Submitted</th>
+                                    <th>Applicant</th>
+                                    <th>Handles</th>
+                                    <th>Wallet</th>
+                                    <th>Proof</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="followBonusTableBody">
+                                <tr class="empty-row">
+                                    <td colspan="7">Loading requests…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="admin-panel hidden" data-panel="events">
+                    <div class="placeholder-card">
+                        <i class="fas fa-hard-hat"></i>
+                        <h2>Events management coming soon</h2>
+                        <p>This module will allow the team to create, pause and monitor special campaigns.</p>
+                    </div>
+                </section>
+
+                <section class="admin-panel hidden" data-panel="users">
+                    <div class="placeholder-card">
+                        <i class="fas fa-hard-hat"></i>
+                        <h2>User flags &amp; moderation coming soon</h2>
+                        <p>Track suspicious accounts, reset mining profiles and manage escalations.</p>
+                    </div>
+                </section>
+            </section>
+        </main>
+
+        <footer class="admin-footer">
+            <span>© <span id="adminYear"></span> RSC Chain — Internal use only</span>
+            <span>Build version <span id="adminBuildVersion">1.0.0</span></span>
+        </footer>
+    </div>
+
+    <div class="admin-modal-overlay hidden" id="proofModal" aria-hidden="true">
+        <div class="admin-modal">
+            <button class="modal-close" data-admin-close aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body" id="proofModalBody"></div>
+        </div>
+    </div>
+
+    <div class="command-palette hidden" id="commandPalette" aria-hidden="true">
+        <div class="command-dialog">
+            <header>
+                <i class="fas fa-terminal"></i>
+                <input type="text" id="commandSearch" placeholder="Type a command or search…" autocomplete="off">
+                <button id="closeCommandPalette" aria-label="Close palette"><i class="fas fa-times"></i></button>
+            </header>
+            <ul id="commandList"></ul>
+            <footer>
+                <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+                <span><kbd>Enter</kbd> run command</span>
+                <span><kbd>Esc</kbd> close</span>
+            </footer>
+        </div>
+    </div>
+
+    <template id="attachmentTemplate">
+        <figure class="proof-attachment">
+            <img src="" alt="Proof screenshot">
+            <figcaption></figcaption>
+            <a href="#" download target="_blank" rel="noopener" class="download-link">
+                <i class="fas fa-download"></i>
+                <span>Download</span>
+            </a>
+        </figure>
+    </template>
+
+    <script>
+        window.FollowBonusAdminConfig = {
+            allowedEmails: [
+                'orion.ops@rsc-chain.com',
+                'nova.ops@rsc-chain.com',
+                'centauri.ops@rsc-chain.com',
+                'lyra.ops@rsc-chain.com',
+                'phoenix.ops@rsc-chain.com'
+            ],
+            buildVersion: '1.2.0'
+        };
+
+        // Admin authentication helper
+        window.AdminAuth = {
+            getToken: () => localStorage.getItem('rsc_admin_token'),
+            getUser: () => {
+                const user = localStorage.getItem('rsc_admin_user');
+                return user ? JSON.parse(user) : null;
+            },
+            logout: () => {
+                localStorage.removeItem('rsc_admin_token');
+                localStorage.removeItem('rsc_admin_user');
+                window.location.href = '../admin-login.html';
+            },
+            isAuthenticated: () => {
+                const token = this.getToken();
+                const user = this.getUser();
+                return token && user;
+            }
+        };
+    </script>
+    <script src="../../scripts/admin/admin-auth.js"></script>
+    <script src="../../scripts/admin/admin.js" type="module"></script>
+</body>
+</html>

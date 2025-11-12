@@ -1,0 +1,264 @@
+// Prisma schema for RSC Admin Mission Control
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  OPS_LEAD
+  ANALYST
+  VIEWER
+  AUDITOR
+}
+
+enum FollowBonusStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum EventStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  APPROVE
+  REJECT
+  LOGIN
+  LOGOUT
+  EXPORT
+  BULK_ACTION
+}
+
+// User management
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  username          String?
+  walletAddress     String?
+  referralCode      String   @unique
+  referredBy        String?
+  balance           Float    @default(0)
+  minedBalance      Float    @default(0)
+  status            UserStatus @default(ACTIVE)
+  lastMine          DateTime?
+  riskScore         Int      @default(0)
+  flags             Json     @default("{}")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  referredUsers     User[]   @relation("UserReferrals")
+  referrer          User?    @relation("UserReferrals", fields: [referredBy], references: [id])
+  miningEvents      MiningEvent[]
+  followBonusRequests FollowBonusRequest[]
+  bonuses           Bonus[]
+  adminActions      AdminAction[]
+
+  @@map("users")
+}
+
+// Mining system
+model MiningEvent {
+  id          String   @id @default(cuid())
+  userId      String
+  reward      Float
+  ip          String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("mining_events")
+}
+
+// Follow Bonus system
+model FollowBonusRequest {
+  id              String            @id @default(cuid())
+  userId          String?
+  fullName        String
+  contactEmail    String
+  xHandle         String
+  telegramUsername String?
+  walletAddress   String
+  status          FollowBonusStatus  @default(PENDING)
+  attachments     Json              @default("[]") // Array of attachment objects
+  amount          Float             @default(100)
+  reviewedBy      String?
+  reviewedAt      DateTime?
+  reviewNotes     String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Relations
+  user            User?             @relation(fields: [userId], references: [id])
+  bonuses         Bonus[]
+
+  @@map("follow_bonus_requests")
+}
+
+// Bonus system
+model Bonus {
+  id          String   @id @default(cuid())
+  userId      String
+  bonusType   String
+  amount      Float
+  multiplier  Float    @default(1)
+  reason      String
+  isClaimed   Boolean  @default(true)
+  claimedAt   DateTime?
+  createdAt   DateTime @default(now())
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  followBonusRequest FollowBonusRequest? @relation(fields: [followBonusRequestId], references: [id])
+  followBonusRequestId String?
+
+  @@map("bonuses")
+}
+
+// Admin users
+model AdminUser {
+  id            String      @id @default(cuid())
+  email         String      @unique
+  passwordHash  String
+  firstName     String?
+  lastName      String?
+  role          AdminRole   @default(ANALYST)
+  permissions   Json        @default("[]")
+  isActive      Boolean     @default(true)
+  lastLogin     DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relations
+  actions       AdminAction[]
+
+  @@map("admin_users")
+}
+
+// Audit logging
+model AdminAction {
+  id              String      @id @default(cuid())
+  adminUserId     String
+  actionType      AuditAction
+  resourceType    String      // e.g., "user", "follow_bonus_request"
+  resourceId      String
+  actionDetails   Json        @default("{}")
+  ipAddress       String?
+  userAgent       String?
+  reason          String?
+  timestamp       DateTime    @default(now())
+
+  // Relations
+  adminUser       AdminUser   @relation(fields: [adminUserId], references: [id])
+
+  @@map("admin_actions")
+}
+
+// Events system
+model Event {
+  id              String      @id @default(cuid())
+  name            String
+  description     String?
+  type            String      // e.g., "follow_bonus", "mining_multiplier"
+  status          EventStatus @default(DRAFT)
+  config          Json        @default("{}")
+  startDate       DateTime?
+  endDate         DateTime?
+  createdBy       String
+  updatedBy       String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relations
+  stages          EventStage[]
+
+  @@map("events")
+}
+
+model EventStage {
+  id              String   @id @default(cuid())
+  eventId         String
+  name            String
+  description     String?
+  order           Int
+  config          Json     @default("{}")
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+
+  // Relations
+  event           Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  tasks           EventTask[]
+
+  @@map("event_stages")
+}
+
+model EventTask {
+  id          String   @id @default(cuid())
+  stageId     String
+  userId      String?
+  type        String   // e.g., "manual_review", "auto_bonus"
+  status      String   @default("pending")
+  data        Json     @default("{}")
+  assignedTo  String?
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  stage       EventStage @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  user        User?      @relation(fields: [userId], references: [id])
+
+  @@map("event_tasks")
+}
+
+// System configuration
+model SystemConfig {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  description String?
+  updatedBy   String
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  @@map("system_config")
+}
+
+// Queue for background jobs
+model Job {
+  id          String   @id @default(cuid())
+  type        String   // e.g., "email", "export", "notification"
+  payload     Json
+  status      String   @default("pending") // pending, processing, completed, failed
+  priority    Int      @default(0)
+  attempts    Int      @default(0)
+  maxAttempts Int      @default(3)
+  error       String?
+  processedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("jobs")
+}
