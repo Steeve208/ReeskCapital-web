@@ -336,10 +336,14 @@ BEGIN
         updated_at = NOW()
     WHERE id = v_referrer_id;
     
-    -- Actualizar comisión total en referrals
-    UPDATE referrals 
-    SET total_commission = total_commission + v_commission_amount
-    WHERE referrer_id = v_referrer_id AND referred_id = p_referred_user_id;
+    -- Asegurar que la relación de referral exista y actualizar comisión total
+    INSERT INTO referrals (referrer_id, referred_id, commission_rate, total_commission, level, is_active)
+    VALUES (v_referrer_id, p_referred_user_id, COALESCE(v_commission_rate, 0.1000), v_commission_amount, p_commission_level, true)
+    ON CONFLICT (referrer_id, referred_id) 
+    DO UPDATE SET 
+        total_commission = referrals.total_commission + v_commission_amount,
+        commission_rate = COALESCE(EXCLUDED.commission_rate, referrals.commission_rate, 0.1000),
+        is_active = true;
     
     -- Registrar transacción de comisión
     INSERT INTO transactions (

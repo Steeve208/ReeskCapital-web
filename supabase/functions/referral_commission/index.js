@@ -111,18 +111,51 @@ serve(async (req) => {
       });
     }
 
-    // Ensure referral relation exists
+    // Ensure referral relation exists with default commission rate (10%)
     const relationPayload = {
       referrer_id: referrerId,
       referred_id: referredUserId,
+      commission_rate: 0.1000, // 10% default
+      level: commissionLevel || 1,
+      status: "active",
+      created_at: new Date().toISOString(),
     };
 
-    const { error: relationError } = await supabase
+    // First, try to get existing relation
+    const { data: existingRelation } = await supabase
       .from("referrals")
-      .upsert(relationPayload, { onConflict: "referrer_id,referred_id" });
+      .select("commission_rate, level, status")
+      .eq("referrer_id", referrerId)
+      .eq("referred_id", referredUserId)
+      .maybeSingle();
 
-    if (relationError) {
-      console.warn("Referral relation upsert warning:", relationError);
+    // If relation doesn't exist, create it; if it exists, update it
+    if (!existingRelation) {
+      const { error: relationError } = await supabase
+        .from("referrals")
+        .insert(relationPayload);
+
+      if (relationError) {
+        console.error("Error creating referral relation:", relationError);
+        // Continue anyway - the RPC function will use default commission rate
+      } else {
+        console.log("✅ Referral relation created successfully");
+      }
+    } else {
+      // Update existing relation to ensure it's active and has correct commission rate
+      const { error: updateError } = await supabase
+        .from("referrals")
+        .update({
+          commission_rate: existingRelation.commission_rate || 0.1000,
+          status: "active",
+          level: commissionLevel || existingRelation.level || 1,
+        })
+        .eq("referrer_id", referrerId)
+        .eq("referred_id", referredUserId);
+
+      if (updateError) {
+        console.warn("Warning updating referral relation:", updateError);
+      }
     }
 
     // Execute RPC to process commission (fallback to two-arg version if needed)
@@ -159,6 +192,22 @@ serve(async (req) => {
     }
 
     commissionAmount = Number(rpcData ?? 0) || 0;
+
+    // Verify that the commission was actually processed
+    if (commissionAmount > 0) {
+      // Get updated referrer balance to confirm the update
+      const { data: referrerUser, error: referrerError } = await supabase
+        .from("users")
+        .select("balance, username")
+        .eq("id", referrerId)
+        .maybeSingle();
+
+      if (referrerError) {
+        console.warn("Warning: Could not verify referrer balance update:", referrerError);
+      } else {
+        console.log(`✅ Commission processed: ${commissionAmount.toFixed(8)} RSC for referrer ${referrerUser?.username || referrerId}, new balance: ${Number(referrerUser?.balance || 0).toFixed(8)} RSC`);
+      }
+    }
 
     const { data: totalsRow } = await supabase
       .from("transactions")

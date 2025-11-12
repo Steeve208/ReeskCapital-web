@@ -46,10 +46,73 @@ class SupabaseIntegration {
             await this.checkConnection();
             await this.loadStoredUser();
             await this.checkMiningSession();
+            this.setupReferralCommissionListener();
             console.log('✅ Supabase Integration inicializado');
         } catch (error) {
             console.error('❌ Error inicializando Supabase:', error);
         }
+    }
+
+    /**
+     * 🎯 CONFIGURAR LISTENER DE COMISIONES DE REFERIDOS
+     * Escucha cuando el usuario (como referrer) recibe comisiones de sus referidos
+     */
+    setupReferralCommissionListener() {
+        // Escuchar eventos de comisiones recibidas como referrer
+        window.addEventListener('rsc:referrer-commission-received', async (event) => {
+            const { referrerId, commissionAmount, referredUserId, miningAmount } = event.detail;
+            
+            // Solo procesar si el evento es para el usuario actual
+            if (this.user.isAuthenticated && this.user.id === referrerId) {
+                console.log(`💰 ¡Comisión recibida! +${commissionAmount.toFixed(8)} RSC de referido ${referredUserId}`);
+                
+                // Actualizar balance local
+                const oldBalance = this.user.balance;
+                this.user.balance += commissionAmount;
+                this.saveUserToStorage();
+                
+                // Actualizar UI
+                this.forceUIUpdate();
+                
+                // Sincronizar con base de datos
+                try {
+                    await this.syncBalanceToBackend();
+                    console.log(`✅ Balance actualizado: ${oldBalance.toFixed(8)} → ${this.user.balance.toFixed(8)} RSC`);
+                } catch (error) {
+                    console.error('❌ Error sincronizando balance después de comisión:', error);
+                }
+                
+                // Mostrar notificación visual si existe la función
+                if (typeof window.showNotification === 'function') {
+                    window.showNotification({
+                        type: 'success',
+                        title: '💰 Comisión Recibida',
+                        message: `Has recibido ${commissionAmount.toFixed(6)} RSC de comisión de referido`,
+                        duration: 5000
+                    });
+                }
+                
+                // Disparar evento de balance actualizado
+                window.dispatchEvent(new CustomEvent('balanceUpdated', {
+                    detail: {
+                        balance: this.user.balance,
+                        change: commissionAmount,
+                        source: 'referral_commission',
+                        timestamp: new Date().toISOString()
+                    }
+                }));
+            }
+        });
+        
+        // También escuchar el evento general de comisiones procesadas (para logging)
+        window.addEventListener('rsc:referral-commission-processed', (event) => {
+            const { referrerId, commissionAmount } = event.detail;
+            if (this.user.isAuthenticated && this.user.id === referrerId) {
+                console.log(`📊 Comisión procesada en sistema: ${commissionAmount.toFixed(8)} RSC`);
+            }
+        });
+        
+        console.log('✅ Listener de comisiones de referidos configurado');
     }
 
     async checkConnection() {
@@ -1390,13 +1453,18 @@ class SupabaseIntegration {
                     session_id: this.miningSession.sessionId,
                     hash_rate: this.miningSession.hashRate,
                     efficiency: this.miningSession.efficiency,
-                    processed_at: new Date().toISOString()
+                    processed_at: new Date().toISOString(),
+                    referred_username: this.user.username || 'Unknown'
                 }
             };
 
             const endpoint = `${this.config.url}/functions/v1/referral_commission`;
 
-            console.log('🎯 Llamando función edge referral_commission con payload:', payload);
+            console.log('🎯 Procesando comisión de referido:', {
+                referrerId: this.user.referredBy,
+                miningAmount: miningAmount.toFixed(8),
+                expectedCommission: (miningAmount * 0.1).toFixed(8)
+            });
 
             const response = await fetch(endpoint, {
                 method: 'POST',
@@ -1411,24 +1479,55 @@ class SupabaseIntegration {
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error(`❌ Error procesando comisión de referido (HTTP ${response.status}):`, errorText);
+                
+                // Try to parse error if it's JSON
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    console.error('Error details:', errorJson);
+                } catch (e) {
+                    // Not JSON, just log the text
+                }
                 return;
             }
 
             const result = await response.json();
-            console.log('✅ Comisión de referido procesada vía edge function:', result);
-
-            if (result?.success && Number(result.commission_amount) > 0) {
-                window.dispatchEvent(new CustomEvent('rsc:referral-commission-processed', {
-                    detail: {
-                        commissionAmount: Number(result.commission_amount),
-                        totals: result.totals || {},
-                        referrerId: result.referrer_user_id
-                    }
-                }));
+            
+            if (result?.success) {
+                const commissionAmount = Number(result.commission_amount) || 0;
+                
+                if (commissionAmount > 0) {
+                    console.log(`✅ Comisión de referido procesada: ${commissionAmount.toFixed(8)} RSC para referrer ${result.referrer_user_id}`);
+                    
+                    // Dispatch event for the referrer (if they're logged in on another tab/device)
+                    window.dispatchEvent(new CustomEvent('rsc:referral-commission-processed', {
+                        detail: {
+                            commissionAmount: commissionAmount,
+                            totals: result.totals || {},
+                            referrerId: result.referrer_user_id,
+                            referredUserId: result.referred_user_id,
+                            miningAmount: miningAmount
+                        }
+                    }));
+                    
+                    // Also dispatch a global event that the referrer can listen to
+                    window.dispatchEvent(new CustomEvent('rsc:referrer-commission-received', {
+                        detail: {
+                            referrerId: result.referrer_user_id,
+                            commissionAmount: commissionAmount,
+                            referredUserId: result.referred_user_id,
+                            miningAmount: miningAmount
+                        }
+                    }));
+                } else {
+                    console.warn('⚠️ Comisión procesada pero el monto es 0. Razón:', result.reason || 'unknown');
+                }
+            } else {
+                console.error('❌ La función edge retornó success: false:', result);
             }
 
         } catch (error) {
             console.error('❌ Error procesando comisiones de referido:', error);
+            console.error('Stack trace:', error.stack);
         }
     }
 
