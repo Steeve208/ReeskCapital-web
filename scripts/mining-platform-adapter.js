@@ -884,12 +884,6 @@
                                 <i class="fas fa-sign-in-alt"></i>
                                 Login
                             </button>
-                            <div class="auth-demo">
-                                <button type="button" class="auth-demo-btn" id="createTestUserBtn">
-                                    <i class="fas fa-vial"></i>
-                                    Create Test User
-                                </button>
-                            </div>
                         </form>
                         
                         <!-- Register Form -->
@@ -999,25 +993,6 @@
             const storedReferralCode = getStoredReferralCode();
             if (storedReferralCode && modal.querySelector('#registerReferral')) {
                 modal.querySelector('#registerReferral').value = storedReferralCode;
-            }
-            
-            // Setup test user button
-            const testUserBtn = modal.querySelector('#createTestUserBtn');
-            if (testUserBtn) {
-                testUserBtn.addEventListener('click', async () => {
-                    try {
-                        showAuthLoading(true);
-                        const testUser = await supabase.createTestUser();
-                        // El createTestUser ya hace auto-login
-                        closeAuthModal(modal);
-                        loadInitialState();
-                        showNotification('Test user created!', 'success');
-                    } catch (error) {
-                        showAuthError(modal, error.message);
-                    } finally {
-                        showAuthLoading(false);
-                    }
-                });
             }
             
             return modal;
