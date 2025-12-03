@@ -887,15 +887,24 @@ class SupabaseIntegration {
                     const dbBalance = parseFloat(users[0].balance) || 0;
                     const localBalance = this.user.balance || 0;
                     
-                    // 🔧 CORRECCIÓN: Usar siempre el mayor para evitar pérdidas durante minería
-                    // No sobreescribir el balance local si está minando activamente
+                    // 🔧 CORRECCIÓN CRÍTICA: Durante minería activa, el balance local es la fuente de verdad
+                    // NO reducir el balance local nunca durante la minería
                     if (this.miningSession.isActive) {
-                        // Durante minería, mantener el mayor de los dos balances
-                        this.user.balance = Math.max(dbBalance, localBalance);
-                        console.log(`💰 getUserBalance durante minería - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Usado: ${this.user.balance.toFixed(6)}`);
+                        // Durante minería, SIEMPRE mantener el balance local (nunca reducirlo)
+                        // Solo actualizar si la DB tiene un balance MAYOR (por ejemplo, de otra sesión)
+                        if (dbBalance > localBalance) {
+                            console.log(`💰 Balance DB mayor que local durante minería - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}`);
+                            console.log(`   Actualizando balance local con el mayor valor: ${dbBalance.toFixed(6)}`);
+                            this.user.balance = dbBalance;
+                            this.saveUserToStorage();
+                        } else {
+                            // El balance local es mayor o igual, mantenerlo (nunca reducirlo)
+                            console.log(`💰 getUserBalance durante minería - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Manteniendo local: ${this.user.balance.toFixed(6)}`);
+                        }
                     } else {
                         // Sin minería activa, usar el mayor para evitar pérdidas
                         this.user.balance = Math.max(dbBalance, localBalance);
+                        console.log(`💰 getUserBalance sin minería - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Usado: ${this.user.balance.toFixed(6)}`);
                     }
                     
                     return this.user.balance;
@@ -1063,16 +1072,28 @@ class SupabaseIntegration {
                     }
                 }
             } else if (tokensToAdd < 0) {
-                // 🔧 PROTECCIÓN: Si el balance local es MENOR que el de la DB, hay un problema
-                console.error('⚠️ ADVERTENCIA: Balance local es menor que el de la DB');
-                console.error(`   Esto podría indicar una pérdida de tokens. Balance local: ${localBalance}, DB: ${dbBalance}`);
-                console.error('   No se sincronizará para evitar sobrescribir un balance mayor.');
-                
-                // Actualizar balance local con el valor de la DB (el más alto)
-                this.user.balance = dbBalance;
-                this.saveUserToStorage();
-                
-                return false;
+                // 🔧 PROTECCIÓN CRÍTICA: Si el balance local es MENOR que el de la DB durante minería activa
+                // NO actualizar el balance local, ya que podría estar minando y el balance local es la fuente de verdad
+                if (this.miningSession.isActive) {
+                    console.warn('⚠️ ADVERTENCIA: Balance local es menor que el de la DB durante minería activa');
+                    console.warn(`   Balance local: ${localBalance.toFixed(6)}, DB: ${dbBalance.toFixed(6)}`);
+                    console.warn('   Durante minería activa, el balance local es la fuente de verdad. No se actualizará.');
+                    console.warn('   Esto podría indicar que la DB se actualizó desde otra sesión o hay un problema de sincronización.');
+                    
+                    // NO actualizar el balance local durante minería activa
+                    // El balance local debe ser la fuente de verdad durante la minería
+                    return false;
+                } else {
+                    // Si NO hay minería activa, entonces sí actualizar con el mayor
+                    console.warn('⚠️ ADVERTENCIA: Balance local es menor que el de la DB (sin minería activa)');
+                    console.warn(`   Balance local: ${localBalance.toFixed(6)}, DB: ${dbBalance.toFixed(6)}`);
+                    console.warn('   Actualizando balance local con el valor de la DB (el más alto).');
+                    
+                    this.user.balance = dbBalance;
+                    this.saveUserToStorage();
+                    
+                    return false;
+                }
             } else {
                 // tokensToAdd === 0, ya están sincronizados
                 console.log('✅ Balance ya está sincronizado');
@@ -1092,11 +1113,31 @@ class SupabaseIntegration {
 
         this.syncInterval = setInterval(async () => {
             if (this.user.isAuthenticated && this.miningSession.isActive) {
-                await this.syncBalanceToBackend();
+                try {
+                    // 🔧 PROTECCIÓN: Solo sincronizar si el balance local es mayor que el de la DB
+                    // Esto evita que se reduzca el balance durante la minería
+                    const dbBalanceResponse = await this.makeRequest('GET', `/rest/v1/users?id=eq.${this.user.id}&select=balance`);
+                    if (dbBalanceResponse.ok) {
+                        const dbUsers = await dbBalanceResponse.json();
+                        if (dbUsers && dbUsers.length > 0) {
+                            const dbBalance = parseFloat(dbUsers[0].balance) || 0;
+                            const localBalance = parseFloat(this.user.balance) || 0;
+                            
+                            // Solo sincronizar si hay tokens para agregar (balance local > DB)
+                            if (localBalance > dbBalance) {
+                                await this.syncBalanceToBackend();
+                            } else {
+                                console.log(`🔄 Sincronización omitida: Balance local (${localBalance.toFixed(6)}) <= DB (${dbBalance.toFixed(6)})`);
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ Error en sincronización automática:', error);
+                }
             }
         }, 20000); // 20 segundos
 
-        console.log('🔄 Sincronización automática iniciada (cada 20 segundos)');
+        console.log('🔄 Sincronización automática iniciada (cada 20 segundos) - Solo sincroniza si balance local > DB');
     }
 
     stopBackgroundSync() {
@@ -1173,26 +1214,34 @@ class SupabaseIntegration {
                             this.user.email = dbUser.email;
                             this.user.username = dbUser.username;
                             
-                            // 🔧 CORRECCIÓN: Usar siempre el mayor entre DB y local para evitar pérdidas
+                            // 🔧 CORRECCIÓN CRÍTICA: Durante minería activa, el balance local es la fuente de verdad
                             const dbBalance = parseFloat(dbUser.balance) || 0;
                             const localBalance = parseFloat(userData.balance) || 0;
                             
-                            // Si hay una sesión de minería activa, preferir el balance local (puede tener tokens recientes)
+                            // Si hay una sesión de minería activa, SIEMPRE mantener el balance local (nunca reducirlo)
                             const hasActiveMining = this.miningSession.isActive;
                             
-                            if (hasActiveMining && localBalance > dbBalance) {
-                                // Durante minería activa, usar el mayor de los dos
-                                this.user.balance = Math.max(dbBalance, localBalance);
-                                console.log(`💰 Balance durante minería activa - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Usado: ${this.user.balance.toFixed(6)}`);
-                                
-                                // Sincronizar la diferencia al backend
-                                const difference = localBalance - dbBalance;
-                                if (difference > 0) {
-                                    console.log(`🔄 Sincronizando diferencia de balance: +${difference.toFixed(6)} RSC`);
-                                    // Sincronizar en background (no esperar)
-                                    this.syncBalanceToBackend().catch(err => {
-                                        console.error('❌ Error sincronizando balance al cargar usuario:', err);
-                                    });
+                            if (hasActiveMining) {
+                                // Durante minería activa, el balance local es la fuente de verdad
+                                // Solo actualizar si la DB tiene un balance MAYOR (de otra sesión)
+                                if (dbBalance > localBalance) {
+                                    console.log(`💰 Balance DB mayor que local durante minería - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}`);
+                                    console.log(`   Actualizando balance local con el mayor valor: ${dbBalance.toFixed(6)}`);
+                                    this.user.balance = dbBalance;
+                                } else {
+                                    // Mantener el balance local (nunca reducirlo durante minería)
+                                    this.user.balance = localBalance;
+                                    console.log(`💰 Balance durante minería activa - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Manteniendo local: ${this.user.balance.toFixed(6)}`);
+                                    
+                                    // Sincronizar la diferencia al backend solo si hay tokens para agregar
+                                    const difference = localBalance - dbBalance;
+                                    if (difference > 0) {
+                                        console.log(`🔄 Sincronizando diferencia de balance: +${difference.toFixed(6)} RSC`);
+                                        // Sincronizar en background (no esperar)
+                                        this.syncBalanceToBackend().catch(err => {
+                                            console.error('❌ Error sincronizando balance al cargar usuario:', err);
+                                        });
+                                    }
                                 }
                             } else {
                                 // Sin minería activa, usar siempre el mayor para evitar pérdidas

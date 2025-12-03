@@ -107,8 +107,10 @@
                     elements.startMiningBtn.disabled = true;
                     try {
                         await supabase.startMiningSession();
+                        // 🔧 ACTUALIZAR BALANCE DEL USUARIO EN LA UI DESPUÉS DE INICIAR MINERÍA
+                        // (initializeEarnings ya lo hace, pero lo hacemos aquí también para asegurar)
                         updateUIState(true);
-                        initializeEarnings(); // Reinicializar earnings para nueva sesión
+                        initializeEarnings(); // Reinicializar earnings para nueva sesión (actualiza el balance también)
                         addActivity('Mining started', 'success');
                         showNotification('Mining started!', 'success');
                     } catch (error) {
@@ -196,9 +198,11 @@
                 return;
             }
             
-            // Cargar balance
+            // 🔧 CARGAR BALANCE CONSIDERANDO TOKENS MINADOS DE SESIÓN ACTIVA
             if (elements.miningBalance) {
-                elements.miningBalance.textContent = supabase.user.balance.toFixed(6) + ' RSC';
+                const tokensMined = supabase.miningSession.tokensMined || 0;
+                const totalBalance = supabase.user.balance + tokensMined;
+                elements.miningBalance.textContent = totalBalance.toFixed(6) + ' RSC';
             }
             
             // Inicializar earnings
@@ -232,11 +236,17 @@
             // Escuchar eventos de actualización de balance desde Supabase
             window.addEventListener('balanceUpdated', (event) => {
                 console.log('💰 Balance actualizado:', event.detail);
+                // 🔧 ACTUALIZAR BALANCE DEL USUARIO EN EL OBJETO SUPABASE
+                if (event.detail.balance !== undefined) {
+                    supabase.user.balance = parseFloat(event.detail.balance) || 0;
+                }
                 // Actualizar earnings cuando el balance cambie
                 initializeEarnings();
-                // Actualizar balance en la UI
+                // Actualizar balance en la UI (ya se hace en initializeEarnings, pero por si acaso)
                 if (elements.miningBalance) {
-                    elements.miningBalance.textContent = event.detail.balance.toFixed(6) + ' RSC';
+                    const tokensMined = supabase.miningSession.tokensMined || 0;
+                    const totalBalance = supabase.user.balance + tokensMined;
+                    elements.miningBalance.textContent = totalBalance.toFixed(6) + ' RSC';
                 }
             });
             
@@ -520,7 +530,14 @@
             // Get mined tokens from current session or user balance
             const tokensMined = supabase.miningSession.tokensMined || 0;
             
-            // Actualizar earnings total
+            // 🔧 ACTUALIZAR BALANCE DEL USUARIO EN LA UI (NO SOLO LOS TOKENS MINADOS DE LA SESIÓN)
+            if (elements.miningBalance) {
+                // Mostrar el balance total del usuario (balance base + tokens minados en esta sesión)
+                const totalBalance = supabase.user.balance + tokensMined;
+                elements.miningBalance.textContent = totalBalance.toFixed(6) + ' RSC';
+            }
+            
+            // Actualizar earnings total (solo tokens de esta sesión)
             if (elements.periodEarnings) {
                 elements.periodEarnings.textContent = tokensMined.toFixed(6) + ' RSC';
             }
