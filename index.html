@@ -31,7 +31,16 @@
   
   <!-- Styles -->
   <link rel="stylesheet" href="styles/global.css?v=4.0">
-  <link rel="stylesheet" href="styles/navbar.css?v=4.0">
+  <link rel="stylesheet" href="styles/neurosearch-navbar.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-hero.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-technology.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-roadmap.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-tokenomics.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-performance.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-ecosystem.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-community.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-cta.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-footer.css?v=1.0">
   <link rel="stylesheet" href="styles/animations.css?v=4.0">
   <link rel="stylesheet" href="styles/glassmorphism-effects.css?v=4.0">
   <link rel="stylesheet" href="styles/app.css?v=4.0">
@@ -56,255 +65,324 @@
   <link rel="shortcut icon" type="image/svg+xml" href="assets/img/rsc-logo-quantum.svg">
 </head>
 <body>
-  <!-- Navbar tipo ArgusVPN -->
-  <nav class="argus-navbar">
-    <div class="argus-navbar-inner">
-      <!-- Logo -->
-      <div class="argusnav-logo">
-        <img src="assets/img/rsc-logo-quantum.svg" class="argusnav-logo-img" alt="RSC Chain" />
-        <span class="argusnav-logo-text">RSC CHAIN</span>
-      </div>
-      
-      <!-- Menu Links (centrado) -->
-      <ul class="argusnav-menu">
-        <li><a href="#home">Home</a></li>
-        <li><a href="pages/technology.html">Technology</a></li>
-        <li><a href="pages/mine.html">Mining</a></li>
-        <li><a href="pages/staking.html">Staking</a></li>
-        <li><a href="pages/about.html">About</a></li>
-        <li><a href="pages/explorer.html">Explorer</a></li>
-      </ul>
-      
-      <!-- Utilidades derecha -->
-      <div class="argusnav-utilities">
-        <button class="argusnav-lang">EN</button>
-        <a href="pages/mine.html" class="argusnav-cta">Start Mining RSC</a>
-        <button id="argusnav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
-      </div>
+  <!-- Navbar estilo NeuroSearch -->
+  <nav class="neurosearch-navbar">
+    <!-- Left Navigation Buttons -->
+    <div class="neurosearch-nav-left">
+      <a href="#home" class="neurosearch-nav-btn active">How it works</a>
+      <a href="pages/about.html" class="neurosearch-nav-btn">About Us</a>
+      <a href="pages/docs.html" class="neurosearch-nav-btn">Blog</a>
+      <a href="https://t.me/RSCchain" target="_blank" rel="noopener noreferrer" class="neurosearch-nav-btn">Contact</a>
     </div>
-    <!-- Collapsible mobile menu -->
-    <div class="argusnav-mobile-menu" id="argusnav-mobile-menu">
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="pages/technology.html">Technology</a></li>
-        <li><a href="pages/mine.html">Mining</a></li>
-        <li><a href="pages/staking.html">Staking</a></li>
-        <li><a href="pages/about.html">About</a></li>
-        <li><a href="pages/mine.html" class="argusnav-cta-mobile">Start Mining</a></li>
-      </ul>
+
+    <!-- Center Logo -->
+    <div class="neurosearch-nav-center">
+      <div class="neurosearch-logo-icon"></div>
+      <span class="neurosearch-logo-text">RSC CHAIN</span>
+    </div>
+
+    <!-- Right Utilities -->
+    <div class="neurosearch-nav-right">
+      <button class="neurosearch-icon-btn" aria-label="Option 1"></button>
+      <button class="neurosearch-icon-btn" aria-label="Option 2"></button>
+      <button class="neurosearch-icon-btn" aria-label="Option 3"></button>
+      <a href="pages/coming-soon.html" class="neurosearch-account-btn">My Account</a>
+      <button class="neurosearch-mobile-toggle" id="neurosearchMobileToggle" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </nav>
-<script>// Mobile menu toggle
-  const burger = document.getElementById('argusnav-hamburger');
-  const mobileMenu = document.getElementById('argusnav-mobile-menu');
-  burger.onclick = () => {
-    mobileMenu.classList.toggle('open');
-    burger.classList.toggle('open');
-  };
-</script>
 
   <!-- Main Content -->
   <main>
-    <!-- ===== HERO SECTION - REDESIGNED TOP ===== -->
-    <section class="hero-top">
-      <!-- Background Effects -->
-      <div class="hero-top-bg">
-        <!-- Animated Gradient Mesh -->
-        <div class="hero-gradient-mesh"></div>
-        
-        <!-- Floating Orbs -->
-        <div class="hero-orb orb-1"></div>
-        <div class="hero-orb orb-2"></div>
-        <div class="hero-orb orb-3"></div>
-        
-        <!-- Grid Pattern -->
-        <div class="hero-grid-pattern"></div>
-        
-        <!-- Light Beams -->
-        <div class="hero-light-beam beam-1"></div>
-        <div class="hero-light-beam beam-2"></div>
-        
-        <!-- Particles Canvas -->
-        <canvas id="heroParticles" class="hero-particles-canvas"></canvas>
+    <!-- ===== HERO SECTION - ESTILO NEUROSEARCH ===== -->
+    <section class="neurosearch-hero">
+      <!-- Título izquierdo -->
+      <div class="neurosearch-hero-title-left">
+        <h1><span>THE FIRST BLOCKCHAIN</span><span>THAT CARES ABOUT YOUR ANONYMITY</span></h1>
+        <div class="neurosearch-hero-meta">
+          <div class="dot"></div>
+          <span>Active users 21K</span>
+        </div>
       </div>
 
-      <!-- Content -->
-      <div class="hero-top-container">
-        <!-- Main Content -->
-        <div class="hero-top-content">
-          <!-- Badge -->
-          <div class="hero-badge">
-            <div class="hero-badge-glow"></div>
-            <i class="fas fa-rocket"></i>
-            <span>QUANTUM BLOCKCHAIN REVOLUTION</span>
-          </div>
-
-          <!-- Main Title with 3D Effect -->
-          <h1 class="hero-main-title">
-            <span class="title-line">
-              <span class="title-word highlight" data-text="RSC">RSC</span>
-              <span class="title-word" data-text="CHAIN">CHAIN</span>
-            </span>
-            <span class="title-line">
-              <span class="title-word" data-text="QUANTUM">QUANTUM</span>
-            </span>
-            <span class="title-line">
-              <span class="title-word highlight" data-text="BLOCKCHAIN">BLOCKCHAIN</span>
-            </span>
-          </h1>
-
-          <!-- Subtitle -->
-          <p class="hero-subtitle">
-            Experience lightning-fast transactions, quantum-resistant security, and true decentralization. 
-            Join the next generation of blockchain technology with RSC Chain.
-          </p>
-
-          <!-- CTA Buttons -->
-          <div class="hero-cta-group">
-            <a href="pages/mine.html" class="hero-btn-primary">
-              <span class="btn-content">
-                <i class="fas fa-play-circle"></i>
-                <span>Start Mining Now</span>
-              </span>
-              <div class="btn-particles">
-                <span></span><span></span><span></span><span></span>
-              </div>
-            </a>
+      <!-- Cabeza Robot Humanoide 3D Animada con Selfie -->
+      <div class="neurosearch-3d-head-container">
+        <svg class="robot-head-svg" viewBox="0 0 500 550" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Definiciones de gradientes y filtros -->
+          <defs>
+            <!-- Gradiente para la piel del robot -->
+            <linearGradient id="skinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#4a4a52"/>
+              <stop offset="50%" stop-color="#3a3a42"/>
+              <stop offset="100%" stop-color="#2a2a32"/>
+            </linearGradient>
             
-            <a href="pages/docs.html" class="hero-btn-secondary">
-              <i class="fas fa-file-alt"></i>
-              <span>Learn More</span>
-            </a>
+            <!-- Gradiente para la cabeza -->
+            <radialGradient id="headSkin" cx="40%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#5a5a62"/>
+              <stop offset="40%" stop-color="#4a4a52"/>
+              <stop offset="70%" stop-color="#3a3a42"/>
+              <stop offset="100%" stop-color="#2a2a32"/>
+            </radialGradient>
+            
+            <!-- Gradiente para el brazo -->
+            <linearGradient id="armSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#5a5a62"/>
+              <stop offset="100%" stop-color="#3a3a42"/>
+            </linearGradient>
+            
+            <!-- Gradiente para el cuello -->
+            <linearGradient id="neckSkin" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4a4a52"/>
+              <stop offset="100%" stop-color="#3a3a42"/>
+            </linearGradient>
+            
+            <!-- Glow de fondo -->
+            <radialGradient id="headGlow" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#5a5a62" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+            </radialGradient>
+            
+            <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            
+            <linearGradient id="phoneScreen" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#2a2a35"/>
+              <stop offset="100%" stop-color="#1a1a25"/>
+            </linearGradient>
+          </defs>
+          
+          <!-- Glow de fondo -->
+          <ellipse class="robot-glow" cx="250" cy="220" rx="160" ry="200" fill="url(#headGlow)"/>
+          
+          <!-- ===== BRAZO Y MANO CON TELÉFONO ===== -->
+          <g class="selfie-arm">
+            <!-- Hombro con piel -->
+            <ellipse cx="380" cy="420" rx="28" ry="22" fill="url(#armSkin)" stroke="#5a5a62" stroke-width="1"/>
+            
+            <!-- Brazo superior con piel -->
+            <path d="M375 405 Q415 355 435 285 Q445 280 455 285 Q475 355 435 405 Q410 420 385 410 Z" 
+                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
+            
+            <!-- Codo con piel -->
+            <ellipse cx="445" cy="280" rx="15" ry="12" fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
+            
+            <!-- Antebrazo con piel -->
+            <path d="M435 275 Q455 225 448 165 Q460 160 468 165 Q480 225 460 280 Z" 
+                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
+            
+            <!-- Muñeca con piel -->
+            <ellipse cx="455" cy="162" rx="14" ry="10" fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
+            
+            <!-- Mano con piel -->
+            <path d="M438 158 Q428 145 433 118 Q440 115 445 118 Q442 145 448 155 Z" 
+                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
+            <path d="M448 155 Q445 132 450 108 Q457 105 462 108 Q458 132 458 155 Z" 
+                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
+            <path d="M458 158 Q468 138 465 112 Q472 110 477 115 Q478 140 468 160 Z" 
+                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
+            
+            <!-- Palma de la mano -->
+            <path d="M432 160 Q445 175 470 160 Q472 170 470 175 Q445 185 432 175 Z" 
+                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
+            
+            <!-- Pulgar -->
+            <path d="M428 155 Q415 148 410 158 Q405 172 418 180 Q428 178 432 168 Z" 
+                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
+            
+            <!-- TELÉFONO -->
+            <g class="phone">
+              <!-- Cuerpo del teléfono -->
+              <rect x="405" y="65" width="60" height="100" rx="10" ry="10" fill="#1a1a22" stroke="#4a4a52" stroke-width="1.5"/>
+              
+              <!-- Pantalla -->
+              <rect x="410" y="73" width="50" height="80" rx="5" ry="5" fill="url(#phoneScreen)" stroke="#3a3a42" stroke-width="0.8"/>
+              
+              <!-- Contenido de la pantalla del teléfono -->
+              <g class="phone-screen-content">
+                <!-- Logo RSC Chain -->
+                <text x="435" y="88" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#00ffff" text-anchor="middle">RSC</text>
+                <text x="435" y="95" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#00ffff" text-anchor="middle">CHAIN</text>
+                
+                <!-- Moneda RSK -->
+                <circle cx="435" cy="108" r="8" fill="#ffffff" opacity="0.9"/>
+                <text x="435" y="111" font-family="Arial, sans-serif" font-size="5" font-weight="bold" fill="#000000" text-anchor="middle">RSK</text>
+                
+                <!-- Gráfico de trading (línea ascendente) -->
+                <path d="M415 120 L420 115 L425 112 L430 110 L435 108 L440 106 L445 104 L450 102" 
+                      stroke="#00ffff" stroke-width="1.5" fill="none" opacity="0.8"/>
+                <circle cx="415" cy="120" r="1" fill="#00ffff"/>
+                <circle cx="420" cy="115" r="1" fill="#00ffff"/>
+                <circle cx="425" cy="112" r="1" fill="#00ffff"/>
+                <circle cx="430" cy="110" r="1" fill="#00ffff"/>
+                <circle cx="435" cy="108" r="1" fill="#00ffff"/>
+                <circle cx="440" cy="106" r="1" fill="#00ffff"/>
+                <circle cx="445" cy="104" r="1" fill="#00ffff"/>
+                <circle cx="450" cy="102" r="1" fill="#00ffff"/>
+                
+                <!-- Precio $10 -->
+                <text x="435" y="140" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#00ffff" text-anchor="middle">$10.00</text>
+                <text x="435" y="147" font-family="Arial, sans-serif" font-size="4" fill="#888888" text-anchor="middle">+2.5%</text>
+              </g>
+              
+              <!-- Cámara frontal del teléfono -->
+              <circle cx="435" cy="160" r="5" fill="#2a2a35" stroke="#4a4a52" stroke-width="1"/>
+              <circle cx="435" cy="160" r="2.5" fill="#3a3a42"/>
+              
+              <!-- LED flash -->
+              <circle cx="445" cy="70" r="2" fill="#5a5a62"/>
+              
+              <!-- Cámara trasera -->
+              <circle cx="418" cy="70" r="4" fill="#2a2a35" stroke="#4a4a52" stroke-width="0.8"/>
+              <circle cx="418" cy="70" r="2" fill="#3a3a42"/>
+            </g>
+          </g>
+          
+          <!-- ===== CABEZA CON PIEL ===== -->
+          <!-- Forma principal de la cabeza -->
+          <path d="M250 40 
+                   C330 40 390 100 390 180 
+                   L390 280 
+                   C390 340 350 380 330 400 
+                   L330 440 
+                   C330 460 310 480 250 480 
+                   C190 480 170 460 170 440 
+                   L170 400 
+                   C150 380 110 340 110 280 
+                   L110 180 
+                   C110 100 170 40 250 40Z" 
+                fill="url(#headSkin)" stroke="#5a5a62" stroke-width="1.2" filter="url(#softGlow)"/>
+          
+          <!-- Detalle de frente -->
+          <path d="M150 120 C190 70 310 70 350 120" 
+                stroke="#6a6a72" stroke-width="1" fill="none"/>
+          
+          <!-- Línea de frente -->
+          <path d="M140 160 C180 135 320 135 360 160" 
+                stroke="#5a5a62" stroke-width="0.8" fill="none"/>
+          
+          <!-- Cejas -->
+          <path d="M160 188 C180 178 220 178 240 188" 
+                stroke="#6a6a72" stroke-width="2" fill="none"/>
+          <path d="M260 188 C280 178 320 178 340 188" 
+                stroke="#6a6a72" stroke-width="2" fill="none"/>
+          
+          <!-- Cuencas de los ojos (sombra) -->
+          <ellipse cx="200" cy="210" rx="38" ry="22" fill="#2a2a32"/>
+          <ellipse cx="300" cy="210" rx="38" ry="22" fill="#2a2a32"/>
+          
+          <!-- Ojos (con animación de parpadeo) -->
+          <g class="robot-eye robot-eye-left">
+            <ellipse cx="200" cy="210" rx="18" ry="12" fill="#1a1a22"/>
+            <ellipse cx="200" cy="210" rx="10" ry="7" fill="#3a3a42"/>
+            <ellipse cx="203" cy="207" rx="4" ry="3" fill="#5a5a62"/>
+            <ellipse cx="205" cy="205" rx="2" ry="1.5" fill="#ffffff" opacity="0.6"/>
+          </g>
+          <g class="robot-eye robot-eye-right">
+            <ellipse cx="300" cy="210" rx="18" ry="12" fill="#1a1a22"/>
+            <ellipse cx="300" cy="210" rx="10" ry="7" fill="#3a3a42"/>
+            <ellipse cx="303" cy="207" rx="4" ry="3" fill="#5a5a62"/>
+            <ellipse cx="305" cy="205" rx="2" ry="1.5" fill="#ffffff" opacity="0.6"/>
+          </g>
+          
+          <!-- Puente de la nariz -->
+          <path d="M250 195 L250 275" stroke="#5a5a62" stroke-width="1.5" fill="none"/>
+          
+          <!-- Nariz con volumen -->
+          <path d="M235 275 Q240 295 250 300 Q260 295 265 275" 
+                fill="#3a3a42" stroke="#5a5a62" stroke-width="1"/>
+          <ellipse cx="240" cy="285" rx="8" ry="6" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.5"/>
+          <ellipse cx="260" cy="285" rx="8" ry="6" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.5"/>
+          
+          <!-- Filtrum -->
+          <path d="M250 300 L250 315" stroke="#4a4a52" stroke-width="1" fill="none"/>
+          
+          <!-- Labios - Sonrisa -->
+          <path d="M210 320 Q250 340 290 320" 
+                fill="#4a4a52" stroke="#5a5a62" stroke-width="1"/>
+          <path d="M215 322 Q250 335 285 322" 
+                stroke="#3a3a42" stroke-width="0.8" fill="none"/>
+          
+          <!-- Barbilla -->
+          <ellipse cx="250" cy="375" rx="50" ry="25" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.8"/>
+          
+          <!-- Pómulos (highlights) -->
+          <ellipse cx="150" cy="250" rx="25" ry="35" fill="#4a4a52" opacity="0.5"/>
+          <ellipse cx="350" cy="250" rx="25" ry="35" fill="#4a4a52" opacity="0.5"/>
+          
+          <!-- Cuello con piel -->
+          <path d="M190 400 L180 500 Q250 510 320 500 L310 400 Z" 
+                fill="url(#neckSkin)" stroke="#5a5a62" stroke-width="0.8"/>
+          
+          <!-- Líneas del cuello -->
+          <path d="M220 420 L218 480" stroke="#4a4a52" stroke-width="0.8" fill="none"/>
+          <path d="M250 410 L250 490" stroke="#4a4a52" stroke-width="0.8" fill="none"/>
+          <path d="M280 420 L282 480" stroke="#4a4a52" stroke-width="0.8" fill="none"/>
+          
+          <!-- Hombros con piel -->
+          <path d="M140 500 Q190 480 250 485 Q310 480 360 500 Q380 510 400 520 L100 520 Q120 510 140 500 Z" 
+                fill="url(#skinGradient)" stroke="#5a5a62" stroke-width="0.8"/>
+          
+          <!-- Conexión al hombro levantado -->
+          <path d="M360 500 Q385 485 390 460 Q400 440 380 420" 
+                fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
+          
+          <!-- Orejas con piel -->
+          <ellipse cx="105" cy="220" rx="15" ry="35" fill="url(#skinGradient)" stroke="#5a5a62" stroke-width="1"/>
+          <ellipse cx="395" cy="220" rx="15" ry="35" fill="url(#skinGradient)" stroke="#5a5a62" stroke-width="1"/>
+          
+          <!-- Detalles internos de orejas -->
+          <ellipse cx="105" cy="220" rx="8" ry="20" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.5"/>
+          <ellipse cx="395" cy="220" rx="8" ry="20" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.5"/>
+        </svg>
+      </div>
+
+      <!-- Tarjetas inferiores izquierda -->
+      <div class="neurosearch-stats-cards">
+        <div class="neurosearch-stat-card mining-card">
+          <div class="neurosearch-stat-value">100%</div>
+          <div class="neurosearch-stat-label">Start Mining<br>Now</div>
+          <div class="neurosearch-stat-icons">
+            <div class="neurosearch-stat-icon">
+              <i class="fas fa-digging"></i>
+            </div>
+            <div class="neurosearch-stat-icon">
+              <i class="fas fa-coins"></i>
+            </div>
           </div>
-
-          <!-- Stats Bar -->
-          <div class="hero-stats-bar">
-            <div class="hero-stat-item">
-              <div class="stat-icon">
-                <i class="fas fa-bolt"></i>
-              </div>
-              <div class="stat-data">
-                <span class="stat-value">10,000+</span>
-                <span class="stat-label">TPS</span>
-              </div>
-            </div>
-
-            <div class="stat-divider"></div>
-
-            <div class="hero-stat-item">
-              <div class="stat-icon">
-                <i class="fas fa-clock"></i>
-              </div>
-              <div class="stat-data">
-                <span class="stat-value">1.8s</span>
-                <span class="stat-label">Finality</span>
-              </div>
-            </div>
-
-            <div class="stat-divider"></div>
-
-            <div class="hero-stat-item">
-              <div class="stat-icon">
-                <i class="fas fa-users"></i>
-              </div>
-              <div class="stat-data">
-                <span class="stat-value">50K+</span>
-                <span class="stat-label">Users</span>
-              </div>
-            </div>
-
-            <div class="stat-divider"></div>
-
-            <div class="hero-stat-item">
-              <div class="stat-icon">
-                <i class="fas fa-network-wired"></i>
-              </div>
-              <div class="stat-data">
-                <span class="stat-value">99.99%</span>
-                <span class="stat-label">Uptime</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Trust Badges -->
-          <div class="hero-trust-badges">
-            <div class="trust-badge">
-              <i class="fas fa-shield-alt"></i>
-              <span>Quantum Secure</span>
-            </div>
-            <div class="trust-badge">
-              <i class="fas fa-code-branch"></i>
-              <span>Open Source</span>
-            </div>
-            <div class="trust-badge">
-              <i class="fas fa-globe"></i>
-              <span>Decentralized</span>
-            </div>
-          </div>
+          <a href="pages/mine.html" class="mining-start-btn">
+            <span>Start Mining</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
 
-        <!-- Visual Element - 3D Blockchain -->
-        <div class="hero-visual">
-          <div class="visual-container">
-            <!-- Central Sphere -->
-            <div class="hero-sphere">
-              <div class="sphere-inner">
-                <div class="sphere-ring ring-1"></div>
-                <div class="sphere-ring ring-2"></div>
-                <div class="sphere-ring ring-3"></div>
-                <div class="sphere-core">
-                  <img src="assets/img/rsc-logo-quantum.svg" alt="RSC" class="sphere-logo">
-                </div>
-              </div>
-            </div>
-
-            <!-- Floating Cards -->
-            <div class="floating-card card-1">
-              <div class="card-icon">
-                <i class="fas fa-cube"></i>
-              </div>
-              <div class="card-content">
-                <span class="card-value">1,247,892</span>
-                <span class="card-label">Blocks</span>
-              </div>
-            </div>
-
-            <div class="floating-card card-2">
-              <div class="card-icon">
-                <i class="fas fa-exchange-alt"></i>
-              </div>
-              <div class="card-content">
-                <span class="card-value">2.5M+</span>
-                <span class="card-label">Transactions</span>
-              </div>
-            </div>
-
-            <div class="floating-card card-3">
-              <div class="card-icon">
-                <i class="fas fa-coins"></i>
-              </div>
-              <div class="card-content">
-                <span class="card-value">2.1M</span>
-                <span class="card-label">Total Supply</span>
-              </div>
-            </div>
-
-            <!-- Connection Lines -->
-            <svg class="connection-lines" viewBox="0 0 400 400">
-              <line x1="200" y1="200" x2="100" y2="100" class="connection-line" />
-              <line x1="200" y1="200" x2="300" y2="100" class="connection-line" />
-              <line x1="200" y1="200" x2="300" y2="300" class="connection-line" />
-            </svg>
+        <div class="neurosearch-stat-card event-card">
+          <div class="event-badge">
+            <i class="fas fa-fire"></i>
+            <span>ACTIVE EVENT</span>
+          </div>
+          <div class="neurosearch-stat-value event-value">50 RSK</div>
+          <div class="neurosearch-stat-label">Welcome Bonus<br>Event</div>
+          <div class="event-animation">
+            <div class="event-pulse"></div>
+          </div>
+          <div class="event-timer">
+            <i class="fas fa-clock"></i>
+            <span id="eventTimer">Limited Time</span>
           </div>
         </div>
       </div>
 
-      <!-- Scroll Indicator -->
-      <div class="hero-scroll-indicator">
-        <div class="scroll-mouse">
-          <div class="scroll-wheel"></div>
-        </div>
-        <span>Scroll to explore</span>
+      <!-- Texto derecho inferior -->
+      <div class="neurosearch-hero-right">
+        <h2>FOR REAL<br>LIFE LOOK-ALIKES</h2>
+        <p>It's crucial to stay updated on the legal and ethical considerations surrounding face recognition technology.</p>
       </div>
     </section>
 
@@ -326,140 +404,95 @@
       </div>
     </section>
 
-    <!-- ===== QUANTUM TECHNOLOGY SECTION - ARGUS STYLE ===== -->
-    <section id="technology" class="quantum-technology-argus">
-      <!-- Argus Background Effects -->
-      <div class="quantum-argus-bg">
-        <!-- Light leaks diagonales -->
-        <div class="argus-light-leak argus-light-leak-left"></div>
-        <div class="argus-light-leak argus-light-leak-right"></div>
-
-        <!-- Arco blanco superior -->
-        <svg class="argus-white-arc" viewBox="0 0 2000 300" width="100%" height="300" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="arcGlowTech" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="3" result="blur1"/>
-              <feGaussianBlur stdDeviation="6" result="blur2"/>
-              <feGaussianBlur stdDeviation="12" result="blur3"/>
-              <feGaussianBlur stdDeviation="24" result="blur4"/>
-              <feMerge>
-                <feMergeNode in="blur4"/>
-                <feMergeNode in="blur3"/>
-                <feMergeNode in="blur2"/>
-                <feMergeNode in="blur1"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-          <path d="M 50 280 Q 500 20, 1000 20 Q 1500 20, 1950 280"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                fill="none"
-                filter="url(#arcGlowTech)"
-                opacity="1"/>
-        </svg>
-      </div>
-
-      <div class="quantum-argus-container">
+    <!-- ===== QUANTUM TECHNOLOGY SECTION - NEUROSEARCH STYLE ===== -->
+    <section id="technology" class="neurosearch-technology">
+      <div class="neurosearch-technology-container">
         <!-- Main title -->
-        <h1 class="quantum-argus-title">Quantum-Powered Security</h1>
+        <h1 class="neurosearch-technology-title">Quantum-Powered Security</h1>
 
         <!-- Explanatory subtitle -->
-        <p class="quantum-argus-subtitle">
+        <p class="neurosearch-technology-subtitle">
           RSC Chain delivers next-generation blockchain security through advanced quantum technologies
           that ensure complete protection against current and future threats.
         </p>
 
         <!-- Grid de 5 características -->
-        <div class="quantum-features-grid">
+        <div class="neurosearch-features-grid">
           <!-- Característica 1: Quantum Security -->
-          <div class="quantum-feature-card">
-            <div class="feature-icon-container">
-              <div class="feature-icon-bg"></div>
-              <i class="fas fa-shield-alt feature-icon"></i>
+          <div class="neurosearch-feature-card">
+            <div class="neurosearch-feature-icon">
+              <i class="fas fa-shield-alt"></i>
             </div>
-            <h3 class="feature-title">Quantum Security</h3>
+            <h3 class="neurosearch-feature-title">Quantum Security</h3>
           </div>
 
           <!-- Característica 2: AI Intelligence -->
-          <div class="quantum-feature-card">
-            <div class="feature-icon-container">
-              <div class="feature-icon-bg"></div>
-              <i class="fas fa-brain feature-icon"></i>
+          <div class="neurosearch-feature-card">
+            <div class="neurosearch-feature-icon">
+              <i class="fas fa-brain"></i>
             </div>
-            <h3 class="feature-title">AI Intelligence</h3>
+            <h3 class="neurosearch-feature-title">AI Intelligence</h3>
           </div>
 
           <!-- Característica 3: Hybrid Consensus -->
-          <div class="quantum-feature-card">
-            <div class="feature-icon-container">
-              <div class="feature-icon-bg"></div>
-              <i class="fas fa-cogs feature-icon"></i>
+          <div class="neurosearch-feature-card">
+            <div class="neurosearch-feature-icon">
+              <i class="fas fa-cogs"></i>
             </div>
-            <h3 class="feature-title">Hybrid Consensus</h3>
+            <h3 class="neurosearch-feature-title">Hybrid Consensus</h3>
           </div>
 
           <!-- Característica 4: Post-Quantum Crypto -->
-          <div class="quantum-feature-card">
-            <div class="feature-icon-container">
-              <div class="feature-icon-bg"></div>
-              <i class="fas fa-key feature-icon"></i>
+          <div class="neurosearch-feature-card">
+            <div class="neurosearch-feature-icon">
+              <i class="fas fa-key"></i>
             </div>
-            <h3 class="feature-title">Post-Quantum Crypto</h3>
+            <h3 class="neurosearch-feature-title">Post-Quantum Crypto</h3>
           </div>
 
           <!-- Característica 5: Decentralized Network -->
-          <div class="quantum-feature-card">
-            <div class="feature-icon-container">
-              <div class="feature-icon-bg"></div>
-              <i class="fas fa-network-wired feature-icon"></i>
+          <div class="neurosearch-feature-card">
+            <div class="neurosearch-feature-icon">
+              <i class="fas fa-network-wired"></i>
             </div>
-            <h3 class="feature-title">Decentralized Network</h3>
+            <h3 class="neurosearch-feature-title">Decentralized Network</h3>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== ROADMAP SECTION - REDESIGNED TOP ===== -->
-    <section id="roadmap" class="roadmap-modern">
-      <!-- Background -->
-      <div class="roadmap-bg">
-        <div class="roadmap-glow-1"></div>
-        <div class="roadmap-glow-2"></div>
-        <div class="roadmap-grid"></div>
-      </div>
-
-      <div class="roadmap-container">
+    <!-- ===== ROADMAP SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
+    <section id="roadmap" class="neurosearch-roadmap">
+      <div class="neurosearch-roadmap-container">
         <!-- Header -->
-        <div class="roadmap-header">
-          <div class="roadmap-tag">
+        <div class="neurosearch-roadmap-header">
+          <div class="neurosearch-roadmap-tag">
             <i class="fas fa-route"></i>
             OUR JOURNEY
           </div>
-          <h2 class="roadmap-title">Development Roadmap</h2>
-          <p class="roadmap-subtitle">
+          <h2 class="neurosearch-roadmap-title">Development Roadmap</h2>
+          <p class="neurosearch-roadmap-subtitle">
             From foundational ideology to global blockchain infrastructure. 
             Follow our strategic path to revolutionize decentralized finance.
           </p>
         </div>
 
         <!-- Timeline -->
-        <div class="roadmap-timeline">
+        <div class="neurosearch-roadmap-timeline">
             <!-- Phase 0 -->
-            <div class="roadmap-phase completed">
-              <div class="phase-number">01</div>
-              <div class="phase-card">
-                <div class="phase-status-badge completed">
+            <div class="neurosearch-roadmap-phase completed">
+              <div class="neurosearch-phase-number">01</div>
+              <div class="neurosearch-phase-card">
+                <div class="neurosearch-phase-status-badge completed">
                   <i class="fas fa-check-circle"></i>
                   Completed
                 </div>
-                <h3 class="phase-title">Ideology & Foundation</h3>
-                <p class="phase-period">2024</p>
-                <p class="phase-description">
+                <h3 class="neurosearch-phase-title">Ideology & Foundation</h3>
+                <p class="neurosearch-phase-period">2024</p>
+                <p class="neurosearch-phase-description">
                   RSC Manifesto: freedom without borders, without banks, without KYC.
                 </p>
-                <ul class="phase-features">
+                <ul class="neurosearch-phase-features">
                   <li><i class="fas fa-check"></i> Layer 1 Blockchain (PoW + PoS + AI)</li>
                   <li><i class="fas fa-check"></i> Advanced security (PQC)</li>
                   <li><i class="fas fa-check"></i> Genesis modules & core infrastructure</li>
@@ -468,19 +501,19 @@
             </div>
             
             <!-- Phase 1 -->
-            <div class="roadmap-phase active">
-              <div class="phase-number">02</div>
-              <div class="phase-card">
-                <div class="phase-status-badge active">
+            <div class="neurosearch-roadmap-phase active">
+              <div class="neurosearch-phase-number">02</div>
+              <div class="neurosearch-phase-card">
+                <div class="neurosearch-phase-status-badge active">
                   <i class="fas fa-rocket"></i>
                   In Progress
                 </div>
-                <h3 class="phase-title">Fair Distribution</h3>
-                <p class="phase-period">2025</p>
-                <p class="phase-description">
+                <h3 class="neurosearch-phase-title">Fair Distribution</h3>
+                <p class="neurosearch-phase-period">2025</p>
+                <p class="neurosearch-phase-description">
                   Web Mining initial distribution without ICO.
                 </p>
-                <ul class="phase-features">
+                <ul class="neurosearch-phase-features">
                   <li><i class="fas fa-spinner fa-spin"></i> Community gamification & daily tasks</li>
                   <li><i class="fas fa-spinner fa-spin"></i> Simulated P2P Market</li>
                   <li><i class="fas fa-spinner fa-spin"></i> Initial DAO governance</li>
@@ -489,19 +522,19 @@
             </div>
 
             <!-- Phase 2 -->
-            <div class="roadmap-phase">
-              <div class="phase-number">03</div>
-              <div class="phase-card">
-                <div class="phase-status-badge upcoming">
+            <div class="neurosearch-roadmap-phase">
+              <div class="neurosearch-phase-number">03</div>
+              <div class="neurosearch-phase-card">
+                <div class="neurosearch-phase-status-badge upcoming">
                   <i class="fas fa-clock"></i>
                   Upcoming
                 </div>
-                <h3 class="phase-title">Ecosystem Infrastructure</h3>
-                <p class="phase-period">Q4 2025 – Q1 2026</p>
-                <p class="phase-description">
+                <h3 class="neurosearch-phase-title">Ecosystem Infrastructure</h3>
+                <p class="neurosearch-phase-period">Q4 2025 – Q1 2026</p>
+                <p class="neurosearch-phase-description">
                   Complete Wallet - crypto bank in your pocket.
                 </p>
-                <ul class="phase-features">
+                <ul class="neurosearch-phase-features">
                   <li><i class="fas fa-circle"></i> RSC Bank Alpha with QR payments</li>
                   <li><i class="fas fa-circle"></i> NFT Validator Licenses (500 nodes)</li>
                   <li><i class="fas fa-circle"></i> Bridge v1 (RSC ↔ BNB)</li>
@@ -511,19 +544,19 @@
             </div>
 
             <!-- Phase 3 -->
-            <div class="roadmap-phase">
-              <div class="phase-number">04</div>
-              <div class="phase-card">
-                <div class="phase-status-badge upcoming">
+            <div class="neurosearch-roadmap-phase">
+              <div class="neurosearch-phase-number">04</div>
+              <div class="neurosearch-phase-card">
+                <div class="neurosearch-phase-status-badge upcoming">
                   <i class="fas fa-clock"></i>
                   Upcoming
                 </div>
-                <h3 class="phase-title">Multichain Innovation</h3>
-                <p class="phase-period">2026</p>
-                <p class="phase-description">
+                <h3 class="neurosearch-phase-title">Multichain Innovation</h3>
+                <p class="neurosearch-phase-period">2026</p>
+                <p class="neurosearch-phase-description">
                   Multiple bridges and native DEX with 10M TPS.
                 </p>
-                <ul class="phase-features">
+                <ul class="neurosearch-phase-features">
                   <li><i class="fas fa-circle"></i> Ethereum, TON, Solana bridges</li>
                   <li><i class="fas fa-circle"></i> Native DEX on RSC (10M TPS)</li>
                   <li><i class="fas fa-circle"></i> Advanced oracles</li>
@@ -533,19 +566,19 @@
             </div>
 
             <!-- Phase 4 -->
-            <div class="roadmap-phase">
-              <div class="phase-number">05</div>
-              <div class="phase-card">
-                <div class="phase-status-badge upcoming">
+            <div class="neurosearch-roadmap-phase">
+              <div class="neurosearch-phase-number">05</div>
+              <div class="neurosearch-phase-card">
+                <div class="neurosearch-phase-status-badge upcoming">
                   <i class="fas fa-clock"></i>
                   Upcoming
                 </div>
-                <h3 class="phase-title">Mass Adoption</h3>
-                <p class="phase-period">2026–2027</p>
-                <p class="phase-description">
+                <h3 class="neurosearch-phase-title">Mass Adoption</h3>
+                <p class="neurosearch-phase-period">2026–2027</p>
+                <p class="neurosearch-phase-description">
                   Global RSC Bank - payments without banks, without KYC.
                 </p>
-                <ul class="phase-features">
+                <ul class="neurosearch-phase-features">
                   <li><i class="fas fa-circle"></i> Direct crypto → fiat conversion</li>
                   <li><i class="fas fa-circle"></i> Regional partnerships (LatAm, Africa, Asia)</li>
                   <li><i class="fas fa-circle"></i> Hackathons & Grants program</li>
@@ -555,19 +588,19 @@
             </div>
 
             <!-- Phase 5 -->
-            <div class="roadmap-phase">
-              <div class="phase-number">06</div>
-              <div class="phase-card">
-                <div class="phase-status-badge upcoming">
+            <div class="neurosearch-roadmap-phase">
+              <div class="neurosearch-phase-number">06</div>
+              <div class="neurosearch-phase-card">
+                <div class="neurosearch-phase-status-badge upcoming">
                   <i class="fas fa-clock"></i>
                   Upcoming
                 </div>
-                <h3 class="phase-title">Global Infrastructure</h3>
-                <p class="phase-period">2027–2028</p>
-                <p class="phase-description">
+                <h3 class="neurosearch-phase-title">Global Infrastructure</h3>
+                <p class="neurosearch-phase-period">2027–2028</p>
+                <p class="neurosearch-phase-description">
                   RSC as the backbone of global decentralized commerce.
                 </p>
-                <ul class="phase-features">
+                <ul class="neurosearch-phase-features">
                   <li><i class="fas fa-circle"></i> Advanced backtesting for traders</li>
                   <li><i class="fas fa-circle"></i> Offline nodes for unstable internet</li>
                   <li><i class="fas fa-circle"></i> Global commerce integration</li>
@@ -580,118 +613,112 @@
       </div>
     </section>
 
-    <!-- ===== TOKENOMICS SECTION - PREMIUM MODERN ===== -->
-    <section id="tokenomics" class="tokenomics-modern">
-      <div class="tokenomics-bg-effects">
-        <div class="bg-glow bg-glow-1"></div>
-        <div class="bg-glow bg-glow-2"></div>
-        <div class="bg-particles"></div>
-      </div>
-
-      <div class="tokenomics-container">
+    <!-- ===== TOKENOMICS SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
+    <section id="tokenomics" class="neurosearch-tokenomics">
+      <div class="neurosearch-tokenomics-container">
         <!-- Header Section -->
-        <div class="tokenomics-header">
-          <div class="section-tag">TOKENOMICS</div>
-          <h2 class="tokenomics-title">RSC Token Distribution</h2>
-          <p class="tokenomics-subtitle">Fair, transparent, and sustainable token economy designed for long-term value creation</p>
+        <div class="neurosearch-tokenomics-header">
+          <div class="neurosearch-tokenomics-tag">TOKENOMICS</div>
+          <h2 class="neurosearch-tokenomics-title">RSC Token Distribution</h2>
+          <p class="neurosearch-tokenomics-subtitle">Fair, transparent, and sustainable token economy designed for long-term value creation</p>
         </div>
 
         <!-- Main Stats -->
-        <div class="tokenomics-main-stats">
-          <div class="main-stat-card">
-            <div class="stat-icon">
+        <div class="neurosearch-tokenomics-main-stats">
+          <div class="neurosearch-main-stat-card">
+            <div class="neurosearch-stat-icon">
               <i class="fas fa-coins"></i>
             </div>
-            <div class="stat-value">2.1M</div>
-            <div class="stat-label">Total Supply</div>
+            <div class="neurosearch-stat-value">2.1M</div>
+            <div class="neurosearch-stat-label">Total Supply</div>
           </div>
-          <div class="main-stat-card">
-            <div class="stat-icon">
+          <div class="neurosearch-main-stat-card">
+            <div class="neurosearch-stat-icon">
               <i class="fas fa-fire-alt"></i>
             </div>
-            <div class="stat-value">50%</div>
-            <div class="stat-label">Already Burned</div>
+            <div class="neurosearch-stat-value">50%</div>
+            <div class="neurosearch-stat-label">Already Burned</div>
           </div>
-          <div class="main-stat-card">
-            <div class="stat-icon">
+          <div class="neurosearch-main-stat-card">
+            <div class="neurosearch-stat-icon">
               <i class="fas fa-chart-line"></i>
             </div>
-            <div class="stat-value">1.05M</div>
-            <div class="stat-label">Circulating Supply</div>
+            <div class="neurosearch-stat-value">1.05M</div>
+            <div class="neurosearch-stat-label">Circulating Supply</div>
           </div>
         </div>
 
         <!-- Distribution Chart -->
-        <div class="tokenomics-distribution">
-          <div class="distribution-chart-container">
+        <div class="neurosearch-tokenomics-distribution">
+          <div class="neurosearch-distribution-chart-container">
             <canvas id="tokenomicsChart" width="400" height="400"></canvas>
-            <div class="chart-center-info">
-              <div class="chart-center-title">RSC</div>
-              <div class="chart-center-subtitle">Token</div>
+            <div class="neurosearch-chart-center-info">
+              <div class="neurosearch-chart-center-title">RSC</div>
+              <div class="neurosearch-chart-center-subtitle">Token</div>
             </div>
           </div>
 
-          <div class="distribution-legend">
-            <div class="legend-item" data-color="#00d4ff">
-              <div class="legend-color"></div>
-              <div class="legend-info">
-                <div class="legend-percentage">40%</div>
-                <div class="legend-label">Mining Rewards</div>
-                <div class="legend-amount">840,000 RSC</div>
+          <div class="neurosearch-distribution-legend">
+            <div class="neurosearch-legend-item" data-color="#ffffff">
+              <div class="neurosearch-legend-color" style="background: rgba(255, 255, 255, 0.8);"></div>
+              <div class="neurosearch-legend-info">
+                <div class="neurosearch-legend-percentage">40%</div>
+                <div class="neurosearch-legend-label">Mining Rewards</div>
+                <div class="neurosearch-legend-amount">840,000 RSC</div>
               </div>
             </div>
-            <div class="legend-item" data-color="#7c3aed">
-              <div class="legend-color"></div>
-              <div class="legend-info">
-                <div class="legend-percentage">30%</div>
-                <div class="legend-label">Staking Rewards</div>
-                <div class="legend-amount">630,000 RSC</div>
+            <div class="neurosearch-legend-item" data-color="#ffffff">
+              <div class="neurosearch-legend-color" style="background: rgba(255, 255, 255, 0.6);"></div>
+              <div class="neurosearch-legend-info">
+                <div class="neurosearch-legend-percentage">30%</div>
+                <div class="neurosearch-legend-label">Staking Rewards</div>
+                <div class="neurosearch-legend-amount">630,000 RSC</div>
               </div>
             </div>
-            <div class="legend-item" data-color="#10b981">
-              <div class="legend-color"></div>
-              <div class="legend-info">
-                <div class="legend-percentage">20%</div>
-                <div class="legend-label">Ecosystem Development</div>
-                <div class="legend-amount">420,000 RSC</div>
+            <div class="neurosearch-legend-item" data-color="#ffffff">
+              <div class="neurosearch-legend-color" style="background: rgba(255, 255, 255, 0.4);"></div>
+              <div class="neurosearch-legend-info">
+                <div class="neurosearch-legend-percentage">20%</div>
+                <div class="neurosearch-legend-label">Ecosystem Development</div>
+                <div class="neurosearch-legend-amount">420,000 RSC</div>
               </div>
             </div>
-            <div class="legend-item" data-color="#f59e0b">
-              <div class="legend-color"></div>
-              <div class="legend-info">
-                <div class="legend-percentage">10%</div>
-                <div class="legend-label">Reserve Fund</div>
-                <div class="legend-amount">210,000 RSC</div>
+            <div class="neurosearch-legend-item" data-color="#ffffff">
+              <div class="neurosearch-legend-color" style="background: rgba(255, 255, 255, 0.2);"></div>
+              <div class="neurosearch-legend-info">
+                <div class="neurosearch-legend-percentage">10%</div>
+                <div class="neurosearch-legend-label">Reserve Fund</div>
+                <div class="neurosearch-legend-amount">210,000 RSC</div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Key Features -->
-        <div class="tokenomics-features">
-          <div class="feature-card">
-            <div class="feature-icon">
+        <div class="neurosearch-tokenomics-features">
+          <div class="neurosearch-tokenomics-feature-card">
+            <div class="neurosearch-tokenomics-feature-icon">
               <i class="fas fa-shield-alt"></i>
             </div>
             <h3>No ICO/Presale</h3>
             <p>100% fair launch with no pre-mine or private sales</p>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">
+          <div class="neurosearch-tokenomics-feature-card">
+            <div class="neurosearch-tokenomics-feature-icon">
               <i class="fas fa-cut"></i>
             </div>
             <h3>Halving Mechanism</h3>
             <p>Mining rewards halve every 4 years for sustainable supply</p>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">
+          <div class="neurosearch-tokenomics-feature-card">
+            <div class="neurosearch-tokenomics-feature-icon">
               <i class="fas fa-lock"></i>
             </div>
             <h3>Deflationary Model</h3>
             <p>Transaction fees burned to reduce circulating supply</p>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">
+          <div class="neurosearch-tokenomics-feature-card">
+            <div class="neurosearch-tokenomics-feature-icon">
               <i class="fas fa-users"></i>
             </div>
             <h3>Community Driven</h3>
@@ -701,168 +728,138 @@
       </div>
     </section>
 
-    <!-- ===== PERFORMANCE SECTION - REDESIGNED TOP ===== -->
-    <section class="performance-modern">
-      <!-- Background -->
-      <div class="performance-bg">
-        <div class="performance-glow-top"></div>
-        <div class="performance-glow-bottom"></div>
-      </div>
-
-      <div class="performance-container">
+    <!-- ===== LIVE METRICS SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
+    <section class="neurosearch-performance">
+      <div class="neurosearch-performance-container">
         <!-- Header -->
-        <div class="performance-header">
-          <div class="perf-tag">
-            <div class="tag-dot"></div>
+        <div class="neurosearch-performance-header">
+          <div class="neurosearch-perf-tag">
+            <div class="neurosearch-tag-dot"></div>
             LIVE METRICS
           </div>
-          <h2 class="perf-title">Real-Time Performance</h2>
-          <p class="perf-subtitle">
+          <h2 class="neurosearch-perf-title">Real-Time Performance</h2>
+          <p class="neurosearch-perf-subtitle">
             Live blockchain metrics updated every second. Monitor RSC Chain's performance in real-time.
           </p>
         </div>
 
         <!-- Stats Grid -->
-        <div class="perf-stats-grid">
+        <div class="neurosearch-perf-stats-grid">
           <!-- Big Stat 1 - TPS -->
-          <div class="perf-big-card">
-            <div class="perf-card-bg"></div>
-            <div class="perf-card-content">
-              <div class="perf-icon-wrapper">
-                <i class="fas fa-bolt"></i>
-              </div>
-              <div class="perf-metric-value" data-target="10000">0</div>
-              <div class="perf-metric-label">Transactions Per Second</div>
-              <div class="perf-trend">
-                <span class="trend-badge trend-up">
-                  <i class="fas fa-arrow-up"></i>
-                  +15%
-                </span>
-                <span class="trend-text">vs last hour</span>
-              </div>
+          <div class="neurosearch-perf-big-card">
+            <div class="neurosearch-perf-icon-wrapper">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="neurosearch-perf-metric-value" data-target="10000">0</div>
+            <div class="neurosearch-perf-metric-label">Transactions Per Second</div>
+            <div class="neurosearch-perf-trend">
+              <span class="neurosearch-trend-badge trend-up">
+                <i class="fas fa-arrow-up"></i>
+                +15%
+              </span>
+              <span class="neurosearch-trend-text">vs last hour</span>
             </div>
           </div>
 
           <!-- Big Stat 2 - Block Height -->
-          <div class="perf-big-card">
-            <div class="perf-card-bg"></div>
-            <div class="perf-card-content">
-              <div class="perf-icon-wrapper">
-                <i class="fas fa-cubes"></i>
-              </div>
-              <div class="perf-metric-value" data-target="1247892">0</div>
-              <div class="perf-metric-label">Current Block Height</div>
-              <div class="perf-mini-viz">
-                <div class="block-pulse"></div>
-                <div class="block-pulse"></div>
-                <div class="block-pulse"></div>
-                <div class="block-pulse"></div>
-              </div>
-              <div class="perf-info-text">
-                <i class="fas fa-clock"></i>
-                New block every 1.8s
-              </div>
+          <div class="neurosearch-perf-big-card">
+            <div class="neurosearch-perf-icon-wrapper">
+              <i class="fas fa-cubes"></i>
+            </div>
+            <div class="neurosearch-perf-metric-value" data-target="1247892">0</div>
+            <div class="neurosearch-perf-metric-label">Current Block Height</div>
+            <div class="neurosearch-perf-mini-viz">
+              <div class="neurosearch-block-pulse"></div>
+              <div class="neurosearch-block-pulse"></div>
+              <div class="neurosearch-block-pulse"></div>
+              <div class="neurosearch-block-pulse"></div>
+            </div>
+            <div class="neurosearch-perf-info-text">
+              <i class="fas fa-clock"></i>
+              New block every 1.8s
             </div>
           </div>
 
           <!-- Small Stats Row 1 -->
-          <div class="perf-small-card">
-            <div class="perf-card-bg"></div>
-            <div class="perf-small-content">
-              <div class="perf-small-icon">
-                <i class="fas fa-globe"></i>
-              </div>
-              <div class="perf-small-value" data-target="2847">0</div>
-              <div class="perf-small-label">Active Nodes</div>
-              <div class="perf-small-viz">
-                <div class="node-dot"></div>
-                <div class="node-dot"></div>
-                <div class="node-dot"></div>
-              </div>
+          <div class="neurosearch-perf-small-card">
+            <div class="neurosearch-perf-small-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div class="neurosearch-perf-small-value" data-target="2847">0</div>
+            <div class="neurosearch-perf-small-label">Active Nodes</div>
+            <div class="neurosearch-perf-small-viz">
+              <div class="neurosearch-node-dot"></div>
+              <div class="neurosearch-node-dot"></div>
+              <div class="neurosearch-node-dot"></div>
             </div>
           </div>
 
-          <div class="perf-small-card">
-            <div class="perf-card-bg"></div>
-            <div class="perf-small-content">
-              <div class="perf-small-icon">
-                <i class="fas fa-network-wired"></i>
-              </div>
-              <div class="perf-small-value">99.9%</div>
-              <div class="perf-small-label">Network Uptime</div>
-              <div class="perf-progress-bar">
-                <div class="perf-progress-fill" style="width: 99.9%"></div>
-              </div>
+          <div class="neurosearch-perf-small-card">
+            <div class="neurosearch-perf-small-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <div class="neurosearch-perf-small-value">99.9%</div>
+            <div class="neurosearch-perf-small-label">Network Uptime</div>
+            <div class="neurosearch-perf-progress-bar">
+              <div class="neurosearch-perf-progress-fill" style="width: 99.9%"></div>
             </div>
           </div>
 
-          <div class="perf-small-card">
-            <div class="perf-card-bg"></div>
-            <div class="perf-small-content">
-              <div class="perf-small-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="perf-small-value">512-bit</div>
-              <div class="perf-small-label">Security Level</div>
-              <div class="perf-shield-viz">
-                <i class="fas fa-check-circle"></i>
-                Quantum Safe
-              </div>
+          <div class="neurosearch-perf-small-card">
+            <div class="neurosearch-perf-small-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="neurosearch-perf-small-value">512-bit</div>
+            <div class="neurosearch-perf-small-label">Security Level</div>
+            <div class="neurosearch-perf-shield-viz">
+              <i class="fas fa-check-circle"></i>
+              Quantum Safe
             </div>
           </div>
 
           <!-- Small Stats Row 2 -->
-          <div class="perf-small-card">
-            <div class="perf-card-bg"></div>
-            <div class="perf-small-content">
-              <div class="perf-small-icon">
-                <i class="fas fa-coins"></i>
-              </div>
-              <div class="perf-small-value">$0.00</div>
-              <div class="perf-small-label">RSC Price</div>
-              <div class="perf-status-badge">Pre-Launch</div>
+          <div class="neurosearch-perf-small-card">
+            <div class="neurosearch-perf-small-icon">
+              <i class="fas fa-coins"></i>
             </div>
+            <div class="neurosearch-perf-small-value">$0.00</div>
+            <div class="neurosearch-perf-small-label">RSC Price</div>
+            <div class="neurosearch-perf-status-badge">Pre-Launch</div>
           </div>
 
-          <div class="perf-small-card">
-            <div class="perf-card-bg"></div>
-            <div class="perf-small-content">
-              <div class="perf-small-icon">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <div class="perf-small-value">$0</div>
-              <div class="perf-small-label">Market Cap</div>
-              <div class="perf-status-badge">Pre-Launch</div>
+          <div class="neurosearch-perf-small-card">
+            <div class="neurosearch-perf-small-icon">
+              <i class="fas fa-chart-line"></i>
             </div>
+            <div class="neurosearch-perf-small-value">$0</div>
+            <div class="neurosearch-perf-small-label">Market Cap</div>
+            <div class="neurosearch-perf-status-badge">Pre-Launch</div>
           </div>
 
-          <div class="perf-small-card">
-            <div class="perf-card-bg"></div>
-            <div class="perf-small-content">
-              <div class="perf-small-icon">
-                <i class="fas fa-fire-alt"></i>
-              </div>
-              <div class="perf-small-value">50%</div>
-              <div class="perf-small-label">Supply Burned</div>
-              <div class="perf-fire-viz">
-                <i class="fas fa-fire"></i>
-                1.05M RSC
-              </div>
+          <div class="neurosearch-perf-small-card">
+            <div class="neurosearch-perf-small-icon">
+              <i class="fas fa-fire-alt"></i>
+            </div>
+            <div class="neurosearch-perf-small-value">50%</div>
+            <div class="neurosearch-perf-small-label">Supply Burned</div>
+            <div class="neurosearch-perf-fire-viz">
+              <i class="fas fa-fire"></i>
+              1.05M RSC
             </div>
           </div>
         </div>
 
         <!-- Bottom Info Bar -->
-        <div class="perf-info-bar">
-          <div class="perf-info-item">
+        <div class="neurosearch-perf-info-bar">
+          <div class="neurosearch-perf-info-item">
             <i class="fas fa-database"></i>
             <span>Total Supply: <strong>2.1M RSC</strong></span>
           </div>
-          <div class="perf-info-item">
+          <div class="neurosearch-perf-info-item">
             <i class="fas fa-exchange-alt"></i>
             <span>24h Volume: <strong>$0</strong></span>
           </div>
-          <div class="perf-info-item">
+          <div class="neurosearch-perf-info-item">
             <i class="fas fa-users"></i>
             <span>Community: <strong>10K+ Members</strong></span>
           </div>
@@ -870,54 +867,47 @@
       </div>
     </section>
 
-    <!-- ===== ECOSYSTEM SECTION - ARGUS STYLE ===== -->
-    <section id="ecosystem" class="ecosystem-argus">
-      <!-- Background Effects -->
-      <div class="ecosystem-bg-effects">
-        <div class="ecosystem-glow ecosystem-glow-left"></div>
-        <div class="ecosystem-glow ecosystem-glow-right"></div>
-        <div class="ecosystem-grid-pattern"></div>
-      </div>
-
-      <div class="ecosystem-container">
+    <!-- ===== ECOSYSTEM SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
+    <section id="ecosystem" class="neurosearch-ecosystem">
+      <div class="neurosearch-ecosystem-container">
         <!-- Content Split Layout -->
-        <div class="ecosystem-content-wrapper">
+        <div class="neurosearch-ecosystem-content-wrapper">
           <!-- Left Side - Text Content -->
-          <div class="ecosystem-text-content">
-            <h1 class="ecosystem-title">
-              <span class="title-line">Fast.</span>
-              <span class="title-line">Reliable.</span>
-              <span class="title-line">Safe.</span>
+          <div class="neurosearch-ecosystem-text-content">
+            <h1 class="neurosearch-ecosystem-title">
+              <span class="neurosearch-title-line">Fast.</span>
+              <span class="neurosearch-title-line">Reliable.</span>
+              <span class="neurosearch-title-line">Safe.</span>
             </h1>
-            <p class="ecosystem-subtitle">
+            <p class="neurosearch-ecosystem-subtitle">
               RSC Chain is available on desktop and mobile devices with full mining and staking capabilities
             </p>
-            <div class="ecosystem-cta-group">
-              <a href="pages/mine.html" class="ecosystem-cta-button">Start Mining RSC</a>
-              <div class="ecosystem-guarantee">30-days money back guarantee</div>
+            <div class="neurosearch-ecosystem-cta-group">
+              <a href="pages/mine.html" class="neurosearch-ecosystem-cta-button">Start Mining RSC</a>
+              <div class="neurosearch-ecosystem-guarantee">30-days money back guarantee</div>
             </div>
           </div>
 
           <!-- Right Side - Phone Mockup -->
-          <div class="ecosystem-phone-mockup">
-            <div class="phone-frame">
-              <div class="phone-screen">
-                <div class="phone-header">
-                  <div class="phone-status-left">
+          <div class="neurosearch-ecosystem-phone-mockup">
+            <div class="neurosearch-phone-frame">
+              <div class="neurosearch-phone-screen">
+                <div class="neurosearch-phone-header">
+                  <div class="neurosearch-phone-status-left">
                     <i class="fas fa-circle"></i>
                   </div>
-                  <div class="phone-logo">RSC CHAIN</div>
-                  <div class="phone-status-right">
+                  <div class="neurosearch-phone-logo">RSC CHAIN</div>
+                  <div class="neurosearch-phone-status-right">
                     <i class="fas fa-star"></i>
                   </div>
                 </div>
                 
-                <div class="phone-timer">00:00:05</div>
-                <div class="phone-location">Argentina</div>
+                <div class="neurosearch-phone-timer">00:00:05</div>
+                <div class="neurosearch-phone-location">Argentina</div>
                 
                 <canvas id="ecosystemPlanetCanvas" width="300" height="300"></canvas>
                 
-                <div class="phone-connection-btn">Connected</div>
+                <div class="neurosearch-phone-connection-btn">Connected</div>
               </div>
             </div>
           </div>
@@ -925,134 +915,121 @@
       </div>
     </section>
 
-    <!-- ===== COMMUNITY SECTION - REDESIGNED TOP ===== -->
-    <section id="community" class="community-modern">
-      <!-- Background -->
-      <div class="community-bg">
-        <div class="community-glow-left"></div>
-        <div class="community-glow-right"></div>
-        <div class="community-grid-pattern"></div>
-      </div>
-
-      <div class="community-container">
+    <!-- ===== COMMUNITY SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
+    <section id="community" class="neurosearch-community">
+      <div class="neurosearch-community-container">
         <!-- Header -->
-        <div class="community-header">
-          <div class="comm-tag">
+        <div class="neurosearch-community-header">
+          <div class="neurosearch-comm-tag">
             <i class="fas fa-users"></i>
             JOIN THE COMMUNITY
           </div>
-          <h2 class="comm-title">Connect With RSC Chain</h2>
-          <p class="comm-subtitle">
+          <h2 class="neurosearch-comm-title">Connect With RSC Chain</h2>
+          <p class="neurosearch-comm-subtitle">
             Join our vibrant global community of developers, miners, and blockchain enthusiasts.
             Get support, share ideas, and stay updated with the latest news.
           </p>
         </div>
 
         <!-- Social Networks Grid -->
-        <div class="comm-social-grid">
+        <div class="neurosearch-comm-social-grid">
           <!-- Discord -->
-          <a href="https://discord.gg/KDpJRnaBwB" class="comm-social-card discord-card" target="_blank" rel="noopener noreferrer">
-            <div class="social-card-bg"></div>
-            <div class="social-icon">
+          <a href="https://discord.gg/KDpJRnaBwB" class="neurosearch-comm-social-card" target="_blank" rel="noopener noreferrer">
+            <div class="neurosearch-social-icon">
               <i class="fab fa-discord"></i>
             </div>
-            <h3 class="social-title">Discord</h3>
-            <p class="social-members">12.5K+ Members</p>
-            <div class="social-status">
-              <div class="status-dot"></div>
+            <h3 class="neurosearch-social-title">Discord</h3>
+            <p class="neurosearch-social-members">12.5K+ Members</p>
+            <div class="neurosearch-social-status">
+              <div class="neurosearch-status-dot"></div>
               <span>8.2K Online</span>
             </div>
-            <div class="social-cta">
+            <div class="neurosearch-social-cta">
               Join Server
               <i class="fas fa-arrow-right"></i>
             </div>
           </a>
 
           <!-- Telegram -->
-          <a href="https://t.me/RSCchain" class="comm-social-card telegram-card" target="_blank" rel="noopener noreferrer">
-            <div class="social-card-bg"></div>
-            <div class="social-icon">
+          <a href="https://t.me/RSCchain" class="neurosearch-comm-social-card" target="_blank" rel="noopener noreferrer">
+            <div class="neurosearch-social-icon">
               <i class="fab fa-telegram-plane"></i>
             </div>
-            <h3 class="social-title">Telegram</h3>
-            <p class="social-members">15.8K+ Members</p>
-            <div class="social-status">
-              <div class="status-dot"></div>
+            <h3 class="neurosearch-social-title">Telegram</h3>
+            <p class="neurosearch-social-members">15.8K+ Members</p>
+            <div class="neurosearch-social-status">
+              <div class="neurosearch-status-dot"></div>
               <span>10.5K Online</span>
             </div>
-            <div class="social-cta">
+            <div class="neurosearch-social-cta">
               Join Channel
               <i class="fas fa-arrow-right"></i>
             </div>
           </a>
 
           <!-- Twitter -->
-          <a href="https://x.com/Reeskcap" class="comm-social-card twitter-card" target="_blank" rel="noopener noreferrer">
-            <div class="social-card-bg"></div>
-            <div class="social-icon">
+          <a href="https://x.com/Reeskcap" class="neurosearch-comm-social-card" target="_blank" rel="noopener noreferrer">
+            <div class="neurosearch-social-icon">
               <i class="fab fa-twitter"></i>
             </div>
-            <h3 class="social-title">Twitter</h3>
-            <p class="social-members">22.3K+ Followers</p>
-            <div class="social-activity">
+            <h3 class="neurosearch-social-title">Twitter</h3>
+            <p class="neurosearch-social-members">22.3K+ Followers</p>
+            <div class="neurosearch-social-activity">
               <i class="fas fa-fire"></i>
               <span>High Activity</span>
             </div>
-            <div class="social-cta">
+            <div class="neurosearch-social-cta">
               Follow Us
               <i class="fas fa-arrow-right"></i>
             </div>
           </a>
 
           <!-- GitHub -->
-          <a href="https://github.com/rscchain" class="comm-social-card github-card" target="_blank" rel="noopener noreferrer">
-            <div class="social-card-bg"></div>
-            <div class="social-icon">
+          <a href="https://github.com/rscchain" class="neurosearch-comm-social-card" target="_blank" rel="noopener noreferrer">
+            <div class="neurosearch-social-icon">
               <i class="fab fa-github"></i>
             </div>
-            <h3 class="social-title">GitHub</h3>
-            <p class="social-members">3.2K+ Stars</p>
-            <div class="social-activity">
+            <h3 class="neurosearch-social-title">GitHub</h3>
+            <p class="neurosearch-social-members">3.2K+ Stars</p>
+            <div class="neurosearch-social-activity">
               <i class="fas fa-code-branch"></i>
               <span>847 Contributors</span>
             </div>
-            <div class="social-cta">
+            <div class="neurosearch-social-cta">
               Star Repo
               <i class="fas fa-arrow-right"></i>
             </div>
           </a>
 
           <!-- Reddit -->
-          <a href="#" class="comm-social-card reddit-card">
-            <div class="social-card-bg"></div>
-            <div class="social-icon">
+          <a href="#" class="neurosearch-comm-social-card">
+            <div class="neurosearch-social-icon">
               <i class="fab fa-reddit-alien"></i>
             </div>
-            <h3 class="social-title">Reddit</h3>
-            <p class="social-members">8.5K+ Members</p>
-            <div class="social-activity">
+            <h3 class="neurosearch-social-title">Reddit</h3>
+            <p class="neurosearch-social-members">8.5K+ Members</p>
+            <div class="neurosearch-social-activity">
               <i class="fas fa-comments"></i>
               <span>Very Active</span>
             </div>
-            <div class="social-cta">
+            <div class="neurosearch-social-cta">
               Join Subreddit
               <i class="fas fa-arrow-right"></i>
             </div>
           </a>
 
           <!-- YouTube -->
-          <a href="#" class="comm-social-card youtube-card">
-            <div class="social-card-bg"></div>
-            <div class="social-icon">
+          <a href="#" class="neurosearch-comm-social-card">
+            <div class="neurosearch-social-icon">
               <i class="fab fa-youtube"></i>
             </div>
-            <h3 class="social-title">YouTube</h3>
-            <p class="social-members">5.7K+ Subscribers</p>
-            <div class="social-activity">
+            <h3 class="neurosearch-social-title">YouTube</h3>
+            <p class="neurosearch-social-members">5.7K+ Subscribers</p>
+            <div class="neurosearch-social-activity">
               <i class="fas fa-video"></i>
               <span>Weekly Videos</span>
             </div>
-            <div class="social-cta">
+            <div class="neurosearch-social-cta">
               Subscribe
               <i class="fas fa-arrow-right"></i>
             </div>
@@ -1060,58 +1037,58 @@
         </div>
 
         <!-- Community Stats -->
-        <div class="comm-stats-banner">
-          <div class="comm-stat-item">
-            <div class="stat-icon-wrapper">
+        <div class="neurosearch-comm-stats-banner">
+          <div class="neurosearch-comm-stat-item">
+            <div class="neurosearch-comm-stat-icon-wrapper">
               <i class="fas fa-users"></i>
             </div>
-            <div class="stat-info">
-              <div class="stat-number" data-target="50000">0</div>
-              <div class="stat-label">Total Members</div>
+            <div class="neurosearch-comm-stat-info">
+              <div class="neurosearch-comm-stat-number" data-target="50000">0</div>
+              <div class="neurosearch-comm-stat-label">Total Members</div>
             </div>
           </div>
 
-          <div class="comm-stat-item">
-            <div class="stat-icon-wrapper">
+          <div class="neurosearch-comm-stat-item">
+            <div class="neurosearch-comm-stat-icon-wrapper">
               <i class="fas fa-globe-americas"></i>
             </div>
-            <div class="stat-info">
-              <div class="stat-number" data-target="150">0</div>
-              <div class="stat-label">Countries</div>
+            <div class="neurosearch-comm-stat-info">
+              <div class="neurosearch-comm-stat-number" data-target="150">0</div>
+              <div class="neurosearch-comm-stat-label">Countries</div>
             </div>
           </div>
 
-          <div class="comm-stat-item">
-            <div class="stat-icon-wrapper">
+          <div class="neurosearch-comm-stat-item">
+            <div class="neurosearch-comm-stat-icon-wrapper">
               <i class="fas fa-comments"></i>
             </div>
-            <div class="stat-info">
-              <div class="stat-number" data-target="25000">0</div>
-              <div class="stat-label">Messages Daily</div>
+            <div class="neurosearch-comm-stat-info">
+              <div class="neurosearch-comm-stat-number" data-target="25000">0</div>
+              <div class="neurosearch-comm-stat-label">Messages Daily</div>
             </div>
           </div>
 
-          <div class="comm-stat-item">
-            <div class="stat-icon-wrapper">
+          <div class="neurosearch-comm-stat-item">
+            <div class="neurosearch-comm-stat-icon-wrapper">
               <i class="fas fa-heart"></i>
             </div>
-            <div class="stat-info">
-              <div class="stat-number">98%</div>
-              <div class="stat-label">Satisfaction Rate</div>
+            <div class="neurosearch-comm-stat-info">
+              <div class="neurosearch-comm-stat-number">98%</div>
+              <div class="neurosearch-comm-stat-label">Satisfaction Rate</div>
             </div>
           </div>
         </div>
 
         <!-- CTA Box -->
-        <div class="comm-cta-box">
-          <div class="cta-box-icon">
+        <div class="neurosearch-comm-cta-box">
+          <div class="neurosearch-cta-box-icon">
             <i class="fas fa-rocket"></i>
           </div>
-          <div class="cta-box-content">
+          <div class="neurosearch-cta-box-content">
             <h3>Ready to Join?</h3>
             <p>Connect with thousands of RSC Chain enthusiasts and get instant support from our community</p>
           </div>
-          <a href="#" class="cta-box-button">
+          <a href="#" class="neurosearch-cta-box-button">
             Get Started
             <i class="fas fa-arrow-right"></i>
           </a>
@@ -1119,96 +1096,82 @@
       </div>
     </section>
 
-    <!-- ===== CTA SECTION - REDESIGNED TOP ===== -->
-    <section class="cta-modern">
-      <!-- Background -->
-      <div class="cta-bg">
-        <div class="cta-glow-center"></div>
-        <div class="cta-rays"></div>
-        <div class="cta-particles-wrapper">
-          <div class="cta-particle"></div>
-          <div class="cta-particle"></div>
-          <div class="cta-particle"></div>
-          <div class="cta-particle"></div>
-          <div class="cta-particle"></div>
-        </div>
-      </div>
-
-      <div class="cta-container">
+    <!-- ===== CTA SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
+    <section class="neurosearch-cta">
+      <div class="neurosearch-cta-container">
         <!-- Main Content -->
-        <div class="cta-main-content">
-          <div class="cta-badge-modern">
-            <div class="badge-dot"></div>
+        <div class="neurosearch-cta-main-content">
+          <div class="neurosearch-cta-badge">
+            <div class="neurosearch-badge-dot"></div>
             START YOUR JOURNEY
           </div>
           
-          <h2 class="cta-title">Ready to Experience the Future?</h2>
+          <h2 class="neurosearch-cta-title">Ready to Experience the Future?</h2>
           
-          <p class="cta-description">
+          <p class="neurosearch-cta-description">
             Join thousands of innovators who are already building on RSC Chain. 
             Start mining, staking, and earning rewards today with our quantum-resistant blockchain technology.
           </p>
 
           <!-- Stats Cards -->
-          <div class="cta-stats-grid">
-            <div class="cta-stat-card">
-              <div class="stat-card-icon">
+          <div class="neurosearch-cta-stats-grid">
+            <div class="neurosearch-cta-stat-card">
+              <div class="neurosearch-cta-stat-card-icon">
                 <i class="fas fa-bolt"></i>
               </div>
-              <div class="stat-card-value">10,000+</div>
-              <div class="stat-card-label">TPS</div>
+              <div class="neurosearch-cta-stat-card-value">10,000+</div>
+              <div class="neurosearch-cta-stat-card-label">TPS</div>
             </div>
 
-            <div class="cta-stat-card">
-              <div class="stat-card-icon">
+            <div class="neurosearch-cta-stat-card">
+              <div class="neurosearch-cta-stat-card-icon">
                 <i class="fas fa-clock"></i>
               </div>
-              <div class="stat-card-value">1.8s</div>
-              <div class="stat-card-label">Finality</div>
+              <div class="neurosearch-cta-stat-card-value">1.8s</div>
+              <div class="neurosearch-cta-stat-card-label">Finality</div>
             </div>
 
-            <div class="cta-stat-card">
-              <div class="stat-card-icon">
+            <div class="neurosearch-cta-stat-card">
+              <div class="neurosearch-cta-stat-card-icon">
                 <i class="fas fa-shield-alt"></i>
               </div>
-              <div class="stat-card-value">99.99%</div>
-              <div class="stat-card-label">Uptime</div>
+              <div class="neurosearch-cta-stat-card-value">99.99%</div>
+              <div class="neurosearch-cta-stat-card-label">Uptime</div>
             </div>
 
-            <div class="cta-stat-card">
-              <div class="stat-card-icon">
+            <div class="neurosearch-cta-stat-card">
+              <div class="neurosearch-cta-stat-card-icon">
                 <i class="fas fa-users"></i>
               </div>
-              <div class="stat-card-value">50K+</div>
-              <div class="stat-card-label">Users</div>
+              <div class="neurosearch-cta-stat-card-value">50K+</div>
+              <div class="neurosearch-cta-stat-card-label">Users</div>
             </div>
           </div>
 
           <!-- Action Buttons -->
-          <div class="cta-actions-modern">
-            <a href="pages/mine.html" class="cta-btn-primary">
+          <div class="neurosearch-cta-actions">
+            <a href="pages/mine.html" class="neurosearch-cta-btn-primary">
               <span>Start Mining Now</span>
               <i class="fas fa-arrow-right"></i>
-              <div class="btn-shine"></div>
             </a>
             
-            <a href="pages/docs.html" class="cta-btn-secondary">
+            <a href="pages/docs.html" class="neurosearch-cta-btn-secondary">
               <i class="fas fa-book"></i>
               <span>Documentation</span>
             </a>
           </div>
 
           <!-- Features List -->
-          <div class="cta-features-list">
-            <div class="cta-feature-item">
+          <div class="neurosearch-cta-features-list">
+            <div class="neurosearch-cta-feature-item">
               <i class="fas fa-check-circle"></i>
               <span>No technical knowledge required</span>
             </div>
-            <div class="cta-feature-item">
+            <div class="neurosearch-cta-feature-item">
               <i class="fas fa-check-circle"></i>
               <span>Start earning in minutes</span>
             </div>
-            <div class="cta-feature-item">
+            <div class="neurosearch-cta-feature-item">
               <i class="fas fa-check-circle"></i>
               <span>24/7 community support</span>
             </div>
@@ -1216,59 +1179,55 @@
         </div>
 
         <!-- Side Panel -->
-        <div class="cta-side-panel">
-          <div class="panel-card">
-            <div class="panel-card-header">
-              <div class="panel-icon">
-                <i class="fas fa-gift"></i>
+        <div class="neurosearch-cta-side-panel">
+          <div class="neurosearch-cta-panel-card">
+            <div class="neurosearch-cta-panel-card-header">
+              <div class="neurosearch-cta-panel-icon">
+                <i class="fas fa-digging"></i>
               </div>
-              <h3>Special Launch Offer</h3>
+              <h3>Start Mining</h3>
             </div>
             
-            <div class="panel-card-body">
-              <div class="offer-item">
-                <i class="fas fa-star"></i>
-                <div class="offer-text">
-                  <strong>Double Rewards</strong>
-                  <span>For early miners</span>
+            <div class="neurosearch-cta-panel-card-body">
+              <div class="neurosearch-cta-offer-item">
+                <i class="fas fa-bolt"></i>
+                <div class="neurosearch-cta-offer-text">
+                  <strong>High Performance</strong>
+                  <span>10,000+ TPS mining speed</span>
                 </div>
               </div>
               
-              <div class="offer-item">
-                <i class="fas fa-fire"></i>
-                <div class="offer-text">
-                  <strong>Zero Fees</strong>
-                  <span>First 3 months</span>
+              <div class="neurosearch-cta-offer-item">
+                <i class="fas fa-shield-alt"></i>
+                <div class="neurosearch-cta-offer-text">
+                  <strong>Quantum Secure</strong>
+                  <span>Resistant to quantum attacks</span>
                 </div>
               </div>
               
-              <div class="offer-item">
-                <i class="fas fa-trophy"></i>
-                <div class="offer-text">
-                  <strong>Exclusive NFTs</strong>
-                  <span>For top contributors</span>
+              <div class="neurosearch-cta-offer-item">
+                <i class="fas fa-coins"></i>
+                <div class="neurosearch-cta-offer-text">
+                  <strong>Instant Rewards</strong>
+                  <span>Get paid in real-time</span>
+                </div>
+              </div>
+
+              <div class="neurosearch-cta-offer-item">
+                <i class="fas fa-server"></i>
+                <div class="neurosearch-cta-offer-text">
+                  <strong>Low Resources</strong>
+                  <span>Mine with any device</span>
                 </div>
               </div>
             </div>
 
-            <div class="panel-card-footer">
-              <div class="countdown-label">Offer ends in:</div>
-              <div class="countdown-timer">
-                <div class="time-unit">
-                  <span class="time-value">07</span>
-                  <span class="time-label">Days</span>
-                </div>
-                <div class="time-separator">:</div>
-                <div class="time-unit">
-                  <span class="time-value">12</span>
-                  <span class="time-label">Hours</span>
-                </div>
-                <div class="time-separator">:</div>
-                <div class="time-unit">
-                  <span class="time-value">34</span>
-                  <span class="time-label">Mins</span>
-                </div>
-              </div>
+            <div class="neurosearch-cta-panel-card-footer">
+              <a href="pages/mine.html" class="neurosearch-cta-mining-btn">
+                <i class="fas fa-rocket"></i>
+                <span>Start Mining Now</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -1276,53 +1235,46 @@
     </section>
   </main>
 
-  <!-- ===== FOOTER - REDESIGNED TOP ===== -->
-  <footer class="footer-modern">
-    <!-- Background -->
-    <div class="footer-bg">
-      <div class="footer-glow-top"></div>
-      <div class="footer-glow-bottom"></div>
-      <div class="footer-grid"></div>
-    </div>
-
-    <div class="footer-container">
+  <!-- ===== FOOTER - FUTURISTA NEUROSEARCH STYLE ===== -->
+  <footer class="neurosearch-footer">
+    <div class="neurosearch-footer-container">
       <!-- Main Footer Content -->
-      <div class="footer-main">
+      <div class="neurosearch-footer-main">
         <!-- Brand Column -->
-        <div class="footer-brand">
-          <div class="brand-logo">
-            <img src="assets/img/rsc-logo-quantum.svg" alt="RSC Chain" class="logo-img">
+        <div class="neurosearch-footer-brand">
+          <div class="neurosearch-footer-brand-logo">
+            <img src="assets/img/rsc-logo-quantum.svg" alt="RSC Chain" class="neurosearch-footer-logo-img">
           </div>
-          <h3 class="brand-name">RSC Chain</h3>
-          <p class="brand-tagline">Next-Generation Quantum Blockchain Technology</p>
+          <h3 class="neurosearch-footer-brand-name">RSC Chain</h3>
+          <p class="neurosearch-footer-brand-tagline">Next-Generation Quantum Blockchain Technology</p>
           
           <!-- Social Links -->
-          <div class="social-links">
-            <a href="https://x.com/Reeskcap" target="_blank" class="social-btn twitter-btn">
+          <div class="neurosearch-footer-social-links">
+            <a href="https://x.com/Reeskcap" target="_blank" class="neurosearch-footer-social-btn">
               <i class="fab fa-x-twitter"></i>
             </a>
-            <a href="https://t.me/RSCchain" target="_blank" class="social-btn telegram-btn">
+            <a href="https://t.me/RSCchain" target="_blank" class="neurosearch-footer-social-btn">
               <i class="fab fa-telegram-plane"></i>
             </a>
-            <a href="https://discord.gg/KDpJRnaBwB" class="social-btn discord-btn" target="_blank" rel="noopener noreferrer">
+            <a href="https://discord.gg/KDpJRnaBwB" class="neurosearch-footer-social-btn" target="_blank" rel="noopener noreferrer">
               <i class="fab fa-discord"></i>
             </a>
-            <a href="https://github.com/rscchain" class="social-btn github-btn" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/rscchain" class="neurosearch-footer-social-btn" target="_blank" rel="noopener noreferrer">
               <i class="fab fa-github"></i>
             </a>
           </div>
           
           <!-- Live Stats -->
-          <div class="footer-stats">
-            <div class="footer-stat-item">
-              <div class="stat-dot"></div>
+          <div class="neurosearch-footer-stats">
+            <div class="neurosearch-footer-stat-item">
+              <div class="neurosearch-footer-stat-dot"></div>
               <span>Network Online</span>
             </div>
-            <div class="footer-stat-item">
+            <div class="neurosearch-footer-stat-item">
               <i class="fas fa-cube"></i>
               <span id="footerBlocks">1,247,892</span>
             </div>
-            <div class="footer-stat-item">
+            <div class="neurosearch-footer-stat-item">
               <i class="fas fa-users"></i>
               <span>15.6K Nodes</span>
             </div>
@@ -1330,11 +1282,11 @@
         </div>
 
         <!-- Links Columns -->
-        <div class="footer-links-wrapper">
+        <div class="neurosearch-footer-links-wrapper">
           <!-- Products -->
-          <div class="footer-column">
-            <h4 class="footer-column-title">Products</h4>
-            <ul class="footer-links">
+          <div class="neurosearch-footer-column">
+            <h4 class="neurosearch-footer-column-title">Products</h4>
+            <ul class="neurosearch-footer-links">
               <li><a href="pages/mine.html">Mining Platform</a></li>
               <li><a href="pages/staking.html">Staking</a></li>
               <li><a href="pages/explorer.html">Explorer</a></li>
@@ -1343,9 +1295,9 @@
           </div>
 
           <!-- Developers -->
-          <div class="footer-column">
-            <h4 class="footer-column-title">Developers</h4>
-            <ul class="footer-links">
+          <div class="neurosearch-footer-column">
+            <h4 class="neurosearch-footer-column-title">Developers</h4>
+            <ul class="neurosearch-footer-links">
               <li><a href="pages/docs.html">Documentation</a></li>
               <li><a href="#">API Reference</a></li>
               <li><a href="#">SDK & Tools</a></li>
@@ -1354,9 +1306,9 @@
           </div>
 
           <!-- Community -->
-          <div class="footer-column">
-            <h4 class="footer-column-title">Community</h4>
-            <ul class="footer-links">
+          <div class="neurosearch-footer-column">
+            <h4 class="neurosearch-footer-column-title">Community</h4>
+            <ul class="neurosearch-footer-links">
               <li><a href="https://reeskcapital.co" target="_blank">Official Website</a></li>
               <li><a href="https://t.me/RscCommunity" target="_blank">News Channel</a></li>
               <li><a href="https://t.me/Rscspanish" target="_blank">Spanish Group</a></li>
@@ -1365,9 +1317,9 @@
           </div>
 
           <!-- Support -->
-          <div class="footer-column">
-            <h4 class="footer-column-title">Support</h4>
-            <ul class="footer-links">
+          <div class="neurosearch-footer-column">
+            <h4 class="neurosearch-footer-column-title">Support</h4>
+            <ul class="neurosearch-footer-links">
               <li><a href="#">Help Center</a></li>
               <li><a href="#">Contact Us</a></li>
               <li><a href="#">Bug Reports</a></li>
@@ -1378,17 +1330,17 @@
       </div>
 
       <!-- Newsletter Section -->
-      <div class="footer-newsletter">
-        <div class="newsletter-content">
-          <div class="newsletter-icon">
+      <div class="neurosearch-footer-newsletter">
+        <div class="neurosearch-footer-newsletter-content">
+          <div class="neurosearch-footer-newsletter-icon">
             <i class="fas fa-envelope"></i>
           </div>
-          <div class="newsletter-text">
+          <div class="neurosearch-footer-newsletter-text">
             <h4>Stay Updated</h4>
             <p>Subscribe to get the latest news and updates</p>
           </div>
         </div>
-        <form class="newsletter-form">
+        <form class="neurosearch-footer-newsletter-form">
           <input type="email" placeholder="Enter your email" required>
           <button type="submit">
             Subscribe
@@ -1398,19 +1350,19 @@
       </div>
 
       <!-- Footer Bottom -->
-      <div class="footer-bottom">
-        <div class="footer-bottom-left">
-          <p class="copyright">
+      <div class="neurosearch-footer-bottom">
+        <div class="neurosearch-footer-bottom-left">
+          <p class="neurosearch-footer-copyright">
             © 2024 <strong>RSC chain</strong> - RSC Chain. All rights reserved.
           </p>
-          <div class="legal-links">
+          <div class="neurosearch-footer-legal-links">
             <a href="#">Terms</a>
             <a href="#">Privacy</a>
             <a href="#">Cookies</a>
           </div>
         </div>
         
-        <button class="back-to-top" id="backToTop">
+        <button class="neurosearch-footer-back-to-top" id="backToTop">
           <i class="fas fa-arrow-up"></i>
           <span>Top</span>
         </button>

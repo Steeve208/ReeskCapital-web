@@ -1,0 +1,168 @@
+/* ===== NAVBAR NEUROSEARCH - EXACTO AL MOCKUP ===== */
+.neurosearch-navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: #000000;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Left Navigation Buttons */
+.neurosearch-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.neurosearch-nav-btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #333333;
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.neurosearch-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #444444;
+}
+
+.neurosearch-nav-btn.active {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #000000;
+  font-weight: 500;
+}
+
+/* Center Logo */
+.neurosearch-nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.neurosearch-logo-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+/* Icono de 4 puntos en cruz */
+.neurosearch-logo-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 
+    0 -8px 0 0 #ffffff,
+    0 8px 0 0 #ffffff,
+    -8px 0 0 0 #ffffff,
+    8px 0 0 0 #ffffff;
+}
+
+.neurosearch-logo-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+/* Right Utilities */
+.neurosearch-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.neurosearch-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #333333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.neurosearch-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #444444;
+}
+
+.neurosearch-account-btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #333333;
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.neurosearch-account-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #444444;
+}
+
+/* Mobile */
+.neurosearch-mobile-toggle {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #333333;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .neurosearch-nav-left {
+    display: none;
+  }
+  
+  .neurosearch-nav-center {
+    position: static;
+    transform: none;
+  }
+  
+  .neurosearch-icon-btn {
+    display: none;
+  }
+  
+  .neurosearch-mobile-toggle {
+    display: flex;
+  }
+  
+  .neurosearch-account-btn {
+    display: none;
+  }
+}

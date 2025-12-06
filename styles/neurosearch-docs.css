@@ -1,0 +1,646 @@
+/* ===== DOCS PAGE - FUTURISTA NEUROSEARCH STYLE ===== */
+.neurosearch-docs-main {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #000000;
+  padding-top: 80px;
+}
+
+/* Grid sutil de fondo */
+.neurosearch-docs-main::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Hero Section */
+.neurosearch-docs-hero {
+  position: relative;
+  width: 100%;
+  padding: 80px 0 60px;
+  background: #000000;
+  border-bottom: 1px solid rgba(60, 60, 65, 0.5);
+}
+
+.neurosearch-docs-hero-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.neurosearch-docs-hero-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.neurosearch-docs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 50px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.neurosearch-docs-badge i {
+  color: #00ffff;
+}
+
+.neurosearch-docs-hero-title {
+  font-size: 3.5rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px 0;
+}
+
+.neurosearch-docs-hero-subtitle {
+  font-size: 1.2rem;
+  color: #888888;
+  line-height: 1.6;
+  margin: 0 0 40px 0;
+}
+
+.neurosearch-docs-hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 40px;
+}
+
+.neurosearch-docs-stat {
+  text-align: center;
+}
+
+.neurosearch-docs-stat-value {
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.neurosearch-docs-stat-label {
+  font-size: 0.9rem;
+  color: #888888;
+  font-weight: 500;
+}
+
+/* Docs Container */
+.neurosearch-docs-container {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+}
+
+/* Sidebar */
+.neurosearch-docs-sidebar {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.neurosearch-docs-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Search */
+.neurosearch-docs-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.neurosearch-docs-search i {
+  position: absolute;
+  left: 16px;
+  color: #888888;
+  font-size: 0.9rem;
+}
+
+.neurosearch-docs-search input {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 14px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.neurosearch-docs-search input::placeholder {
+  color: #666666;
+}
+
+.neurosearch-docs-search input:focus {
+  border-color: rgba(0, 255, 255, 0.3);
+  background: rgba(30, 30, 35, 1);
+}
+
+/* Navigation */
+.neurosearch-docs-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.neurosearch-docs-nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.neurosearch-docs-nav-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #888888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.neurosearch-docs-nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.neurosearch-docs-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 12px;
+  color: #888888;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.neurosearch-docs-nav-link i {
+  color: #00ffff;
+  font-size: 0.9rem;
+  width: 18px;
+  text-align: center;
+}
+
+.neurosearch-docs-nav-link:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+  color: #ffffff;
+  background: rgba(30, 30, 35, 1);
+}
+
+.neurosearch-docs-nav-link.active {
+  border-color: rgba(0, 255, 255, 0.3);
+  background: rgba(0, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* Main Content */
+.neurosearch-docs-content {
+  position: relative;
+  min-height: 600px;
+}
+
+/* Breadcrumb */
+.neurosearch-docs-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  font-size: 0.9rem;
+  color: #888888;
+}
+
+.neurosearch-docs-breadcrumb a {
+  color: #888888;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.neurosearch-docs-breadcrumb a:hover {
+  color: #ffffff;
+}
+
+.neurosearch-docs-breadcrumb i {
+  font-size: 0.7rem;
+  color: #666666;
+}
+
+.neurosearch-docs-breadcrumb span {
+  color: #ffffff;
+}
+
+/* Docs Pages */
+.neurosearch-docs-page {
+  display: none;
+}
+
+.neurosearch-docs-page.active {
+  display: block;
+}
+
+.neurosearch-docs-page-header {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(60, 60, 65, 0.5);
+}
+
+.neurosearch-docs-page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px 0;
+}
+
+.neurosearch-docs-page-header p {
+  font-size: 1.1rem;
+  color: #888888;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.neurosearch-docs-page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Table of Contents */
+.neurosearch-docs-toc {
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.neurosearch-docs-toc h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.neurosearch-docs-toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.neurosearch-docs-toc a {
+  color: #888888;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+  display: block;
+  padding: 8px 0;
+}
+
+.neurosearch-docs-toc a:hover {
+  color: #ffffff;
+}
+
+/* Sections */
+.neurosearch-docs-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.neurosearch-docs-section {
+  scroll-margin-top: 100px;
+}
+
+.neurosearch-docs-section h2 {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px 0;
+}
+
+.neurosearch-docs-section p {
+  font-size: 1rem;
+  color: #888888;
+  line-height: 1.7;
+  margin: 0 0 16px 0;
+}
+
+.neurosearch-docs-section p:last-child {
+  margin-bottom: 0;
+}
+
+/* Cards */
+.neurosearch-docs-card {
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 16px 0;
+  transition: all 0.3s ease;
+}
+
+.neurosearch-docs-card:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+}
+
+.neurosearch-docs-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ffff, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 16px 16px 0 0;
+}
+
+.neurosearch-docs-card:hover::before {
+  opacity: 1;
+}
+
+.neurosearch-docs-card h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+}
+
+.neurosearch-docs-card p {
+  font-size: 0.95rem;
+  color: #888888;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Code Blocks */
+.neurosearch-docs-section pre {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 12px;
+  padding: 20px;
+  overflow-x: auto;
+  margin: 24px 0;
+}
+
+.neurosearch-docs-section code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+.neurosearch-docs-section pre code {
+  color: #ffffff;
+}
+
+/* API Info */
+.neurosearch-docs-api-info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.neurosearch-docs-info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.neurosearch-docs-info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.neurosearch-docs-info-label {
+  font-size: 0.9rem;
+  color: #888888;
+  font-weight: 500;
+  min-width: 80px;
+}
+
+.neurosearch-docs-info-item code {
+  color: #00ffff;
+  font-size: 0.9rem;
+}
+
+/* API Endpoints */
+.neurosearch-docs-api-endpoint {
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.neurosearch-docs-api-endpoint h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.neurosearch-docs-endpoint-method {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 6px;
+  color: #00ffff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.neurosearch-docs-endpoint-url {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  color: #00ffff;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+/* Steps */
+.neurosearch-docs-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.neurosearch-docs-step {
+  display: flex;
+  gap: 24px;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.neurosearch-docs-step:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+}
+
+.neurosearch-docs-step-number {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 12px;
+  color: #00ffff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.neurosearch-docs-step-content {
+  flex: 1;
+}
+
+.neurosearch-docs-step-content h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+
+.neurosearch-docs-step-content p {
+  font-size: 0.95rem;
+  color: #888888;
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+}
+
+.neurosearch-docs-step-content pre {
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .neurosearch-docs-container {
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 968px) {
+  .neurosearch-docs-container {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .neurosearch-docs-sidebar {
+    position: relative;
+    top: 0;
+    max-height: none;
+  }
+
+  .neurosearch-docs-hero-title {
+    font-size: 2.5rem;
+  }
+
+  .neurosearch-docs-hero-stats {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .neurosearch-docs-hero {
+    padding: 60px 0 40px;
+  }
+
+  .neurosearch-docs-hero-container {
+    padding: 0 20px;
+  }
+
+  .neurosearch-docs-hero-title {
+    font-size: 2rem;
+  }
+
+  .neurosearch-docs-hero-stats {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .neurosearch-docs-page-header h1 {
+    font-size: 2rem;
+  }
+
+  .neurosearch-docs-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .neurosearch-docs-step {
+    flex-direction: column;
+  }
+}
+
+/* Scrollbar styling */
+.neurosearch-docs-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.neurosearch-docs-sidebar::-webkit-scrollbar-track {
+  background: rgba(30, 30, 35, 0.5);
+  border-radius: 3px;
+}
+
+.neurosearch-docs-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.neurosearch-docs-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 255, 0.5);
+}
+

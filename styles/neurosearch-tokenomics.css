@@ -1,0 +1,445 @@
+/* ===== TOKENOMICS SECTION - FUTURISTA NEUROSEARCH STYLE ===== */
+.neurosearch-tokenomics {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #000000;
+  padding: 120px 0;
+  overflow: hidden;
+}
+
+/* Grid sutil de fondo */
+.neurosearch-tokenomics::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.neurosearch-tokenomics-container {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Header */
+.neurosearch-tokenomics-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.neurosearch-tokenomics-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 50px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.neurosearch-tokenomics-title {
+  font-size: 3.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.neurosearch-tokenomics-subtitle {
+  font-size: 1rem;
+  color: #888888;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Main Stats */
+.neurosearch-tokenomics-main-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 80px;
+}
+
+.neurosearch-main-stat-card {
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.neurosearch-main-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transition: left 0.6s ease;
+}
+
+.neurosearch-main-stat-card:hover::before {
+  left: 100%;
+}
+
+.neurosearch-main-stat-card:hover {
+  background: rgba(40, 40, 45, 0.95);
+  border-color: rgba(80, 80, 85, 0.7);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.neurosearch-stat-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 1.8rem;
+  color: #ffffff;
+  background: rgba(20, 20, 25, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(60, 60, 65, 0.3);
+  transition: all 0.3s ease;
+}
+
+.neurosearch-main-stat-card:hover .neurosearch-stat-icon {
+  background: rgba(30, 30, 35, 0.7);
+  border-color: rgba(80, 80, 85, 0.5);
+  transform: scale(1.1);
+}
+
+.neurosearch-stat-value {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.neurosearch-stat-label {
+  font-size: 0.9rem;
+  color: #888888;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Distribution Chart */
+.neurosearch-tokenomics-distribution {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 80px;
+  align-items: center;
+}
+
+.neurosearch-distribution-chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.neurosearch-distribution-chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
+}
+
+.neurosearch-chart-center-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.neurosearch-chart-center-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.02em;
+}
+
+.neurosearch-chart-center-subtitle {
+  font-size: 0.9rem;
+  color: #888888;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Distribution Legend */
+.neurosearch-distribution-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.neurosearch-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.neurosearch-legend-item:hover {
+  background: rgba(40, 40, 45, 0.95);
+  border-color: rgba(80, 80, 85, 0.7);
+  transform: translateX(8px);
+}
+
+.neurosearch-legend-color {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.neurosearch-legend-info {
+  flex: 1;
+}
+
+.neurosearch-legend-percentage {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.01em;
+}
+
+.neurosearch-legend-label {
+  font-size: 0.95rem;
+  color: #ffffff;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+
+.neurosearch-legend-amount {
+  font-size: 0.85rem;
+  color: #888888;
+  font-weight: 400;
+}
+
+/* Key Features */
+.neurosearch-tokenomics-features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.neurosearch-tokenomics-feature-card {
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.neurosearch-tokenomics-feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transition: left 0.6s ease;
+}
+
+.neurosearch-tokenomics-feature-card:hover::before {
+  left: 100%;
+}
+
+.neurosearch-tokenomics-feature-card:hover {
+  background: rgba(40, 40, 45, 0.95);
+  border-color: rgba(80, 80, 85, 0.7);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.neurosearch-tokenomics-feature-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 1.5rem;
+  color: #ffffff;
+  background: rgba(20, 20, 25, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(60, 60, 65, 0.3);
+  transition: all 0.3s ease;
+}
+
+.neurosearch-tokenomics-feature-card:hover .neurosearch-tokenomics-feature-icon {
+  background: rgba(30, 30, 35, 0.7);
+  border-color: rgba(80, 80, 85, 0.5);
+  transform: scale(1.1);
+}
+
+.neurosearch-tokenomics-feature-card h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.01em;
+}
+
+.neurosearch-tokenomics-feature-card p {
+  font-size: 0.9rem;
+  color: #888888;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .neurosearch-tokenomics-distribution {
+    gap: 40px;
+  }
+  
+  .neurosearch-tokenomics-features {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .neurosearch-tokenomics-main-stats {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .neurosearch-tokenomics-distribution {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  
+  .neurosearch-tokenomics-container {
+    padding: 0 30px;
+  }
+  
+  .neurosearch-tokenomics-title {
+    font-size: 2.8rem;
+  }
+  
+  .neurosearch-tokenomics-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .neurosearch-tokenomics {
+    padding: 80px 0;
+  }
+
+  .neurosearch-tokenomics-container {
+    padding: 0 24px;
+  }
+
+  .neurosearch-tokenomics-header {
+    margin-bottom: 60px;
+  }
+  
+  .neurosearch-tokenomics-title {
+    font-size: 2.4rem;
+  }
+  
+  .neurosearch-tokenomics-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .neurosearch-tokenomics-main-stats {
+    margin-bottom: 60px;
+  }
+  
+  .neurosearch-main-stat-card {
+    padding: 32px 24px;
+  }
+  
+  .neurosearch-stat-value {
+    font-size: 2rem;
+  }
+  
+  .neurosearch-tokenomics-distribution {
+    margin-bottom: 60px;
+  }
+  
+  .neurosearch-tokenomics-features {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .neurosearch-tokenomics-feature-card {
+    padding: 28px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .neurosearch-tokenomics-title {
+    font-size: 2rem;
+  }
+  
+  .neurosearch-main-stat-card {
+    padding: 28px 20px;
+  }
+  
+  .neurosearch-stat-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+  
+  .neurosearch-stat-value {
+    font-size: 1.8rem;
+  }
+  
+  .neurosearch-chart-center-title {
+    font-size: 2rem;
+  }
+  
+  .neurosearch-legend-item {
+    padding: 16px;
+  }
+  
+  .neurosearch-legend-percentage {
+    font-size: 1.3rem;
+  }
+}
+

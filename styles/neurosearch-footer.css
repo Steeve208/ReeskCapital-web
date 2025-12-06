@@ -1,0 +1,478 @@
+/* ===== FOOTER - FUTURISTA NEUROSEARCH STYLE ===== */
+.neurosearch-footer {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  padding: 80px 0 40px;
+  overflow: hidden;
+}
+
+/* Grid sutil de fondo */
+.neurosearch-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.neurosearch-footer-container {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Main Footer Content */
+.neurosearch-footer-main {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 80px;
+  margin-bottom: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(60, 60, 65, 0.5);
+}
+
+/* Brand Column */
+.neurosearch-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.neurosearch-footer-brand-logo {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 8px;
+}
+
+.neurosearch-footer-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.neurosearch-footer-brand-name {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.neurosearch-footer-brand-tagline {
+  font-size: 0.95rem;
+  color: #888888;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Social Links */
+.neurosearch-footer-social-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.neurosearch-footer-social-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 12px;
+  color: #888888;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.neurosearch-footer-social-btn:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+  color: #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Footer Stats */
+.neurosearch-footer-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.neurosearch-footer-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #888888;
+}
+
+.neurosearch-footer-stat-dot {
+  width: 8px;
+  height: 8px;
+  background: #00ffff;
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+.neurosearch-footer-stat-item i {
+  color: #00ffff;
+  font-size: 0.9rem;
+  width: 16px;
+}
+
+/* Links Wrapper */
+.neurosearch-footer-links-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.neurosearch-footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.neurosearch-footer-column-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.neurosearch-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.neurosearch-footer-links li {
+  margin: 0;
+}
+
+.neurosearch-footer-links a {
+  font-size: 0.9rem;
+  color: #888888;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.neurosearch-footer-links a:hover {
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+/* Newsletter Section */
+.neurosearch-footer-newsletter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 32px;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 16px;
+  margin-bottom: 40px;
+  transition: all 0.3s ease;
+}
+
+.neurosearch-footer-newsletter:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+}
+
+.neurosearch-footer-newsletter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ffff, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 16px 16px 0 0;
+}
+
+.neurosearch-footer-newsletter:hover::before {
+  opacity: 1;
+}
+
+.neurosearch-footer-newsletter-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.neurosearch-footer-newsletter-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 12px;
+  color: #00ffff;
+  font-size: 1.2rem;
+}
+
+.neurosearch-footer-newsletter-text h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.neurosearch-footer-newsletter-text p {
+  font-size: 0.9rem;
+  color: #888888;
+  margin: 0;
+}
+
+.neurosearch-footer-newsletter-form {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  max-width: 500px;
+}
+
+.neurosearch-footer-newsletter-form input {
+  flex: 1;
+  padding: 14px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 14px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.neurosearch-footer-newsletter-form input::placeholder {
+  color: #666666;
+}
+
+.neurosearch-footer-newsletter-form input:focus {
+  border-color: rgba(0, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.neurosearch-footer-newsletter-form button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.neurosearch-footer-newsletter-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+}
+
+.neurosearch-footer-newsletter-form button i {
+  transition: transform 0.3s ease;
+}
+
+.neurosearch-footer-newsletter-form button:hover i {
+  transform: translateX(4px);
+}
+
+/* Footer Bottom */
+.neurosearch-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.neurosearch-footer-bottom-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.neurosearch-footer-copyright {
+  font-size: 0.9rem;
+  color: #888888;
+  margin: 0;
+}
+
+.neurosearch-footer-copyright strong {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.neurosearch-footer-legal-links {
+  display: flex;
+  gap: 24px;
+}
+
+.neurosearch-footer-legal-links a {
+  font-size: 0.9rem;
+  color: #888888;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.neurosearch-footer-legal-links a:hover {
+  color: #ffffff;
+}
+
+/* Back to Top Button */
+.neurosearch-footer-back-to-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 14px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.neurosearch-footer-back-to-top:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+  background: rgba(0, 255, 255, 0.1);
+  color: #00ffff;
+  transform: translateY(-2px);
+}
+
+.neurosearch-footer-back-to-top i {
+  transition: transform 0.3s ease;
+}
+
+.neurosearch-footer-back-to-top:hover i {
+  transform: translateY(-4px);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .neurosearch-footer-main {
+    grid-template-columns: 300px 1fr;
+    gap: 60px;
+  }
+
+  .neurosearch-footer-links-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+@media (max-width: 968px) {
+  .neurosearch-footer-main {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .neurosearch-footer-links-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .neurosearch-footer-newsletter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .neurosearch-footer-newsletter-form {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .neurosearch-footer {
+    padding: 60px 0 30px;
+  }
+
+  .neurosearch-footer-container {
+    padding: 0 20px;
+  }
+
+  .neurosearch-footer-main {
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+  }
+
+  .neurosearch-footer-links-wrapper {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .neurosearch-footer-newsletter {
+    padding: 24px;
+  }
+
+  .neurosearch-footer-newsletter-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .neurosearch-footer-newsletter-form {
+    flex-direction: column;
+  }
+
+  .neurosearch-footer-newsletter-form button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .neurosearch-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .neurosearch-footer-bottom-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .neurosearch-footer-legal-links {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+

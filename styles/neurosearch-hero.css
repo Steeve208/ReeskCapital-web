@@ -1,0 +1,484 @@
+/* ===== HERO NEUROSEARCH - EXACTO AL MOCKUP ===== */
+.neurosearch-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #000000;
+  overflow: hidden;
+  padding-top: 80px;
+}
+
+/* ===== TÍTULO IZQUIERDO ===== */
+.neurosearch-hero-title-left {
+  position: absolute;
+  top: 140px;
+  left: 40px;
+  z-index: 10;
+  max-width: 500px;
+}
+
+.neurosearch-hero-title-left h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.3;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.neurosearch-hero-title-left h1 span {
+  display: block;
+}
+
+.neurosearch-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.neurosearch-hero-meta .dot {
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.neurosearch-hero-meta span {
+  font-size: 0.85rem;
+  color: #888888;
+  font-weight: 400;
+}
+
+/* ===== CABEZA ROBOT HUMANOIDE 3D CON SELFIE ===== */
+.neurosearch-3d-head-container {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 550px;
+  z-index: 5;
+}
+
+.robot-head-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Animación sutil del brazo selfie */
+@keyframes selfie-move {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.selfie-arm {
+  transform-origin: 380px 420px;
+  animation: selfie-move 3s ease-in-out infinite;
+}
+
+/* Flash de la cámara */
+@keyframes camera-flash {
+  0%, 90%, 100% {
+    opacity: 0;
+  }
+  95% {
+    opacity: 0.8;
+  }
+}
+
+.phone::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  animation: camera-flash 5s ease-in-out infinite;
+}
+
+/* Animación de parpadeo */
+@keyframes blink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+.robot-eye {
+  animation: blink 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.robot-eye-left {
+  animation-delay: 0s;
+}
+
+.robot-eye-right {
+  animation-delay: 0.1s;
+}
+
+/* Brillo sutil animado */
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.robot-glow {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ===== TARJETAS INFERIORES IZQUIERDA ===== */
+.neurosearch-stats-cards {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.neurosearch-stat-card {
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(60, 60, 65, 0.5);
+  border-radius: 16px;
+  padding: 20px;
+  min-width: 160px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.neurosearch-stat-card.mining-card {
+  text-decoration: none;
+  color: inherit;
+  cursor: default;
+}
+
+.neurosearch-stat-card.mining-card:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 255, 255, 0.1);
+}
+
+/* Mining Start Button */
+.mining-start-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.mining-start-btn:hover {
+  background: #00ffff;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+}
+
+.mining-start-btn i {
+  transition: transform 0.3s ease;
+}
+
+.mining-start-btn:hover i {
+  transform: translateX(4px);
+}
+
+.neurosearch-stat-card.event-card {
+  border-color: rgba(255, 193, 7, 0.3);
+  background: rgba(30, 30, 35, 0.95);
+}
+
+.neurosearch-stat-card.event-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.neurosearch-stat-card.event-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffc107, transparent);
+  animation: event-glow 2s ease-in-out infinite;
+}
+
+@keyframes event-glow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.neurosearch-stat-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.neurosearch-stat-value.event-value {
+  color: #ffc107;
+  animation: value-pulse 2s ease-in-out infinite;
+}
+
+@keyframes value-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.neurosearch-stat-label {
+  font-size: 0.75rem;
+  color: #888888;
+  font-weight: 400;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.neurosearch-stat-icons {
+  display: flex;
+  gap: 6px;
+}
+
+.neurosearch-stat-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00ffff;
+  font-size: 0.7rem;
+}
+
+/* Event Badge */
+.event-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 6px;
+  font-size: 0.65rem;
+  color: #ffc107;
+  font-weight: 500;
+  margin-bottom: 8px;
+  width: fit-content;
+  animation: badge-shake 3s ease-in-out infinite;
+}
+
+@keyframes badge-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+.event-badge i {
+  animation: fire-spin 2s linear infinite;
+}
+
+@keyframes fire-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Event Animation */
+.event-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.event-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 193, 7, 0.3);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Event Timer */
+.event-timer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 0.7rem;
+  color: #ffc107;
+  font-weight: 500;
+}
+
+.event-timer i {
+  font-size: 0.65rem;
+  animation: clock-tick 1s ease-in-out infinite;
+}
+
+@keyframes clock-tick {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+/* ===== TEXTO DERECHO INFERIOR ===== */
+.neurosearch-hero-right {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  text-align: right;
+  z-index: 10;
+  max-width: 320px;
+}
+
+.neurosearch-hero-right h2 {
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.15;
+  margin: 0 0 16px 0;
+  letter-spacing: 0.02em;
+}
+
+.neurosearch-hero-right p {
+  font-size: 0.75rem;
+  color: #666666;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .neurosearch-3d-head-container {
+    width: 450px;
+    height: 500px;
+    left: 50%;
+  }
+}
+
+@media (max-width: 900px) {
+  .neurosearch-hero-title-left {
+    top: 100px;
+    left: 24px;
+    max-width: 400px;
+  }
+  
+  .neurosearch-hero-title-left h1 {
+    font-size: 1.6rem;
+  }
+  
+  .neurosearch-3d-head-container {
+    width: 380px;
+    height: 420px;
+    top: 45%;
+    left: 50%;
+  }
+  
+  .neurosearch-stats-cards {
+    left: 24px;
+    bottom: 24px;
+    flex-direction: column;
+  }
+  
+  .neurosearch-hero-right {
+    right: 24px;
+    bottom: 24px;
+  }
+  
+  .neurosearch-hero-right h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .neurosearch-hero-title-left {
+    max-width: 300px;
+  }
+  
+  .neurosearch-hero-title-left h1 {
+    font-size: 1.4rem;
+  }
+  
+  .neurosearch-3d-head-container {
+    width: 300px;
+    height: 340px;
+  }
+  
+  .neurosearch-stat-card {
+    min-width: 140px;
+    padding: 16px;
+  }
+  
+  .neurosearch-stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .neurosearch-hero-right h2 {
+    font-size: 1.3rem;
+  }
+}
