@@ -8,12 +8,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const centerY = canvas.height / 2;
   const radius = 140;
   
-  // Datos de distribución
+  // Datos de distribución RSK (Total: 35,999,999 RSK)
   const data = [
-    { percentage: 40, color: '#00d4ff', label: 'Mining' },
-    { percentage: 30, color: '#7c3aed', label: 'Staking' },
-    { percentage: 20, color: '#10b981', label: 'Ecosystem' },
-    { percentage: 10, color: '#f59e0b', label: 'Reserve' }
+    { percentage: 30, color: '#00d4ff', label: 'Ecosystem & Mining', amount: '10,799,999 RSK' },
+    { percentage: 18, color: '#7c3aed', label: 'Liquidity & MM', amount: '6,479,999 RSK' },
+    { percentage: 15, color: '#10b981', label: 'Public Sale / TGE', amount: '5,399,999 RSK' },
+    { percentage: 12, color: '#f59e0b', label: 'Private Rounds', amount: '4,319,999 RSK' },
+    { percentage: 10, color: '#ef4444', label: 'Treasury', amount: '3,599,999 RSK' },
+    { percentage: 10, color: '#8b5cf6', label: 'Team & Advisors', amount: '3,599,999 RSK' },
+    { percentage: 5, color: '#06b6d4', label: 'Bridge Reserve', amount: '1,799,999 RSK' }
   ];
   
   let currentRotation = -Math.PI / 2;

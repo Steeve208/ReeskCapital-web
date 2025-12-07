@@ -86,6 +86,7 @@
       <button class="neurosearch-icon-btn" aria-label="Option 1"></button>
       <button class="neurosearch-icon-btn" aria-label="Option 2"></button>
       <button class="neurosearch-icon-btn" aria-label="Option 3"></button>
+      <a href="pages/coming-soon.html" class="neurosearch-account-btn">First Round</a>
       <a href="pages/coming-soon.html" class="neurosearch-account-btn">My Account</a>
       <button class="neurosearch-mobile-toggle" id="neurosearchMobileToggle" aria-label="Menu">
         <i class="fas fa-bars"></i>
@@ -619,8 +620,8 @@
         <!-- Header Section -->
         <div class="neurosearch-tokenomics-header">
           <div class="neurosearch-tokenomics-tag">TOKENOMICS</div>
-          <h2 class="neurosearch-tokenomics-title">RSC Token Distribution</h2>
-          <p class="neurosearch-tokenomics-subtitle">Fair, transparent, and sustainable token economy designed for long-term value creation</p>
+          <h2 class="neurosearch-tokenomics-title">RSK Token Distribution</h2>
+          <p class="neurosearch-tokenomics-subtitle">Bridge token of the RSC ecosystem. Fixed supply of 35,999,999 RSK with no inflation and no hidden mint.</p>
         </div>
 
         <!-- Main Stats -->
@@ -629,22 +630,22 @@
             <div class="neurosearch-stat-icon">
               <i class="fas fa-coins"></i>
             </div>
-            <div class="neurosearch-stat-value">2.1M</div>
+            <div class="neurosearch-stat-value">36M</div>
             <div class="neurosearch-stat-label">Total Supply</div>
           </div>
           <div class="neurosearch-main-stat-card">
             <div class="neurosearch-stat-icon">
-              <i class="fas fa-fire-alt"></i>
+              <i class="fas fa-lock"></i>
             </div>
-            <div class="neurosearch-stat-value">50%</div>
-            <div class="neurosearch-stat-label">Already Burned</div>
+            <div class="neurosearch-stat-value">Fixed</div>
+            <div class="neurosearch-stat-label">No Inflation</div>
           </div>
           <div class="neurosearch-main-stat-card">
             <div class="neurosearch-stat-icon">
-              <i class="fas fa-chart-line"></i>
+              <i class="fas fa-bridge"></i>
             </div>
-            <div class="neurosearch-stat-value">1.05M</div>
-            <div class="neurosearch-stat-label">Circulating Supply</div>
+            <div class="neurosearch-stat-value">Bridge</div>
+            <div class="neurosearch-stat-label">RSC Ecosystem</div>
           </div>
         </div>
 
@@ -653,42 +654,66 @@
           <div class="neurosearch-distribution-chart-container">
             <canvas id="tokenomicsChart" width="400" height="400"></canvas>
             <div class="neurosearch-chart-center-info">
-              <div class="neurosearch-chart-center-title">RSC</div>
-              <div class="neurosearch-chart-center-subtitle">Token</div>
+              <div class="neurosearch-chart-center-title">RSK</div>
+              <div class="neurosearch-chart-center-subtitle">Bridge Token</div>
             </div>
           </div>
 
           <div class="neurosearch-distribution-legend">
-            <div class="neurosearch-legend-item" data-color="#ffffff">
-              <div class="neurosearch-legend-color" style="background: rgba(255, 255, 255, 0.8);"></div>
-              <div class="neurosearch-legend-info">
-                <div class="neurosearch-legend-percentage">40%</div>
-                <div class="neurosearch-legend-label">Mining Rewards</div>
-                <div class="neurosearch-legend-amount">840,000 RSC</div>
-              </div>
-            </div>
-            <div class="neurosearch-legend-item" data-color="#ffffff">
-              <div class="neurosearch-legend-color" style="background: rgba(255, 255, 255, 0.6);"></div>
+            <div class="neurosearch-legend-item" data-color="#00d4ff">
+              <div class="neurosearch-legend-color" style="background: rgba(0, 212, 255, 0.8);"></div>
               <div class="neurosearch-legend-info">
                 <div class="neurosearch-legend-percentage">30%</div>
-                <div class="neurosearch-legend-label">Staking Rewards</div>
-                <div class="neurosearch-legend-amount">630,000 RSC</div>
+                <div class="neurosearch-legend-label">Ecosystem & Mining Rewards</div>
+                <div class="neurosearch-legend-amount">10,799,999 RSK</div>
               </div>
             </div>
-            <div class="neurosearch-legend-item" data-color="#ffffff">
-              <div class="neurosearch-legend-color" style="background: rgba(255, 255, 255, 0.4);"></div>
+            <div class="neurosearch-legend-item" data-color="#7c3aed">
+              <div class="neurosearch-legend-color" style="background: rgba(124, 58, 237, 0.8);"></div>
               <div class="neurosearch-legend-info">
-                <div class="neurosearch-legend-percentage">20%</div>
-                <div class="neurosearch-legend-label">Ecosystem Development</div>
-                <div class="neurosearch-legend-amount">420,000 RSC</div>
+                <div class="neurosearch-legend-percentage">18%</div>
+                <div class="neurosearch-legend-label">Liquidity & Market Making</div>
+                <div class="neurosearch-legend-amount">6,479,999 RSK</div>
               </div>
             </div>
-            <div class="neurosearch-legend-item" data-color="#ffffff">
-              <div class="neurosearch-legend-color" style="background: rgba(255, 255, 255, 0.2);"></div>
+            <div class="neurosearch-legend-item" data-color="#10b981">
+              <div class="neurosearch-legend-color" style="background: rgba(16, 185, 129, 0.8);"></div>
+              <div class="neurosearch-legend-info">
+                <div class="neurosearch-legend-percentage">15%</div>
+                <div class="neurosearch-legend-label">Public Sale / IDO / TGE</div>
+                <div class="neurosearch-legend-amount">5,399,999 RSK</div>
+              </div>
+            </div>
+            <div class="neurosearch-legend-item" data-color="#f59e0b">
+              <div class="neurosearch-legend-color" style="background: rgba(245, 158, 11, 0.8);"></div>
+              <div class="neurosearch-legend-info">
+                <div class="neurosearch-legend-percentage">12%</div>
+                <div class="neurosearch-legend-label">Private Rounds</div>
+                <div class="neurosearch-legend-amount">4,319,999 RSK</div>
+              </div>
+            </div>
+            <div class="neurosearch-legend-item" data-color="#ef4444">
+              <div class="neurosearch-legend-color" style="background: rgba(239, 68, 68, 0.8);"></div>
               <div class="neurosearch-legend-info">
                 <div class="neurosearch-legend-percentage">10%</div>
-                <div class="neurosearch-legend-label">Reserve Fund</div>
-                <div class="neurosearch-legend-amount">210,000 RSC</div>
+                <div class="neurosearch-legend-label">Treasury & Partnerships</div>
+                <div class="neurosearch-legend-amount">3,599,999 RSK</div>
+              </div>
+            </div>
+            <div class="neurosearch-legend-item" data-color="#8b5cf6">
+              <div class="neurosearch-legend-color" style="background: rgba(139, 92, 246, 0.8);"></div>
+              <div class="neurosearch-legend-info">
+                <div class="neurosearch-legend-percentage">10%</div>
+                <div class="neurosearch-legend-label">Team & Advisors</div>
+                <div class="neurosearch-legend-amount">3,599,999 RSK</div>
+              </div>
+            </div>
+            <div class="neurosearch-legend-item" data-color="#06b6d4">
+              <div class="neurosearch-legend-color" style="background: rgba(6, 182, 212, 0.8);"></div>
+              <div class="neurosearch-legend-info">
+                <div class="neurosearch-legend-percentage">5%</div>
+                <div class="neurosearch-legend-label">Bridge & RSC Mainnet Reserve</div>
+                <div class="neurosearch-legend-amount">1,799,999 RSK</div>
               </div>
             </div>
           </div>
@@ -698,31 +723,143 @@
         <div class="neurosearch-tokenomics-features">
           <div class="neurosearch-tokenomics-feature-card">
             <div class="neurosearch-tokenomics-feature-icon">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <h3>No ICO/Presale</h3>
-            <p>100% fair launch with no pre-mine or private sales</p>
-          </div>
-          <div class="neurosearch-tokenomics-feature-card">
-            <div class="neurosearch-tokenomics-feature-icon">
-              <i class="fas fa-cut"></i>
-            </div>
-            <h3>Halving Mechanism</h3>
-            <p>Mining rewards halve every 4 years for sustainable supply</p>
-          </div>
-          <div class="neurosearch-tokenomics-feature-card">
-            <div class="neurosearch-tokenomics-feature-icon">
               <i class="fas fa-lock"></i>
             </div>
-            <h3>Deflationary Model</h3>
-            <p>Transaction fees burned to reduce circulating supply</p>
+            <h3>Fixed Supply</h3>
+            <p>Hard-capped at 35,999,999 RSK with no inflation and no hidden mint</p>
+          </div>
+          <div class="neurosearch-tokenomics-feature-card">
+            <div class="neurosearch-tokenomics-feature-icon">
+              <i class="fas fa-bridge"></i>
+            </div>
+            <h3>Bridge Asset</h3>
+            <p>Connects EVM ecosystem to RSC Chain mainnet via native bridge</p>
+          </div>
+          <div class="neurosearch-tokenomics-feature-card">
+            <div class="neurosearch-tokenomics-feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>On-Chain Vesting</h3>
+            <p>Team, advisors, and private allocations locked with smart contracts</p>
           </div>
           <div class="neurosearch-tokenomics-feature-card">
             <div class="neurosearch-tokenomics-feature-icon">
               <i class="fas fa-users"></i>
             </div>
-            <h3>Community Driven</h3>
-            <p>Governance controlled by RSC token holders</p>
+            <h3>Long-Term Aligned</h3>
+            <p>Vesting schedules ensure long-term commitment from all stakeholders</p>
+          </div>
+        </div>
+
+        <!-- Detailed Allocation Table -->
+        <div class="neurosearch-tokenomics-details">
+          <h3 class="neurosearch-details-title">Detailed Token Allocation</h3>
+          <div class="neurosearch-allocation-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Percentage</th>
+                  <th>Amount (RSK)</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><i class="fas fa-coins"></i> Ecosystem & Mining Rewards</td>
+                  <td>30%</td>
+                  <td>10,799,999 RSK</td>
+                  <td>Mining, in-app rewards, staking, community incentives</td>
+                </tr>
+                <tr>
+                  <td><i class="fas fa-exchange-alt"></i> Liquidity & Market Making</td>
+                  <td>18%</td>
+                  <td>6,479,999 RSK</td>
+                  <td>DEX/CEX liquidity, MM, stability reserves</td>
+                </tr>
+                <tr>
+                  <td><i class="fas fa-shopping-cart"></i> Public Sale / IDO / TGE</td>
+                  <td>15%</td>
+                  <td>5,399,999 RSK</td>
+                  <td>Open community sale (30% TGE, 70% linear 6 months)</td>
+                </tr>
+                <tr>
+                  <td><i class="fas fa-user-secret"></i> Private Rounds</td>
+                  <td>12%</td>
+                  <td>4,319,999 RSK</td>
+                  <td>Strategic early backers (10% TGE, 90% linear 18 months)</td>
+                </tr>
+                <tr>
+                  <td><i class="fas fa-vault"></i> Treasury & Strategic Partnerships</td>
+                  <td>10%</td>
+                  <td>3,599,999 RSK</td>
+                  <td>Partnerships, infra, audits, long-term growth</td>
+                </tr>
+                <tr>
+                  <td><i class="fas fa-users-cog"></i> Team & Advisors</td>
+                  <td>10%</td>
+                  <td>3,599,999 RSK</td>
+                  <td>Core team, contributors, advisors (12-month cliff, 36-month vesting)</td>
+                </tr>
+                <tr>
+                  <td><i class="fas fa-bridge"></i> Bridge & RSC Mainnet Reserve</td>
+                  <td>5%</td>
+                  <td>1,799,999 RSK</td>
+                  <td>Bridge liquidity, technical reserves for migration</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td><strong>Total Supply</strong></td>
+                  <td><strong>100%</strong></td>
+                  <td><strong>35,999,999 RSK</strong></td>
+                  <td><strong>Fixed supply - No inflation</strong></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Vesting Information -->
+        <div class="neurosearch-vesting-info">
+          <h3 class="neurosearch-vesting-title">Vesting & Locking Model</h3>
+          <div class="neurosearch-vesting-grid">
+            <div class="neurosearch-vesting-card">
+              <div class="vesting-icon"><i class="fas fa-user-secret"></i></div>
+              <h4>Private Rounds</h4>
+              <ul>
+                <li>10% unlocked at TGE</li>
+                <li>90% vested linearly over 18 months</li>
+                <li>Long-term aligned participants</li>
+              </ul>
+            </div>
+            <div class="neurosearch-vesting-card">
+              <div class="vesting-icon"><i class="fas fa-shopping-cart"></i></div>
+              <h4>Public Sale / TGE</h4>
+              <ul>
+                <li>30% unlocked at TGE</li>
+                <li>70% vested linearly over 6 months</li>
+                <li>Healthy price discovery</li>
+              </ul>
+            </div>
+            <div class="neurosearch-vesting-card">
+              <div class="vesting-icon"><i class="fas fa-users-cog"></i></div>
+              <h4>Team & Advisors</h4>
+              <ul>
+                <li>12-month cliff (no tokens first year)</li>
+                <li>36-month linear vesting after cliff</li>
+                <li>On-chain vesting contracts</li>
+              </ul>
+            </div>
+            <div class="neurosearch-vesting-card">
+              <div class="vesting-icon"><i class="fas fa-exchange-alt"></i></div>
+              <h4>Liquidity Pools</h4>
+              <ul>
+                <li>LP tokens locked 18-24 months</li>
+                <li>Via trusted locking service</li>
+                <li>Infrastructure, not exit door</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -853,7 +990,7 @@
         <div class="neurosearch-perf-info-bar">
           <div class="neurosearch-perf-info-item">
             <i class="fas fa-database"></i>
-            <span>Total Supply: <strong>2.1M RSC</strong></span>
+            <span>Total Supply: <strong>35,999,999 RSK</strong></span>
           </div>
           <div class="neurosearch-perf-info-item">
             <i class="fas fa-exchange-alt"></i>
