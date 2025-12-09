@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSK Private Round #1 - RSC Chain</title>
+  <meta name="description" content="Primera ronda privada del token puente RSK en BNB. Cupos limitados para los primeros inversores del ecosistema RSC Chain.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel="stylesheet" href="../styles/neurosearch-navbar.css?v=1.0">
+  <link rel="stylesheet" href="../styles/neurosearch-first-round.css?v=1.0">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/img/rsc-logo-quantum.svg">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="neurosearch-navbar">
+    <div class="neurosearch-nav-left">
+      <a href="../index.html" class="neurosearch-nav-btn">How it works</a>
+      <a href="about.html" class="neurosearch-nav-btn">About Us</a>
+      <a href="docs.html" class="neurosearch-nav-btn">Blog</a>
+      <a href="https://t.me/RSCchain" target="_blank" rel="noopener noreferrer" class="neurosearch-nav-btn">Contact</a>
+    </div>
+
+    <div class="neurosearch-nav-center">
+      <a href="../index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+        <div class="neurosearch-logo-icon"></div>
+        <span class="neurosearch-logo-text">RSC CHAIN</span>
+      </a>
+    </div>
+
+    <div class="neurosearch-nav-right">
+      <button class="neurosearch-icon-btn" aria-label="Option 1"></button>
+      <button class="neurosearch-icon-btn" aria-label="Option 2"></button>
+      <button class="neurosearch-icon-btn" aria-label="Option 3"></button>
+      <a href="first-round.html" class="neurosearch-account-btn active">First Round</a>
+      <a href="coming-soon.html" class="neurosearch-account-btn">My Account</a>
+      <button class="neurosearch-mobile-toggle" id="neurosearchMobileToggle" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="first-round-main">
+    <!-- 1. Hero Section -->
+    <section class="first-round-hero">
+      <div class="first-round-hero-container">
+        <div class="first-round-hero-content">
+          <div class="first-round-badge">
+            <i class="fas fa-lock"></i>
+            <span>PRIVATE ROUND #1</span>
+          </div>
+          
+          <h1 class="first-round-title">RSK Private Round #1</h1>
+          <p class="first-round-subtitle">Acceso temprano al ecosistema RSC Chain</p>
+          <p class="first-round-description">
+            Primera ronda privada del token puente RSK en BNB. Cupos limitados para los primeros inversores del ecosistema RSC Chain.
+          </p>
+
+          <!-- KPIs Cards -->
+          <div class="first-round-kpis">
+            <div class="first-round-kpi-card">
+              <div class="kpi-label">Hard Cap</div>
+              <div class="kpi-value">5,000,000</div>
+              <div class="kpi-unit">RSK</div>
+            </div>
+            <div class="first-round-kpi-card">
+              <div class="kpi-label">Máximo Inversores</div>
+              <div class="kpi-value">100</div>
+            </div>
+            <div class="first-round-kpi-card">
+              <div class="kpi-label">Precio por RSK</div>
+              <div class="kpi-value">0.02</div>
+              <div class="kpi-unit">USD</div>
+            </div>
+            <div class="first-round-kpi-card">
+              <div class="kpi-label">% Supply Total</div>
+              <div class="kpi-value">13.89%</div>
+            </div>
+            <div class="first-round-kpi-card status-card" id="roundStatusCard">
+              <div class="kpi-label">Estado</div>
+              <div class="kpi-value status-value" id="roundStatus">Upcoming</div>
+            </div>
+          </div>
+
+          <!-- Hero Actions -->
+          <div class="first-round-hero-actions">
+            <button class="first-round-btn-primary" id="connectWalletBtn">
+              <i class="fas fa-wallet"></i>
+              <span>Connect Wallet</span>
+            </button>
+            <a href="#round-details" class="first-round-btn-secondary">
+              <span>Ver Detalles del Round</span>
+              <i class="fas fa-arrow-down"></i>
+            </a>
+            <a href="docs.html#whitepaper" class="first-round-btn-link">
+              <i class="fas fa-file-alt"></i>
+              <span>Leer Whitepaper</span>
+            </a>
+          </div>
+
+          <div class="first-round-exclusivity">
+            <i class="fas fa-star"></i>
+            <span>100 slots máx. — prioridad OG miners</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. User Panel -->
+    <section class="first-round-user-panel" id="userPanel">
+      <div class="first-round-container">
+        <div class="user-panel-card">
+          <h3 class="user-panel-title">Tu Estado en el Round</h3>
+          
+          <!-- Not Connected State -->
+          <div class="user-panel-not-connected" id="notConnectedState">
+            <p class="user-panel-message">
+              Conecta tu wallet para ver tu elegibilidad y cupo máximo.
+            </p>
+            <button class="first-round-btn-primary" id="connectWalletBtn2">
+              <i class="fas fa-wallet"></i>
+              <span>Connect Wallet</span>
+            </button>
+          </div>
+
+          <!-- Connected State -->
+          <div class="user-panel-connected" id="connectedState" style="display: none;">
+            <div class="user-wallet-info">
+              <div class="wallet-address">
+                <i class="fas fa-wallet"></i>
+                <span id="walletAddress">0x1234...89AF</span>
+                <button class="copy-btn" id="copyAddressBtn">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+              
+              <div class="user-status">
+                <span class="status-label">Estado:</span>
+                <span class="status-badge approved" id="userStatus">Aprobado</span>
+              </div>
+            </div>
+
+            <div class="user-limits">
+              <div class="limit-item">
+                <span class="limit-label">Límite personal:</span>
+                <span class="limit-value" id="maxLimit">250,000 RSK</span>
+              </div>
+              <div class="limit-item">
+                <span class="limit-label">Ya reservado:</span>
+                <span class="limit-value" id="reservedAmount">80,000 RSK</span>
+              </div>
+              <div class="limit-item">
+                <span class="limit-label">Disponible aún:</span>
+                <span class="limit-value available" id="availableAmount">170,000 RSK</span>
+              </div>
+            </div>
+
+            <div class="whitelist-status" id="whitelistStatus">
+              <i class="fas fa-check-circle"></i>
+              <span>Wallet verificada para el Private Round #1.</span>
+            </div>
+          </div>
+
+          <div class="user-panel-warning">
+            <i class="fas fa-info-circle"></i>
+            <p>
+              Este Private Round <strong>no envía los tokens RSK al momento del pago</strong>.
+              Tu contribución quedará registrada en el sistema y tus tokens podrán reclamarse en el evento oficial de distribución (TGE).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Purchase Module -->
+    <section class="first-round-purchase" id="purchaseModule">
+      <div class="first-round-container">
+        <div class="purchase-module-card">
+          <h2 class="purchase-module-title">Participar en el Private Round</h2>
+
+          <!-- Currency Selector -->
+          <div class="currency-selector">
+            <label class="currency-label">Moneda de contribución:</label>
+            <div class="currency-options">
+              <button class="currency-option active" data-currency="BNB">
+                <i class="fab fa-ethereum"></i>
+                <span>BNB</span>
+              </button>
+              <button class="currency-option" data-currency="USDT">
+                <i class="fas fa-dollar-sign"></i>
+                <span>USDT (BEP-20)</span>
+              </button>
+            </div>
+            <div class="exchange-rate">
+              <span>1 RSK = 0.02 USD</span>
+              <span id="currencyRate">1 BNB = XXXX RSK (aprox.)</span>
+            </div>
+          </div>
+
+          <!-- Amount Input -->
+          <div class="amount-input-section">
+            <label class="amount-label">Quiero contribuir:</label>
+            <div class="amount-input-wrapper">
+              <input type="number" id="contributionAmount" class="amount-input" placeholder="0.00" min="0" step="0.01">
+              <span class="amount-currency" id="amountCurrency">BNB</span>
+            </div>
+            <div class="amount-preview">
+              <span>Recibirás: <strong id="estimatedRSK">0</strong> RSK (estimado)</span>
+            </div>
+          </div>
+
+          <!-- Restrictions -->
+          <div class="purchase-restrictions">
+            <div class="restriction-item">
+              <i class="fas fa-info-circle"></i>
+              <span>Mínimo por usuario: <strong>200 USD</strong></span>
+            </div>
+            <div class="restriction-item">
+              <i class="fas fa-info-circle"></i>
+              <span>Máximo personal: <strong id="maxPersonalLimit">300,000 RSK</strong></span>
+            </div>
+            <div class="restriction-item">
+              <i class="fas fa-info-circle"></i>
+              <span>Estado global: <strong id="remainingSupply">1,250,000 RSK</strong> disponibles</span>
+            </div>
+          </div>
+
+          <!-- Summary -->
+          <div class="purchase-summary" id="purchaseSummary">
+            <h4>Resumen de tu contribución</h4>
+            <div class="summary-item">
+              <span>Dirección:</span>
+              <span id="summaryAddress">-</span>
+            </div>
+            <div class="summary-item">
+              <span>Token:</span>
+              <span>RSK (BEP-20, BNB Chain)</span>
+            </div>
+            <div class="summary-item">
+              <span>Cantidad RSK estimada:</span>
+              <span id="summaryRSK">0</span>
+            </div>
+            <div class="summary-item">
+              <span>Tipo de contribución:</span>
+              <span id="summaryCurrency">BNB</span>
+            </div>
+            <div class="summary-item">
+              <span>Vesting:</span>
+              <span>15% en TGE, 85% lineal 12 meses</span>
+            </div>
+            <div class="summary-warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>Los tokens no se envían ahora. Se registran y se reclaman más adelante.</span>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <button class="first-round-btn-primary purchase-btn" id="confirmPurchaseBtn" disabled>
+            <i class="fas fa-check-circle"></i>
+            <span>Confirmar contribución</span>
+          </button>
+
+          <!-- Success Message -->
+          <div class="purchase-success" id="purchaseSuccess" style="display: none;">
+            <i class="fas fa-check-circle"></i>
+            <h3>¡Contribución registrada!</h3>
+            <p>Tu contribución ha sido registrada correctamente.</p>
+            <p>Tus RSK estarán disponibles para claim en el evento TGE / distribución según el calendario de vesting.</p>
+            <button class="first-round-btn-secondary" id="viewContributionsBtn">
+              <span>Ver mis contribuciones</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Round Details -->
+    <section class="first-round-details" id="round-details">
+      <div class="first-round-container">
+        <h2 class="section-title">Detalle del Private Round</h2>
+
+        <!-- Structure Table -->
+        <div class="details-card">
+          <h3 class="details-subtitle">Estructura del Round</h3>
+          <div class="details-table">
+            <div class="table-row">
+              <span class="table-label">Supply total RSK:</span>
+              <span class="table-value">35,999,999</span>
+            </div>
+            <div class="table-row">
+              <span class="table-label">Pool privado #1:</span>
+              <span class="table-value">5,000,000 RSK</span>
+            </div>
+            <div class="table-row">
+              <span class="table-label">Número máx. de inversores:</span>
+              <span class="table-value">100</span>
+            </div>
+            <div class="table-row">
+              <span class="table-label">Precio fijo:</span>
+              <span class="table-value">0.02 USD por RSK</span>
+            </div>
+            <div class="table-row">
+              <span class="table-label">Hard cap:</span>
+              <span class="table-value">100,000 USD</span>
+            </div>
+            <div class="table-row">
+              <span class="table-label">Vesting:</span>
+              <span class="table-value">15% TGE, 85% lineal 12 meses</span>
+            </div>
+            <div class="table-row">
+              <span class="table-label">Cliff:</span>
+              <span class="table-value">Sin período de espera</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rules -->
+        <div class="details-card">
+          <h3 class="details-subtitle">Reglas de Participación</h3>
+          <div class="rules-list">
+            <div class="rule-item">
+              <i class="fas fa-check-circle"></i>
+              <div>
+                <strong>Quién puede entrar:</strong>
+                <p>Inversores invitados, OG miners, socios estratégicos.</p>
+              </div>
+            </div>
+            <div class="rule-item">
+              <i class="fas fa-check-circle"></i>
+              <div>
+                <strong>Límite por usuario:</strong>
+                <p>Mínimo: 200 USD | Máximo: 300,000 RSK</p>
+              </div>
+            </div>
+            <div class="rule-item">
+              <i class="fas fa-check-circle"></i>
+              <div>
+                <strong>Monedas aceptadas:</strong>
+                <p>BNB, USDT (BEP-20 en BNB Chain)</p>
+              </div>
+            </div>
+            <div class="rule-item">
+              <i class="fas fa-check-circle"></i>
+              <div>
+                <strong>Si no se llega al soft cap:</strong>
+                <p>El round se reestructurará y se comunicará a los participantes.</p>
+              </div>
+            </div>
+            <div class="rule-item">
+              <i class="fas fa-check-circle"></i>
+              <div>
+                <strong>Si se sobrepasa el hard cap:</strong>
+                <p>El sistema corta automáticamente, no se aceptan nuevas contribuciones.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Timeline -->
+    <section class="first-round-timeline">
+      <div class="first-round-container">
+        <h2 class="section-title">Timeline del Proyecto</h2>
+        <p class="timeline-intro">
+          Este Private Round es la puerta de entrada a todo el ecosistema RSC: desde el token puente RSK en BNB hasta la blockchain propia RSC Chain con bridge nativo y utilidades reales.
+        </p>
+
+        <div class="timeline-container">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Q4 2025</div>
+              <h3 class="timeline-title">Private Round #1</h3>
+              <p class="timeline-description">RSK en BNB - Primera ronda privada</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Q4 2025 / Q1 2026</div>
+              <h3 class="timeline-title">Public Round / IDO</h3>
+              <p class="timeline-description">Ronda pública e IDO</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2026</div>
+              <h3 class="timeline-title">Listado en DEX</h3>
+              <p class="timeline-description">PancakeSwap + Liquidez inicial</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2026+</div>
+              <h3 class="timeline-title">Lanzamiento RSC Chain Mainnet</h3>
+              <p class="timeline-description">Beta → Estable</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Post-mainnet</div>
+              <h3 class="timeline-title">Activación del Bridge</h3>
+              <p class="timeline-description">RSK (BNB) ↔ RSC Chain</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Post-bridge</div>
+              <h3 class="timeline-title">Expansión del Ecosistema</h3>
+              <p class="timeline-description">Wallet, bank, pagos, etc.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Vesting & Distribution -->
+    <section class="first-round-vesting">
+      <div class="first-round-container">
+        <h2 class="section-title">Vesting & Distribución</h2>
+        <p class="vesting-intro">Cuándo y cómo recibirás tus tokens RSK</p>
+
+        <!-- Vesting Chart -->
+        <div class="vesting-chart-card">
+          <div class="vesting-visual">
+            <div class="vesting-bar">
+              <div class="vesting-segment tge" style="width: 15%">
+                <span>15% TGE</span>
+              </div>
+              <div class="vesting-segment locked" style="width: 85%">
+                <span>85% Vesting</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vesting Calendar -->
+        <div class="vesting-calendar-card">
+          <h3 class="calendar-title">Calendario de Vesting</h3>
+          <div class="calendar-table">
+            <div class="calendar-row header">
+              <span>Período</span>
+              <span>Porcentaje</span>
+              <span>Fecha Estimada</span>
+            </div>
+            <div class="calendar-row">
+              <span>Mes 0 (TGE)</span>
+              <span>15%</span>
+              <span>TGE Date</span>
+            </div>
+            <div class="calendar-row">
+              <span>Mes 1-12</span>
+              <span>7.08% mensual</span>
+              <span>Mensual</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Claim Explanation -->
+        <div class="claim-explanation-card">
+          <h3 class="explanation-title">Cómo reclamar tus tokens</h3>
+          <div class="explanation-content">
+            <p>
+              En el día del TGE se abrirá un panel de <strong>Claim RSK</strong>, donde conectarás tu wallet y podrás reclamar los tokens desbloqueados.
+            </p>
+            <p>
+              Los periodos futuros de vesting se podrán reclamar en el mismo panel a medida que se vayan desbloqueando.
+            </p>
+            <p>
+              Toda tu info de contribución queda registrada en la base de datos y asociada a tu wallet. No necesitas hacer nada más que guardar bien tu dirección.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Risks & Security -->
+    <section class="first-round-risks">
+      <div class="first-round-container">
+        <h2 class="section-title">Riesgos & Seguridad</h2>
+
+        <div class="risks-card">
+          <div class="risk-item">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+              <h3>Aviso de Riesgo</h3>
+              <p>Invertir en activos digitales conlleva riesgos significativos, incluyendo pérdida total del capital.</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <i class="fas fa-shield-alt"></i>
+            <div>
+              <h3>Transparencia</h3>
+              <p>Contrato de RSK en BNB será publicado y verificado públicamente en BscScan.</p>
+              <p>Cualquier auditoría será publicada y enlazada desde esta página.</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <i class="fas fa-lock"></i>
+            <div>
+              <h3>Seguridad de Fondos</h3>
+              <p>Los fondos de la preventa se almacenan en una wallet multi-sig controlada por múltiples firmas de seguridad.</p>
+              <p>Dirección oficial del contrato: <code id="contractAddress">0x0000...0000</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. FAQ -->
+    <section class="first-round-faq">
+      <div class="first-round-container">
+        <h2 class="section-title">Preguntas Frecuentes</h2>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>¿Recibo mis RSK inmediatamente después del pago?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>No. Los tokens se registran y se reclaman en TGE / evento de claim según el calendario de vesting.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>¿Qué pasa si pierdo mi wallet?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>No se pueden reasignar tokens a otra wallet sin proceso manual y validaciones fuertes. Es crucial que guardes de forma segura tus claves privadas.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>¿Habrá más rondas después de esta?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Esta es la primera ronda privada. Puede haber rondas públicas o IDO en el futuro, pero esta Private Round #1 es única y limitada.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>¿Qué moneda uso para participar?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Puedes participar con BNB o USDT (BEP-20) en la red BNB Chain.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>¿Dónde veo mis contribuciones?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Puedes ver tus contribuciones en el panel "Mis contribuciones" que estará disponible después de conectar tu wallet.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <span>¿Cuándo se lanza la blockchain RSC?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>El lanzamiento de RSC Chain mainnet está estimado para 2026+. Consulta la sección Timeline para más detalles.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Final CTA -->
+    <section class="first-round-cta">
+      <div class="first-round-container">
+        <div class="cta-content">
+          <h2 class="cta-title">Los primeros inversores de RSK son los arquitectos de la futura RSC Chain</h2>
+          <p class="cta-subtitle">Cupos limitados. No habrá otro Private Round #1.</p>
+          <div class="cta-actions">
+            <button class="first-round-btn-primary" id="finalConnectBtn">
+              <i class="fas fa-wallet"></i>
+              <span>Conectar wallet y participar</span>
+            </button>
+            <a href="docs.html" class="first-round-btn-link">
+              <i class="fas fa-file-alt"></i>
+              <span>Leer documentos técnicos de RSC Chain</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Legal -->
+    <footer class="first-round-footer">
+      <div class="first-round-container">
+        <div class="footer-links">
+          <a href="#">Términos & Condiciones</a>
+          <a href="#">Política de Privacidad</a>
+          <a href="#">Política de Riesgos</a>
+        </div>
+        <p class="footer-disclaimer">
+          Esta página no constituye asesoría financiera, legal o fiscal.
+        </p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../scripts/first-round.js"></script>
+</body>
+</html>
+
+

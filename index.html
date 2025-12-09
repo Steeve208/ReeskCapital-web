@@ -32,7 +32,8 @@
   <!-- Styles -->
   <link rel="stylesheet" href="styles/global.css?v=4.0">
   <link rel="stylesheet" href="styles/neurosearch-navbar.css?v=1.0">
-  <link rel="stylesheet" href="styles/neurosearch-hero.css?v=1.0">
+  <link rel="stylesheet" href="styles/neurosearch-hero.css?v=2.0">
+  <link rel="stylesheet" href="styles/ecosystem-flow-3d.css?v=20.0">
   <link rel="stylesheet" href="styles/neurosearch-technology.css?v=1.0">
   <link rel="stylesheet" href="styles/neurosearch-roadmap.css?v=1.0">
   <link rel="stylesheet" href="styles/neurosearch-tokenomics.css?v=1.0">
@@ -107,241 +108,99 @@
         </div>
       </div>
 
-      <!-- Cabeza Robot Humanoide 3D Animada con Selfie -->
-      <div class="neurosearch-3d-head-container">
-        <svg class="robot-head-svg" viewBox="0 0 500 550" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Definiciones de gradientes y filtros -->
-          <defs>
-            <!-- Gradiente para la piel del robot -->
-            <linearGradient id="skinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#4a4a52"/>
-              <stop offset="50%" stop-color="#3a3a42"/>
-              <stop offset="100%" stop-color="#2a2a32"/>
-            </linearGradient>
-            
-            <!-- Gradiente para la cabeza -->
-            <radialGradient id="headSkin" cx="40%" cy="30%" r="70%">
-              <stop offset="0%" stop-color="#5a5a62"/>
-              <stop offset="40%" stop-color="#4a4a52"/>
-              <stop offset="70%" stop-color="#3a3a42"/>
-              <stop offset="100%" stop-color="#2a2a32"/>
-            </radialGradient>
-            
-            <!-- Gradiente para el brazo -->
-            <linearGradient id="armSkin" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#5a5a62"/>
-              <stop offset="100%" stop-color="#3a3a42"/>
-            </linearGradient>
-            
-            <!-- Gradiente para el cuello -->
-            <linearGradient id="neckSkin" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#4a4a52"/>
-              <stop offset="100%" stop-color="#3a3a42"/>
-            </linearGradient>
-            
-            <!-- Glow de fondo -->
-            <radialGradient id="headGlow" cx="50%" cy="40%" r="60%">
-              <stop offset="0%" stop-color="#5a5a62" stop-opacity="0.4"/>
-              <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
-            </radialGradient>
-            
-            <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="3" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-            
-            <linearGradient id="phoneScreen" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#2a2a35"/>
-              <stop offset="100%" stop-color="#1a1a25"/>
-            </linearGradient>
-          </defs>
-          
-          <!-- Glow de fondo -->
-          <ellipse class="robot-glow" cx="250" cy="220" rx="160" ry="200" fill="url(#headGlow)"/>
-          
-          <!-- ===== BRAZO Y MANO CON TELÉFONO ===== -->
-          <g class="selfie-arm">
-            <!-- Hombro con piel -->
-            <ellipse cx="380" cy="420" rx="28" ry="22" fill="url(#armSkin)" stroke="#5a5a62" stroke-width="1"/>
-            
-            <!-- Brazo superior con piel -->
-            <path d="M375 405 Q415 355 435 285 Q445 280 455 285 Q475 355 435 405 Q410 420 385 410 Z" 
-                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
-            
-            <!-- Codo con piel -->
-            <ellipse cx="445" cy="280" rx="15" ry="12" fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
-            
-            <!-- Antebrazo con piel -->
-            <path d="M435 275 Q455 225 448 165 Q460 160 468 165 Q480 225 460 280 Z" 
-                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
-            
-            <!-- Muñeca con piel -->
-            <ellipse cx="455" cy="162" rx="14" ry="10" fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
-            
-            <!-- Mano con piel -->
-            <path d="M438 158 Q428 145 433 118 Q440 115 445 118 Q442 145 448 155 Z" 
-                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
-            <path d="M448 155 Q445 132 450 108 Q457 105 462 108 Q458 132 458 155 Z" 
-                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
-            <path d="M458 158 Q468 138 465 112 Q472 110 477 115 Q478 140 468 160 Z" 
-                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
-            
-            <!-- Palma de la mano -->
-            <path d="M432 160 Q445 175 470 160 Q472 170 470 175 Q445 185 432 175 Z" 
-                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
-            
-            <!-- Pulgar -->
-            <path d="M428 155 Q415 148 410 158 Q405 172 418 180 Q428 178 432 168 Z" 
-                  fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.6"/>
-            
-            <!-- TELÉFONO -->
-            <g class="phone">
-              <!-- Cuerpo del teléfono -->
-              <rect x="405" y="65" width="60" height="100" rx="10" ry="10" fill="#1a1a22" stroke="#4a4a52" stroke-width="1.5"/>
-              
-              <!-- Pantalla -->
-              <rect x="410" y="73" width="50" height="80" rx="5" ry="5" fill="url(#phoneScreen)" stroke="#3a3a42" stroke-width="0.8"/>
-              
-              <!-- Contenido de la pantalla del teléfono -->
-              <g class="phone-screen-content">
-                <!-- Logo RSC Chain -->
-                <text x="435" y="88" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#00ffff" text-anchor="middle">RSC</text>
-                <text x="435" y="95" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#00ffff" text-anchor="middle">CHAIN</text>
-                
-                <!-- Moneda RSK -->
-                <circle cx="435" cy="108" r="8" fill="#ffffff" opacity="0.9"/>
-                <text x="435" y="111" font-family="Arial, sans-serif" font-size="5" font-weight="bold" fill="#000000" text-anchor="middle">RSK</text>
-                
-                <!-- Gráfico de trading (línea ascendente) -->
-                <path d="M415 120 L420 115 L425 112 L430 110 L435 108 L440 106 L445 104 L450 102" 
-                      stroke="#00ffff" stroke-width="1.5" fill="none" opacity="0.8"/>
-                <circle cx="415" cy="120" r="1" fill="#00ffff"/>
-                <circle cx="420" cy="115" r="1" fill="#00ffff"/>
-                <circle cx="425" cy="112" r="1" fill="#00ffff"/>
-                <circle cx="430" cy="110" r="1" fill="#00ffff"/>
-                <circle cx="435" cy="108" r="1" fill="#00ffff"/>
-                <circle cx="440" cy="106" r="1" fill="#00ffff"/>
-                <circle cx="445" cy="104" r="1" fill="#00ffff"/>
-                <circle cx="450" cy="102" r="1" fill="#00ffff"/>
-                
-                <!-- Precio $10 -->
-                <text x="435" y="140" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#00ffff" text-anchor="middle">$10.00</text>
-                <text x="435" y="147" font-family="Arial, sans-serif" font-size="4" fill="#888888" text-anchor="middle">+2.5%</text>
-              </g>
-              
-              <!-- Cámara frontal del teléfono -->
-              <circle cx="435" cy="160" r="5" fill="#2a2a35" stroke="#4a4a52" stroke-width="1"/>
-              <circle cx="435" cy="160" r="2.5" fill="#3a3a42"/>
-              
-              <!-- LED flash -->
-              <circle cx="445" cy="70" r="2" fill="#5a5a62"/>
-              
-              <!-- Cámara trasera -->
-              <circle cx="418" cy="70" r="4" fill="#2a2a35" stroke="#4a4a52" stroke-width="0.8"/>
-              <circle cx="418" cy="70" r="2" fill="#3a3a42"/>
-            </g>
-          </g>
-          
-          <!-- ===== CABEZA CON PIEL ===== -->
-          <!-- Forma principal de la cabeza -->
-          <path d="M250 40 
-                   C330 40 390 100 390 180 
-                   L390 280 
-                   C390 340 350 380 330 400 
-                   L330 440 
-                   C330 460 310 480 250 480 
-                   C190 480 170 460 170 440 
-                   L170 400 
-                   C150 380 110 340 110 280 
-                   L110 180 
-                   C110 100 170 40 250 40Z" 
-                fill="url(#headSkin)" stroke="#5a5a62" stroke-width="1.2" filter="url(#softGlow)"/>
-          
-          <!-- Detalle de frente -->
-          <path d="M150 120 C190 70 310 70 350 120" 
-                stroke="#6a6a72" stroke-width="1" fill="none"/>
-          
-          <!-- Línea de frente -->
-          <path d="M140 160 C180 135 320 135 360 160" 
-                stroke="#5a5a62" stroke-width="0.8" fill="none"/>
-          
-          <!-- Cejas -->
-          <path d="M160 188 C180 178 220 178 240 188" 
-                stroke="#6a6a72" stroke-width="2" fill="none"/>
-          <path d="M260 188 C280 178 320 178 340 188" 
-                stroke="#6a6a72" stroke-width="2" fill="none"/>
-          
-          <!-- Cuencas de los ojos (sombra) -->
-          <ellipse cx="200" cy="210" rx="38" ry="22" fill="#2a2a32"/>
-          <ellipse cx="300" cy="210" rx="38" ry="22" fill="#2a2a32"/>
-          
-          <!-- Ojos (con animación de parpadeo) -->
-          <g class="robot-eye robot-eye-left">
-            <ellipse cx="200" cy="210" rx="18" ry="12" fill="#1a1a22"/>
-            <ellipse cx="200" cy="210" rx="10" ry="7" fill="#3a3a42"/>
-            <ellipse cx="203" cy="207" rx="4" ry="3" fill="#5a5a62"/>
-            <ellipse cx="205" cy="205" rx="2" ry="1.5" fill="#ffffff" opacity="0.6"/>
-          </g>
-          <g class="robot-eye robot-eye-right">
-            <ellipse cx="300" cy="210" rx="18" ry="12" fill="#1a1a22"/>
-            <ellipse cx="300" cy="210" rx="10" ry="7" fill="#3a3a42"/>
-            <ellipse cx="303" cy="207" rx="4" ry="3" fill="#5a5a62"/>
-            <ellipse cx="305" cy="205" rx="2" ry="1.5" fill="#ffffff" opacity="0.6"/>
-          </g>
-          
-          <!-- Puente de la nariz -->
-          <path d="M250 195 L250 275" stroke="#5a5a62" stroke-width="1.5" fill="none"/>
-          
-          <!-- Nariz con volumen -->
-          <path d="M235 275 Q240 295 250 300 Q260 295 265 275" 
-                fill="#3a3a42" stroke="#5a5a62" stroke-width="1"/>
-          <ellipse cx="240" cy="285" rx="8" ry="6" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.5"/>
-          <ellipse cx="260" cy="285" rx="8" ry="6" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.5"/>
-          
-          <!-- Filtrum -->
-          <path d="M250 300 L250 315" stroke="#4a4a52" stroke-width="1" fill="none"/>
-          
-          <!-- Labios - Sonrisa -->
-          <path d="M210 320 Q250 340 290 320" 
-                fill="#4a4a52" stroke="#5a5a62" stroke-width="1"/>
-          <path d="M215 322 Q250 335 285 322" 
-                stroke="#3a3a42" stroke-width="0.8" fill="none"/>
-          
-          <!-- Barbilla -->
-          <ellipse cx="250" cy="375" rx="50" ry="25" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.8"/>
-          
-          <!-- Pómulos (highlights) -->
-          <ellipse cx="150" cy="250" rx="25" ry="35" fill="#4a4a52" opacity="0.5"/>
-          <ellipse cx="350" cy="250" rx="25" ry="35" fill="#4a4a52" opacity="0.5"/>
-          
-          <!-- Cuello con piel -->
-          <path d="M190 400 L180 500 Q250 510 320 500 L310 400 Z" 
-                fill="url(#neckSkin)" stroke="#5a5a62" stroke-width="0.8"/>
-          
-          <!-- Líneas del cuello -->
-          <path d="M220 420 L218 480" stroke="#4a4a52" stroke-width="0.8" fill="none"/>
-          <path d="M250 410 L250 490" stroke="#4a4a52" stroke-width="0.8" fill="none"/>
-          <path d="M280 420 L282 480" stroke="#4a4a52" stroke-width="0.8" fill="none"/>
-          
-          <!-- Hombros con piel -->
-          <path d="M140 500 Q190 480 250 485 Q310 480 360 500 Q380 510 400 520 L100 520 Q120 510 140 500 Z" 
-                fill="url(#skinGradient)" stroke="#5a5a62" stroke-width="0.8"/>
-          
-          <!-- Conexión al hombro levantado -->
-          <path d="M360 500 Q385 485 390 460 Q400 440 380 420" 
-                fill="url(#armSkin)" stroke="#5a5a62" stroke-width="0.8"/>
-          
-          <!-- Orejas con piel -->
-          <ellipse cx="105" cy="220" rx="15" ry="35" fill="url(#skinGradient)" stroke="#5a5a62" stroke-width="1"/>
-          <ellipse cx="395" cy="220" rx="15" ry="35" fill="url(#skinGradient)" stroke="#5a5a62" stroke-width="1"/>
-          
-          <!-- Detalles internos de orejas -->
-          <ellipse cx="105" cy="220" rx="8" ry="20" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.5"/>
-          <ellipse cx="395" cy="220" rx="8" ry="20" fill="#3a3a42" stroke="#4a4a52" stroke-width="0.5"/>
-        </svg>
+      <!-- RSC Ecosystem Diagram - Flexbox/Grid Layout -->
+      <div class="rsc-ecosystem-diagram">
+        <!-- Líneas de conexión -->
+        <div class="diagram-connections">
+          <!-- HQ -> Chain, Token, Identity -->
+          <div class="conn-line conn-hq-chain"></div>
+          <div class="conn-line conn-hq-token"></div>
+          <div class="conn-line conn-hq-id"></div>
+          <!-- Chain, Token, Identity -> Wallet -->
+          <div class="conn-line conn-chain-wallet"></div>
+          <div class="conn-line conn-token-wallet"></div>
+          <div class="conn-line conn-id-wallet"></div>
+          <!-- Wallet -> Bank, P2P, Marketplace -->
+          <div class="conn-line conn-wallet-bank"></div>
+          <div class="conn-line conn-wallet-p2p"></div>
+          <div class="conn-line conn-wallet-market"></div>
+        </div>
+
+        <!-- NIVEL 1: RSC CORPORATION (TOP) -->
+        <div class="diagram-row">
+          <div class="diagram-node node-hq">
+            <div class="node-icon"><i class="fas fa-building"></i></div>
+            <div class="node-text">
+              <div class="node-title">RSC CORPORATION</div>
+              <div class="node-subtitle">(Marca matriz / HQ)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NIVEL 2: Chain, Token, Identity (MIDDLE ROW) -->
+        <div class="diagram-row-middle">
+          <div class="diagram-node node-chain">
+            <div class="node-icon"><i class="fas fa-link"></i></div>
+            <div class="node-text">
+              <div class="node-title">RSC Chain</div>
+              <div class="node-subtitle">(Blockchain)</div>
+            </div>
+          </div>
+
+          <div class="diagram-node node-token">
+            <div class="node-icon"><i class="fas fa-coins"></i></div>
+            <div class="node-text">
+              <div class="node-title">RSK Token</div>
+              <div class="node-subtitle">(Activo nativo)</div>
+            </div>
+          </div>
+
+          <div class="diagram-node node-id">
+            <div class="node-icon"><i class="fas fa-fingerprint"></i></div>
+            <div class="node-text">
+              <div class="node-title">RSC Identity</div>
+              <div class="node-subtitle">(User/Brand)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NIVEL 3: RSC WALLET (CENTER) -->
+        <div class="diagram-row">
+          <div class="diagram-node node-wallet">
+            <div class="node-icon"><i class="fas fa-wallet"></i></div>
+            <div class="node-text">
+              <div class="node-title">RSC WALLET</div>
+              <div class="node-subtitle">(Access / Custody / Signing)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NIVEL 4: Bank, P2P, Marketplace (BOTTOM ROW) -->
+        <div class="diagram-row-bottom">
+          <div class="diagram-node node-bank">
+            <div class="node-icon"><i class="fas fa-university"></i></div>
+            <div class="node-text">
+              <div class="node-title">RSC BANK</div>
+              <div class="node-subtitle">(Pagos / QR / FX)</div>
+            </div>
+          </div>
+
+          <div class="diagram-node node-p2p">
+            <div class="node-icon"><i class="fas fa-exchange-alt"></i></div>
+            <div class="node-text">
+              <div class="node-title">RSC P2P MARKET</div>
+              <div class="node-subtitle">(Trader to Trader)</div>
+            </div>
+          </div>
+
+          <div class="diagram-node node-market">
+            <div class="node-icon"><i class="fas fa-store"></i></div>
+            <div class="node-text">
+              <div class="node-title">RSC MARKETPLACE</div>
+              <div class="node-subtitle">(E-commerce cripto)</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Tarjetas inferiores izquierda -->
