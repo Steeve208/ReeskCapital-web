@@ -1,0 +1,439 @@
+/* ===== TECHNOLOGY RESPONSIVE FIX - FORZAR RESPONSIVE ===== */
+
+/* ===== NAVBAR NEUROSEARCH AJUSTES ===== */
+.neurosearch-navbar {
+  height: 68px !important;
+  padding: 12px 32px !important;
+}
+
+.neurosearch-nav-btn {
+  padding: 8px 16px !important;
+  font-size: 0.8rem !important;
+}
+
+.neurosearch-icon-btn {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 0.8rem !important;
+}
+
+.neurosearch-account-btn {
+  padding: 8px 16px !important;
+  font-size: 0.8rem !important;
+}
+
+.neurosearch-logo-text {
+  font-size: 0.9rem !important;
+}
+
+/* Reset y reglas generales IMPORTANTES */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+}
+
+.technology-hero,
+.architecture-section,
+.ai-section,
+.security-section,
+.consensus-section,
+.network-section,
+.comparison-section,
+.tech-cta {
+  width: 100% !important;
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+/* FORZAR tamaños de texto responsive - TAMAÑOS VISIBLES */
+
+/* Desktop - Pantallas grandes (por defecto) */
+.tech-hero-title {
+  font-size: 2.75rem !important;
+  line-height: 1.2 !important;
+}
+
+.tech-hero-description {
+  font-size: 1.15rem !important;
+  line-height: 1.6 !important;
+}
+
+.section-header h2 {
+  font-size: 2.25rem !important;
+  line-height: 1.3 !important;
+}
+
+.section-header p {
+  font-size: 1.05rem !important;
+  line-height: 1.6 !important;
+}
+
+.layer-header h3,
+.component-header h3,
+.protocol-header h3,
+.layer-content h3,
+.component-content h3 {
+  font-size: 1.35rem !important;
+}
+
+.feature-card p,
+.layer-content p,
+.component-content p,
+.protocol-content p,
+.application-item p,
+.geo-content p,
+.innovation-item p {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Tablets grandes */
+@media (max-width: 1200px) {
+  .neurosearch-navbar {
+    height: 64px !important;
+    padding: 10px 24px !important;
+  }
+  
+  .neurosearch-nav-btn {
+    padding: 7px 14px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .tech-hero-title {
+    font-size: 2.4rem !important;
+  }
+  
+  .tech-hero-description {
+    font-size: 1.05rem !important;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem !important;
+  }
+  
+  .section-header p {
+    font-size: 1rem !important;
+  }
+}
+
+/* Tablets medianas */
+@media (max-width: 1024px) {
+  .neurosearch-navbar {
+    height: 60px !important;
+    padding: 8px 20px !important;
+  }
+  
+  .neurosearch-nav-btn {
+    padding: 6px 12px !important;
+    font-size: 0.7rem !important;
+  }
+  
+  .neurosearch-logo-text {
+    font-size: 0.85rem !important;
+  }
+  
+  .tech-hero-title {
+    font-size: 2.1rem !important;
+  }
+  
+  .tech-hero-description {
+    font-size: 1rem !important;
+  }
+  
+  .section-header h2 {
+    font-size: 1.85rem !important;
+  }
+  
+  .section-header p {
+    font-size: 0.95rem !important;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .neurosearch-navbar {
+    height: 56px !important;
+    padding: 8px 16px !important;
+  }
+  
+  .neurosearch-nav-left {
+    display: none !important;
+  }
+  
+  .neurosearch-nav-center {
+    position: static !important;
+    transform: none !important;
+  }
+  
+  .neurosearch-icon-btn {
+    display: none !important;
+  }
+  
+  .neurosearch-account-btn {
+    display: none !important;
+  }
+  
+  .neurosearch-mobile-toggle {
+    display: flex !important;
+  }
+  
+  .tech-hero-title {
+    font-size: 1.85rem !important;
+    padding: 0 1rem !important;
+  }
+  
+  .tech-hero-description {
+    font-size: 0.95rem !important;
+    padding: 0 1rem !important;
+  }
+  
+  .section-header h2 {
+    font-size: 1.65rem !important;
+    padding: 0 1rem !important;
+  }
+  
+  .section-header p {
+    font-size: 0.9rem !important;
+    padding: 0 1rem !important;
+  }
+  
+  .tech-hero-content {
+    padding: 0 1rem !important;
+  }
+  
+  .layer-header h3,
+  .component-header h3,
+  .protocol-header h3 {
+    font-size: 1.3rem !important;
+  }
+  
+  .feature-card h3,
+  .application-item h4,
+  .innovation-item h4 {
+    font-size: 1.25rem !important;
+  }
+  
+  .feature-card p,
+  .layer-content p,
+  .component-content p,
+  .protocol-content p,
+  .application-item p,
+  .geo-content p,
+  .innovation-item p {
+    font-size: 0.9rem !important;
+  }
+  
+  .ai-applications h3,
+  .security-metrics h3,
+  .consensus-performance h3,
+  .geographic-optimization h3,
+  .network-performance h3,
+  .innovation-highlights h3 {
+    font-size: 1.6rem !important;
+  }
+}
+
+/* Móviles grandes */
+@media (max-width: 640px) {
+  .neurosearch-navbar {
+    height: 52px !important;
+    padding: 6px 12px !important;
+  }
+  
+  .neurosearch-logo-text {
+    font-size: 0.8rem !important;
+  }
+  
+  .tech-hero-title {
+    font-size: 1.65rem !important;
+    padding: 0 0.85rem !important;
+  }
+  
+  .tech-hero-description {
+    font-size: 0.9rem !important;
+    padding: 0 0.85rem !important;
+  }
+  
+  .section-header h2 {
+    font-size: 1.5rem !important;
+    padding: 0 0.85rem !important;
+  }
+  
+  .section-header p {
+    font-size: 0.85rem !important;
+    padding: 0 0.85rem !important;
+  }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+  .neurosearch-navbar {
+    height: 50px !important;
+    padding: 6px 10px !important;
+  }
+  
+  .neurosearch-logo-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  
+  .neurosearch-logo-text {
+    font-size: 0.75rem !important;
+  }
+  
+  .neurosearch-mobile-toggle {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  
+  .tech-hero-title {
+    font-size: 1.5rem !important;
+    padding: 0 0.75rem !important;
+  }
+  
+  .tech-hero-description {
+    font-size: 0.87rem !important;
+    padding: 0 0.75rem !important;
+  }
+  
+  .section-header h2 {
+    font-size: 1.4rem !important;
+    padding: 0 0.75rem !important;
+  }
+  
+  .section-header p {
+    font-size: 0.82rem !important;
+    padding: 0 0.75rem !important;
+  }
+  
+  .tech-hero-content {
+    padding: 0 0.75rem !important;
+  }
+  
+  .layer-header h3,
+  .component-header h3,
+  .protocol-header h3 {
+    font-size: 1.15rem !important;
+  }
+  
+  .feature-card h3,
+  .application-item h4,
+  .innovation-item h4 {
+    font-size: 1.1rem !important;
+  }
+  
+  .feature-card p,
+  .layer-content p,
+  .component-content p,
+  .protocol-content p,
+  .application-item p,
+  .geo-content p,
+  .innovation-item p {
+    font-size: 0.82rem !important;
+  }
+  
+  .ai-applications h3,
+  .security-metrics h3,
+  .consensus-performance h3,
+  .geographic-optimization h3,
+  .network-performance h3,
+  .innovation-highlights h3 {
+    font-size: 1.35rem !important;
+  }
+  
+  .cta-content h2 {
+    font-size: 1.4rem !important;
+  }
+  
+  .cta-content p {
+    font-size: 0.82rem !important;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 375px) {
+  .tech-hero-title {
+    font-size: 1.4rem !important;
+    padding: 0 0.65rem !important;
+  }
+  
+  .tech-hero-description {
+    font-size: 0.82rem !important;
+    padding: 0 0.65rem !important;
+  }
+  
+  .section-header h2 {
+    font-size: 1.3rem !important;
+    padding: 0 0.65rem !important;
+  }
+  
+  .section-header p {
+    font-size: 0.78rem !important;
+    padding: 0 0.65rem !important;
+  }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 320px) {
+  .tech-hero-title {
+    font-size: 1.3rem !important;
+    padding: 0 0.5rem !important;
+  }
+  
+  .tech-hero-description {
+    font-size: 0.78rem !important;
+    padding: 0 0.5rem !important;
+  }
+  
+  .section-header h2 {
+    font-size: 1.2rem !important;
+    padding: 0 0.5rem !important;
+  }
+  
+  .section-header p {
+    font-size: 0.75rem !important;
+    padding: 0 0.5rem !important;
+  }
+}
+
+/* Forzar word-wrap en todos los textos */
+.tech-hero-title,
+.tech-hero-description,
+.section-header h2,
+.section-header p,
+.feature-card h3,
+.feature-card p,
+.layer-header h3,
+.layer-content h3,
+.layer-content p,
+.component-header h3,
+.component-content h3,
+.component-content p,
+.protocol-header h3,
+.protocol-content p,
+.application-item h4,
+.application-item p,
+.geo-content h4,
+.geo-content p,
+.innovation-item h4,
+.innovation-item p,
+.cta-content h2,
+.cta-content p {
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
+  -ms-hyphens: auto !important;
+}
+
