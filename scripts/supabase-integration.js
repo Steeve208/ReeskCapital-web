@@ -1011,9 +1011,7 @@ class SupabaseIntegration {
             
             const dbBalance = parseFloat(dbUsers[0].balance) || 0;
             const localBalance = parseFloat(this.user.balance) || 0;
-            
-            // 🔧 Calcular diferencia (solo tokens minados desde la última sincronización)
-            const tokensToAdd = localBalance - dbBalance;
+            const tokensToAdd = Math.max(0, localBalance - dbBalance); // nunca decrementar
             
             console.log(`🔄 Sincronizando balance:`);
             console.log(`   Balance DB: ${dbBalance.toFixed(6)} RSC`);
@@ -1048,14 +1046,12 @@ class SupabaseIntegration {
                 if (rpcResponse.ok) {
                     const result = await rpcResponse.json();
                     console.log(`✅ Balance sincronizado correctamente: +${tokensToAdd.toFixed(6)} RSC`);
-                    console.log(`   Balance final en DB: ${result.balance_after.toFixed(6)} RSC`);
-                    
-                    // Actualizar balance local con el valor confirmado de la DB
-                    if (result.balance_after !== undefined) {
-                        this.user.balance = parseFloat(result.balance_after);
-                        this.saveUserToStorage();
-                    }
-                    
+                    console.log(`   Balance final en DB: ${result.balance_after?.toFixed?.(6) ?? 'N/A'} RSC`);
+
+                    // Mantener el mayor balance conocido (no bajar nunca)
+                    const dbAfter = result.balance_after !== undefined ? parseFloat(result.balance_after) : dbBalance + tokensToAdd;
+                    this.user.balance = Math.max(localBalance, dbAfter, dbBalance);
+                    this.saveUserToStorage();
                     return true;
                 } else {
                     // Si falla la función RPC, intentar con PATCH como fallback
@@ -1066,39 +1062,20 @@ class SupabaseIntegration {
                     
                     if (response.ok) {
                         console.log(`✅ Balance sincronizado con fallback PATCH: ${localBalance.toFixed(6)} RSC`);
+                        this.user.balance = Math.max(localBalance, dbBalance);
+                        this.saveUserToStorage();
                         return true;
                     } else {
                         throw new Error(`Fallback PATCH falló: ${response.status}`);
                     }
                 }
-            } else if (tokensToAdd < 0) {
-                // 🔧 PROTECCIÓN CRÍTICA: Si el balance local es MENOR que el de la DB durante minería activa
-                // NO actualizar el balance local, ya que podría estar minando y el balance local es la fuente de verdad
-                if (this.miningSession.isActive) {
-                    console.warn('⚠️ ADVERTENCIA: Balance local es menor que el de la DB durante minería activa');
-                    console.warn(`   Balance local: ${localBalance.toFixed(6)}, DB: ${dbBalance.toFixed(6)}`);
-                    console.warn('   Durante minería activa, el balance local es la fuente de verdad. No se actualizará.');
-                    console.warn('   Esto podría indicar que la DB se actualizó desde otra sesión o hay un problema de sincronización.');
-                    
-                    // NO actualizar el balance local durante minería activa
-                    // El balance local debe ser la fuente de verdad durante la minería
-                    return false;
-                } else {
-                    // Si NO hay minería activa, entonces sí actualizar con el mayor
-                    console.warn('⚠️ ADVERTENCIA: Balance local es menor que el de la DB (sin minería activa)');
-                    console.warn(`   Balance local: ${localBalance.toFixed(6)}, DB: ${dbBalance.toFixed(6)}`);
-                    console.warn('   Actualizando balance local con el valor de la DB (el más alto).');
-                    
-                    this.user.balance = dbBalance;
-                    this.saveUserToStorage();
-                    
-                    return false;
-                }
-            } else {
-                // tokensToAdd === 0, ya están sincronizados
-                console.log('✅ Balance ya está sincronizado');
-                return true;
             }
+
+            // tokensToAdd === 0 -> nada que subir, mantener mayor referencia
+            this.user.balance = Math.max(localBalance, dbBalance);
+            this.saveUserToStorage();
+            console.log('✅ Balance sincronizado (sin cambios, se mantiene el mayor valor)');
+            return true;
         } catch (error) {
             console.error('❌ Error en syncBalanceToBackend:', error);
             throw error; // Re-lanzar el error para que sea manejado por el caller

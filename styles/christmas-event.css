@@ -1,0 +1,1108 @@
+/* ======================================
+   CHRISTMAS COMMUNITY EVENT STYLES
+   Evento Navideño Orientado a Comunidad
+====================================== */
+
+/* Event Section */
+.christmas-event {
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+/* Snowflakes Animation */
+.snowflakes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.5rem;
+    animation: snowfall linear infinite;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.snowflake:nth-child(1) {
+    left: 10%;
+    animation-duration: 10s;
+    animation-delay: 0s;
+}
+
+.snowflake:nth-child(2) {
+    left: 20%;
+    animation-duration: 12s;
+    animation-delay: 1s;
+}
+
+.snowflake:nth-child(3) {
+    left: 30%;
+    animation-duration: 14s;
+    animation-delay: 2s;
+}
+
+.snowflake:nth-child(4) {
+    left: 40%;
+    animation-duration: 11s;
+    animation-delay: 0.5s;
+}
+
+.snowflake:nth-child(5) {
+    left: 50%;
+    animation-duration: 13s;
+    animation-delay: 1.5s;
+}
+
+.snowflake:nth-child(6) {
+    left: 60%;
+    animation-duration: 15s;
+    animation-delay: 2.5s;
+}
+
+.snowflake:nth-child(7) {
+    left: 70%;
+    animation-duration: 12s;
+    animation-delay: 0.8s;
+}
+
+.snowflake:nth-child(8) {
+    left: 80%;
+    animation-duration: 14s;
+    animation-delay: 1.8s;
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Event Card */
+.christmas-event-card {
+    background: rgba(15, 20, 40, 0.95);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 24px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(255, 215, 0, 0.1);
+    z-index: 2;
+}
+
+.christmas-event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        #ff0000 0%, 
+        #ffd700 25%, 
+        #00ff00 50%, 
+        #ffd700 75%, 
+        #ff0000 100%);
+    background-size: 200% 100%;
+    animation: christmasGradient 3s ease-in-out infinite;
+}
+
+@keyframes christmasGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Event Header */
+.event-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.event-icon-wrapper {
+    flex-shrink: 0;
+}
+
+.event-icon.christmas-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #ff0000, #ffd700);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    position: relative;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    animation: giftPulse 2s ease-in-out infinite;
+}
+
+.icon-glow {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.4), transparent);
+    border-radius: 50%;
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes giftPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.event-title-wrapper {
+    flex: 1;
+    min-width: 250px;
+}
+
+.title-main {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #ff0000, #ffd700, #00ff00, #ffd700);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleShimmer 3s ease-in-out infinite;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes titleShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.title-sub {
+    display: block;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+.event-status {
+    flex-shrink: 0;
+}
+
+.status-badge.active {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(0, 255, 0, 0.2);
+    border: 1px solid rgba(0, 255, 0, 0.5);
+    border-radius: 20px;
+    color: #00ff00;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.status-badge.active i {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Tabs Navigation */
+.event-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tab-btn:hover {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.tab-btn.active {
+    color: #ffd700;
+    border-bottom-color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Gift Boxes */
+.gift-boxes-container h3 {
+    color: #ffd700;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.gift-boxes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 2rem;
+}
+
+.gift-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.gift-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gift-box:hover::before {
+    opacity: 1;
+}
+
+.gift-box:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+.gift-box.unlocked {
+    border-color: #00ff00;
+    background: rgba(0, 255, 0, 0.1);
+    animation: unlockAnimation 0.6s ease;
+}
+
+.gift-box.claimed {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.02);
+    opacity: 0.7;
+}
+
+.gift-box.special {
+    border-color: rgba(255, 215, 0, 0.6);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 0, 0, 0.1));
+}
+
+@keyframes unlockAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.gift-box-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.gift-box-content h4 {
+    color: #ffd700;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.gift-reward {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #00ff00;
+    margin: 0.5rem 0;
+}
+
+.gift-requirement {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.gift-status {
+    margin-top: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.gift-status[data-status="locked"] {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.gift-status[data-status="unlocked"] {
+    background: rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+    border: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+.gift-status[data-status="claimed"] {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Action Buttons */
+.event-actions {
+    display: flex;
+    gap: 15px;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.btn-christmas {
+    flex: 1;
+    min-width: 200px;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #ff0000, #ff6b35);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-christmas::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-christmas:hover::before {
+    left: 100%;
+}
+
+.btn-christmas:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+    border-color: #ffd700;
+}
+
+.btn-christmas.completed {
+    background: linear-gradient(135deg, #00ff00, #4caf50);
+    border-color: #00ff00;
+}
+
+.btn-christmas i {
+    font-size: 1.3rem;
+}
+
+.btn-text {
+    flex: 1;
+    text-align: left;
+}
+
+.btn-title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.btn-text small {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+.btn-status {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+/* Referrals Section */
+.referrals-container h3 {
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2rem;
+}
+
+.referral-milestones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 2rem;
+}
+
+.milestone-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.milestone-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 215, 0, 0.6);
+}
+
+.milestone-card.completed {
+    border-color: #00ff00;
+    background: rgba(0, 255, 0, 0.1);
+}
+
+.milestone-card.special {
+    border-color: rgba(255, 215, 0, 0.6);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 0, 0, 0.1));
+}
+
+.milestone-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.milestone-content h4 {
+    color: #ffd700;
+    margin: 0 0 0.5rem 0;
+}
+
+.milestone-reward {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #00ff00;
+    margin: 0.5rem 0;
+}
+
+.milestone-progress {
+    margin-top: 1rem;
+}
+
+.progress-text {
+    display: block;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-small {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill-small {
+    height: 100%;
+    background: linear-gradient(90deg, #ff0000, #ffd700, #00ff00);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.referral-code-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.referral-code-section h4 {
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+.code-display {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.code-display input {
+    flex: 1;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.copy-btn {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #ff0000, #ff6b35);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+}
+
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-share {
+    flex: 1;
+    min-width: 150px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-share:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #ffd700;
+}
+
+/* Challenges Section */
+.challenges-container h3 {
+    color: #ffd700;
+    margin-bottom: 1.5rem;
+}
+
+.challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.challenge-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.challenge-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 215, 0, 0.6);
+}
+
+.challenge-card.completed {
+    border-color: #00ff00;
+    background: rgba(0, 255, 0, 0.1);
+}
+
+.challenge-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.challenge-header i {
+    font-size: 1.5rem;
+    color: #ffd700;
+}
+
+.challenge-type {
+    padding: 4px 12px;
+    background: rgba(255, 215, 0, 0.2);
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ffd700;
+}
+
+.challenge-card h4 {
+    color: white;
+    margin: 0.5rem 0;
+}
+
+.challenge-reward {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #00ff00;
+    margin: 0.5rem 0;
+}
+
+.challenge-progress {
+    margin: 1rem 0;
+}
+
+.btn-claim {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #ff0000, #ff6b35);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.btn-claim:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+}
+
+.btn-claim:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-claim.available {
+    background: linear-gradient(135deg, #00ff00, #4caf50);
+    animation: claimPulse 2s ease-in-out infinite;
+}
+
+@keyframes claimPulse {
+    0%, 100% { box-shadow: 0 0 0 rgba(0, 255, 0, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.6); }
+}
+
+/* Leaderboard */
+.leaderboard-container h3 {
+    color: #ffd700;
+    margin-bottom: 1.5rem;
+}
+
+.leaderboard-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.lb-tab {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lb-tab:hover {
+    background: rgba(255, 215, 0, 0.1);
+    color: white;
+}
+
+.lb-tab.active {
+    background: linear-gradient(135deg, #ff0000, #ff6b35);
+    border-color: #ffd700;
+    color: white;
+}
+
+.leaderboard-list {
+    min-height: 300px;
+}
+
+.leaderboard-loading {
+    text-align: center;
+    padding: 3rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.leaderboard-loading i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ffd700;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.leaderboard-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.leaderboard-rank {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff0000, #ff6b35);
+    border-radius: 50%;
+    font-weight: 700;
+    color: white;
+}
+
+.leaderboard-rank.top-1 {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #000;
+}
+
+.leaderboard-rank.top-2 {
+    background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+    color: #000;
+}
+
+.leaderboard-rank.top-3 {
+    background: linear-gradient(135deg, #cd7f32, #daa520);
+    color: #000;
+}
+
+.leaderboard-info {
+    flex: 1;
+}
+
+.leaderboard-name {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 4px;
+}
+
+.leaderboard-stats {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.leaderboard-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+/* Progress Section */
+.event-progress-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.progress-header h4 {
+    color: #ffd700;
+    margin: 0;
+}
+
+.progress-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff0000, #ffd700, #00ff00);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progressShine 2s infinite;
+}
+
+@keyframes progressShine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Stats */
+.event-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 2rem 0;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+/* Community Milestones */
+.community-milestones {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.community-milestones h4 {
+    color: #ffd700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.milestones-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.community-milestone {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.milestone-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.milestone-name {
+    color: white;
+    font-weight: 600;
+}
+
+.milestone-reward {
+    color: #00ff00;
+    font-weight: 600;
+}
+
+.milestone-progress-community {
+    margin-top: 0.5rem;
+}
+
+/* Event Message */
+.christmas-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1.25rem;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    margin: 2rem 0;
+}
+
+.christmas-message i {
+    color: #ffd700;
+    font-size: 1.2rem;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Event Rules */
+.event-rules {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.event-rules h4 {
+    color: #ffd700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.event-rules ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.event-rules li {
+    padding: 0.75rem 0;
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.event-rules li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .christmas-event-card {
+        padding: 1.5rem;
+    }
+    
+    .event-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .title-main {
+        font-size: 1.5rem;
+    }
+    
+    .gift-boxes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .referral-milestones {
+        grid-template-columns: 1fr;
+    }
+    
+    .challenges-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .event-tabs {
+        flex-direction: column;
+    }
+    
+    .tab-btn {
+        width: 100%;
+    }
+    
+    .event-actions {
+        flex-direction: column;
+    }
+    
+    .btn-christmas {
+        width: 100%;
+    }
+}
+

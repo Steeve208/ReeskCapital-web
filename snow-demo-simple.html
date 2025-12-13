@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snow Mining - DEMO FUNCIONAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0d1b2a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #89CFF0, #FFFFFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #89CFF0, #4FC3F7);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(137, 207, 240, 0.4);
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(180deg, rgba(137, 207, 240, 0.1), rgba(15, 20, 40, 0.5));
+            border: 2px solid rgba(137, 207, 240, 0.3);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        #gameCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: crosshair;
+        }
+
+        .stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(137, 207, 240, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #89CFF0;
+        }
+
+        .stat-value.active {
+            color: #FFD700;
+            animation: glow 1s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px 24px;
+            border-radius: 20px;
+            border: 1px solid rgba(137, 207, 240, 0.3);
+            pointer-events: none;
+        }
+
+        .collection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .collection-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(137, 207, 240, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .collection-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(137, 207, 240, 0.5);
+        }
+
+        .item-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-count {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #89CFF0;
+            margin: 0.5rem 0;
+        }
+
+        .item-name {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .log {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(137, 207, 240, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            max-height: 150px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .log-entry {
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>❄️ Snow Mining Event - DEMO ❄️</h1>
+        <p class="subtitle">Haz clic en los items que caen para colectarlos</p>
+
+        <div class="controls">
+            <button class="btn" onclick="game.spawnItem()">
+                <i class="fas fa-gift"></i> Spawnear Item
+            </button>
+            <button class="btn" onclick="game.spawnMultiple()">
+                <i class="fas fa-gifts"></i> Spawnear 5 Items
+            </button>
+            <button class="btn" onclick="game.reset()">
+                <i class="fas fa-redo"></i> Resetear
+            </button>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="gameCanvas"></canvas>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-label">Multiplicador</div>
+                    <div class="stat-value" id="multiplier">1.0x</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Items Colectados</div>
+                    <div class="stat-value" id="collected">0</div>
+                </div>
+            </div>
+            <div class="instructions">
+                <i class="fas fa-mouse-pointer"></i> ¡Haz clic en los items para colectarlos!
+            </div>
+        </div>
+
+        <div class="collection">
+            <div class="collection-item">
+                <div class="item-icon">❄️</div>
+                <div class="item-count" id="snowflakes">0</div>
+                <div class="item-name">Copos de Nieve</div>
+                <small>+50% minería</small>
+            </div>
+            <div class="collection-item">
+                <div class="item-icon">🔔</div>
+                <div class="item-count" id="bells">0</div>
+                <div class="item-name">Campanas</div>
+                <small>+100% minería</small>
+            </div>
+            <div class="collection-item">
+                <div class="item-icon">🎁</div>
+                <div class="item-count" id="gifts">0</div>
+                <div class="item-name">Regalos</div>
+                <small>+150% minería</small>
+            </div>
+            <div class="collection-item">
+                <div class="item-icon">⭐</div>
+                <div class="item-count" id="stars">0</div>
+                <div class="item-name">Estrellas</div>
+                <small>+200% minería</small>
+            </div>
+        </div>
+
+        <div class="log" id="log">
+            <div class="log-entry">Sistema iniciado...</div>
+        </div>
+    </div>
+
+    <script>
+        class SnowMiningGame {
+            constructor() {
+                this.canvas = document.getElementById('gameCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+
+                this.items = [];
+                this.snowflakes = [];
+                this.particles = [];
+
+                this.collection = {
+                    snowflakes: 0,
+                    bells: 0,
+                    gifts: 0,
+                    stars: 0
+                };
+
+                this.totalCollected = 0;
+                this.multiplier = 1.0;
+                this.bonusTimeLeft = 0;
+
+                this.itemTypes = [
+                    { emoji: '❄️', type: 'snowflakes', multiplier: 1.5, name: 'Copo de Nieve' },
+                    { emoji: '🔔', type: 'bells', multiplier: 2.0, name: 'Campana' },
+                    { emoji: '🎁', type: 'gifts', multiplier: 2.5, name: 'Regalo' },
+                    { emoji: '⭐', type: 'stars', multiplier: 3.0, name: 'Estrella' }
+                ];
+
+                this.setupEvents();
+                this.start();
+                
+                this.log('Canvas inicializado: ' + this.canvas.width + 'x' + this.canvas.height);
+                
+                // Spawn automático inicial
+                setTimeout(() => this.spawnItem(), 1000);
+                setInterval(() => this.spawnItem(), 5000);
+            }
+
+            setupEvents() {
+                this.canvas.addEventListener('click', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    this.handleClick(x, y);
+                });
+
+                window.addEventListener('resize', () => {
+                    this.canvas.width = this.canvas.offsetWidth;
+                    this.canvas.height = this.canvas.offsetHeight;
+                });
+            }
+
+            start() {
+                // Generar nieve de fondo
+                setInterval(() => this.spawnSnowflake(), 100);
+                
+                // Loop de renderizado
+                this.render();
+                
+                // Timer de bonus
+                setInterval(() => {
+                    if (this.bonusTimeLeft > 0) {
+                        this.bonusTimeLeft--;
+                        if (this.bonusTimeLeft === 0) {
+                            this.multiplier = 1.0;
+                        }
+                        this.updateUI();
+                    }
+                }, 1000);
+            }
+
+            spawnSnowflake() {
+                this.snowflakes.push({
+                    x: Math.random() * this.canvas.width,
+                    y: -10,
+                    size: Math.random() * 3 + 1,
+                    speed: Math.random() * 1 + 0.5,
+                    drift: (Math.random() - 0.5) * 0.5,
+                    opacity: Math.random() * 0.5 + 0.3
+                });
+
+                if (this.snowflakes.length > 100) {
+                    this.snowflakes.shift();
+                }
+            }
+
+            spawnItem() {
+                const itemType = this.itemTypes[Math.floor(Math.random() * this.itemTypes.length)];
+                
+                this.items.push({
+                    x: Math.random() * (this.canvas.width - 60) + 30,
+                    y: -50,
+                    size: 50,
+                    speed: Math.random() * 1 + 1,
+                    rotation: 0,
+                    rotationSpeed: (Math.random() - 0.5) * 0.05,
+                    ...itemType
+                });
+
+                this.log('Item spawned: ' + itemType.name);
+            }
+
+            spawnMultiple() {
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => this.spawnItem(), i * 300);
+                }
+            }
+
+            handleClick(x, y) {
+                for (let i = this.items.length - 1; i >= 0; i--) {
+                    const item = this.items[i];
+                    const distance = Math.sqrt(
+                        Math.pow(x - item.x, 2) + Math.pow(y - item.y, 2)
+                    );
+
+                    if (distance < item.size / 2) {
+                        this.collectItem(item);
+                        this.items.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+
+            collectItem(item) {
+                // Incrementar colección
+                this.collection[item.type]++;
+                this.totalCollected++;
+
+                // Aplicar multiplicador
+                this.multiplier = item.multiplier;
+                this.bonusTimeLeft = 30;
+
+                // Crear partículas
+                this.createParticles(item.x, item.y, item.emoji);
+
+                // Actualizar UI
+                this.updateUI();
+
+                // Log
+                const bonus = Math.round((item.multiplier - 1) * 100);
+                this.log(`¡${item.name} colectado! +${bonus}% minería x30s`);
+            }
+
+            createParticles(x, y, emoji) {
+                for (let i = 0; i < 10; i++) {
+                    const angle = (Math.PI * 2 * i) / 10;
+                    const speed = Math.random() * 3 + 2;
+                    
+                    this.particles.push({
+                        x: x,
+                        y: y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        size: Math.random() * 4 + 2,
+                        life: 60,
+                        emoji: emoji
+                    });
+                }
+            }
+
+            render() {
+                // Limpiar canvas
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                // Dibujar nieve de fondo
+                this.snowflakes.forEach((flake, index) => {
+                    this.ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+                    this.ctx.beginPath();
+                    this.ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    flake.y += flake.speed;
+                    flake.x += flake.drift;
+
+                    if (flake.y > this.canvas.height) {
+                        this.snowflakes.splice(index, 1);
+                    }
+                });
+
+                // Dibujar partículas
+                this.particles.forEach((particle, index) => {
+                    this.ctx.font = `${particle.size * 3}px Arial`;
+                    this.ctx.globalAlpha = particle.life / 60;
+                    this.ctx.fillText(particle.emoji, particle.x, particle.y);
+                    this.ctx.globalAlpha = 1;
+
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    particle.vy += 0.2; // gravedad
+                    particle.life--;
+
+                    if (particle.life <= 0) {
+                        this.particles.splice(index, 1);
+                    }
+                });
+
+                // Dibujar items
+                this.items.forEach((item, index) => {
+                    this.ctx.save();
+                    this.ctx.translate(item.x, item.y);
+                    this.ctx.rotate(item.rotation);
+
+                    // Sombra
+                    this.ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                    this.ctx.shadowBlur = 15;
+                    this.ctx.shadowOffsetY = 5;
+
+                    // Emoji
+                    this.ctx.font = `${item.size}px Arial`;
+                    this.ctx.textAlign = 'center';
+                    this.ctx.textBaseline = 'middle';
+                    this.ctx.fillText(item.emoji, 0, 0);
+
+                    this.ctx.restore();
+
+                    // Actualizar
+                    item.y += item.speed;
+                    item.rotation += item.rotationSpeed;
+
+                    // Remover si sale
+                    if (item.y > this.canvas.height + 50) {
+                        this.items.splice(index, 1);
+                    }
+                });
+
+                requestAnimationFrame(() => this.render());
+            }
+
+            updateUI() {
+                document.getElementById('multiplier').textContent = 
+                    this.bonusTimeLeft > 0 
+                        ? `${this.multiplier.toFixed(1)}x (${this.bonusTimeLeft}s)` 
+                        : '1.0x';
+                
+                document.getElementById('multiplier').className = 
+                    this.bonusTimeLeft > 0 ? 'stat-value active' : 'stat-value';
+
+                document.getElementById('collected').textContent = this.totalCollected;
+                document.getElementById('snowflakes').textContent = this.collection.snowflakes;
+                document.getElementById('bells').textContent = this.collection.bells;
+                document.getElementById('gifts').textContent = this.collection.gifts;
+                document.getElementById('stars').textContent = this.collection.stars;
+            }
+
+            log(message) {
+                const logDiv = document.getElementById('log');
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+                logDiv.insertBefore(entry, logDiv.firstChild);
+
+                // Limitar a 20 entradas
+                while (logDiv.children.length > 20) {
+                    logDiv.removeChild(logDiv.lastChild);
+                }
+            }
+
+            reset() {
+                this.collection = { snowflakes: 0, bells: 0, gifts: 0, stars: 0 };
+                this.totalCollected = 0;
+                this.multiplier = 1.0;
+                this.bonusTimeLeft = 0;
+                this.items = [];
+                this.particles = [];
+                this.updateUI();
+                this.log('Sistema reseteado');
+            }
+        }
+
+        // Iniciar juego
+        const game = new SnowMiningGame();
+        console.log('Game initialized:', game);
+    </script>
+</body>
+</html>
+

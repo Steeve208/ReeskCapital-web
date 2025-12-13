@@ -1,0 +1,478 @@
+/* ===== SOCIAL MEDIA GOALS EVENT STYLES ===== */
+
+/* Events Navigation */
+.events-nav-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    overflow-x: auto;
+    padding-bottom: 15px;
+}
+
+.event-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    position: relative;
+}
+
+.event-tab:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.event-tab.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.event-tab:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.event-tab i {
+    font-size: 1.2rem;
+}
+
+.event-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 5px;
+}
+
+.active-badge {
+    background: #10b981;
+    color: #fff;
+    animation: pulse 2s infinite;
+}
+
+/* Events Container */
+.events-container {
+    position: relative;
+}
+
+.event-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.event-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Social Goals Event Card */
+.social-goals-event-card {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.social-goals-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.social-goals-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+}
+
+.social-goals-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+}
+
+/* Social Platforms Grid */
+.social-platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.platform-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.platform-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(102, 126, 234, 0.5);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+}
+
+.platform-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.platform-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.platform-info h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.platform-subscribers {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.current-count {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.platform-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Platform CTA Button */
+.platform-cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.platform-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    filter: brightness(1.1);
+}
+
+.platform-cta-btn:active {
+    transform: translateY(0);
+}
+
+.platform-cta-btn i:first-child {
+    font-size: 1.2rem;
+}
+
+.platform-cta-btn i:last-child {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Milestones */
+.platform-milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.milestone-item {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.milestone-item.reached {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.milestone-item.claimed {
+    opacity: 0.6;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.milestone-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.milestone-target {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.milestone-target i {
+    color: #fbbf24;
+}
+
+.milestone-reward {
+    font-weight: 700;
+    color: #10b981;
+    font-size: 1.1rem;
+}
+
+.milestone-progress {
+    position: relative;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.milestone-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.milestone-progress-text {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.milestone-status {
+    text-align: center;
+}
+
+.status-claimed {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #10b981;
+    font-weight: 600;
+}
+
+.status-progress {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.claim-milestone-btn {
+    width: 100%;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.claim-milestone-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+}
+
+.claim-milestone-btn:active {
+    transform: scale(0.98);
+}
+
+/* Info Box */
+.social-goals-info-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border-left: 4px solid #667eea;
+}
+
+.social-goals-info-box h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #667eea;
+}
+
+.social-goals-info-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.social-goals-info-box li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+.social-goals-info-box li i {
+    color: #10b981;
+    margin-top: 3px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .social-platforms-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .social-goals-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .events-nav-tabs {
+        gap: 10px;
+    }
+
+    .event-tab {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+
+    .event-tab span:not(.event-badge) {
+        display: none;
+    }
+
+    .event-tab i {
+        font-size: 1.5rem;
+    }
+
+    .social-goals-event-card {
+        padding: 20px;
+    }
+
+    .social-goals-title {
+        font-size: 1.8rem;
+    }
+
+    .social-platforms-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .platform-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .social-goals-title {
+        font-size: 1.5rem;
+    }
+
+    .social-goals-subtitle {
+        font-size: 1rem;
+    }
+
+    .platform-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .milestone-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+

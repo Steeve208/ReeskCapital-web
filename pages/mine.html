@@ -25,7 +25,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="../styles/global.css?v=4.0">
     <link rel="stylesheet" href="../styles/mining-platform.css?v=1.0">
-    <link rel="stylesheet" href="../styles/welcome-bonus-event.css?v=1.0">
+    <link rel="stylesheet" href="../styles/snow-mining-event.css?v=2.0">
+    <link rel="stylesheet" href="../styles/social-goals-event.css?v=1.1">
+    <!-- Welcome Bonus Event CSS removed - replaced with Christmas Event -->
+    <!-- <link rel="stylesheet" href="../styles/welcome-bonus-event.css?v=1.0"> -->
 </head>
 <body>
     <!-- Navigation -->
@@ -357,8 +360,8 @@
             </div>
         </section>
 
-        <!-- Follow Bonus Event -->
-        <section class="welcome-bonus-event">
+        <!-- Follow Bonus Event - HIDDEN (replaced with Christmas Event) -->
+        <section class="welcome-bonus-event" style="display: none !important; visibility: hidden !important; height: 0 !important; overflow: hidden !important;">
             <div class="container">
                 <div class="event-card">
                     <div class="event-header">
@@ -438,6 +441,527 @@
                                     <li>We reserve the right to pause or cancel the event if suspicious activity is detected.</li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section with Navigation -->
+        <section class="events-section">
+            <div class="container">
+                <!-- Events Navigation Tabs -->
+                <div class="events-nav-tabs">
+                    <button class="event-tab active" data-event="snow-mining">
+                        <i class="fas fa-snowflake"></i>
+                        <span>Snow Mining</span>
+                        <span class="event-badge active-badge">Active</span>
+                    </button>
+                    <button class="event-tab" data-event="social-goals">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Social Goals</span>
+                        <span class="event-badge active-badge">Active</span>
+                    </button>
+                    <button class="event-tab" data-event="event-3" disabled>
+                        <i class="fas fa-lock"></i>
+                        <span>Coming Soon</span>
+                    </button>
+                    <button class="event-tab" data-event="event-4" disabled>
+                        <i class="fas fa-lock"></i>
+                        <span>Coming Soon</span>
+                    </button>
+                </div>
+
+                <!-- Events Container -->
+                <div class="events-container">
+                    <!-- Snow Mining Event -->
+                    <div class="event-content active" id="event-snow-mining">
+        <!-- Snow Mining Event -->
+        <section class="snow-mining-event">
+            <div class="container">
+                <div class="snow-event-card">
+                    <!-- Event Header -->
+                    <div class="snow-event-header">
+                        <h2 class="snow-event-title">❄️ Snow Mining Bonanza ❄️</h2>
+                        <p class="snow-event-subtitle">
+                            Catch Christmas items while mining and multiply your earnings!
+                        </p>
+                        <div class="event-time-left">
+                            <i class="fas fa-clock"></i> 
+                            <span id="snowTimeLeft">Loading...</span>
+                        </div>
+                    </div>
+
+                    <!-- Canvas de Animación Interactivo -->
+                    <div class="snow-canvas-container" id="snowMiningEvent">
+                        <canvas id="snowCanvas"></canvas>
+                        
+                        <div class="canvas-overlay">
+                            <div class="canvas-stat">
+                                <span class="canvas-stat-label">Multiplicador</span>
+                                <span class="canvas-stat-value" id="currentMultiplier">1.0x</span>
+                            </div>
+                            <div class="canvas-stat">
+                                <span class="canvas-stat-label">Items Colectados</span>
+                                <span class="canvas-stat-value" id="totalCollected">0</span>
+                            </div>
+                        </div>
+
+                        <div class="canvas-instructions">
+                            <i class="fas fa-mouse-pointer"></i>
+                            Click on falling items to collect them!
+                        </div>
+                    </div>
+
+                    <!-- Estadísticas del Evento -->
+                    <div class="snow-stats-section" id="snowStats">
+                        <div class="snow-stat-card">
+                            <div class="snow-stat-icon">❄️</div>
+                            <div class="snow-stat-value" id="snowflakeCount">0</div>
+                            <div class="snow-stat-label">Snowflakes</div>
+                        </div>
+                        <div class="snow-stat-card">
+                            <div class="snow-stat-icon">🔔</div>
+                            <div class="snow-stat-value" id="bellCount">0</div>
+                            <div class="snow-stat-label">Bells</div>
+                        </div>
+                        <div class="snow-stat-card">
+                            <div class="snow-stat-icon">🎁</div>
+                            <div class="snow-stat-value" id="giftCount">0</div>
+                            <div class="snow-stat-label">Gifts</div>
+                        </div>
+                        <div class="snow-stat-card">
+                            <div class="snow-stat-icon">🎅</div>
+                            <div class="snow-stat-value" id="starCount">0</div>
+                            <div class="snow-stat-label">Santa Claus</div>
+                        </div>
+                        <div class="snow-stat-card">
+                            <div class="snow-stat-icon">💰</div>
+                            <div class="snow-stat-value" id="snowEarned">0 RSK</div>
+                            <div class="snow-stat-label">Total Earned</div>
+                        </div>
+                    </div>
+
+                    <!-- Collection Section -->
+                    <div class="collection-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-trophy"></i>
+                            Your Collection
+                        </h3>
+                        <div class="collection-grid" id="collectionGrid">
+                            <!-- Generated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Collection Rewards Section -->
+                    <div class="rewards-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-gift"></i>
+                            Collection Rewards
+                        </h3>
+                        <div class="rewards-container" id="rewardsContainer">
+                            <!-- Generated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Random Bonus Button -->
+                    <div class="activate-bonus-section">
+                        <button class="btn-activate-bonus" id="activateBonusBtn">
+                            <i class="fas fa-magic"></i>
+                            Activate Random Bonus
+                        </button>
+                    </div>
+
+                    <!-- Event Information -->
+                    <div class="event-info-box">
+                        <h3>
+                            <i class="fas fa-info-circle"></i>
+                            How It Works
+                        </h3>
+                        <ul>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Start mining and special items will begin falling</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Click on items to collect them (they're fast!)</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Each item gives you a mining multiplier for 15 seconds</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>❄️ Snowflake: +2% mining (Very Common - 65%)</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>🔔 Bell: +12% mining (Common - 25%)</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>🎁 Gift: +85% mining (Rare - 8%)</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>🎅 Santa Claus: +200% mining (ULTRA RARE - 2%)</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Collect many items to unlock RSK rewards</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                    <!-- End Snow Mining Event -->
+
+                    <!-- Social Media Goals Event -->
+                    <div class="event-content" id="event-social-goals">
+                        <div class="social-goals-event-card">
+                            <!-- Event Header -->
+                            <div class="social-goals-header">
+                                <h2 class="social-goals-title">🎯 Social Media Goals Event</h2>
+                                <p class="social-goals-subtitle">
+                                    Help us grow our community and earn rewards when we reach milestones!
+                                </p>
+                                <div class="event-time-left">
+                                    <i class="fas fa-clock"></i> 
+                                    <span id="socialGoalsTimeLeft">Loading...</span>
+                                </div>
+                            </div>
+
+                            <!-- Social Media Platforms Grid -->
+                            <div class="social-platforms-grid" id="socialPlatformsGrid">
+                                <!-- Generated dynamically by JavaScript -->
+                            </div>
+
+                            <!-- Event Information -->
+                            <div class="social-goals-info-box">
+                                <h3>
+                                    <i class="fas fa-info-circle"></i>
+                                    How It Works
+                                </h3>
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <span>Follow/Join our social media platforms</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <span>When we reach a milestone, ALL users receive rewards</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <span>Rewards are automatically available to claim</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <span>Multiple milestones = Multiple rewards!</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <span>Help us grow and earn together!</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Social Media Goals Event -->
+
+                </div>
+                <!-- End Events Container -->
+            </div>
+        </section>
+        <!-- End Events Section -->
+
+                    <div class="event-content" style="display: none;">
+
+                        <!-- Gifts Tab -->
+                        <div class="tab-content active" id="giftsTab">
+                            <div class="gift-boxes-container">
+                                <h3>🎁 Unlock Your Christmas Gifts</h3>
+                                <div class="gift-boxes-grid">
+                                    <div class="gift-box" data-gift="gift1" data-reward="50">
+                                        <div class="gift-box-icon">🎁</div>
+                                        <div class="gift-box-content">
+                                            <h4>Gift #1</h4>
+                                            <p class="gift-reward">50 RSK</p>
+                                            <p class="gift-requirement">Follow on X</p>
+                                            <div class="gift-status" data-status="locked">
+                                                <i class="fas fa-lock"></i> Locked
+                                            </div>
+                                            <button class="gift-action-button" data-action="follow_twitter">
+                                                <i class="fab fa-twitter"></i> Follow on X
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="gift-box" data-gift="gift2" data-reward="50">
+                                        <div class="gift-box-icon">🎁</div>
+                                        <div class="gift-box-content">
+                                            <h4>Gift #2</h4>
+                                            <p class="gift-reward">50 RSK</p>
+                                            <p class="gift-requirement">Join Telegram</p>
+                                            <div class="gift-status" data-status="locked">
+                                                <i class="fas fa-lock"></i> Locked
+                                            </div>
+                                            <button class="gift-action-button" data-action="join_telegram">
+                                                <i class="fab fa-telegram"></i> Join Telegram
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="gift-box" data-gift="gift3" data-reward="50">
+                                        <div class="gift-box-icon">🎁</div>
+                                        <div class="gift-box-content">
+                                            <h4>Gift #3</h4>
+                                            <p class="gift-reward">50 RSK</p>
+                                            <p class="gift-requirement">Mine 1 Hour</p>
+                                            <div class="gift-status" data-status="locked">
+                                                <i class="fas fa-lock"></i> Locked
+                                            </div>
+                                            <button class="gift-action-button" disabled>
+                                                <i class="fas fa-hammer"></i> Start Mining
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="gift-box special" data-gift="gift4" data-reward="50">
+                                        <div class="gift-box-icon">🌟</div>
+                                        <div class="gift-box-content">
+                                            <h4>Bonus Gift</h4>
+                                            <p class="gift-reward">50 RSK</p>
+                                            <p class="gift-requirement">Complete All 3</p>
+                                            <div class="gift-status" data-status="locked">
+                                                <i class="fas fa-lock"></i> Locked
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Referrals Tab -->
+                        <div class="tab-content" id="referralsTab">
+                            <div class="referrals-container">
+                                <h3>👥 Invite Friends & Earn More</h3>
+                                <p class="section-description">Share your referral code and earn bonus RSK for each friend you invite!</p>
+                                
+                                <div class="referral-milestones">
+                                    <div class="milestone-card" data-milestone="1">
+                                        <div class="milestone-icon">🎯</div>
+                                        <div class="milestone-content">
+                                            <h4>1 Friend</h4>
+                                            <p class="milestone-reward">+25 RSK</p>
+                                            <div class="milestone-progress">
+                                                <span class="progress-text">0/1</span>
+                                                <div class="progress-bar-small">
+                                                    <div class="progress-fill-small" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="milestone-card" data-milestone="3">
+                                        <div class="milestone-icon">🔥</div>
+                                        <div class="milestone-content">
+                                            <h4>3 Friends</h4>
+                                            <p class="milestone-reward">+100 RSK</p>
+                                            <div class="milestone-progress">
+                                                <span class="progress-text">0/3</span>
+                                                <div class="progress-bar-small">
+                                                    <div class="progress-fill-small" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="milestone-card" data-milestone="5">
+                                        <div class="milestone-icon">⚡</div>
+                                        <div class="milestone-content">
+                                            <h4>5 Friends</h4>
+                                            <p class="milestone-reward">+200 RSK</p>
+                                            <div class="milestone-progress">
+                                                <span class="progress-text">0/5</span>
+                                                <div class="progress-bar-small">
+                                                    <div class="progress-fill-small" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="milestone-card special" data-milestone="10">
+                                        <div class="milestone-icon">🌟</div>
+                                        <div class="milestone-content">
+                                            <h4>10 Friends</h4>
+                                            <p class="milestone-reward">+500 RSK + Special Gift</p>
+                                            <div class="milestone-progress">
+                                                <span class="progress-text">0/10</span>
+                                                <div class="progress-bar-small">
+                                                    <div class="progress-fill-small" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="referral-code-section">
+                                    <h4>Your Referral Code</h4>
+                                    <div class="code-display">
+                                        <input type="text" id="christmasReferralCode" readonly>
+                                        <button class="copy-btn" id="copyChristmasReferral">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="share-buttons">
+                                        <button class="btn-share" data-share="twitter">
+                                            <i class="fab fa-twitter"></i> Share on X
+                                        </button>
+                                        <button class="btn-share" data-share="telegram">
+                                            <i class="fab fa-telegram"></i> Share on Telegram
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Challenges Tab -->
+                        <div class="tab-content" id="challengesTab">
+                            <div class="challenges-container">
+                                <h3>🎯 Daily & Weekly Challenges</h3>
+                                
+                                <div class="challenges-grid">
+                                    <div class="challenge-card daily" data-challenge="dailyMining">
+                                        <div class="challenge-header">
+                                            <i class="fas fa-calendar-day"></i>
+                                            <span class="challenge-type">Daily</span>
+                                        </div>
+                                        <h4>Mine 30 Minutes</h4>
+                                        <p class="challenge-reward">5 RSK</p>
+                                        <div class="challenge-progress">
+                                            <span class="progress-text">0/30 min</span>
+                                            <div class="progress-bar-small">
+                                                <div class="progress-fill-small" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <button class="btn-claim" disabled>Claim</button>
+                                    </div>
+                                    
+                                    <div class="challenge-card weekly" data-challenge="telegramActivity">
+                                        <div class="challenge-header">
+                                            <i class="fas fa-calendar-week"></i>
+                                            <span class="challenge-type">Weekly</span>
+                                        </div>
+                                        <h4>Telegram Activity</h4>
+                                        <p class="challenge-reward">10 RSK</p>
+                                        <div class="challenge-progress">
+                                            <span class="progress-text">0/5 messages</span>
+                                            <div class="progress-bar-small">
+                                                <div class="progress-fill-small" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <button class="btn-claim" disabled>Claim</button>
+                                    </div>
+                                    
+                                    <div class="challenge-card" data-challenge="socialShare">
+                                        <div class="challenge-header">
+                                            <i class="fas fa-share-alt"></i>
+                                            <span class="challenge-type">One-time</span>
+                                        </div>
+                                        <h4>Share Event</h4>
+                                        <p class="challenge-reward">15 RSK</p>
+                                        <div class="challenge-progress">
+                                            <span class="progress-text">0/1 share</span>
+                                            <div class="progress-bar-small">
+                                                <div class="progress-fill-small" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <button class="btn-claim" disabled>Claim</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Leaderboard Tab -->
+                        <div class="tab-content" id="leaderboardTab">
+                            <div class="leaderboard-container">
+                                <h3>🏆 Community Leaderboard</h3>
+                                
+                                <div class="leaderboard-tabs">
+                                    <button class="lb-tab active" data-lb="referrals">Top Referrers</button>
+                                    <button class="lb-tab" data-lb="mining">Top Miners</button>
+                                    <button class="lb-tab" data-lb="activity">Most Active</button>
+                                </div>
+                                
+                                <div class="leaderboard-list" id="leaderboardList">
+                                    <div class="leaderboard-loading">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        <p>Loading leaderboard...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress & Stats -->
+                        <div class="event-progress-section">
+                            <div class="progress-header">
+                                <h4>Your Total Progress</h4>
+                                <span class="progress-text" id="christmasTotalProgress">0 RSK earned</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="christmasProgressBar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="event-stats" id="christmasStats">
+                            <div class="stat-item">
+                                <span class="stat-label">Time Left</span>
+                                <span class="stat-value" id="christmasTimeLeft">Loading...</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Your Earnings</span>
+                                <span class="stat-value" id="christmasYourEarnings">0 RSK</span>
+                            </div>
+                        </div>
+
+                        <!-- Community Milestones -->
+                        <div class="community-milestones">
+                            <h4><i class="fas fa-users"></i> Community Milestones</h4>
+                            <div class="milestones-list">
+                                <div class="community-milestone" data-community="telegram-1000">
+                                    <div class="milestone-info">
+                                        <span class="milestone-name">1,000 Telegram Members</span>
+                                        <span class="milestone-reward">+25 RSK for everyone</span>
+                                    </div>
+                                    <div class="milestone-progress-community">
+                                        <span class="progress-text">0/1000</span>
+                                        <div class="progress-bar-small">
+                                            <div class="progress-fill-small" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="event-message christmas-message">
+                            <i class="fas fa-snowflake"></i>
+                            <span>Invite friends, complete challenges, and climb the leaderboard to maximize your rewards! 🎁✨</span>
+                        </div>
+
+                        <div class="event-rules">
+                            <h4>Event Rules</h4>
+                            <ul>
+                                <li>🎁 Gifts must be unlocked before claiming</li>
+                                <li>👥 Referrals must be active users (mine at least once)</li>
+                                <li>⏰ Daily challenges reset every 24 hours</li>
+                                <li>🏆 Leaderboard updates in real-time</li>
+                                <li>🔒 Multiple accounts or suspicious activity will result in disqualification</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -911,8 +1435,8 @@
         </div>
     </footer>
 
-    <!-- Welcome Bonus Floating Banner -->
-    <div class="welcome-banner-overlay" id="welcomeBannerOverlay" style="display: none;">
+    <!-- Welcome Bonus Floating Banner - HIDDEN (replaced with Christmas Event) -->
+    <div class="welcome-banner-overlay" id="welcomeBannerOverlay" style="display: none !important;">
         <div class="welcome-banner">
             <button class="banner-close" id="bannerClose">
                 <i class="fas fa-times"></i>
@@ -949,13 +1473,60 @@
     </div>
 
     <!-- Scripts -->
+    <script src="../scripts/notification-system.js"></script>
     <script src="../scripts/supabase-integration.js"></script>
     <script src="../scripts/test-referral-system.js"></script>
     <script src="../scripts/mining/background-mining.js"></script>
     <script src="../scripts/mining/level-system.js"></script>
     <script src="../scripts/mining/achievement-system.js"></script>
     <script src="../scripts/mining/algorithm-system.js"></script>
-    <script src="../scripts/mining/welcome-bonus-event.js"></script>
+    <!-- Snow Mining Event -->
+    <script src="../scripts/mining/snow-mining-event.js?v=4.4"></script>
+    <script src="../scripts/mining/snow-mining-adapter.js?v=1.0"></script>
+    
+    <!-- Social Goals Event -->
+    <script src="../scripts/mining/social-goals-event.js?v=1.3"></script>
+    
+    <!-- Events Navigation Script -->
+    <script>
+        // Events navigation system
+        document.addEventListener('DOMContentLoaded', () => {
+            const eventTabs = document.querySelectorAll('.event-tab:not([disabled])');
+            const eventContents = document.querySelectorAll('.event-content');
+
+            eventTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const eventId = tab.dataset.event;
+
+                    // Remove active class from all tabs
+                    eventTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+
+                    // Hide all event contents
+                    eventContents.forEach(content => content.classList.remove('active'));
+
+                    // Show selected event content
+                    const selectedContent = document.getElementById(`event-${eventId}`);
+                    if (selectedContent) {
+                        selectedContent.classList.add('active');
+                    }
+
+                    // Save active event to localStorage
+                    localStorage.setItem('activeEvent', eventId);
+                });
+            });
+
+            // Load last active event
+            const lastActiveEvent = localStorage.getItem('activeEvent') || 'snow-mining';
+            const lastTab = document.querySelector(`.event-tab[data-event="${lastActiveEvent}"]`);
+            if (lastTab && !lastTab.disabled) {
+                lastTab.click();
+            }
+        });
+    </script>
+    
     <script src="../scripts/mining-platform-adapter.js?v=1.0"></script>
 </body>
 </html>
