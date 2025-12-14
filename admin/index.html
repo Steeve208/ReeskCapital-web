@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC Chain - Admin Panel</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/admin.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/img/rsc-logo-quantum.svg">
+</head>
+<body>
+  <!-- Admin Panel Container -->
+  <div class="admin-panel">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <div class="admin-logo">
+          <img src="../assets/img/rsc-logo-quantum.svg" alt="RSC Chain">
+          <span>RSC Admin</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="#" class="nav-item active" data-module="dashboard">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="#" class="nav-item" data-module="content">
+            <i class="fas fa-file-alt"></i>
+            <span>Content</span>
+          </a>
+          <a href="#" class="nav-item" data-module="users">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="#" class="nav-item" data-module="social-metrics">
+            <i class="fas fa-share-alt"></i>
+            <span>Social Metrics</span>
+          </a>
+          <a href="#" class="nav-item" data-module="metrics">
+            <i class="fas fa-chart-bar"></i>
+            <span>System Metrics</span>
+          </a>
+          <a href="#" class="nav-item" data-module="campaigns">
+            <i class="fas fa-bullhorn"></i>
+            <span>Campaigns</span>
+          </a>
+          <a href="#" class="nav-item" data-module="rewards">
+            <i class="fas fa-gift"></i>
+            <span>Rewards</span>
+          </a>
+          <a href="#" class="nav-item" data-module="jobs">
+            <i class="fas fa-cogs"></i>
+            <span>Automation</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">System</div>
+          <a href="#" class="nav-item" data-module="treasury">
+            <i class="fas fa-wallet"></i>
+            <span>Treasury</span>
+          </a>
+          <a href="#" class="nav-item" data-module="admins">
+            <i class="fas fa-user-shield"></i>
+            <span>Administrators</span>
+          </a>
+          <a href="#" class="nav-item" data-module="audit">
+            <i class="fas fa-history"></i>
+            <span>Audit Log</span>
+          </a>
+          <a href="#" class="nav-item" data-module="settings">
+            <i class="fas fa-sliders-h"></i>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="admin-user">
+          <div class="user-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="user-info">
+            <div class="user-name" id="adminName">Admin User</div>
+            <div class="user-role" id="adminRole">Super Admin</div>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Top Bar -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="btn-menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn-icon" title="Notifications" onclick="showNotifications()">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge" id="notificationCount">0</span>
+          </button>
+          <button class="btn-icon" title="Help" onclick="showHelp()">
+            <i class="fas fa-question-circle"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="admin-content" id="adminContent">
+        <!-- All module contents will be loaded here dynamically -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loader"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Modal Container -->
+  <div class="modal-container" id="modalContainer"></div>
+
+  <!-- Supabase Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Admin Panel Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/modules/auth.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/modules/dashboard.js"></script>
+  <script src="js/modules/social-metrics.js"></script>
+  <script src="js/modules/users.js"></script>
+  <script src="js/modules/content.js"></script>
+  <script src="js/modules/admins.js"></script>
+
+  <script>
+    // Initialize admin panel
+    document.addEventListener('DOMContentLoaded', () => {
+      initAdminPanel();
+    });
+  </script>
+</body>
+</html>
+
+

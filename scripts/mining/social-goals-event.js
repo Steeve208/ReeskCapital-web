@@ -85,6 +85,7 @@ class SocialGoalsEvent {
 
         try {
             await this.waitForDOM();
+            await this.loadMetricsFromAdmin(); // Load from admin panel
             this.loadState();
             this.renderPlatforms();
             this.updateTimeLeft();
@@ -96,6 +97,37 @@ class SocialGoalsEvent {
 
         } catch (error) {
             console.error('❌ Error initializing Social Goals Event:', error);
+        }
+    }
+
+    async loadMetricsFromAdmin() {
+        try {
+            // First try to load from localStorage (admin updates)
+            const adminMetrics = localStorage.getItem('social_metrics_admin');
+            
+            if (adminMetrics) {
+                const metrics = JSON.parse(adminMetrics);
+                console.log('📊 Cargando métricas desde admin panel:', metrics);
+                
+                // Update platform counts
+                if (metrics.youtube !== undefined) this.platforms.youtube.current = metrics.youtube;
+                if (metrics.x !== undefined) this.platforms.x.current = metrics.x;
+                if (metrics.telegram !== undefined) this.platforms.telegram.current = metrics.telegram;
+                if (metrics.discord !== undefined) this.platforms.discord.current = metrics.discord;
+                
+                console.log('✅ Métricas actualizadas desde admin');
+            } else {
+                console.log('ℹ️ No hay métricas del admin, usando valores por defecto');
+            }
+            
+            // TODO: En producción, cargar desde Supabase
+            // const { data, error } = await supabase
+            //     .from('metrics')
+            //     .select('*')
+            //     .eq('category', 'social');
+            
+        } catch (error) {
+            console.error('Error loading metrics from admin:', error);
         }
     }
 
@@ -205,10 +237,31 @@ class SocialGoalsEvent {
             }
         });
 
-        // Simulate real-time updates (every 5 minutes in production, use API)
+        // Escuchar actualizaciones en tiempo real desde el admin panel
+        window.addEventListener('socialMetricsUpdated', (e) => {
+            console.log('📡 Actualización recibida del admin:', e.detail);
+            const { platform, value } = e.detail;
+            if (this.platforms[platform]) {
+                this.platforms[platform].current = value;
+                this.renderPlatforms();
+                this.saveState();
+                this.showNotification(`📊 ${this.platforms[platform].name} actualizado: ${value.toLocaleString()}`, 'info');
+            }
+        });
+
+        // Escuchar cambios en localStorage (para cuando admin está en otra pestaña)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'social_metrics_admin') {
+                console.log('📡 Cambio detectado en localStorage');
+                this.loadMetricsFromAdmin();
+                this.renderPlatforms();
+            }
+        });
+
+        // Check for updates every minute (más frecuente)
         setInterval(() => {
             this.checkForUpdates();
-        }, 5 * 60 * 1000);
+        }, 60 * 1000);
     }
 
     async claimMilestone(platformKey, milestoneIndex) {
@@ -250,11 +303,18 @@ class SocialGoalsEvent {
     }
 
     async checkForUpdates() {
-        // In production, this would call an API to get real follower counts
-        // For now, we'll just reload from localStorage
+        // Check for updates from admin panel
         console.log('🔄 Checking for social media updates...');
         
-        // You can implement API calls here to fetch real-time counts
+        try {
+            await this.loadMetricsFromAdmin();
+            this.renderPlatforms();
+            console.log('✅ Métricas actualizadas automáticamente');
+        } catch (error) {
+            console.error('Error checking updates:', error);
+        }
+        
+        // In production, this would also call an API to get real follower counts
         // Example:
         // const response = await fetch('/api/social-media/counts');
         // const data = await response.json();

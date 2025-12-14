@@ -88,6 +88,7 @@
       <button class="neurosearch-icon-btn" aria-label="Option 2"></button>
       <button class="neurosearch-icon-btn" aria-label="Option 3"></button>
       <a href="pages/coming-soon.html" class="neurosearch-account-btn">First Round</a>
+      <a href="admin/index.html" class="neurosearch-account-btn" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">Adm</a>
       <a href="pages/coming-soon.html" class="neurosearch-account-btn">My Account</a>
       <button class="neurosearch-mobile-toggle" id="neurosearchMobileToggle" aria-label="Menu">
         <i class="fas fa-bars"></i>
@@ -245,6 +246,11 @@
         <p>It's crucial to stay updated on the legal and ethical considerations surrounding face recognition technology.</p>
       </div>
     </section>
+
+    <!-- ===== ANNOUNCEMENT BOX - Anuncios del Admin ===== -->
+    <div id="announcementBox" class="announcement-box" style="display:none;max-width:1200px;margin:0 auto 2rem;padding:0 1rem;">
+      <!-- Los anuncios se cargan dinámicamente desde el admin panel -->
+    </div>
 
     <!-- ===== A-ADS BANNER ===== -->
     <section class="ad-banner-section" style="display: block !important; background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important; color: white !important; padding: 20px !important; text-align: center !important; box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4) !important; border: 2px solid #00ff88 !important;">
@@ -1661,5 +1667,8 @@
   
   <!-- Script del Chatbot -->
   <script src="scripts/chatbot.js?v=1.0"></script>
+  
+  <!-- Sistema de Anuncios -->
+  <script src="scripts/announcements-display.js?v=1.0"></script>
 </body>
 </html>

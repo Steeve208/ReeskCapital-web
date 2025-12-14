@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Test</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div style="padding: 2rem;">
+    <h1>🧪 Test del Panel de Administración</h1>
+    
+    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
+      <h2>1. Verificar Carga de Scripts</h2>
+      <div id="scriptsCheck"></div>
+    </div>
+
+    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
+      <h2>2. Verificar Templates</h2>
+      <div id="templatesCheck"></div>
+    </div>
+
+    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
+      <h2>3. Preview de Módulos</h2>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+        <button onclick="testModule('dashboard')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Dashboard</button>
+        <button onclick="testModule('content')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Contenido</button>
+        <button onclick="testModule('users')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Usuarios</button>
+        <button onclick="testModule('metrics')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Métricas</button>
+        <button onclick="testModule('campaigns')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Campañas</button>
+        <button onclick="testModule('rewards')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Recompensas</button>
+        <button onclick="testModule('jobs')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Jobs</button>
+        <button onclick="testModule('treasury')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Tesorería</button>
+        <button onclick="testModule('settings')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Configuración</button>
+        <button onclick="testModule('audit')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Auditoría</button>
+        <button onclick="testModule('admins')" style="padding: 0.75rem 1.5rem; background: #00ff88; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Admins</button>
+      </div>
+    </div>
+
+    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
+      <h2>4. Preview del Módulo</h2>
+      <div id="modulePreview" style="background: #0f0f1e; padding: 2rem; border-radius: 8px; min-height: 400px; margin-top: 1rem;">
+        <p style="text-align: center; color: #888;">Haz clic en un botón arriba para ver el módulo</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/admin.js"></script>
+
+  <script>
+    // Check Scripts
+    function checkScripts() {
+      const checks = {
+        'Chart.js': typeof Chart !== 'undefined',
+        'AdminTemplates': typeof AdminTemplates !== 'undefined',
+        'ADMIN_CONFIG': typeof ADMIN_CONFIG !== 'undefined',
+        'initAdminPanel': typeof initAdminPanel !== 'undefined',
+        'showToast': typeof showToast !== 'undefined'
+      };
+
+      let html = '<ul style="list-style: none; padding: 0;">';
+      for (const [name, loaded] of Object.entries(checks)) {
+        const icon = loaded ? '✅' : '❌';
+        const color = loaded ? '#00ff88' : '#ff4444';
+        html += `<li style="margin: 0.5rem 0; color: ${color};">${icon} ${name}</li>`;
+      }
+      html += '</ul>';
+      document.getElementById('scriptsCheck').innerHTML = html;
+    }
+
+    // Check Templates
+    function checkTemplates() {
+      if (typeof AdminTemplates === 'undefined') {
+        document.getElementById('templatesCheck').innerHTML = '<p style="color: #ff4444;">❌ AdminTemplates no está cargado</p>';
+        return;
+      }
+
+      const templates = Object.keys(AdminTemplates);
+      let html = '<ul style="list-style: none; padding: 0;">';
+      templates.forEach(template => {
+        html += `<li style="margin: 0.5rem 0; color: #00ff88;">✅ ${template}</li>`;
+      });
+      html += '</ul>';
+      html += `<p style="margin-top: 1rem; color: #888;">Total: ${templates.length} templates cargados</p>`;
+      document.getElementById('templatesCheck').innerHTML = html;
+    }
+
+    // Test Module
+    function testModule(moduleName) {
+      console.log('Testing module:', moduleName);
+      const preview = document.getElementById('modulePreview');
+      
+      if (typeof AdminTemplates === 'undefined') {
+        preview.innerHTML = '<p style="color: #ff4444; text-align: center;">❌ AdminTemplates no está cargado</p>';
+        return;
+      }
+
+      if (!AdminTemplates[moduleName]) {
+        preview.innerHTML = `<p style="color: #ff4444; text-align: center;">❌ Template "${moduleName}" no encontrado</p>`;
+        return;
+      }
+
+      try {
+        preview.innerHTML = AdminTemplates[moduleName]();
+        console.log('✅ Módulo renderizado correctamente:', moduleName);
+      } catch (error) {
+        preview.innerHTML = `<p style="color: #ff4444;">❌ Error al renderizar: ${error.message}</p>`;
+        console.error('Error:', error);
+      }
+    }
+
+    // Run checks on load
+    window.addEventListener('DOMContentLoaded', () => {
+      checkScripts();
+      checkTemplates();
+    });
+  </script>
+</body>
+</html>
+
