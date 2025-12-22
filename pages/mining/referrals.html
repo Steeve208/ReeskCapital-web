@@ -151,7 +151,7 @@
                     <div class="referral-code-card">
                         <h3>Tu Código de Referido</h3>
                         <div class="code-display-large">
-                            <input type="text" id="referralCode" class="code-input" value="RSC-ABC123XYZ" readonly>
+                            <input type="text" id="referralCode" class="code-input" value="" readonly placeholder="Cargando...">
                             <button class="btn btn-primary" id="copyReferralCodeBtn">
                                 <i class="fas fa-copy"></i>
                                 <span>Copiar</span>
@@ -180,7 +180,7 @@
                     <div class="referral-link-card">
                         <h3>Tu Link de Referido</h3>
                         <div class="link-display-large">
-                            <input type="text" id="referralLink" class="link-input" value="https://rscchain.com/mining?ref=RSC-ABC123XYZ" readonly>
+                            <input type="text" id="referralLink" class="link-input" value="" readonly placeholder="Cargando...">
                             <button class="btn btn-secondary" id="copyReferralLinkBtn">
                                 <i class="fas fa-copy"></i>
                                 <span>Copiar Link</span>
@@ -259,60 +259,60 @@
                 <div class="milestones-section">
                     <h2 class="section-title">Logros de Referidos</h2>
                     <div class="milestones-grid">
-                        <div class="milestone-card">
+                        <div class="milestone-card" id="milestone-1">
                             <div class="milestone-icon"><i class="fas fa-trophy"></i></div>
                             <div class="milestone-content">
                                 <h4>Primer Referido</h4>
                                 <p class="milestone-reward">+10 RSC</p>
                                 <div class="milestone-progress">
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 100%"></div>
+                                        <div class="progress-fill" id="milestone-1-progress" style="width: 0%"></div>
                                     </div>
-                                    <span class="progress-text">1/1 Completado</span>
+                                    <span class="progress-text" id="milestone-1-text">0/1 Referidos</span>
                                 </div>
-                                <button class="btn btn-primary btn-sm" disabled>Reclamado</button>
+                                <button class="btn btn-secondary btn-sm" id="milestone-1-btn" disabled>En Progreso</button>
                             </div>
                         </div>
-                        <div class="milestone-card">
+                        <div class="milestone-card" id="milestone-5">
                             <div class="milestone-icon"><i class="fas fa-trophy"></i></div>
                             <div class="milestone-content">
                                 <h4>5 Referidos</h4>
                                 <p class="milestone-reward">+50 RSC</p>
                                 <div class="milestone-progress">
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 40%"></div>
+                                        <div class="progress-fill" id="milestone-5-progress" style="width: 0%"></div>
                                     </div>
-                                    <span class="progress-text">2/5 Referidos</span>
+                                    <span class="progress-text" id="milestone-5-text">0/5 Referidos</span>
                                 </div>
-                                <button class="btn btn-secondary btn-sm" disabled>En Progreso</button>
+                                <button class="btn btn-secondary btn-sm" id="milestone-5-btn" disabled>En Progreso</button>
                             </div>
                         </div>
-                        <div class="milestone-card">
+                        <div class="milestone-card" id="milestone-10">
                             <div class="milestone-icon"><i class="fas fa-trophy"></i></div>
                             <div class="milestone-content">
                                 <h4>10 Referidos</h4>
                                 <p class="milestone-reward">+150 RSC</p>
                                 <div class="milestone-progress">
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 20%"></div>
+                                        <div class="progress-fill" id="milestone-10-progress" style="width: 0%"></div>
                                     </div>
-                                    <span class="progress-text">2/10 Referidos</span>
+                                    <span class="progress-text" id="milestone-10-text">0/10 Referidos</span>
                                 </div>
-                                <button class="btn btn-secondary btn-sm" disabled>En Progreso</button>
+                                <button class="btn btn-secondary btn-sm" id="milestone-10-btn" disabled>En Progreso</button>
                             </div>
                         </div>
-                        <div class="milestone-card">
+                        <div class="milestone-card" id="milestone-25">
                             <div class="milestone-icon"><i class="fas fa-trophy"></i></div>
                             <div class="milestone-content">
                                 <h4>25 Referidos</h4>
                                 <p class="milestone-reward">+500 RSC</p>
                                 <div class="milestone-progress">
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 8%"></div>
+                                        <div class="progress-fill" id="milestone-25-progress" style="width: 0%"></div>
                                     </div>
-                                    <span class="progress-text">2/25 Referidos</span>
+                                    <span class="progress-text" id="milestone-25-text">0/25 Referidos</span>
                                 </div>
-                                <button class="btn btn-secondary btn-sm" disabled>En Progreso</button>
+                                <button class="btn btn-secondary btn-sm" id="milestone-25-btn" disabled>En Progreso</button>
                             </div>
                         </div>
                     </div>

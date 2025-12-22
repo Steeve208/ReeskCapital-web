@@ -5,16 +5,104 @@
     
     let commissionsChart = null;
     
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeReferrals();
+    document.addEventListener('DOMContentLoaded', async function() {
+        await initializeReferrals();
         setupEventListeners();
-        loadReferralsData();
-        loadCommissions();
+        await loadReferralsData(); // Esta función ya carga comisiones también
         setupCommissionsChart();
     });
     
-    function initializeReferrals() {
+    async function initializeReferrals() {
         console.log('👥 Initializing Referrals page...');
+        
+        // Cargar código de referral del usuario
+        await loadReferralCode();
+    }
+    
+    async function waitForSupabaseIntegration() {
+        let attempts = 0;
+        const maxAttempts = 50;
+        
+        return new Promise((resolve) => {
+            const checkInterval = setInterval(() => {
+                attempts++;
+                
+                if (window.supabaseIntegration && 
+                    window.supabaseIntegration.user && 
+                    window.supabaseIntegration.user.isAuthenticated &&
+                    window.supabaseIntegration.user.id) {
+                    clearInterval(checkInterval);
+                    resolve(true);
+                    return;
+                }
+                
+                if (attempts >= maxAttempts) {
+                    clearInterval(checkInterval);
+                    console.warn('⚠️ Supabase Integration no disponible');
+                    resolve(false);
+                }
+            }, 100);
+        });
+    }
+    
+    async function loadReferralCode() {
+        try {
+            // Esperar a que Supabase esté listo
+            const isReady = await waitForSupabaseIntegration();
+            
+            if (!isReady) {
+                console.warn('⚠️ No se pudo cargar código de referral: Supabase no disponible');
+                return;
+            }
+            
+            const userId = window.supabaseIntegration.user.id;
+            let referralCode = window.supabaseIntegration.user.referralCode || 
+                             window.supabaseIntegration.user.referral_code;
+            
+            // Si no está en memoria, obtenerlo desde la base de datos
+            if (!referralCode) {
+                console.log('📡 Obteniendo código de referral desde Supabase...');
+                try {
+                    const userResponse = await window.supabaseIntegration.makeRequest(
+                        'GET',
+                        `/rest/v1/users?id=eq.${userId}&select=referral_code`
+                    );
+                    
+                    if (userResponse.ok) {
+                        const users = await userResponse.json();
+                        if (users.length > 0 && users[0].referral_code) {
+                            referralCode = users[0].referral_code;
+                            // Guardar en el objeto user para futuras referencias
+                            window.supabaseIntegration.user.referralCode = referralCode;
+                            window.supabaseIntegration.user.referral_code = referralCode;
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ Error obteniendo código de referral desde BD:', error);
+                    return;
+                }
+            }
+            
+            if (referralCode) {
+                const referralLink = `${window.location.origin}${window.location.pathname.replace('referrals.html', 'login.html')}?ref=${referralCode}`;
+                
+                const codeInput = document.getElementById('referralCode');
+                const linkInput = document.getElementById('referralLink');
+                
+                if (codeInput) {
+                    codeInput.value = referralCode;
+                    console.log('✅ Código de referral cargado:', referralCode);
+                }
+                if (linkInput) {
+                    linkInput.value = referralLink;
+                    console.log('✅ Link de referral cargado:', referralLink);
+                }
+            } else {
+                console.warn('⚠️ No se encontró código de referral para el usuario');
+            }
+        } catch (error) {
+            console.error('❌ Error cargando código de referral:', error);
+        }
     }
     
     function setupEventListeners() {
@@ -53,129 +141,306 @@
         }
     }
     
-    async function loadReferralsData() {
-        // Intentar cargar desde backend API primero
-        if (window.miningBackendAPI && window.miningBackendAPI.isAuthenticated()) {
-            try {
-                // Cargar referidos
-                const referralsResponse = await window.miningBackendAPI.request('GET', '/api/referrals');
-                if (referralsResponse.success && referralsResponse.data) {
-                    const referrals = referralsResponse.data.referrals || [];
-                    
-                    // Cargar comisiones
-                    const commissionsResponse = await window.miningBackendAPI.request('GET', '/api/referrals/commissions?period=all');
-                    const commissions = commissionsResponse.success && commissionsResponse.data 
-                        ? commissionsResponse.data.commissions || [] 
-                        : [];
-                    
-                    // Update stats
-                    if (document.getElementById('totalReferrals')) {
-                        document.getElementById('totalReferrals').textContent = referralsResponse.data.total_referrals || referrals.length;
-                    }
-                    
-                    const totalCommissions = commissionsResponse.success && commissionsResponse.data
-                        ? parseFloat(commissionsResponse.data.total || 0)
-                        : commissions.reduce((sum, c) => sum + parseFloat(c.amount || 0), 0);
-                    
-                    if (document.getElementById('totalCommissions')) {
-                        document.getElementById('totalCommissions').textContent = totalCommissions.toFixed(6) + ' RSC';
-                    }
-                    
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    const todayCommissions = commissions
-                        .filter(c => {
-                            const date = new Date(c.created_at);
-                            return date >= today;
-                        })
-                        .reduce((sum, c) => sum + parseFloat(c.amount || 0), 0);
-                    
-                    if (document.getElementById('todayCommissions')) {
-                        document.getElementById('todayCommissions').textContent = todayCommissions.toFixed(6) + ' RSC';
-                    }
-                    
-                    // Load referrals list
-                    await loadReferralsList(referrals);
-                    await loadCommissions(commissions);
-                    await updateCommissionsChart();
+    async function waitForSupabase() {
+        let attempts = 0;
+        const maxAttempts = 50;
+        
+        return new Promise((resolve) => {
+            const checkInterval = setInterval(() => {
+                attempts++;
+                
+                // Verificar si supabaseIntegration está disponible y autenticado
+                if (window.supabaseIntegration && 
+                    window.supabaseIntegration.user && 
+                    window.supabaseIntegration.user.isAuthenticated &&
+                    window.supabaseIntegration.user.id) {
+                    clearInterval(checkInterval);
+                    console.log('✅ Referrals: Supabase listo y autenticado');
+                    resolve(true);
                     return;
                 }
-            } catch (error) {
-                console.error('Error cargando datos de referidos desde backend:', error);
-            }
-        }
-        
-        // Fallback a Supabase o mock data
-        if (window.miningSupabaseAdapter) {
-            try {
-                const referrals = await window.miningSupabaseAdapter.getReferrals();
-                const commissions = await window.miningSupabaseAdapter.getReferralCommissions('all');
                 
-                // Update stats
-                if (document.getElementById('totalReferrals')) {
-                    document.getElementById('totalReferrals').textContent = referrals.length;
+                if (attempts >= maxAttempts) {
+                    clearInterval(checkInterval);
+                    console.warn('⚠️ Referrals: Supabase no disponible después de esperar');
+                    resolve(false);
+                }
+            }, 100);
+        });
+    }
+    
+    async function loadReferralsData() {
+        // Esperar a que Supabase esté listo y autenticado
+        const isSupabaseReady = await waitForSupabase();
+        
+        if (isSupabaseReady && window.supabaseIntegration && window.supabaseIntegration.user && window.supabaseIntegration.user.isAuthenticated) {
+            try {
+                console.log('📡 Referrals: Cargando datos desde Supabase...');
+                const userId = window.supabaseIntegration.user.id;
+                
+                // 1. Obtener lista de referidos desde la tabla referrals
+                console.log('📡 Obteniendo referidos para usuario:', userId);
+                const referralsResponse = await window.supabaseIntegration.makeRequest(
+                    'GET',
+                    `/rest/v1/referrals?referrer_id=eq.${userId}&select=id,referrer_id,referred_id,created_at,commission_rate,total_commission`
+                );
+                
+                let referrals = [];
+                if (referralsResponse.ok) {
+                    const referralsData = await referralsResponse.json();
+                    console.log('✅ Referidos obtenidos:', referralsData.length, referralsData);
+                    
+                    // Para cada referido, obtener sus datos completos, hashrate y earnings
+                    for (const ref of referralsData) {
+                        const referredId = ref.referred_id;
+                        console.log('📊 Procesando referido:', referredId);
+                        
+                        // Obtener datos del usuario referido
+                        const userResponse = await window.supabaseIntegration.makeRequest(
+                            'GET',
+                            `/rest/v1/users?id=eq.${referredId}&select=id,email,username,created_at,balance,status,is_active,referral_code`
+                        );
+                        
+                        let userData = {};
+                        if (userResponse.ok) {
+                            const users = await userResponse.json();
+                            if (users.length > 0) {
+                                userData = users[0];
+                                console.log('✅ Datos del usuario referido:', userData.email);
+                            } else {
+                                console.warn('⚠️ Usuario referido no encontrado:', referredId);
+                            }
+                        } else {
+                            console.error('❌ Error obteniendo datos del usuario:', userResponse.status);
+                        }
+                        
+                        // Obtener hashrate promedio desde mining_sessions
+                        const hashrateResponse = await window.supabaseIntegration.makeRequest(
+                            'GET',
+                            `/rest/v1/mining_sessions?user_id=eq.${referredId}&status=eq.completed&select=hash_rate`
+                        );
+                        
+                        let avgHashrate = 0;
+                        if (hashrateResponse.ok) {
+                            const sessions = await hashrateResponse.json();
+                            if (sessions.length > 0) {
+                                const totalHashrate = sessions.reduce((sum, s) => sum + parseFloat(s.hash_rate || 0), 0);
+                                avgHashrate = totalHashrate / sessions.length;
+                                console.log('📈 Hashrate promedio:', avgHashrate);
+                            }
+                        }
+                        
+                        // Obtener earnings totales desde transactions
+                        const earningsResponse = await window.supabaseIntegration.makeRequest(
+                            'GET',
+                            `/rest/v1/transactions?user_id=eq.${referredId}&type=eq.mining&amount=gt.0&select=amount,status`
+                        );
+                        
+                        let totalEarnings = 0;
+                        if (earningsResponse.ok) {
+                            const transactions = await earningsResponse.json();
+                            totalEarnings = transactions.reduce((sum, t) => {
+                                const status = t.status || 'completed';
+                                if (status === 'completed' || status === null) {
+                                    return sum + parseFloat(t.amount || 0);
+                                }
+                                return sum;
+                            }, 0);
+                            console.log('💰 Earnings totales:', totalEarnings);
+                        }
+                        
+                        referrals.push({
+                            ...ref,
+                            referred_id: referredId,
+                            referred_email: userData.email || 'N/A',
+                            referred_username: userData.username || userData.email || 'N/A',
+                            referred_joined_at: userData.created_at || ref.created_at,
+                            referred_balance: parseFloat(userData.balance || 0),
+                            referred_status: userData.status,
+                            referred_is_active: userData.is_active,
+                            referred_referral_code: userData.referral_code,
+                            avg_hashrate: avgHashrate,
+                            total_earnings: totalEarnings,
+                            total_commission: parseFloat(ref.total_commission || 0)
+                        });
+                    }
                 }
                 
-                const totalCommissions = commissions.reduce((sum, c) => sum + parseFloat(c.amount || 0), 0);
+                // 2. Obtener comisiones desde transactions
+                const commissionsResponse = await window.supabaseIntegration.makeRequest(
+                    'GET',
+                    `/rest/v1/transactions?user_id=eq.${userId}&type=eq.referral_commission&order=created_at.desc&select=*`
+                );
+                
+                let commissions = [];
+                if (commissionsResponse.ok) {
+                    commissions = await commissionsResponse.json();
+                }
+                
+                // 3. Calcular estadísticas
+                const totalReferrals = referrals.length;
+                const activeReferrals = referrals.filter(r => {
+                    const status = r.referred_status;
+                    const isActive = r.referred_is_active;
+                    return (status === 'active' || status === null) && 
+                           (isActive === true || isActive === null);
+                }).length;
+                
+                const totalCommissions = commissions.reduce((sum, c) => {
+                    const status = c.status || 'completed';
+                    if (status === 'completed' || status === null) {
+                        return sum + parseFloat(c.amount || 0);
+                    }
+                    return sum;
+                }, 0);
+                
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const todayCommissions = commissions
+                    .filter(c => {
+                        const date = new Date(c.created_at);
+                        return date >= today;
+                    })
+                    .reduce((sum, c) => {
+                        const status = c.status || 'completed';
+                        if (status === 'completed' || status === null) {
+                            return sum + parseFloat(c.amount || 0);
+                        }
+                        return sum;
+                    }, 0);
+                
+                // 4. Actualizar UI
+                if (document.getElementById('totalReferrals')) {
+                    document.getElementById('totalReferrals').textContent = totalReferrals;
+                }
+                
                 if (document.getElementById('totalCommissions')) {
                     document.getElementById('totalCommissions').textContent = totalCommissions.toFixed(6) + ' RSC';
                 }
-                
-                const todayCommissions = commissions.filter(c => {
-                    const date = new Date(c.created_at);
-                    const today = new Date();
-                    return date.toDateString() === today.toDateString();
-                }).reduce((sum, c) => sum + parseFloat(c.amount || 0), 0);
                 
                 if (document.getElementById('todayCommissions')) {
                     document.getElementById('todayCommissions').textContent = todayCommissions.toFixed(6) + ' RSC';
                 }
                 
-                // Load referrals list
-                await loadReferralsList(referrals);
-                await loadCommissions(commissions);
+                console.log('✅ Referrals: Datos cargados desde Supabase', {
+                    total: totalReferrals,
+                    active: activeReferrals,
+                    commissions: commissions.length
+                });
+                
+                // 5. Cargar listas
+                loadReferralsList(referrals);
+                loadCommissions(commissions);
+                
+                // 6. Actualizar logros de referidos
+                updateReferralMilestones(totalReferrals);
+                return;
+                
             } catch (error) {
-                console.error('Error cargando datos de referidos:', error);
-                await loadReferralsList();
+                console.error('❌ Error cargando datos de referidos desde Supabase:', error);
             }
-        } else {
-            await loadReferralsList();
         }
+        
+        // Fallback a mock data
+        console.warn('⚠️ Referrals: Usando datos mock');
+        loadReferralsList();
+        loadCommissions();
+        updateReferralMilestones(0); // Sin referidos
+    }
+    
+    function updateReferralMilestones(totalReferrals) {
+        const milestones = [
+            { id: 1, target: 1, reward: 10 },
+            { id: 5, target: 5, reward: 50 },
+            { id: 10, target: 10, reward: 150 },
+            { id: 25, target: 25, reward: 500 }
+        ];
+        
+        milestones.forEach(milestone => {
+            const current = totalReferrals;
+            const target = milestone.target;
+            const progress = Math.min((current / target) * 100, 100);
+            const isCompleted = current >= target;
+            
+            // Actualizar barra de progreso
+            const progressBar = document.getElementById(`milestone-${milestone.id}-progress`);
+            if (progressBar) {
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            // Actualizar texto de progreso
+            const progressText = document.getElementById(`milestone-${milestone.id}-text`);
+            if (progressText) {
+                if (isCompleted) {
+                    progressText.textContent = `${target}/${target} Completado`;
+                } else {
+                    progressText.textContent = `${current}/${target} Referidos`;
+                }
+            }
+            
+            // Actualizar botón
+            const btn = document.getElementById(`milestone-${milestone.id}-btn`);
+            if (btn) {
+                if (isCompleted) {
+                    // Por ahora, solo mostrar "Reclamado" si está completado
+                    // TODO: Agregar verificación desde BD de logros reclamados
+                    btn.textContent = 'Reclamado';
+                    btn.className = 'btn btn-primary btn-sm';
+                    btn.disabled = true;
+                } else {
+                    btn.textContent = 'En Progreso';
+                    btn.className = 'btn btn-secondary btn-sm';
+                    btn.disabled = true;
+                }
+            }
+        });
+        
+        console.log('✅ Logros actualizados:', { totalReferrals });
     }
     
     function formatHashrate(hashrate) {
-        if (hashrate >= 1000000000) {
-            return `${(hashrate / 1000000000).toFixed(2)} TH/s`;
-        } else if (hashrate >= 1000000) {
-            return `${(hashrate / 1000000).toFixed(2)} GH/s`;
-        } else if (hashrate >= 1000) {
-            return `${(hashrate / 1000).toFixed(2)} KH/s`;
+        const h = parseFloat(hashrate || 0);
+        if (h >= 1000000000) {
+            return `${(h / 1000000000).toFixed(2)} TH/s`;
+        } else if (h >= 1000000) {
+            return `${(h / 1000000).toFixed(2)} GH/s`;
+        } else if (h >= 1000) {
+            return `${(h / 1000).toFixed(2)} KH/s`;
         } else {
-            return `${hashrate.toFixed(2)} H/s`;
+            return `${h.toFixed(2)} H/s`;
         }
     }
     
-    async function loadReferralsList(referralsData = null) {
+    function loadReferralsList(referralsData = null) {
         const tbody = document.getElementById('referralsTableBody');
         if (!tbody) return;
         
         if (referralsData && referralsData.length > 0) {
             tbody.innerHTML = referralsData.map(ref => {
+                // Datos del referido (desde backend o estructura Supabase)
                 const email = ref.referred_email || ref.email || 'N/A';
                 const username = ref.referred_username || ref.username || email;
+                const referredId = ref.referred_id || ref.id;
                 const date = new Date(ref.created_at || ref.referred_joined_at);
+                
+                // Hashrate y earnings desde backend (ya calculados en la query)
                 const hashrate = parseFloat(ref.avg_hashrate || 0);
                 const earnings = parseFloat(ref.total_earnings || 0);
                 const commission = parseFloat(ref.total_commission || 0);
-                const status = ref.status || 'active';
+                
+                // Status del referido (manejar tanto status VARCHAR como is_active BOOLEAN)
+                const status = ref.referred_status || ref.status;
+                const isActiveValue = ref.referred_is_active !== undefined ? ref.referred_is_active : null;
+                const isActive = (status === 'active' || status === null) && 
+                                (isActiveValue === true || isActiveValue === null);
                 
                 return `
                     <tr>
                         <td>${email}</td>
                         <td>${date.toLocaleDateString('es-ES')}</td>
                         <td>
-                            <span class="status-badge ${status === 'active' ? 'confirmed' : 'pending'}">
-                                ${status === 'active' ? 'Activo' : 'Inactivo'}
+                            <span class="status-badge ${isActive ? 'confirmed' : 'pending'}">
+                                ${isActive ? 'Activo' : 'Inactivo'}
                             </span>
                         </td>
                         <td>${formatHashrate(hashrate)}</td>
@@ -184,7 +449,7 @@
                             <span class="amount-value positive">${commission.toFixed(6)} RSC</span>
                         </td>
                         <td>
-                            <button class="table-action-btn" onclick="viewReferralDetails('${ref.referred_id || ref.id}')">
+                            <button class="table-action-btn" onclick="viewReferralDetails('${referredId}')">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </td>
@@ -194,108 +459,49 @@
             return;
         }
         
-        const referrals = [
-            {
-                user: 'usuario1@example.com',
-                date: new Date('2024-01-10'),
-                status: 'active',
-                hashrate: '1.23 KH/s',
-                totalEarnings: '45.678901 RSC',
-                commissions: '4.567890 RSC'
-            },
-            {
-                user: 'usuario2@example.com',
-                date: new Date('2024-01-08'),
-                status: 'active',
-                hashrate: '0.89 KH/s',
-                totalEarnings: '32.123456 RSC',
-                commissions: '3.212346 RSC'
-            },
-            {
-                user: 'usuario3@example.com',
-                date: new Date('2024-01-05'),
-                status: 'inactive',
-                hashrate: '0.00 KH/s',
-                totalEarnings: '5.123456 RSC',
-                commissions: '0.512346 RSC'
-            }
-        ];
-        
-        if (referrals.length === 0) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="7" class="empty-state">
-                        <i class="fas fa-user-plus"></i>
-                        <p>No tienes referidos aún. ¡Comparte tu código para empezar a ganar!</p>
-                    </td>
-                </tr>
-            `;
-        } else {
-            tbody.innerHTML = referrals.map(ref => `
-                <tr>
-                    <td>${ref.user}</td>
-                    <td>${ref.date.toLocaleDateString('es-ES')}</td>
-                    <td>
-                        <span class="status-badge ${ref.status === 'active' ? 'confirmed' : 'pending'}">
-                            ${ref.status === 'active' ? 'Activo' : 'Inactivo'}
-                        </span>
-                    </td>
-                    <td>${ref.hashrate}</td>
-                    <td>${ref.totalEarnings}</td>
-                    <td>
-                        <span class="amount-value positive">${ref.commissions}</span>
-                    </td>
-                    <td>
-                        <button class="table-action-btn" onclick="viewReferralDetails('${ref.user}')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
+        // No mostrar datos mock - solo mostrar mensaje vacío
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="empty-state">
+                    <i class="fas fa-user-plus"></i>
+                    <p>No tienes referidos aún. ¡Comparte tu código para empezar a ganar!</p>
+                </td>
+            </tr>
+        `;
     }
     
-    async function loadCommissions(commissionsData = null) {
+    function loadCommissions(commissionsData = null) {
         const tbody = document.getElementById('commissionsTableBody');
         if (!tbody) return;
         
         if (commissionsData && commissionsData.length > 0) {
-            // Si tenemos datos del backend, obtener información del referido desde reference_id
-            const commissionsWithDetails = await Promise.all(commissionsData.map(async (comm) => {
+            tbody.innerHTML = commissionsData.map(comm => {
+                const date = new Date(comm.created_at);
+                const status = comm.status || 'completed';
+                
+                // Obtener información del referido desde metadata o description
                 let referredEmail = 'N/A';
                 let miningAmount = 0;
                 
-                // Intentar obtener información del referido desde reference_id
-                if (comm.reference_id && window.miningBackendAPI && window.miningBackendAPI.isAuthenticated()) {
-                    try {
-                        // El reference_id debería ser el user_id del referido
-                        // Podríamos hacer una consulta adicional, pero por ahora usamos metadata
-                        referredEmail = comm.metadata?.referredEmail || comm.description?.match(/from (.+)/)?.[1] || 'N/A';
-                        miningAmount = parseFloat(comm.metadata?.miningAmount || comm.balance_after - comm.balance_before || 0);
-                    } catch (error) {
-                        console.warn('Error obteniendo detalles de comisión:', error);
-                    }
-                } else {
-                    referredEmail = comm.metadata?.referredEmail || 'N/A';
-                    miningAmount = Math.abs(parseFloat(comm.metadata?.miningAmount || 0));
+                if (comm.metadata) {
+                    referredEmail = comm.metadata.referredEmail || comm.metadata.referred_email || 'N/A';
+                    miningAmount = Math.abs(parseFloat(comm.metadata.miningAmount || comm.metadata.mining_amount || 0));
+                } else if (comm.description) {
+                    // Intentar extraer del description si existe
+                    const match = comm.description.match(/from (.+?)(?: -|$)/i);
+                    if (match) referredEmail = match[1];
                 }
                 
-                return {
-                    ...comm,
-                    referredEmail,
-                    miningAmount
-                };
-            }));
-            
-            tbody.innerHTML = commissionsWithDetails.map(comm => {
-                const date = new Date(comm.created_at);
-                const status = comm.status || 'completed';
+                // Si no hay miningAmount en metadata, calcular desde balance_before y balance_after
+                if (miningAmount === 0 && comm.balance_before !== undefined && comm.balance_after !== undefined) {
+                    miningAmount = Math.abs(parseFloat(comm.balance_after) - parseFloat(comm.balance_before));
+                }
                 
                 return `
                     <tr>
                         <td>${date.toLocaleString('es-ES')}</td>
-                        <td>${comm.referredEmail}</td>
-                        <td>${comm.miningAmount.toFixed(6)} RSC</td>
+                        <td>${referredEmail}</td>
+                        <td>${miningAmount.toFixed(6)} RSC</td>
                         <td>
                             <span class="amount-value positive">+${parseFloat(comm.amount || 0).toFixed(6)} RSC</span>
                         </td>
@@ -310,56 +516,15 @@
             return;
         }
         
-        const commissions = [
-            {
-                date: new Date('2024-01-15T10:30:00'),
-                referral: 'usuario1@example.com',
-                referralEarnings: '1.234567 RSC',
-                commission: '0.123457 RSC',
-                status: 'confirmed'
-            },
-            {
-                date: new Date('2024-01-14T15:20:00'),
-                referral: 'usuario2@example.com',
-                referralEarnings: '0.890123 RSC',
-                commission: '0.089012 RSC',
-                status: 'confirmed'
-            },
-            {
-                date: new Date('2024-01-13T09:15:00'),
-                referral: 'usuario1@example.com',
-                referralEarnings: '2.345678 RSC',
-                commission: '0.234568 RSC',
-                status: 'pending'
-            }
-        ];
-        
-        if (commissions.length === 0) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="5" class="empty-state">
-                        <i class="fas fa-coins"></i>
-                        <p>No hay comisiones registradas</p>
-                    </td>
-                </tr>
-            `;
-        } else {
-            tbody.innerHTML = commissions.map(comm => `
-                <tr>
-                    <td>${comm.date.toLocaleString('es-ES')}</td>
-                    <td>${comm.referral}</td>
-                    <td>${comm.referralEarnings}</td>
-                    <td>
-                        <span class="amount-value positive">+${comm.commission}</span>
-                    </td>
-                    <td>
-                        <span class="status-badge ${comm.status === 'confirmed' ? 'confirmed' : 'pending'}">
-                            ${comm.status === 'confirmed' ? 'Confirmado' : 'Pendiente'}
-                        </span>
-                    </td>
-                </tr>
-            `).join('');
-        }
+        // No mostrar datos mock - solo mostrar mensaje vacío
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty-state">
+                    <i class="fas fa-coins"></i>
+                    <p>No hay comisiones registradas</p>
+                </td>
+            </tr>
+        `;
     }
     
     function setupCommissionsChart() {
@@ -417,27 +582,42 @@
         if (!commissionsChart) return;
         
         try {
-            // Intentar obtener datos reales del backend
-            if (window.miningBackendAPI && window.miningBackendAPI.isAuthenticated()) {
-                const response = await window.miningBackendAPI.request('GET', '/api/referrals/commissions-chart?days=30');
+            // Obtener datos reales desde Supabase
+            if (window.supabaseIntegration && 
+                window.supabaseIntegration.user && 
+                window.supabaseIntegration.user.isAuthenticated) {
                 
-                if (response.success && response.data && response.data.chart_data) {
-                    const chartData = response.data.chart_data;
+                const userId = window.supabaseIntegration.user.id;
+                const days = 30;
+                const startDate = new Date();
+                startDate.setDate(startDate.getDate() - days);
+                
+                // Obtener comisiones de los últimos 30 días
+                const response = await window.supabaseIntegration.makeRequest(
+                    'GET',
+                    `/rest/v1/transactions?user_id=eq.${userId}&type=eq.referral_commission&created_at=gte.${startDate.toISOString()}&order=created_at.asc&select=amount,created_at,status`
+                );
+                
+                if (response.ok) {
+                    const transactions = await response.json();
                     
-                    // Crear un mapa de fechas para llenar días faltantes
-                    const days = 30;
-                    const labels = [];
-                    const data = [];
+                    // Agrupar por día
                     const dataMap = new Map();
-                    
-                    // Mapear datos existentes
-                    chartData.forEach(item => {
-                        const date = new Date(item.date);
+                    transactions.forEach(t => {
+                        const date = new Date(t.created_at);
                         const key = date.toISOString().split('T')[0];
-                        dataMap.set(key, item.commissions);
+                        const status = t.status || 'completed';
+                        
+                        if (status === 'completed' || status === null) {
+                            const current = dataMap.get(key) || 0;
+                            dataMap.set(key, current + parseFloat(t.amount || 0));
+                        }
                     });
                     
-                    // Llenar los últimos 30 días
+                    // Crear arrays para el gráfico
+                    const labels = [];
+                    const data = [];
+                    
                     for (let i = days - 1; i >= 0; i--) {
                         const date = new Date();
                         date.setDate(date.getDate() - i);

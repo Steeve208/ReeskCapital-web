@@ -12,12 +12,13 @@ router.use(userAuth);
 
 /**
  * GET /api/referrals
- * Obtener lista de referidos con hashrate y earnings
+ * Obtener lista de referidos con hashrate y earnings (query optimizada)
  */
 router.get('/', async (req, res) => {
   try {
     const userId = req.user.id;
 
+    // Query optimizada: obtiene todo en una sola consulta usando subconsultas
     const result = await pool.query(
       `SELECT 
         r.*,
@@ -25,7 +26,26 @@ router.get('/', async (req, res) => {
         u.email as referred_email,
         u.username as referred_username,
         u.created_at as referred_joined_at,
-        u.balance as referred_balance
+        u.balance as referred_balance,
+        u.status as referred_status,
+        u.is_active as referred_is_active,
+        u.referral_code as referred_referral_code,
+        -- Hashrate promedio del referido (desde sesiones completadas)
+        COALESCE((
+          SELECT AVG(hash_rate)
+          FROM mining_sessions
+          WHERE user_id = r.referred_id 
+          AND status = 'completed'
+        ), 0) as avg_hashrate,
+        -- Earnings totales del referido (desde transactions tipo 'mining')
+        COALESCE((
+          SELECT SUM(amount)
+          FROM transactions
+          WHERE user_id = r.referred_id 
+          AND type = 'mining' 
+          AND amount > 0
+          AND (COALESCE(status, 'completed') = 'completed' OR status IS NULL)
+        ), 0) as total_earnings
        FROM referrals r
        JOIN users u ON r.referred_id = u.id
        WHERE r.referrer_id = $1
@@ -33,43 +53,15 @@ router.get('/', async (req, res) => {
       [userId]
     );
 
-    // Para cada referido, obtener hashrate promedio y earnings totales
-    const referralsWithStats = await Promise.all(result.rows.map(async (ref) => {
-      const referredId = ref.referred_id;
-
-      // Obtener hashrate promedio desde sesiones completadas
-      const hashrateResult = await pool.query(
-        `SELECT COALESCE(AVG(hash_rate), 0) as avg_hashrate
-         FROM mining_sessions
-         WHERE user_id = $1 AND status = 'completed'`,
-        [referredId]
-      );
-      const avgHashrate = parseFloat(hashrateResult.rows[0]?.avg_hashrate || 0);
-
-      // Obtener earnings totales desde transactions tipo 'mining'
-      const earningsResult = await pool.query(
-        `SELECT COALESCE(SUM(amount), 0) as total_earnings
-         FROM transactions
-         WHERE user_id = $1 
-         AND type = 'mining' 
-         AND amount > 0
-         AND (COALESCE(status, 'completed') = 'completed' OR status IS NULL)`,
-        [referredId]
-      );
-      const totalEarnings = parseFloat(earningsResult.rows[0]?.total_earnings || 0);
-
-      return {
-        ...ref,
-        avg_hashrate: avgHashrate,
-        total_earnings: totalEarnings
-      };
-    }));
-
-    // Obtener totales
+    // Obtener totales (manejar tanto status VARCHAR como is_active BOOLEAN)
     const totalsResult = await pool.query(
       `SELECT 
         COUNT(*) as total_referrals,
-        COUNT(CASE WHEN u.status = 'active' OR u.status IS NULL THEN 1 END) as active_referrals,
+        COUNT(CASE 
+          WHEN (u.status = 'active' OR u.status IS NULL) 
+          OR (u.is_active = true OR (u.is_active IS NULL AND u.status IS NULL))
+          THEN 1 
+        END) as active_referrals,
         COALESCE(SUM(r.total_commission), 0) as total_commissions
        FROM referrals r
        JOIN users u ON r.referred_id = u.id
@@ -77,13 +69,25 @@ router.get('/', async (req, res) => {
       [userId]
     );
 
+    // Obtener código de referral del usuario actual
+    const userCodeResult = await pool.query(
+      `SELECT referral_code FROM users WHERE id = $1`,
+      [userId]
+    );
+    const referralCode = userCodeResult.rows[0]?.referral_code || null;
+
     res.json({
       success: true,
       data: {
-        referrals: referralsWithStats,
+        referrals: result.rows.map(row => ({
+          ...row,
+          avg_hashrate: parseFloat(row.avg_hashrate || 0),
+          total_earnings: parseFloat(row.total_earnings || 0)
+        })),
         total_referrals: parseInt(totalsResult.rows[0].total_referrals || 0),
         active_referrals: parseInt(totalsResult.rows[0].active_referrals || 0),
-        total_commissions: parseFloat(totalsResult.rows[0].total_commissions || 0)
+        total_commissions: parseFloat(totalsResult.rows[0].total_commissions || 0),
+        referral_code: referralCode
       }
     });
 
@@ -169,17 +173,30 @@ router.get('/stats', async (req, res) => {
   try {
     const userId = req.user.id;
 
-    // Obtener código de referral del usuario
+    // Obtener código de referral y datos del usuario
     const userResult = await pool.query(
-      `SELECT referral_code FROM users WHERE id = $1`,
+      `SELECT 
+        referral_code,
+        email,
+        username,
+        balance,
+        status,
+        is_active,
+        created_at
+       FROM users 
+       WHERE id = $1`,
       [userId]
     );
 
-    // Obtener estadísticas
+    // Obtener estadísticas (manejar tanto status VARCHAR como is_active BOOLEAN)
     const statsResult = await pool.query(
       `SELECT 
         COUNT(*) as total_referrals,
-        COUNT(CASE WHEN u.status = 'active' OR u.status IS NULL THEN 1 END) as active_referrals,
+        COUNT(CASE 
+          WHEN (u.status = 'active' OR u.status IS NULL) 
+          OR (u.is_active = true OR (u.is_active IS NULL AND u.status IS NULL))
+          THEN 1 
+        END) as active_referrals,
         COALESCE(SUM(r.total_commission), 0) as total_commissions_earned,
         COALESCE(AVG(r.commission_rate), 0.1) as commission_rate
        FROM referrals r
@@ -188,6 +205,8 @@ router.get('/stats', async (req, res) => {
       [userId]
     );
 
+    const user = userResult.rows[0];
+    
     res.json({
       success: true,
       data: {
@@ -195,7 +214,14 @@ router.get('/stats', async (req, res) => {
         active_referrals: parseInt(statsResult.rows[0].active_referrals || 0),
         total_commissions_earned: parseFloat(statsResult.rows[0].total_commissions_earned || 0),
         commission_rate: parseFloat(statsResult.rows[0].commission_rate || 0.1),
-        referral_code: userResult.rows[0]?.referral_code || null
+        referral_code: user?.referral_code || null,
+        user: user ? {
+          email: user.email,
+          username: user.username,
+          balance: parseFloat(user.balance || 0),
+          status: user.status,
+          is_active: user.is_active
+        } : null
       }
     });
 
@@ -210,7 +236,7 @@ router.get('/stats', async (req, res) => {
 
 /**
  * GET /api/referrals/commissions-chart
- * Obtener datos de comisiones para el gráfico
+ * Obtener datos de comisiones para el gráfico (últimos 30 días)
  */
 router.get('/commissions-chart', async (req, res) => {
   try {
@@ -270,7 +296,7 @@ router.post('/validate-code', async (req, res) => {
 
     const result = await pool.query(
       `SELECT id, email, username FROM users 
-       WHERE referral_code = $1 AND status = 'active'`,
+       WHERE referral_code = $1 AND (status = 'active' OR status IS NULL)`,
       [referral_code]
     );
 

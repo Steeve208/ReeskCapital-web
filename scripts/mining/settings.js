@@ -51,67 +51,207 @@
         document.getElementById('deleteAccountBtn')?.addEventListener('click', confirmDeleteAccount);
     }
     
+    async function waitForSupabaseIntegration() {
+        let attempts = 0;
+        const maxAttempts = 50;
+        
+        return new Promise((resolve) => {
+            const checkInterval = setInterval(() => {
+                attempts++;
+                
+                if (window.supabaseIntegration && 
+                    window.supabaseIntegration.user && 
+                    window.supabaseIntegration.user.isAuthenticated &&
+                    window.supabaseIntegration.user.id) {
+                    clearInterval(checkInterval);
+                    resolve(true);
+                    return;
+                }
+                
+                if (attempts >= maxAttempts) {
+                    clearInterval(checkInterval);
+                    console.warn('⚠️ Supabase Integration no disponible');
+                    resolve(false);
+                }
+            }, 100);
+        });
+    }
+    
     async function loadSettings() {
-        // Load settings from Supabase
-        if (window.miningSupabaseAdapter && window.miningSupabaseAdapter.initialized) {
-            try {
-                const userSettings = await window.miningSupabaseAdapter.getUserSettings();
-                const userData = await window.miningSupabaseAdapter.getUserData();
-                
-                // Apply user data
-                if (userData) {
-                    if (userData.username && document.getElementById('username')) {
-                        document.getElementById('username').value = userData.username;
-                    }
-                    if (userData.email && document.getElementById('email')) {
-                        document.getElementById('email').value = userData.email;
-                    }
-                }
-                
-                // Apply settings
-                if (userSettings) {
-                    if (userSettings.language && document.getElementById('language')) {
-                        document.getElementById('language').value = userSettings.language;
-                    }
-                    if (userSettings.theme && document.getElementById('theme')) {
-                        document.getElementById('theme').value = userSettings.theme;
-                    }
-                    if (userSettings.defaultAlgorithm && document.getElementById('defaultAlgorithm')) {
-                        document.getElementById('defaultAlgorithm').value = userSettings.defaultAlgorithm;
-                    }
-                    if (userSettings.autoStartMining !== undefined && document.getElementById('autoStartMining')) {
-                        document.getElementById('autoStartMining').checked = userSettings.autoStartMining;
-                    }
-                }
-                
-                // Fallback to localStorage
-                const localSettings = JSON.parse(localStorage.getItem('miningSettings') || '{}');
-                Object.keys(localSettings).forEach(key => {
-                    const element = document.getElementById(key);
-                    if (element && !element.value && !element.checked) {
-                        if (typeof localSettings[key] === 'boolean') {
-                            element.checked = localSettings[key];
-                        } else {
-                            element.value = localSettings[key];
-                        }
-                    }
-                });
-            } catch (error) {
-                console.error('Error cargando configuraciones:', error);
-                // Fallback to localStorage
-                loadSettingsFromLocalStorage();
+        // Esperar a que Supabase esté listo
+        const isReady = await waitForSupabaseIntegration();
+        
+        // Primero intentar cargar desde supabaseIntegration.user si está disponible (más rápido)
+        if (window.supabaseIntegration && window.supabaseIntegration.user) {
+            const usernameInput = document.getElementById('username');
+            const emailInput = document.getElementById('userEmail');
+            
+            if (usernameInput && window.supabaseIntegration.user.username) {
+                usernameInput.value = window.supabaseIntegration.user.username;
+                console.log('✅ Username cargado desde supabaseIntegration.user:', window.supabaseIntegration.user.username);
             }
-        } else {
+            if (emailInput && window.supabaseIntegration.user.email) {
+                emailInput.value = window.supabaseIntegration.user.email;
+                console.log('✅ Email cargado desde supabaseIntegration.user:', window.supabaseIntegration.user.email);
+            }
+        }
+        
+        if (!isReady || !window.supabaseIntegration || !window.supabaseIntegration.user || !window.supabaseIntegration.user.isAuthenticated) {
+            console.warn('⚠️ Settings: Supabase no disponible, usando localStorage');
+            loadSettingsFromLocalStorage();
+            return;
+        }
+        
+        try {
+            console.log('📡 Settings: Cargando datos desde Supabase...');
+            const userId = window.supabaseIntegration.user.id;
+            
+            // 1. Cargar datos del usuario desde Supabase (siempre actualizar desde BD para asegurar datos frescos)
+            const userResponse = await window.supabaseIntegration.makeRequest(
+                'GET',
+                `/rest/v1/users?id=eq.${userId}&select=id,email,username,created_at,updated_at`
+            );
+            
+            if (userResponse.ok) {
+                const users = await userResponse.json();
+                if (users.length > 0) {
+                    const userData = users[0];
+                    
+                    console.log('📊 Settings: Datos del usuario desde Supabase:', {
+                        email: userData.email,
+                        username: userData.username
+                    });
+                    
+                    // Actualizar campos del formulario (siempre desde BD)
+                    const emailInput = document.getElementById('userEmail');
+                    if (emailInput) {
+                        emailInput.value = userData.email || '';
+                        console.log('✅ Email actualizado desde BD:', userData.email);
+                    }
+                    
+                    const usernameInput = document.getElementById('username');
+                    if (usernameInput) {
+                        // FORZAR actualización del username desde BD (siempre tiene prioridad)
+                        const realUsername = userData.username || '';
+                        usernameInput.setAttribute('value', realUsername);
+                        usernameInput.value = realUsername;
+                        
+                        console.log('✅ Username actualizado desde BD:', realUsername);
+                        console.log('📋 Verificación - Username en input:', usernameInput.value);
+                        
+                        // Verificar que se actualizó correctamente
+                        if (usernameInput.value !== realUsername) {
+                            console.warn('⚠️ El username no se actualizó correctamente, forzando nuevamente...');
+                            usernameInput.value = realUsername;
+                            usernameInput.setAttribute('value', realUsername);
+                        }
+                    } else {
+                        console.error('❌ No se encontró el elemento username en el DOM');
+                    }
+                    
+                    // Actualizar también en el objeto user de supabaseIntegration
+                    if (window.supabaseIntegration.user) {
+                        window.supabaseIntegration.user.username = userData.username;
+                        window.supabaseIntegration.user.email = userData.email;
+                        window.supabaseIntegration.saveUserToStorage();
+                    }
+                    
+                    console.log('✅ Settings: Datos del usuario cargados desde Supabase');
+                } else {
+                    console.warn('⚠️ Settings: No se encontró usuario en la respuesta');
+                }
+            } else {
+                const errorText = await userResponse.text();
+                console.error('❌ Settings: Error obteniendo usuario:', userResponse.status, errorText);
+            }
+            
+            // 2. Cargar configuraciones desde localStorage (solo preferencias, NO username/email)
+            // Pasar false para NUNCA sobrescribir username/email que vienen de Supabase
+            loadSettingsFromLocalStorage(false);
+            
+            // 3. Cargar sesiones activas
+            await loadActiveSessions();
+            
+        } catch (error) {
+            console.error('❌ Error cargando configuraciones:', error);
             loadSettingsFromLocalStorage();
         }
     }
     
-    function loadSettingsFromLocalStorage() {
+    async function loadActiveSessions() {
+        try {
+            const sessionsList = document.getElementById('sessionsList');
+            if (!sessionsList) return;
+            
+            // Por ahora, mostrar solo la sesión actual
+            // TODO: Implementar sistema de sesiones múltiples si es necesario
+            if (window.supabaseIntegration && window.supabaseIntegration.user && window.supabaseIntegration.user.isAuthenticated) {
+                const userAgent = navigator.userAgent;
+                const deviceInfo = getDeviceInfo(userAgent);
+                
+                sessionsList.innerHTML = `
+                    <div class="session-item">
+                        <div class="session-info">
+                            <div class="session-device">
+                                <i class="fas fa-${deviceInfo.icon}"></i>
+                                <span>${deviceInfo.name}</span>
+                            </div>
+                            <div class="session-location">Sesión actual</div>
+                            <div class="session-time">Última actividad: Ahora</div>
+                        </div>
+                        <button class="btn btn-danger btn-sm" onclick="window.location.href='../../index.html'; localStorage.clear();">
+                            <i class="fas fa-times"></i>
+                            <span>Cerrar Sesión</span>
+                        </button>
+                    </div>
+                `;
+            } else {
+                sessionsList.innerHTML = `
+                    <div class="session-item">
+                        <div class="session-info">
+                            <div class="session-device">
+                                <i class="fas fa-info-circle"></i>
+                                <span>No hay sesiones activas</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error('Error cargando sesiones:', error);
+        }
+    }
+    
+    function getDeviceInfo(userAgent) {
+        if (userAgent.includes('Windows')) {
+            return { name: 'Windows', icon: 'desktop' };
+        } else if (userAgent.includes('Mac')) {
+            return { name: 'macOS', icon: 'laptop' };
+        } else if (userAgent.includes('Linux')) {
+            return { name: 'Linux', icon: 'desktop' };
+        } else if (userAgent.includes('Android')) {
+            return { name: 'Android', icon: 'mobile-alt' };
+        } else if (userAgent.includes('iOS') || userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+            return { name: 'iOS', icon: 'mobile-alt' };
+        }
+        return { name: 'Dispositivo', icon: 'desktop' };
+    }
+    
+    function loadSettingsFromLocalStorage(overwriteUserData = true) {
         const settings = JSON.parse(localStorage.getItem('miningSettings') || '{}');
         
-        if (settings.username && document.getElementById('username')) {
-            document.getElementById('username').value = settings.username;
+        // NUNCA sobrescribir username/email desde localStorage si ya tienen valor
+        // Los datos de Supabase siempre tienen prioridad
+        if (overwriteUserData) {
+            const usernameInput = document.getElementById('username');
+            // Solo cargar desde localStorage si el campo está vacío
+            if (settings.username && usernameInput && (!usernameInput.value || usernameInput.value.trim() === '')) {
+                usernameInput.value = settings.username;
+                console.log('⚠️ Username cargado desde localStorage (fallback):', settings.username);
+            }
         }
+        
+        // Cargar preferencias (estas siempre se pueden cargar desde localStorage)
         if (settings.language && document.getElementById('language')) {
             document.getElementById('language').value = settings.language;
         }
@@ -124,51 +264,69 @@
         if (settings.autoStartMining !== undefined && document.getElementById('autoStartMining')) {
             document.getElementById('autoStartMining').checked = settings.autoStartMining;
         }
-    }
-    
-    async function saveGeneralSettings() {
-        const settings = {
-            username: document.getElementById('username').value,
-            language: document.getElementById('language').value,
-            theme: document.getElementById('theme').value
-        };
-        
-        // Save to Supabase
-        if (window.miningSupabaseAdapter && window.miningSupabaseAdapter.initialized) {
-            try {
-                const success = await window.miningSupabaseAdapter.updateUserSettings(settings);
-                
-                if (success) {
-                    // Also save to localStorage as backup
-                    localStorage.setItem('miningSettings', JSON.stringify({
-                        ...JSON.parse(localStorage.getItem('miningSettings') || '{}'),
-                        ...settings
-                    }));
-                    
-                    window.miningNotifications?.success('Configuración general guardada');
-                } else {
-                    throw new Error('Error al guardar');
-                }
-            } catch (error) {
-                console.error('Error guardando configuración:', error);
-                // Fallback to localStorage
-                localStorage.setItem('miningSettings', JSON.stringify({
-                    ...JSON.parse(localStorage.getItem('miningSettings') || '{}'),
-                    ...settings
-                }));
-                window.miningNotifications?.success('Configuración guardada localmente');
-            }
-        } else {
-            // Fallback to localStorage
-            localStorage.setItem('miningSettings', JSON.stringify({
-                ...JSON.parse(localStorage.getItem('miningSettings') || '{}'),
-                ...settings
-            }));
-            window.miningNotifications?.success('Configuración guardada localmente');
+        if (settings.defaultIntensity && document.getElementById('defaultIntensity')) {
+            document.getElementById('defaultIntensity').value = settings.defaultIntensity;
+        }
+        if (settings.defaultThreads && document.getElementById('defaultThreads')) {
+            document.getElementById('defaultThreads').value = settings.defaultThreads;
+        }
+        if (settings.emailNotifications !== undefined && document.getElementById('emailNotifications')) {
+            document.getElementById('emailNotifications').checked = settings.emailNotifications;
+        }
+        if (settings.pushNotifications !== undefined && document.getElementById('pushNotifications')) {
+            document.getElementById('pushNotifications').checked = settings.pushNotifications;
+        }
+        if (settings.miningAlerts !== undefined && document.getElementById('miningAlerts')) {
+            document.getElementById('miningAlerts').checked = settings.miningAlerts;
+        }
+        if (settings.payoutAlerts !== undefined && document.getElementById('payoutAlerts')) {
+            document.getElementById('payoutAlerts').checked = settings.payoutAlerts;
+        }
+        if (settings.hashrateThreshold && document.getElementById('hashrateThreshold')) {
+            document.getElementById('hashrateThreshold').value = settings.hashrateThreshold;
+        }
+        if (settings.defaultPool && document.getElementById('defaultPool')) {
+            document.getElementById('defaultPool').value = settings.defaultPool;
+        }
+        if (settings.poolTimeout && document.getElementById('poolTimeout')) {
+            document.getElementById('poolTimeout').value = settings.poolTimeout;
+        }
+        if (settings.poolFailover !== undefined && document.getElementById('poolFailover')) {
+            document.getElementById('poolFailover').checked = settings.poolFailover;
+        }
+        if (settings.backupPool && document.getElementById('backupPool')) {
+            document.getElementById('backupPool').value = settings.backupPool;
+        }
+        if (settings.enableLogging !== undefined && document.getElementById('enableLogging')) {
+            document.getElementById('enableLogging').checked = settings.enableLogging;
+        }
+        if (settings.logLevel && document.getElementById('logLevel')) {
+            document.getElementById('logLevel').value = settings.logLevel;
         }
     }
     
-    function saveMiningSettings() {
+    async function saveGeneralSettings() {
+        const language = document.getElementById('language').value;
+        const theme = document.getElementById('theme').value;
+        
+        // Solo guardar preferencias (language, theme) en localStorage
+        // Username y email son inmutables
+        try {
+            localStorage.setItem('miningSettings', JSON.stringify({
+                ...JSON.parse(localStorage.getItem('miningSettings') || '{}'),
+                language: language,
+                theme: theme
+            }));
+            
+            showNotification('Preferencias guardadas exitosamente', 'success');
+            
+        } catch (error) {
+            console.error('Error guardando preferencias:', error);
+            showNotification('Error al guardar las preferencias', 'error');
+        }
+    }
+    
+    async function saveMiningSettings() {
         const settings = {
             defaultAlgorithm: document.getElementById('defaultAlgorithm').value,
             autoStartMining: document.getElementById('autoStartMining').checked,
@@ -176,6 +334,7 @@
             defaultThreads: parseInt(document.getElementById('defaultThreads').value)
         };
         
+        // Guardar en localStorage (configuraciones de minería son locales por ahora)
         localStorage.setItem('miningSettings', JSON.stringify({
             ...JSON.parse(localStorage.getItem('miningSettings') || '{}'),
             ...settings
@@ -184,7 +343,7 @@
         showNotification('Configuración de minería guardada', 'success');
     }
     
-    function saveNotificationSettings() {
+    async function saveNotificationSettings() {
         const settings = {
             emailNotifications: document.getElementById('emailNotifications').checked,
             pushNotifications: document.getElementById('pushNotifications').checked,
@@ -193,6 +352,7 @@
             hashrateThreshold: parseFloat(document.getElementById('hashrateThreshold').value)
         };
         
+        // Guardar en localStorage (preferencias de notificaciones son locales por ahora)
         localStorage.setItem('miningSettings', JSON.stringify({
             ...JSON.parse(localStorage.getItem('miningSettings') || '{}'),
             ...settings
@@ -201,7 +361,7 @@
         showNotification('Preferencias de notificaciones guardadas', 'success');
     }
     
-    function saveAdvancedSettings() {
+    async function saveAdvancedSettings() {
         const settings = {
             defaultPool: document.getElementById('defaultPool').value,
             poolTimeout: parseInt(document.getElementById('poolTimeout').value),
@@ -211,6 +371,7 @@
             logLevel: document.getElementById('logLevel').value
         };
         
+        // Guardar en localStorage (configuraciones avanzadas son locales por ahora)
         localStorage.setItem('miningSettings', JSON.stringify({
             ...JSON.parse(localStorage.getItem('miningSettings') || '{}'),
             ...settings
@@ -239,43 +400,81 @@
             return;
         }
         
-        // Change password via Supabase
-        if (window.miningSupabaseAdapter && window.miningSupabaseAdapter.initialized) {
-            try {
-                const success = await window.miningSupabaseAdapter.changePassword(current, newPass);
-                
-                if (success) {
-                    // Clear form
-                    document.getElementById('currentPassword').value = '';
-                    document.getElementById('newPassword').value = '';
-                    document.getElementById('confirmPassword').value = '';
-                    
-                    window.miningNotifications?.success('Contraseña cambiada exitosamente');
-                } else {
-                    throw new Error('Error al cambiar la contraseña');
-                }
-            } catch (error) {
-                console.error('Error cambiando contraseña:', error);
-                window.miningNotifications?.error(error.message || 'Error al cambiar la contraseña. Verifica tu contraseña actual.');
-            }
-        } else {
-            window.miningNotifications?.error('Sistema no disponible. Intenta más tarde.');
+        // Cambiar contraseña usando supabaseIntegration
+        if (!window.supabaseIntegration || !window.supabaseIntegration.user || !window.supabaseIntegration.user.isAuthenticated) {
+            showNotification('Error: No estás autenticado', 'error');
+            return;
         }
         
-        // Process password change
-        if (window.supabaseIntegration) {
-            window.supabaseIntegration.changePassword(current, newPass)
-                .then(() => {
-                    window.miningNotifications?.success('Contraseña cambiada correctamente');
-                    document.getElementById('currentPassword').value = '';
-                    document.getElementById('newPassword').value = '';
-                    document.getElementById('confirmPassword').value = '';
-                })
-                .catch(error => {
-                    window.miningNotifications?.error('Error al cambiar contraseña: ' + error.message);
-                });
-        } else {
-            window.miningNotifications?.success('Contraseña cambiada correctamente');
+        try {
+            const userId = window.supabaseIntegration.user.id;
+            const email = window.supabaseIntegration.user.email;
+            
+            // Verificar contraseña actual obteniendo el usuario y comparando
+            const userResponse = await window.supabaseIntegration.makeRequest(
+                'GET',
+                `/rest/v1/users?id=eq.${userId}&select=id,password_hash,password`
+            );
+            
+            if (!userResponse.ok) {
+                throw new Error('Error al verificar usuario');
+            }
+            
+            const users = await userResponse.json();
+            if (users.length === 0) {
+                throw new Error('Usuario no encontrado');
+            }
+            
+            const user = users[0];
+            const storedPassword = user.password_hash || user.password;
+            
+            // Verificar contraseña actual (está en base64)
+            const currentPasswordEncoded = btoa(current);
+            if (storedPassword !== currentPasswordEncoded) {
+                // Intentar verificar haciendo login
+                try {
+                    await window.supabaseIntegration.loginUser(email, current);
+                } catch (loginError) {
+                    showNotification('Contraseña actual incorrecta', 'error');
+                    return;
+                }
+            }
+            
+            // Actualizar contraseña en la BD (usando password_hash o password según el esquema)
+            const hashedNewPassword = btoa(newPass);
+            const updateData = {
+                updated_at: new Date().toISOString()
+            };
+            
+            // Intentar actualizar password_hash primero, luego password
+            if (user.password_hash !== undefined) {
+                updateData.password_hash = hashedNewPassword;
+            } else {
+                updateData.password = hashedNewPassword;
+            }
+            
+            const updateResponse = await window.supabaseIntegration.makeRequest(
+                'PATCH',
+                `/rest/v1/users?id=eq.${userId}`,
+                updateData
+            );
+            
+            if (updateResponse.ok) {
+                // Limpiar formulario
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                
+                showNotification('Contraseña cambiada exitosamente', 'success');
+            } else {
+                const errorText = await updateResponse.text();
+                console.error('Error actualizando contraseña:', errorText);
+                throw new Error('Error al actualizar la contraseña');
+            }
+            
+        } catch (error) {
+            console.error('Error cambiando contraseña:', error);
+            showNotification(error.message || 'Error al cambiar la contraseña. Verifica tu contraseña actual.', 'error');
         }
     }
     
@@ -347,19 +546,50 @@
             return;
         }
         
-        // Delete account
-        if (window.supabaseIntegration) {
-            window.supabaseIntegration.deleteAccount()
-                .then(() => {
-                    window.miningNotifications?.success('Cuenta eliminada. Serás redirigido...');
-                    setTimeout(() => window.location.href = '../../index.html', 2000);
-                })
-                .catch(error => {
-                    window.miningNotifications?.error('Error al eliminar cuenta: ' + error.message);
-                });
-        } else {
-            window.miningNotifications?.success('Cuenta eliminada');
-            setTimeout(() => window.location.href = '../../index.html', 2000);
+        // Eliminar cuenta desde Supabase
+        if (!window.supabaseIntegration || !window.supabaseIntegration.user || !window.supabaseIntegration.user.isAuthenticated) {
+            showNotification('Error: No estás autenticado', 'error');
+            return;
+        }
+        
+        try {
+            const userId = window.supabaseIntegration.user.id;
+            
+            // Eliminar usuario de la BD
+            // Nota: Esto eliminará en cascada todas las relaciones (referrals, transactions, sessions, etc.)
+            const deleteResponse = await window.supabaseIntegration.makeRequest(
+                'DELETE',
+                `/rest/v1/users?id=eq.${userId}`
+            );
+            
+            if (deleteResponse.ok) {
+                // Limpiar localStorage
+                localStorage.clear();
+                
+                // Limpiar sesión
+                window.supabaseIntegration.user.isAuthenticated = false;
+                window.supabaseIntegration.user = {
+                    isAuthenticated: false,
+                    id: null,
+                    email: null,
+                    username: null,
+                    balance: 0,
+                    referralCode: null
+                };
+                
+                showNotification('Cuenta eliminada. Serás redirigido...', 'success');
+                setTimeout(() => {
+                    window.location.href = '../../index.html';
+                }, 2000);
+            } else {
+                const errorText = await deleteResponse.text();
+                console.error('Error eliminando cuenta:', errorText);
+                throw new Error('Error al eliminar la cuenta');
+            }
+            
+        } catch (error) {
+            console.error('Error eliminando cuenta:', error);
+            showNotification('Error al eliminar la cuenta: ' + error.message, 'error');
         }
     }
     

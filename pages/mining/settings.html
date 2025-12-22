@@ -131,12 +131,13 @@
                             <div class="settings-form">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" id="userEmail" class="form-input" value="usuario@example.com" readonly>
+                                    <input type="email" id="userEmail" class="form-input" value="" readonly placeholder="Cargando...">
                                     <small class="form-hint">El email no puede ser modificado</small>
                                 </div>
                                 <div class="form-group">
                                     <label>Nombre de Usuario</label>
-                                    <input type="text" id="username" class="form-input" value="usuario123">
+                                    <input type="text" id="username" class="form-input" value="" placeholder="Cargando..." readonly>
+                                    <small class="form-hint">El nombre de usuario no puede ser modificado</small>
                                 </div>
                                 <div class="form-group">
                                     <label>Idioma</label>
@@ -281,16 +282,10 @@
                                         <div class="session-item">
                                             <div class="session-info">
                                                 <div class="session-device">
-                                                    <i class="fas fa-desktop"></i>
-                                                    <span>Windows - Chrome</span>
+                                                    <i class="fas fa-spinner fa-spin"></i>
+                                                    <span>Cargando sesiones...</span>
                                                 </div>
-                                                <div class="session-location">IP: 192.168.1.1</div>
-                                                <div class="session-time">Última actividad: Hace 5 minutos</div>
                                             </div>
-                                            <button class="btn btn-danger btn-sm" onclick="revokeSession('current')">
-                                                <i class="fas fa-times"></i>
-                                                <span>Cerrar Sesión</span>
-                                            </button>
                                         </div>
                                     </div>
                                 </div>

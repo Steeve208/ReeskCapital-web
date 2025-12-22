@@ -186,7 +186,7 @@
                 data: {
                     labels: ['Minería', 'Comisiones', 'Referidos', 'Bonos'],
                     datasets: [{
-                        data: [70, 15, 10, 5],
+                        data: [0, 0, 0, 0],
                         backgroundColor: [
                             '#00ff88',
                             '#6366f1',
@@ -303,134 +303,440 @@
         }
     }
     
-    async function loadAnalyticsData(customFrom = null, customTo = null) {
-        // Load data based on current range
-        if (window.miningSupabaseAdapter) {
-            try {
-                const analyticsData = await window.miningSupabaseAdapter.getAnalyticsData(currentRange);
-                if (analyticsData) {
-                    updateChartsFromSupabase(analyticsData);
-                    updateSummaryFromSupabase(analyticsData);
-                } else {
-                    // Fallback to mock data
-                    const data = generateMockData(currentRange, customFrom, customTo);
-                    updateCharts(data);
-                    updateSummary(data);
+    async function waitForSupabaseIntegration() {
+        let attempts = 0;
+        const maxAttempts = 50;
+        
+        return new Promise((resolve) => {
+            const checkInterval = setInterval(() => {
+                attempts++;
+                
+                if (window.supabaseIntegration && 
+                    window.supabaseIntegration.user && 
+                    window.supabaseIntegration.user.isAuthenticated &&
+                    window.supabaseIntegration.user.id) {
+                    clearInterval(checkInterval);
+                    resolve(true);
+                    return;
                 }
-            } catch (error) {
-                console.error('Error cargando datos de analytics:', error);
-                // Fallback to mock data
-                const data = generateMockData(currentRange, customFrom, customTo);
-                updateCharts(data);
-                updateSummary(data);
-            }
-        } else {
-            const data = generateMockData(currentRange, customFrom, customTo);
-            updateCharts(data);
-            updateSummary(data);
+                
+                if (attempts >= maxAttempts) {
+                    clearInterval(checkInterval);
+                    console.warn('⚠️ Supabase Integration no disponible');
+                    resolve(false);
+                }
+            }, 100);
+        });
+    }
+    
+    async function loadAnalyticsData(customFrom = null, customTo = null) {
+        // Esperar a que Supabase esté listo
+        const isReady = await waitForSupabaseIntegration();
+        
+        if (!isReady || !window.supabaseIntegration || !window.supabaseIntegration.user || !window.supabaseIntegration.user.isAuthenticated) {
+            console.warn('⚠️ Analytics: Supabase no disponible, mostrando datos vacíos');
+            updateChartsWithEmptyData();
+            updateSummaryWithEmptyData();
+            return;
+        }
+        
+        try {
+            console.log('📡 Analytics: Cargando datos desde Supabase...');
+            const userId = window.supabaseIntegration.user.id;
+            
+            // Calcular fechas según el rango
+            const { startDate, endDate } = calculateDateRange(currentRange, customFrom, customTo);
+            
+            // 1. Obtener datos de hashrate desde mining_sessions
+            const hashrateData = await loadHashrateData(userId, startDate, endDate, currentRange);
+            
+            // 2. Obtener datos de earnings desde transactions
+            const earningsData = await loadEarningsData(userId, startDate, endDate, currentRange);
+            
+            // 3. Calcular distribución de ganancias
+            const distributionData = await loadDistributionData(userId, startDate, endDate);
+            
+            // 4. Actualizar gráficos con datos reales
+            updateChartsWithRealData(hashrateData, earningsData, distributionData);
+            
+            // 5. Actualizar resumen con datos reales
+            updateSummaryWithRealData(hashrateData, earningsData);
+            
+            console.log('✅ Analytics: Datos cargados desde Supabase');
+            
+        } catch (error) {
+            console.error('❌ Error cargando datos de analytics:', error);
+            updateChartsWithEmptyData();
+            updateSummaryWithEmptyData();
         }
     }
     
-    function updateChartsFromSupabase(data) {
-        // Update charts with real data from Supabase
-        if (hashrateChart && data.hashrate) {
-            hashrateChart.data.labels = data.hashrate.map(h => new Date(h.time).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
-            hashrateChart.data.datasets[0].data = data.hashrate.map(h => h.value);
+    function calculateDateRange(range, customFrom, customTo) {
+        const endDate = new Date();
+        let startDate = new Date();
+        
+        if (customFrom && customTo) {
+            startDate = new Date(customFrom);
+            endDate = new Date(customTo);
+        } else {
+            switch (range) {
+                case '24h':
+                    startDate.setHours(startDate.getHours() - 24);
+                    break;
+                case '7d':
+                    startDate.setDate(startDate.getDate() - 7);
+                    break;
+                case '30d':
+                    startDate.setDate(startDate.getDate() - 30);
+                    break;
+                case '90d':
+                    startDate.setDate(startDate.getDate() - 90);
+                    break;
+                default:
+                    startDate.setHours(startDate.getHours() - 24);
+            }
+        }
+        
+        return { startDate, endDate };
+    }
+    
+    async function loadHashrateData(userId, startDate, endDate, range) {
+        try {
+            const response = await window.supabaseIntegration.makeRequest(
+                'GET',
+                `/rest/v1/mining_sessions?user_id=eq.${userId}&start_time=gte.${startDate.toISOString()}&start_time=lte.${endDate.toISOString()}&select=start_time,hash_rate,status&order=start_time.asc`
+            );
+            
+            if (!response.ok) {
+                return { labels: [], data: [] };
+            }
+            
+            const sessions = await response.json();
+            const completedSessions = sessions.filter(s => s.status === 'completed' || s.status === 'active');
+            
+            // Agrupar por intervalo según el rango
+            const interval = range === '24h' ? 'hour' : 'day';
+            const grouped = groupByInterval(completedSessions, interval, startDate, endDate);
+            
+            return {
+                labels: grouped.labels,
+                data: grouped.data
+            };
+        } catch (error) {
+            console.error('Error cargando hashrate:', error);
+            return { labels: [], data: [] };
+        }
+    }
+    
+    async function loadEarningsData(userId, startDate, endDate, range) {
+        try {
+            const response = await window.supabaseIntegration.makeRequest(
+                'GET',
+                `/rest/v1/transactions?user_id=eq.${userId}&type=eq.mining&amount=gt.0&created_at=gte.${startDate.toISOString()}&created_at=lte.${endDate.toISOString()}&select=created_at,amount,status&order=created_at.asc`
+            );
+            
+            if (!response.ok) {
+                return { labels: [], data: [] };
+            }
+            
+            const transactions = await response.json();
+            const completedTransactions = transactions.filter(t => 
+                (t.status === 'completed' || t.status === null) && parseFloat(t.amount || 0) > 0
+            );
+            
+            // Agrupar por intervalo según el rango
+            const interval = range === '24h' ? 'hour' : 'day';
+            const grouped = groupTransactionsByInterval(completedTransactions, interval, startDate, endDate);
+            
+            return {
+                labels: grouped.labels,
+                data: grouped.data
+            };
+        } catch (error) {
+            console.error('Error cargando earnings:', error);
+            return { labels: [], data: [] };
+        }
+    }
+    
+    async function loadDistributionData(userId, startDate, endDate) {
+        try {
+            const response = await window.supabaseIntegration.makeRequest(
+                'GET',
+                `/rest/v1/transactions?user_id=eq.${userId}&amount=gt.0&created_at=gte.${startDate.toISOString()}&created_at=lte.${endDate.toISOString()}&select=type,amount,status`
+            );
+            
+            if (!response.ok) {
+                return { mining: 0, commissions: 0, referrals: 0, bonuses: 0 };
+            }
+            
+            const transactions = await response.json();
+            const completedTransactions = transactions.filter(t => 
+                (t.status === 'completed' || t.status === null) && parseFloat(t.amount || 0) > 0
+            );
+            
+            const distribution = {
+                mining: 0,
+                commissions: 0,
+                referrals: 0,
+                bonuses: 0
+            };
+            
+            completedTransactions.forEach(t => {
+                const amount = parseFloat(t.amount || 0);
+                const type = t.type || 'mining';
+                
+                if (type === 'mining') {
+                    distribution.mining += amount;
+                } else if (type === 'referral_commission' || type === 'commission') {
+                    distribution.commissions += amount;
+                } else if (type === 'referral' || type === 'referral_bonus') {
+                    distribution.referrals += amount;
+                } else if (type === 'bonus' || type === 'reward') {
+                    distribution.bonuses += amount;
+                }
+            });
+            
+            return distribution;
+        } catch (error) {
+            console.error('Error cargando distribución:', error);
+            return { mining: 0, commissions: 0, referrals: 0, bonuses: 0 };
+        }
+    }
+    
+    function groupByInterval(sessions, interval, startDate, endDate) {
+        const groups = new Map();
+        const labels = [];
+        const data = [];
+        
+        // Crear intervalos
+        const current = new Date(startDate);
+        while (current <= endDate) {
+            const key = interval === 'hour' 
+                ? `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, '0')}-${String(current.getDate()).padStart(2, '0')}T${String(current.getHours()).padStart(2, '0')}:00:00`
+                : `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, '0')}-${String(current.getDate()).padStart(2, '0')}`;
+            
+            groups.set(key, []);
+            
+            if (interval === 'hour') {
+                labels.push(current.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
+                current.setHours(current.getHours() + 1);
+            } else {
+                labels.push(current.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }));
+                current.setDate(current.getDate() + 1);
+            }
+        }
+        
+        // Agrupar sesiones
+        sessions.forEach(session => {
+            const date = new Date(session.start_time);
+            const key = interval === 'hour'
+                ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T${String(date.getHours()).padStart(2, '0')}:00:00`
+                : `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            
+            if (groups.has(key)) {
+                groups.get(key).push(session);
+            }
+        });
+        
+        // Calcular promedios por intervalo
+        groups.forEach((groupSessions, key) => {
+            if (groupSessions.length > 0) {
+                const avg = groupSessions.reduce((sum, s) => sum + parseFloat(s.hash_rate || 0), 0) / groupSessions.length;
+                data.push(avg);
+            } else {
+                data.push(0);
+            }
+        });
+        
+        return { labels, data };
+    }
+    
+    function groupTransactionsByInterval(transactions, interval, startDate, endDate) {
+        const groups = new Map();
+        const labels = [];
+        const data = [];
+        
+        // Crear intervalos
+        const current = new Date(startDate);
+        while (current <= endDate) {
+            const key = interval === 'hour'
+                ? `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, '0')}-${String(current.getDate()).padStart(2, '0')}T${String(current.getHours()).padStart(2, '0')}:00:00`
+                : `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, '0')}-${String(current.getDate()).padStart(2, '0')}`;
+            
+            groups.set(key, []);
+            
+            if (interval === 'hour') {
+                labels.push(current.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
+                current.setHours(current.getHours() + 1);
+            } else {
+                labels.push(current.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }));
+                current.setDate(current.getDate() + 1);
+            }
+        }
+        
+        // Agrupar transacciones
+        transactions.forEach(transaction => {
+            const date = new Date(transaction.created_at);
+            const key = interval === 'hour'
+                ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T${String(date.getHours()).padStart(2, '0')}:00:00`
+                : `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            
+            if (groups.has(key)) {
+                groups.get(key).push(transaction);
+            }
+        });
+        
+        // Calcular sumas por intervalo
+        groups.forEach((groupTransactions, key) => {
+            const sum = groupTransactions.reduce((s, t) => s + parseFloat(t.amount || 0), 0);
+            data.push(sum);
+        });
+        
+        return { labels, data };
+    }
+    
+    function updateChartsWithRealData(hashrateData, earningsData, distributionData) {
+        // Actualizar gráfico de hashrate
+        if (hashrateChart && hashrateData.labels && hashrateData.data) {
+            hashrateChart.data.labels = hashrateData.labels;
+            hashrateChart.data.datasets[0].data = hashrateData.data;
             hashrateChart.update();
         }
         
-        if (earningsChart && data.earnings) {
-            earningsChart.data.labels = data.earnings.map(e => new Date(e.time).toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }));
-            earningsChart.data.datasets[0].data = data.earnings.map(e => e.value);
+        // Actualizar gráfico de earnings
+        if (earningsChart && earningsData.labels && earningsData.data) {
+            earningsChart.data.labels = earningsData.labels;
+            earningsChart.data.datasets[0].data = earningsData.data;
             earningsChart.update();
         }
+        
+        // Actualizar gráfico de distribución
+        if (distributionChart && distributionData) {
+            const total = distributionData.mining + distributionData.commissions + 
+                         distributionData.referrals + distributionData.bonuses;
+            
+            if (total > 0) {
+                distributionChart.data.datasets[0].data = [
+                    distributionData.mining,
+                    distributionData.commissions,
+                    distributionData.referrals,
+                    distributionData.bonuses
+                ];
+            } else {
+                // Si no hay datos, mostrar ceros
+                distributionChart.data.datasets[0].data = [0, 0, 0, 0];
+            }
+            distributionChart.update();
+        }
+        
+        // Performance chart - por ahora sin datos reales (requiere métricas del sistema)
+        if (performanceChart) {
+            // Mantener vacío hasta que tengamos datos reales de performance
+            performanceChart.data.labels = hashrateData.labels || [];
+            performanceChart.data.datasets[0].data = [];
+            performanceChart.data.datasets[1].data = [];
+            performanceChart.update();
+        }
     }
     
-    function updateSummaryFromSupabase(data) {
-        // Calculate averages from real data
-        if (data.hashrate && data.hashrate.length > 0) {
-            const avgHashrate = data.hashrate.reduce((sum, h) => sum + h.value, 0) / data.hashrate.length;
-            document.getElementById('avgHashrate').textContent = avgHashrate.toFixed(2) + ' H/s';
-        }
+    function updateChartsWithEmptyData() {
+        const emptyLabels = [];
+        const emptyData = [];
         
-        if (data.earnings && data.earnings.length > 0) {
-            const totalEarnings = data.earnings.reduce((sum, e) => sum + e.value, 0);
-            document.getElementById('totalEarnings').textContent = totalEarnings.toFixed(6) + ' RSC';
-        }
-    }
-    
-    function generateMockData(range, from, to) {
-        let labels = [];
-        let hashrateData = [];
-        let earningsData = [];
-        let performanceData = { temp: [], cpu: [] };
-        
-        let count = 24; // Default to 24 hours
-        let interval = 'hour';
-        
-        if (range === '7d') {
-            count = 7;
-            interval = 'day';
-        } else if (range === '30d') {
-            count = 30;
-            interval = 'day';
-        } else if (range === '90d') {
-            count = 90;
-            interval = 'day';
-        }
+        // Crear labels vacíos según el rango
+        const count = currentRange === '24h' ? 24 : (currentRange === '7d' ? 7 : (currentRange === '30d' ? 30 : 90));
+        const interval = currentRange === '24h' ? 'hour' : 'day';
         
         for (let i = count - 1; i >= 0; i--) {
             const date = new Date();
             if (interval === 'hour') {
                 date.setHours(date.getHours() - i);
-                labels.push(date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
+                emptyLabels.push(date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
             } else {
                 date.setDate(date.getDate() - i);
-                labels.push(date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }));
+                emptyLabels.push(date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }));
             }
-            
-            hashrateData.push(Math.random() * 500 + 1000);
-            earningsData.push(Math.random() * 2 + 0.5);
-            performanceData.temp.push(Math.random() * 10 + 60);
-            performanceData.cpu.push(Math.random() * 20 + 50);
+            emptyData.push(0);
         }
         
-        return {
-            labels,
-            hashrate: hashrateData,
-            earnings: earningsData,
-            performance: performanceData
-        };
-    }
-    
-    function updateCharts(data) {
         if (hashrateChart) {
-            hashrateChart.data.labels = data.labels;
-            hashrateChart.data.datasets[0].data = data.hashrate;
+            hashrateChart.data.labels = emptyLabels;
+            hashrateChart.data.datasets[0].data = emptyData;
             hashrateChart.update();
         }
         
         if (earningsChart) {
-            earningsChart.data.labels = data.labels;
-            earningsChart.data.datasets[0].data = data.earnings;
+            earningsChart.data.labels = emptyLabels;
+            earningsChart.data.datasets[0].data = emptyData;
             earningsChart.update();
         }
         
+        if (distributionChart) {
+            distributionChart.data.datasets[0].data = [0, 0, 0, 0];
+            distributionChart.update();
+        }
+        
         if (performanceChart) {
-            performanceChart.data.labels = data.labels;
-            performanceChart.data.datasets[0].data = data.performance.temp;
-            performanceChart.data.datasets[1].data = data.performance.cpu;
+            performanceChart.data.labels = emptyLabels;
+            performanceChart.data.datasets[0].data = [];
+            performanceChart.data.datasets[1].data = [];
             performanceChart.update();
         }
     }
     
-    function updateSummary(data) {
-        // Calculate averages
-        const avgHashrate = data.hashrate.reduce((a, b) => a + b, 0) / data.hashrate.length;
-        const totalEarnings = data.earnings.reduce((a, b) => a + b, 0);
+    function updateSummaryWithRealData(hashrateData, earningsData) {
+        // Calcular promedio de hashrate
+        if (hashrateData.data && hashrateData.data.length > 0) {
+            const avgHashrate = hashrateData.data.reduce((sum, h) => sum + h, 0) / hashrateData.data.length;
+            const avgHashrateEl = document.getElementById('avgHashrate');
+            if (avgHashrateEl) {
+                avgHashrateEl.textContent = formatHashrate(avgHashrate);
+            }
+        } else {
+            const avgHashrateEl = document.getElementById('avgHashrate');
+            if (avgHashrateEl) {
+                avgHashrateEl.textContent = '0.00 H/s';
+            }
+        }
         
-        document.getElementById('avgHashrate').textContent = avgHashrate.toFixed(2) + ' H/s';
-        document.getElementById('totalEarnings').textContent = totalEarnings.toFixed(6) + ' RSC';
+        // Calcular total de earnings
+        if (earningsData.data && earningsData.data.length > 0) {
+            const totalEarnings = earningsData.data.reduce((sum, e) => sum + e, 0);
+            const totalEarningsEl = document.getElementById('totalEarnings');
+            if (totalEarningsEl) {
+                totalEarningsEl.textContent = totalEarnings.toFixed(6) + ' RSC';
+            }
+        } else {
+            const totalEarningsEl = document.getElementById('totalEarnings');
+            if (totalEarningsEl) {
+                totalEarningsEl.textContent = '0.000000 RSC';
+            }
+        }
+    }
+    
+    function updateSummaryWithEmptyData() {
+        const avgHashrateEl = document.getElementById('avgHashrate');
+        if (avgHashrateEl) {
+            avgHashrateEl.textContent = '0.00 H/s';
+        }
+        
+        const totalEarningsEl = document.getElementById('totalEarnings');
+        if (totalEarningsEl) {
+            totalEarningsEl.textContent = '0.000000 RSC';
+        }
+    }
+    
+    function formatHashrate(hashrate) {
+        const h = parseFloat(hashrate || 0);
+        if (h >= 1000000000) {
+            return `${(h / 1000000000).toFixed(2)} TH/s`;
+        } else if (h >= 1000000) {
+            return `${(h / 1000000).toFixed(2)} GH/s`;
+        } else if (h >= 1000) {
+            return `${(h / 1000).toFixed(2)} KH/s`;
+        } else {
+            return `${h.toFixed(2)} H/s`;
+        }
     }
     
     function exportChart(chartId) {
