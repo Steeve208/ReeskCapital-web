@@ -24,10 +24,35 @@ class MiningMobileApp {
         this.setupPullToRefresh();
         this.setupSafeAreas();
         this.updateActiveNavItem();
+        this.setupUserDataListener();
         
         // Listeners
         window.addEventListener('resize', () => this.handleResize());
         window.addEventListener('orientationchange', () => this.handleOrientationChange());
+    }
+    
+    setupUserDataListener() {
+        // Escuchar cuando se actualicen los datos del usuario
+        // Usar MutationObserver para detectar cambios en los elementos del layout
+        const observer = new MutationObserver(() => {
+            this.updateMobileUserData();
+        });
+        
+        // Observar cambios en los elementos de usuario del layout principal
+        const userNameEl = document.getElementById('userName');
+        const userBalanceEl = document.getElementById('userBalance');
+        
+        if (userNameEl) {
+            observer.observe(userNameEl, { childList: true, characterData: true, subtree: true });
+        }
+        if (userBalanceEl) {
+            observer.observe(userBalanceEl, { childList: true, characterData: true, subtree: true });
+        }
+        
+        // También actualizar periódicamente (cada 5 segundos) por si acaso
+        setInterval(() => {
+            this.updateMobileUserData();
+        }, 5000);
     }
     
     getCurrentPage() {
@@ -237,10 +262,55 @@ class MiningMobileApp {
             });
         });
         
+        // Actualizar datos del usuario si ya están disponibles
+        this.updateMobileUserData();
+        
         this.sidebarOpen = true;
         drawer.classList.add('active');
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
+    }
+    
+    updateMobileUserData() {
+        // Intentar obtener datos del usuario desde los elementos del layout principal
+        const mobileUserNameEl = document.getElementById('mobileUserName');
+        const mobileUserBalanceEl = document.getElementById('mobileUserBalance');
+        
+        if (!mobileUserNameEl || !mobileUserBalanceEl) return;
+        
+        // Primero intentar obtener desde los elementos del layout principal (si ya están actualizados)
+        const layoutUserNameEl = document.getElementById('userName');
+        const layoutUserBalanceEl = document.getElementById('userBalance');
+        
+        if (layoutUserNameEl && layoutUserNameEl.textContent && layoutUserNameEl.textContent !== 'Usuario') {
+            mobileUserNameEl.textContent = layoutUserNameEl.textContent;
+        }
+        
+        if (layoutUserBalanceEl && layoutUserBalanceEl.textContent && layoutUserBalanceEl.textContent !== '0.000000 RSC') {
+            mobileUserBalanceEl.textContent = layoutUserBalanceEl.textContent;
+        }
+        
+        // Si no hay datos en el layout, intentar desde localStorage
+        if ((!layoutUserNameEl || layoutUserNameEl.textContent === 'Usuario') && 
+            (!layoutUserBalanceEl || layoutUserBalanceEl.textContent === '0.000000 RSC')) {
+            try {
+                const cachedData = localStorage.getItem('mining_user_profile');
+                if (cachedData) {
+                    const userData = JSON.parse(cachedData);
+                    const userName = userData.username || (userData.email ? userData.email.split('@')[0] : 'Usuario');
+                    const balance = parseFloat(userData.balance || 0);
+                    
+                    if (!mobileUserNameEl.textContent || mobileUserNameEl.textContent === 'Usuario') {
+                        mobileUserNameEl.textContent = userName;
+                    }
+                    if (!mobileUserBalanceEl.textContent || mobileUserBalanceEl.textContent === '0.000000 RSC') {
+                        mobileUserBalanceEl.textContent = `${balance.toFixed(6)} RSC`;
+                    }
+                }
+            } catch (error) {
+                console.warn('Error cargando datos del usuario para menú móvil:', error);
+            }
+        }
     }
     
     openMoreMenu() {

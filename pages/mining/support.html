@@ -13,7 +13,12 @@
     
     <link rel="stylesheet" href="../../styles/global.css?v=4.0">
     <link rel="stylesheet" href="../../styles/mining-layout.css?v=1.0">
+    <link rel="stylesheet" href="../../styles/mining-mobile-app.css?v=1.0">
+    <link rel="stylesheet" href="../../styles/mining-notifications.css?v=1.0">
     <link rel="stylesheet" href="../../styles/mining-support.css?v=1.0">
+    
+    <!-- Mobile App Script -->
+    <script src="../../scripts/mining-mobile-app.js?v=1.0" defer></script>
 </head>
 <body class="mining-platform-layout">
     <!-- Sidebar -->
@@ -285,13 +290,20 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
     <!-- IMPORTANTE: El orden de carga es crítico -->
+    <!-- 1. Configuración de Supabase -->
     <script src="../../scripts/config/supabase-config.js?v=2.0"></script>
+    <!-- 2. Integración de Supabase -->
     <script src="../../scripts/supabase-integration.js?v=2.0"></script>
+    <!-- 3. Auth Guard (DEBE ir después de supabase-integration) -->
     <script src="../../scripts/mining/auth-guard.js?v=2.0"></script>
-    <script src="../../scripts/mining/supabase-adapter.js?v=1.0"></script>
-    <script src="../../scripts/mining/init-production.js?v=1.0"></script>
-    <script src="../../scripts/mining/notifications.js?v=1.0"></script>
-    <script src="../../scripts/mining/layout.js?v=1.0"></script>
+    <!-- 4. Backend API Client (DEBE ir antes de layout) -->
+    <script src="../../scripts/mining/backend-api.js?v=2.0"></script>
+    <!-- 5. Resto de scripts -->
+    <script src="../../scripts/mining/supabase-adapter.js?v=2.0"></script>
+    <script src="../../scripts/mining/init-production.js?v=2.0"></script>
+    <script src="../../scripts/mining/notifications.js?v=2.0"></script>
+    <script src="../../scripts/mining/layout.js?v=2.0"></script>
+    <script src="../../scripts/mining-mobile-app.js?v=1.0"></script>
     <script src="../../scripts/mining/support.js?v=1.0"></script>
 </body>
 </html>

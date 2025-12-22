@@ -386,8 +386,8 @@
         // Determinar el nombre a mostrar (prioridad: username > email > 'Usuario')
         const userName = user.username || (user.email ? user.email.split('@')[0] : 'Usuario');
         
-        // Actualizar nombre de usuario en sidebar y topbar
-        const userNameElements = document.querySelectorAll('#userName, #userNameSmall');
+        // Actualizar nombre de usuario en sidebar, topbar y menú móvil
+        const userNameElements = document.querySelectorAll('#userName, #userNameSmall, #mobileUserName');
         let updatedCount = 0;
         userNameElements.forEach(el => {
             if (el) {
@@ -400,7 +400,7 @@
         // Actualizar balance si está disponible
         if (user.balance !== undefined && user.balance !== null) {
             const balanceValue = parseFloat(user.balance || 0);
-            const balanceElements = document.querySelectorAll('#userBalance');
+            const balanceElements = document.querySelectorAll('#userBalance, #mobileUserBalance');
             let balanceUpdatedCount = 0;
             balanceElements.forEach(el => {
                 if (el) {
