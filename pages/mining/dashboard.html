@@ -2,7 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
     <title>Dashboard - RSC Mining Platform</title>
     
     <!-- Favicon -->
@@ -22,8 +25,13 @@
     <!-- Styles -->
     <link rel="stylesheet" href="../../styles/global.css?v=4.0">
     <link rel="stylesheet" href="../../styles/mining-layout.css?v=1.0">
+    <link rel="stylesheet" href="../../styles/mining-platform.css?v=1.0">
+    <link rel="stylesheet" href="../../styles/mining-mobile-app.css?v=1.0">
     <link rel="stylesheet" href="../../styles/mining-notifications.css?v=1.0">
     <link rel="stylesheet" href="../../styles/mining-dashboard.css?v=1.0">
+    
+    <!-- Mobile App Script -->
+    <script src="../../scripts/mining-mobile-app.js?v=1.0" defer></script>
 </head>
 <body class="mining-platform-layout">
     <!-- Sidebar Navigation -->
@@ -411,6 +419,7 @@
     <script src="../../scripts/mining/init-production.js?v=2.0"></script>
     <script src="../../scripts/mining/notifications.js?v=2.0"></script>
     <script src="../../scripts/mining/layout.js?v=2.0"></script>
+    <script src="../../scripts/mining-mobile-app.js?v=1.0"></script>
     <script src="../../scripts/mining/dashboard.js?v=2.0"></script>
 </body>
 </html>

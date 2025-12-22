@@ -2768,6 +2768,41 @@ body::before {
 
 /* Responsive Design */
 
+/* ===== MEJORAS MÓVILES - INTEGRACIÓN CON MOBILE APP ===== */
+@media (max-width: 768px) {
+    /* Asegurar que el contenido no quede oculto por la bottom nav */
+    .mining-platform {
+        padding-bottom: calc(var(--mobile-bottom-nav-height, 70px) + 20px);
+    }
+    
+    /* Mejorar espaciado en móvil */
+    .container {
+        padding: 0 var(--mobile-spacing, 16px);
+    }
+    
+    /* Cards más compactas en móvil */
+    .control-card,
+    .chart-card,
+    .stat-card {
+        margin-bottom: var(--mobile-spacing, 16px);
+    }
+    
+    /* Botones más grandes para touch */
+    .btn-mining-start,
+    .btn-mining-stop,
+    .btn-mining-settings {
+        min-height: 44px;
+        padding: 12px 20px;
+    }
+    
+    /* Inputs más grandes */
+    input,
+    select {
+        min-height: 44px;
+        font-size: 1rem;
+    }
+}
+
 /* Large Tablets and Small Desktops */
 @media (max-width: 1200px) {
     .control-grid {
