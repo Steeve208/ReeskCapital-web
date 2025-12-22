@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSC Mining Platform - Professional Mining Dashboard</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../assets/img/rsc-logo-quantum.svg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../styles/global.css?v=4.0">
+    <link rel="stylesheet" href="../../styles/mining-layout.css?v=1.0">
+    
+    <!-- Page Specific Styles -->
+    <!-- Se incluirán dinámicamente según la página -->
+</head>
+<body class="mining-platform-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="mining-sidebar" id="miningSidebar">
+        <div class="sidebar-header">
+            <a href="../../index.html" class="sidebar-logo">
+                <div class="logo-icon">
+                    <img src="../../assets/img/rsc-logo-quantum.svg" alt="RSC Logo">
+                </div>
+                <div class="logo-text">
+                    <span class="logo-main">RSC</span>
+                    <span class="logo-sub">MINING</span>
+                </div>
+            </a>
+            <button class="sidebar-toggle-mobile" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-menu-list">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link" data-page="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="control.html" class="nav-link" data-page="control">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Mining Control</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="analytics.html" class="nav-link" data-page="analytics">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="earnings.html" class="nav-link" data-page="earnings">
+                        <i class="fas fa-coins"></i>
+                        <span>Earnings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="transactions.html" class="nav-link" data-page="transactions">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Transactions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="pools.html" class="nav-link" data-page="pools">
+                        <i class="fas fa-swimming-pool"></i>
+                        <span>Pool Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="referrals.html" class="nav-link" data-page="referrals">
+                        <i class="fas fa-users"></i>
+                        <span>Referrals</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="settings.html" class="nav-link" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="api.html" class="nav-link" data-page="api">
+                        <i class="fas fa-code"></i>
+                        <span>API & Integrations</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="support.html" class="nav-link" data-page="support">
+                        <i class="fas fa-life-ring"></i>
+                        <span>Support</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-profile-mini">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <span class="user-name" id="userName">Usuario</span>
+                    <span class="user-balance" id="userBalance">0.000000 RSC</span>
+                </div>
+            </div>
+            <a href="../../index.html" class="sidebar-home-link">
+                <i class="fas fa-home"></i>
+                <span>Back to Home</span>
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <div class="mining-main-wrapper">
+        <!-- Top Header Bar -->
+        <header class="mining-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggleDesktop">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav class="breadcrumbs" id="breadcrumbs">
+                    <a href="dashboard.html">Dashboard</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current" id="currentPage">Current Page</span>
+                </nav>
+            </div>
+            
+            <div class="topbar-center">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search... (Ctrl+K)" id="globalSearch">
+                </div>
+            </div>
+            
+            <div class="topbar-right">
+                <div class="topbar-actions">
+                    <!-- Network Status -->
+                    <div class="network-status-badge">
+                        <div class="status-dot"></div>
+                        <span>Connected</span>
+                    </div>
+                    
+                    <!-- Notifications -->
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    
+                    <!-- User Menu -->
+                    <div class="user-menu-dropdown">
+                        <button class="user-menu-btn" id="userMenuBtn">
+                            <div class="user-avatar-small">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="user-name-small" id="userNameSmall">Usuario</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-menu-dropdown-content" id="userMenuDropdown">
+                            <a href="settings.html">
+                                <i class="fas fa-user-cog"></i>
+                                <span>Profile Settings</span>
+                            </a>
+                            <a href="api.html">
+                                <i class="fas fa-key"></i>
+                                <span>API Keys</span>
+                            </a>
+                            <div class="menu-divider"></div>
+                            <a href="../../index.html">
+                                <i class="fas fa-home"></i>
+                                <span>Back to Home</span>
+                            </a>
+                            <a href="#" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Page Content -->
+        <main class="mining-content" id="miningContent">
+            <!-- El contenido específico de cada página se insertará aquí -->
+            <div class="page-container">
+                <!-- CONTENT PLACEHOLDER -->
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="mining-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 RSC Chain. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="support.html">Support</a>
+                    <a href="../../pages/docs.html">Documentation</a>
+                    <a href="../../pages/about.html">About</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-panel-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications" id="closeNotifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <!-- Notifications will be loaded here -->
+        </div>
+    </div>
+    
+    <!-- Overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- Scripts -->
+    <script src="../../scripts/mining/layout.js?v=1.0"></script>
+    <!-- Page specific scripts will be loaded here -->
+</body>
+</html>
+

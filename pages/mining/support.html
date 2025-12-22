@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - RSC Mining Platform</title>
+    
+    <link rel="icon" type="image/svg+xml" href="../../assets/img/rsc-logo-quantum.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../../styles/global.css?v=4.0">
+    <link rel="stylesheet" href="../../styles/mining-layout.css?v=1.0">
+    <link rel="stylesheet" href="../../styles/mining-support.css?v=1.0">
+</head>
+<body class="mining-platform-layout">
+    <!-- Sidebar -->
+    <aside class="mining-sidebar" id="miningSidebar">
+        <div class="sidebar-header">
+            <a href="../../index.html" class="sidebar-logo">
+                <div class="logo-icon"><img src="../../assets/img/rsc-logo-quantum.svg" alt="RSC Logo"></div>
+                <div class="logo-text"><span class="logo-main">RSC</span><span class="logo-sub">MINING</span></div>
+            </a>
+            <button class="sidebar-toggle-mobile" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-menu-list">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link" data-page="dashboard"><i class="fas fa-chart-line"></i><span>Dashboard</span></a></li>
+                <li class="nav-item"><a href="control.html" class="nav-link" data-page="control"><i class="fas fa-play-circle"></i><span>Mining Control</span></a></li>
+                <li class="nav-item"><a href="analytics.html" class="nav-link" data-page="analytics"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+                <li class="nav-item"><a href="earnings.html" class="nav-link" data-page="earnings"><i class="fas fa-coins"></i><span>Earnings</span></a></li>
+                <li class="nav-item"><a href="transactions.html" class="nav-link" data-page="transactions"><i class="fas fa-exchange-alt"></i><span>Transactions</span></a></li>
+                <li class="nav-item"><a href="pools.html" class="nav-link" data-page="pools"><i class="fas fa-swimming-pool"></i><span>Pool Management</span></a></li>
+                <li class="nav-item"><a href="referrals.html" class="nav-link" data-page="referrals"><i class="fas fa-users"></i><span>Referrals</span></a></li>
+                <li class="nav-item"><a href="settings.html" class="nav-link" data-page="settings"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+                <li class="nav-item"><a href="api.html" class="nav-link" data-page="api"><i class="fas fa-code"></i><span>API & Integrations</span></a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link active" data-page="support"><i class="fas fa-life-ring"></i><span>Support</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile-mini">
+                <div class="user-avatar"><i class="fas fa-user"></i></div>
+                <div class="user-info">
+                    <span class="user-name" id="userName">Usuario</span>
+                    <span class="user-balance" id="userBalance">0.000000 RSC</span>
+                </div>
+            </div>
+            <a href="../../index.html" class="sidebar-home-link"><i class="fas fa-home"></i><span>Back to Home</span></a>
+        </div>
+    </aside>
+    
+    <div class="mining-main-wrapper">
+        <header class="mining-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggleDesktop"><i class="fas fa-bars"></i></button>
+                <nav class="breadcrumbs">
+                    <a href="dashboard.html">Dashboard</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Support</span>
+                </nav>
+            </div>
+            <div class="topbar-center">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search... (Ctrl+K)" id="globalSearch">
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-actions">
+                    <div class="network-status-badge"><div class="status-dot"></div><span>Connected</span></div>
+                    <button class="notification-btn" id="notificationBtn"><i class="fas fa-bell"></i><span class="notification-badge">3</span></button>
+                    <div class="user-menu-dropdown">
+                        <button class="user-menu-btn" id="userMenuBtn">
+                            <div class="user-avatar-small"><i class="fas fa-user"></i></div>
+                            <span class="user-name-small" id="userNameSmall">Usuario</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-menu-dropdown-content" id="userMenuDropdown">
+                            <a href="settings.html"><i class="fas fa-user-cog"></i><span>Profile Settings</span></a>
+                            <a href="api.html"><i class="fas fa-key"></i><span>API Keys</span></a>
+                            <div class="menu-divider"></div>
+                            <a href="../../index.html"><i class="fas fa-home"></i><span>Back to Home</span></a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main class="mining-content">
+            <div class="page-container">
+                <div class="page-header">
+                    <div class="page-title-section">
+                        <h1 class="page-title">Support & Help</h1>
+                        <p class="page-subtitle">Encuentra ayuda y soporte para tu plataforma de minería</p>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="support-quick-actions">
+                    <button class="quick-action-card" onclick="scrollToSection('knowledge-base')">
+                        <i class="fas fa-book"></i>
+                        <span>Knowledge Base</span>
+                    </button>
+                    <button class="quick-action-card" onclick="scrollToSection('tickets')">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Support Tickets</span>
+                    </button>
+                    <button class="quick-action-card" onclick="scrollToSection('community')">
+                        <i class="fas fa-users"></i>
+                        <span>Community</span>
+                    </button>
+                    <button class="quick-action-card" onclick="scrollToSection('faq')">
+                        <i class="fas fa-question-circle"></i>
+                        <span>FAQ</span>
+                    </button>
+                </div>
+                
+                <!-- Knowledge Base -->
+                <div class="support-section" id="knowledge-base">
+                    <h2 class="section-title">Knowledge Base</h2>
+                    <div class="knowledge-base-grid">
+                        <div class="kb-category-card">
+                            <div class="kb-icon"><i class="fas fa-rocket"></i></div>
+                            <h3>Getting Started</h3>
+                            <ul class="kb-articles">
+                                <li><a href="#">Cómo empezar a minar</a></li>
+                                <li><a href="#">Configuración inicial</a></li>
+                                <li><a href="#">Primeros pasos</a></li>
+                                <li><a href="#">Guía de instalación</a></li>
+                            </ul>
+                        </div>
+                        <div class="kb-category-card">
+                            <div class="kb-icon"><i class="fas fa-cog"></i></div>
+                            <h3>Configuration</h3>
+                            <ul class="kb-articles">
+                                <li><a href="#">Configurar pool</a></li>
+                                <li><a href="#">Optimizar rendimiento</a></li>
+                                <li><a href="#">Ajustar intensidad</a></li>
+                                <li><a href="#">Configuración avanzada</a></li>
+                            </ul>
+                        </div>
+                        <div class="kb-category-card">
+                            <div class="kb-icon"><i class="fas fa-tools"></i></div>
+                            <h3>Troubleshooting</h3>
+                            <ul class="kb-articles">
+                                <li><a href="#">Problemas comunes</a></li>
+                                <li><a href="#">La minería no inicia</a></li>
+                                <li><a href="#">Bajo hashrate</a></li>
+                                <li><a href="#">Errores de conexión</a></li>
+                            </ul>
+                        </div>
+                        <div class="kb-category-card">
+                            <div class="kb-icon"><i class="fas fa-chart-line"></i></div>
+                            <h3>Best Practices</h3>
+                            <ul class="kb-articles">
+                                <li><a href="#">Maximizar ganancias</a></li>
+                                <li><a href="#">Optimizar eficiencia</a></li>
+                                <li><a href="#">Gestión de pools</a></li>
+                                <li><a href="#">Seguridad</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Support Tickets -->
+                <div class="support-section" id="tickets">
+                    <div class="section-header-actions">
+                        <h2 class="section-title">Support Tickets</h2>
+                        <button class="btn btn-primary" id="createTicketBtn">
+                            <i class="fas fa-plus"></i>
+                            <span>Crear Ticket</span>
+                        </button>
+                    </div>
+                    <div class="tickets-list" id="ticketsList">
+                        <!-- Tickets will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- FAQ -->
+                <div class="support-section" id="faq">
+                    <h2 class="section-title">Preguntas Frecuentes</h2>
+                    <div class="faq-list" id="faqList">
+                        <!-- FAQ items will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- Community Links -->
+                <div class="support-section" id="community">
+                    <h2 class="section-title">Comunidad</h2>
+                    <div class="community-links-grid">
+                        <a href="https://t.me/RSCchain" target="_blank" class="community-link-card">
+                            <div class="community-icon telegram"><i class="fab fa-telegram"></i></div>
+                            <h3>Telegram</h3>
+                            <p>Únete a nuestra comunidad en Telegram</p>
+                            <span class="community-members">1,234 miembros</span>
+                        </a>
+                        <a href="https://x.com/Reeskcap" target="_blank" class="community-link-card">
+                            <div class="community-icon twitter"><i class="fab fa-twitter"></i></div>
+                            <h3>X (Twitter)</h3>
+                            <p>Síguenos para las últimas noticias</p>
+                            <span class="community-members">5,678 seguidores</span>
+                        </a>
+                        <a href="https://discord.gg/KDpJRnaBwB" target="_blank" class="community-link-card">
+                            <div class="community-icon discord"><i class="fab fa-discord"></i></div>
+                            <h3>Discord</h3>
+                            <p>Únete a nuestro servidor de Discord</p>
+                            <span class="community-members">890 miembros</span>
+                        </a>
+                        <a href="https://github.com/rscchain" target="_blank" class="community-link-card">
+                            <div class="community-icon github"><i class="fab fa-github"></i></div>
+                            <h3>GitHub</h3>
+                            <p>Repositorio oficial del proyecto</p>
+                            <span class="community-members">Open Source</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="mining-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 RSC Chain. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="support.html">Support</a>
+                    <a href="../../pages/docs.html">Documentation</a>
+                    <a href="../../pages/about.html">About</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Create Ticket Modal -->
+    <div class="modal" id="createTicketModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Support Ticket</h3>
+                <button class="modal-close" id="closeTicketModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Asunto</label>
+                    <input type="text" id="ticketSubject" class="form-input" placeholder="Describe brevemente tu problema">
+                </div>
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <select id="ticketCategory" class="form-select">
+                        <option value="technical">Problema Técnico</option>
+                        <option value="billing">Facturación/Pagos</option>
+                        <option value="account">Cuenta</option>
+                        <option value="other">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="ticketDescription" class="form-textarea" rows="6" placeholder="Describe tu problema en detalle..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Adjuntos (opcional)</label>
+                    <input type="file" id="ticketAttachments" class="form-input" multiple>
+                    <small class="form-hint">Máximo 5 archivos, 10MB cada uno</small>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancelTicketBtn">Cancelar</button>
+                    <button class="btn btn-primary" id="submitTicketBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Enviar Ticket</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-panel-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications" id="closeNotifications"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="notification-list" id="notificationList"></div>
+    </div>
+    
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- IMPORTANTE: El orden de carga es crítico -->
+    <script src="../../scripts/config/supabase-config.js?v=2.0"></script>
+    <script src="../../scripts/supabase-integration.js?v=2.0"></script>
+    <script src="../../scripts/mining/auth-guard.js?v=2.0"></script>
+    <script src="../../scripts/mining/supabase-adapter.js?v=1.0"></script>
+    <script src="../../scripts/mining/init-production.js?v=1.0"></script>
+    <script src="../../scripts/mining/notifications.js?v=1.0"></script>
+    <script src="../../scripts/mining/layout.js?v=1.0"></script>
+    <script src="../../scripts/mining/support.js?v=1.0"></script>
+</body>
+</html>
+

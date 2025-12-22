@@ -1,0 +1,307 @@
+/**
+ * 👥 REFERRALS ROUTES (Nueva versión)
+ * Rutas para sistema de referidos
+ */
+
+const express = require('express');
+const { pool } = require('../config/database');
+const { userAuth } = require('../security/auth');
+const router = express.Router();
+
+router.use(userAuth);
+
+/**
+ * GET /api/referrals
+ * Obtener lista de referidos con hashrate y earnings
+ */
+router.get('/', async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const result = await pool.query(
+      `SELECT 
+        r.*,
+        u.id as referred_id,
+        u.email as referred_email,
+        u.username as referred_username,
+        u.created_at as referred_joined_at,
+        u.balance as referred_balance
+       FROM referrals r
+       JOIN users u ON r.referred_id = u.id
+       WHERE r.referrer_id = $1
+       ORDER BY r.created_at DESC`,
+      [userId]
+    );
+
+    // Para cada referido, obtener hashrate promedio y earnings totales
+    const referralsWithStats = await Promise.all(result.rows.map(async (ref) => {
+      const referredId = ref.referred_id;
+
+      // Obtener hashrate promedio desde sesiones completadas
+      const hashrateResult = await pool.query(
+        `SELECT COALESCE(AVG(hash_rate), 0) as avg_hashrate
+         FROM mining_sessions
+         WHERE user_id = $1 AND status = 'completed'`,
+        [referredId]
+      );
+      const avgHashrate = parseFloat(hashrateResult.rows[0]?.avg_hashrate || 0);
+
+      // Obtener earnings totales desde transactions tipo 'mining'
+      const earningsResult = await pool.query(
+        `SELECT COALESCE(SUM(amount), 0) as total_earnings
+         FROM transactions
+         WHERE user_id = $1 
+         AND type = 'mining' 
+         AND amount > 0
+         AND (COALESCE(status, 'completed') = 'completed' OR status IS NULL)`,
+        [referredId]
+      );
+      const totalEarnings = parseFloat(earningsResult.rows[0]?.total_earnings || 0);
+
+      return {
+        ...ref,
+        avg_hashrate: avgHashrate,
+        total_earnings: totalEarnings
+      };
+    }));
+
+    // Obtener totales
+    const totalsResult = await pool.query(
+      `SELECT 
+        COUNT(*) as total_referrals,
+        COUNT(CASE WHEN u.status = 'active' OR u.status IS NULL THEN 1 END) as active_referrals,
+        COALESCE(SUM(r.total_commission), 0) as total_commissions
+       FROM referrals r
+       JOIN users u ON r.referred_id = u.id
+       WHERE r.referrer_id = $1`,
+      [userId]
+    );
+
+    res.json({
+      success: true,
+      data: {
+        referrals: referralsWithStats,
+        total_referrals: parseInt(totalsResult.rows[0].total_referrals || 0),
+        active_referrals: parseInt(totalsResult.rows[0].active_referrals || 0),
+        total_commissions: parseFloat(totalsResult.rows[0].total_commissions || 0)
+      }
+    });
+
+  } catch (error) {
+    console.error('Error obteniendo referidos:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Error interno del servidor'
+    });
+  }
+});
+
+/**
+ * GET /api/referrals/commissions
+ * Obtener comisiones de referidos
+ */
+router.get('/commissions', async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { period = 'month' } = req.query;
+
+    const now = new Date();
+    let startDate;
+
+    switch (period) {
+      case 'today':
+        startDate = new Date(now.setHours(0, 0, 0, 0));
+        break;
+      case 'week':
+        startDate = new Date(now.setDate(now.getDate() - 7));
+        break;
+      case 'month':
+        startDate = new Date(now.setMonth(now.getMonth() - 1));
+        break;
+      case 'year':
+        startDate = new Date(now.setFullYear(now.getFullYear() - 1));
+        break;
+      default:
+        startDate = new Date(0);
+    }
+
+    const result = await pool.query(
+      `SELECT * FROM transactions
+       WHERE user_id = $1 
+       AND type = 'referral_commission' 
+       AND created_at >= $2
+       ORDER BY created_at DESC`,
+      [userId, startDate.toISOString()]
+    );
+
+    const totalResult = await pool.query(
+      `SELECT COALESCE(SUM(amount), 0) as period_total
+       FROM transactions
+       WHERE user_id = $1 
+       AND type = 'referral_commission' 
+       AND created_at >= $2`,
+      [userId, startDate.toISOString()]
+    );
+
+    res.json({
+      success: true,
+      data: {
+        commissions: result.rows,
+        total: parseFloat(totalResult.rows[0].period_total || 0),
+        period_total: parseFloat(totalResult.rows[0].period_total || 0)
+      }
+    });
+
+  } catch (error) {
+    console.error('Error obteniendo comisiones:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Error interno del servidor'
+    });
+  }
+});
+
+/**
+ * GET /api/referrals/stats
+ * Obtener estadísticas de referidos
+ */
+router.get('/stats', async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Obtener código de referral del usuario
+    const userResult = await pool.query(
+      `SELECT referral_code FROM users WHERE id = $1`,
+      [userId]
+    );
+
+    // Obtener estadísticas
+    const statsResult = await pool.query(
+      `SELECT 
+        COUNT(*) as total_referrals,
+        COUNT(CASE WHEN u.status = 'active' OR u.status IS NULL THEN 1 END) as active_referrals,
+        COALESCE(SUM(r.total_commission), 0) as total_commissions_earned,
+        COALESCE(AVG(r.commission_rate), 0.1) as commission_rate
+       FROM referrals r
+       JOIN users u ON r.referred_id = u.id
+       WHERE r.referrer_id = $1`,
+      [userId]
+    );
+
+    res.json({
+      success: true,
+      data: {
+        total_referrals: parseInt(statsResult.rows[0].total_referrals || 0),
+        active_referrals: parseInt(statsResult.rows[0].active_referrals || 0),
+        total_commissions_earned: parseFloat(statsResult.rows[0].total_commissions_earned || 0),
+        commission_rate: parseFloat(statsResult.rows[0].commission_rate || 0.1),
+        referral_code: userResult.rows[0]?.referral_code || null
+      }
+    });
+
+  } catch (error) {
+    console.error('Error obteniendo estadísticas de referidos:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Error interno del servidor'
+    });
+  }
+});
+
+/**
+ * GET /api/referrals/commissions-chart
+ * Obtener datos de comisiones para el gráfico
+ */
+router.get('/commissions-chart', async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { days = 30 } = req.query;
+
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - parseInt(days));
+
+    const result = await pool.query(
+      `SELECT 
+        DATE(created_at) as date,
+        COALESCE(SUM(amount), 0) as daily_commissions
+       FROM transactions
+       WHERE user_id = $1 
+       AND type = 'referral_commission'
+       AND created_at >= $2
+       AND (COALESCE(status, 'completed') = 'completed' OR status IS NULL)
+       GROUP BY DATE(created_at)
+       ORDER BY date ASC`,
+      [userId, startDate.toISOString()]
+    );
+
+    res.json({
+      success: true,
+      data: {
+        chart_data: result.rows.map(row => ({
+          date: row.date,
+          commissions: parseFloat(row.daily_commissions || 0)
+        }))
+      }
+    });
+
+  } catch (error) {
+    console.error('Error obteniendo datos del gráfico de comisiones:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Error interno del servidor'
+    });
+  }
+});
+
+/**
+ * POST /api/referrals/validate-code
+ * Validar código de referido
+ */
+router.post('/validate-code', async (req, res) => {
+  try {
+    const { referral_code } = req.body;
+
+    if (!referral_code) {
+      return res.status(400).json({
+        success: false,
+        error: 'Código de referido es requerido'
+      });
+    }
+
+    const result = await pool.query(
+      `SELECT id, email, username FROM users 
+       WHERE referral_code = $1 AND status = 'active'`,
+      [referral_code]
+    );
+
+    if (result.rows.length === 0) {
+      return res.json({
+        success: true,
+        data: {
+          valid: false
+        }
+      });
+    }
+
+    res.json({
+      success: true,
+      data: {
+        valid: true,
+        referrer: {
+          username: result.rows[0].username,
+          email: result.rows[0].email
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error('Error validando código:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Error interno del servidor'
+    });
+  }
+});
+
+module.exports = router;
+

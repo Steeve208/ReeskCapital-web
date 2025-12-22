@@ -10,9 +10,15 @@
 
 class SupabaseIntegration {
     constructor() {
-        this.config = {
+        // Cargar configuración desde archivo externo o usar valores por defecto
+        const configSource = window.SUPABASE_CONFIG || {
             url: 'https://unevdceponbnmhvpzlzf.supabase.co',
             anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVuZXZkY2Vwb25ibm1odnB6bHpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5MTIyMTksImV4cCI6MjA3MTQ4ODIxOX0.OLHbZrezgBiXWQplN1jrGD_xkARqG2uD8ECqzo05jE4'
+        };
+        
+        this.config = {
+            url: configSource.url || 'https://unevdceponbnmhvpzlzf.supabase.co',
+            anonKey: configSource.anonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVuZXZkY2Vwb25ibm1odnB6bHpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5MTIyMTksImV4cCI6MjA3MTQ4ODIxOX0.OLHbZrezgBiXWQplN1jrGD_xkARqG2uD8ECqzo05jE4'
         };
         
         this.user = {
@@ -507,7 +513,7 @@ class SupabaseIntegration {
 
             console.log('⛏️ Iniciando nueva sesión de minería de 24 horas...');
             
-            // Crear sesión de 24 horas
+            // Crear sesión de 24 horas (TODO LOCAL - como antes)
             const sessionId = `mining_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
             const startTime = new Date().toISOString();
             const endTime = new Date(Date.now() + this.miningSession.duration).toISOString();
@@ -520,16 +526,16 @@ class SupabaseIntegration {
             this.miningSession.hashRate = 0;
             this.miningSession.efficiency = 100;
             
-            // Guardar sesión en localStorage
+            // Guardar sesión en localStorage (sistema local como antes)
             this.saveMiningSession();
             
-            // Iniciar sincronización automática con el backend
+            // Iniciar sincronización automática con Supabase (solo para actualizar balance)
             this.startBackgroundSync();
             
-            // 🔧 INICIAR TIMER DE ACTUALIZACIÓN AUTOMÁTICA
+            // 🔧 INICIAR TIMER DE ACTUALIZACIÓN AUTOMÁTICA (calcula tokens localmente)
             this.startMiningUpdateTimer();
             
-            console.log('✅ Sesión de minería de 24 horas iniciada');
+            console.log('✅ Sesión de minería de 24 horas iniciada (modo local)');
             console.log(`⏰ Terminará el: ${new Date(endTime).toLocaleString()}`);
             return true;
         } catch (error) {
@@ -1311,15 +1317,26 @@ class SupabaseIntegration {
         if (this.miningSession.isActive) {
             try {
                 // Actualizar timestamp
-                this.lastMiningUpdate = Date.now();
+                const now = Date.now();
+                const lastUpdate = this.lastMiningUpdate || (this.miningSession.startTime ? new Date(this.miningSession.startTime).getTime() : now);
+                const timeSinceLastUpdate = now - lastUpdate;
+                
+                // Solo calcular si han pasado al menos 30 segundos
+                if (timeSinceLastUpdate >= 30000) {
+                    // Calcular tokens minados desde la última actualización (igual que el sistema antiguo)
+                    const newTokens = this.calculateOfflineMining(timeSinceLastUpdate);
+                    
+                    if (newTokens > 0) {
+                        // Actualizar stats con los nuevos tokens calculados
+                        const currentHashRate = this.miningSession.hashRate || 100;
+                        const currentEfficiency = this.miningSession.efficiency || 100;
+                        await this.updateMiningStats(newTokens, currentHashRate, currentEfficiency);
+                    }
+                }
+                
+                // Actualizar timestamp
+                this.lastMiningUpdate = now;
                 localStorage.setItem('rsc_last_mining_update', this.lastMiningUpdate.toString());
-                
-                // Forzar actualización de minería
-                const currentHashRate = this.miningSession.hashRate || 100;
-                const currentEfficiency = this.miningSession.efficiency || 100;
-                
-                // Actualizar stats (esto recalculará tokens basado en tiempo transcurrido)
-                await this.updateMiningStats(0, currentHashRate, currentEfficiency);
                 
                 console.log('🔄 Actualización automática de minería ejecutada');
             } catch (error) {

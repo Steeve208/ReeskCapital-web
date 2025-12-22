@@ -1,0 +1,380 @@
+/* ===== MINING REFERRALS STYLES ===== */
+
+/* Referral Stats Overview */
+.referral-stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.stat-card-large {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.stat-card-large:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary);
+}
+
+.stat-icon-large {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: var(--glow-primary);
+}
+
+.stat-content-large {
+    flex: 1;
+}
+
+.stat-label-large {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.stat-value-large {
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--color-text);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+}
+
+.stat-change-large {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.stat-change-large.positive {
+    color: var(--color-primary);
+}
+
+.stat-change-large.neutral {
+    color: var(--color-text-secondary);
+}
+
+/* Referral Code Section */
+.referral-code-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.referral-code-card,
+.referral-link-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+}
+
+.referral-code-card h3,
+.referral-link-card h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.code-display-large,
+.link-display-large {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.code-input,
+.link-input {
+    flex: 1;
+    padding: 14px 18px;
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font-size: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+}
+
+.code-description {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px;
+    background: rgba(0, 255, 136, 0.05);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.code-description i {
+    color: var(--color-primary);
+    margin-top: 2px;
+}
+
+.share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.btn-share {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-share-twitter {
+    background: #1DA1F2;
+    color: white;
+}
+
+.btn-share-telegram {
+    background: #0088cc;
+    color: white;
+}
+
+.btn-share-whatsapp {
+    background: #25D366;
+    color: white;
+}
+
+.btn-share:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.qr-code-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.qr-code-placeholder {
+    width: 200px;
+    height: 200px;
+    background: var(--color-surface-elevated);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--color-text-secondary);
+}
+
+.qr-code-placeholder i {
+    font-size: 3rem;
+    opacity: 0.5;
+}
+
+/* Referrals List */
+.referrals-list-section {
+    margin-bottom: 32px;
+}
+
+.section-header-with-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.referrals-table-container {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+/* Commissions Section */
+.commissions-section {
+    margin-bottom: 32px;
+}
+
+.commissions-chart-container {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+    height: 300px;
+}
+
+.commissions-chart-container canvas {
+    max-height: 100%;
+}
+
+.commissions-table-container {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+/* Milestones */
+.milestones-section {
+    margin-bottom: 32px;
+}
+
+.milestones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.milestone-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    gap: 20px;
+    transition: var(--transition);
+}
+
+.milestone-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary);
+}
+
+.milestone-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #ffa500, #ff8800);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.milestone-content {
+    flex: 1;
+}
+
+.milestone-content h4 {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.milestone-reward {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--color-primary);
+    margin-bottom: 16px;
+}
+
+.milestone-progress {
+    margin-bottom: 16px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--color-surface-elevated);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .referral-code-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .milestones-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .referral-stats-overview {
+        grid-template-columns: 1fr;
+    }
+    
+    .share-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-share {
+        width: 100%;
+    }
+    
+    .milestones-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-header-with-filter {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+}
+

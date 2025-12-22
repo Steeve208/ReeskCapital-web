@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referrals - RSC Mining Platform</title>
+    
+    <link rel="icon" type="image/svg+xml" href="../../assets/img/rsc-logo-quantum.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <link rel="stylesheet" href="../../styles/global.css?v=4.0">
+    <link rel="stylesheet" href="../../styles/mining-layout.css?v=1.0">
+    <link rel="stylesheet" href="../../styles/mining-referrals.css?v=1.0">
+</head>
+<body class="mining-platform-layout">
+    <!-- Sidebar -->
+    <aside class="mining-sidebar" id="miningSidebar">
+        <div class="sidebar-header">
+            <a href="../../index.html" class="sidebar-logo">
+                <div class="logo-icon"><img src="../../assets/img/rsc-logo-quantum.svg" alt="RSC Logo"></div>
+                <div class="logo-text"><span class="logo-main">RSC</span><span class="logo-sub">MINING</span></div>
+            </a>
+            <button class="sidebar-toggle-mobile" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-menu-list">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link" data-page="dashboard"><i class="fas fa-chart-line"></i><span>Dashboard</span></a></li>
+                <li class="nav-item"><a href="control.html" class="nav-link" data-page="control"><i class="fas fa-play-circle"></i><span>Mining Control</span></a></li>
+                <li class="nav-item"><a href="analytics.html" class="nav-link" data-page="analytics"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+                <li class="nav-item"><a href="earnings.html" class="nav-link" data-page="earnings"><i class="fas fa-coins"></i><span>Earnings</span></a></li>
+                <li class="nav-item"><a href="transactions.html" class="nav-link" data-page="transactions"><i class="fas fa-exchange-alt"></i><span>Transactions</span></a></li>
+                <li class="nav-item"><a href="pools.html" class="nav-link" data-page="pools"><i class="fas fa-swimming-pool"></i><span>Pool Management</span></a></li>
+                <li class="nav-item"><a href="referrals.html" class="nav-link active" data-page="referrals"><i class="fas fa-users"></i><span>Referrals</span></a></li>
+                <li class="nav-item"><a href="settings.html" class="nav-link" data-page="settings"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+                <li class="nav-item"><a href="api.html" class="nav-link" data-page="api"><i class="fas fa-code"></i><span>API & Integrations</span></a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link" data-page="support"><i class="fas fa-life-ring"></i><span>Support</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile-mini">
+                <div class="user-avatar"><i class="fas fa-user"></i></div>
+                <div class="user-info">
+                    <span class="user-name" id="userName">Usuario</span>
+                    <span class="user-balance" id="userBalance">0.000000 RSC</span>
+                </div>
+            </div>
+            <a href="../../index.html" class="sidebar-home-link"><i class="fas fa-home"></i><span>Back to Home</span></a>
+        </div>
+    </aside>
+    
+    <div class="mining-main-wrapper">
+        <header class="mining-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggleDesktop"><i class="fas fa-bars"></i></button>
+                <nav class="breadcrumbs">
+                    <a href="dashboard.html">Dashboard</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Referrals</span>
+                </nav>
+            </div>
+            <div class="topbar-center">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search... (Ctrl+K)" id="globalSearch">
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-actions">
+                    <div class="network-status-badge"><div class="status-dot"></div><span>Connected</span></div>
+                    <button class="notification-btn" id="notificationBtn"><i class="fas fa-bell"></i><span class="notification-badge">3</span></button>
+                    <div class="user-menu-dropdown">
+                        <button class="user-menu-btn" id="userMenuBtn">
+                            <div class="user-avatar-small"><i class="fas fa-user"></i></div>
+                            <span class="user-name-small" id="userNameSmall">Usuario</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-menu-dropdown-content" id="userMenuDropdown">
+                            <a href="settings.html"><i class="fas fa-user-cog"></i><span>Profile Settings</span></a>
+                            <a href="api.html"><i class="fas fa-key"></i><span>API Keys</span></a>
+                            <div class="menu-divider"></div>
+                            <a href="../../index.html"><i class="fas fa-home"></i><span>Back to Home</span></a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main class="mining-content">
+            <div class="page-container">
+                <div class="page-header">
+                    <div class="page-title-section">
+                        <h1 class="page-title">Referrals & Commissions</h1>
+                        <p class="page-subtitle">Invita amigos y gana comisiones por sus ganancias</p>
+                    </div>
+                </div>
+                
+                <!-- Referral Stats Overview -->
+                <div class="referral-stats-overview">
+                    <div class="stat-card-large">
+                        <div class="stat-icon-large"><i class="fas fa-users"></i></div>
+                        <div class="stat-content-large">
+                            <div class="stat-label-large">Total Referrals</div>
+                            <div class="stat-value-large" id="totalReferrals">12</div>
+                            <div class="stat-change-large positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+3 este mes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card-large">
+                        <div class="stat-icon-large"><i class="fas fa-coins"></i></div>
+                        <div class="stat-content-large">
+                            <div class="stat-label-large">Comisiones Totales</div>
+                            <div class="stat-value-large" id="totalCommissions">45.678901 RSC</div>
+                            <div class="stat-change-large positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12.5% este mes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card-large">
+                        <div class="stat-icon-large"><i class="fas fa-percentage"></i></div>
+                        <div class="stat-content-large">
+                            <div class="stat-label-large">Tasa de Comisión</div>
+                            <div class="stat-value-large">10%</div>
+                            <div class="stat-change-large neutral">
+                                <span>Fija</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card-large">
+                        <div class="stat-icon-large"><i class="fas fa-calendar-day"></i></div>
+                        <div class="stat-content-large">
+                            <div class="stat-label-large">Comisiones Hoy</div>
+                            <div class="stat-value-large" id="todayCommissions">1.234567 RSC</div>
+                            <div class="stat-change-large positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+0.5 RSC</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Referral Code Section -->
+                <div class="referral-code-section">
+                    <div class="referral-code-card">
+                        <h3>Tu Código de Referido</h3>
+                        <div class="code-display-large">
+                            <input type="text" id="referralCode" class="code-input" value="RSC-ABC123XYZ" readonly>
+                            <button class="btn btn-primary" id="copyReferralCodeBtn">
+                                <i class="fas fa-copy"></i>
+                                <span>Copiar</span>
+                            </button>
+                        </div>
+                        <div class="code-description">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Comparte este código con tus amigos. Gana 10% de comisión por cada ganancia que generen.</span>
+                        </div>
+                        <div class="share-buttons">
+                            <button class="btn-share btn-share-twitter" onclick="shareReferral('twitter')">
+                                <i class="fab fa-twitter"></i>
+                                <span>Compartir en X</span>
+                            </button>
+                            <button class="btn-share btn-share-telegram" onclick="shareReferral('telegram')">
+                                <i class="fab fa-telegram"></i>
+                                <span>Compartir en Telegram</span>
+                            </button>
+                            <button class="btn-share btn-share-whatsapp" onclick="shareReferral('whatsapp')">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>Compartir en WhatsApp</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="referral-link-card">
+                        <h3>Tu Link de Referido</h3>
+                        <div class="link-display-large">
+                            <input type="text" id="referralLink" class="link-input" value="https://rscchain.com/mining?ref=RSC-ABC123XYZ" readonly>
+                            <button class="btn btn-secondary" id="copyReferralLinkBtn">
+                                <i class="fas fa-copy"></i>
+                                <span>Copiar Link</span>
+                            </button>
+                        </div>
+                        <div class="qr-code-section">
+                            <div class="qr-code-placeholder">
+                                <i class="fas fa-qrcode"></i>
+                                <span>QR Code</span>
+                            </div>
+                            <button class="btn btn-secondary" id="downloadQRBtn">
+                                <i class="fas fa-download"></i>
+                                <span>Descargar QR</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Referrals List -->
+                <div class="referrals-list-section">
+                    <div class="section-header-with-filter">
+                        <h2 class="section-title">Mis Referidos</h2>
+                        <div class="filter-controls">
+                            <select id="referralFilter" class="filter-select">
+                                <option value="all">Todos</option>
+                                <option value="active">Activos</option>
+                                <option value="inactive">Inactivos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="referrals-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Fecha de Registro</th>
+                                    <th>Estado</th>
+                                    <th>Hashrate</th>
+                                    <th>Ganancias Totales</th>
+                                    <th>Mis Comisiones</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="referralsTableBody">
+                                <!-- Referrals will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Commissions Section -->
+                <div class="commissions-section">
+                    <h2 class="section-title">Historial de Comisiones</h2>
+                    <div class="commissions-chart-container">
+                        <canvas id="commissionsChart"></canvas>
+                    </div>
+                    <div class="commissions-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Referido</th>
+                                    <th>Ganancia del Referido</th>
+                                    <th>Comisión (10%)</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="commissionsTableBody">
+                                <!-- Commissions will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Referral Milestones -->
+                <div class="milestones-section">
+                    <h2 class="section-title">Logros de Referidos</h2>
+                    <div class="milestones-grid">
+                        <div class="milestone-card">
+                            <div class="milestone-icon"><i class="fas fa-trophy"></i></div>
+                            <div class="milestone-content">
+                                <h4>Primer Referido</h4>
+                                <p class="milestone-reward">+10 RSC</p>
+                                <div class="milestone-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 100%"></div>
+                                    </div>
+                                    <span class="progress-text">1/1 Completado</span>
+                                </div>
+                                <button class="btn btn-primary btn-sm" disabled>Reclamado</button>
+                            </div>
+                        </div>
+                        <div class="milestone-card">
+                            <div class="milestone-icon"><i class="fas fa-trophy"></i></div>
+                            <div class="milestone-content">
+                                <h4>5 Referidos</h4>
+                                <p class="milestone-reward">+50 RSC</p>
+                                <div class="milestone-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 40%"></div>
+                                    </div>
+                                    <span class="progress-text">2/5 Referidos</span>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" disabled>En Progreso</button>
+                            </div>
+                        </div>
+                        <div class="milestone-card">
+                            <div class="milestone-icon"><i class="fas fa-trophy"></i></div>
+                            <div class="milestone-content">
+                                <h4>10 Referidos</h4>
+                                <p class="milestone-reward">+150 RSC</p>
+                                <div class="milestone-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 20%"></div>
+                                    </div>
+                                    <span class="progress-text">2/10 Referidos</span>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" disabled>En Progreso</button>
+                            </div>
+                        </div>
+                        <div class="milestone-card">
+                            <div class="milestone-icon"><i class="fas fa-trophy"></i></div>
+                            <div class="milestone-content">
+                                <h4>25 Referidos</h4>
+                                <p class="milestone-reward">+500 RSC</p>
+                                <div class="milestone-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 8%"></div>
+                                    </div>
+                                    <span class="progress-text">2/25 Referidos</span>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" disabled>En Progreso</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="mining-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 RSC Chain. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="support.html">Support</a>
+                    <a href="../../pages/docs.html">Documentation</a>
+                    <a href="../../pages/about.html">About</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-panel-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications" id="closeNotifications"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="notification-list" id="notificationList"></div>
+    </div>
+    
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- IMPORTANTE: El orden de carga es crítico -->
+    <script src="../../scripts/config/supabase-config.js?v=2.0"></script>
+    <script src="../../scripts/supabase-integration.js?v=2.0"></script>
+    <script src="../../scripts/mining/auth-guard.js?v=2.0"></script>
+    <script src="../../scripts/mining/supabase-adapter.js?v=1.0"></script>
+    <script src="../../scripts/mining/init-production.js?v=1.0"></script>
+    <script src="../../scripts/mining/notifications.js?v=1.0"></script>
+    <script src="../../scripts/mining/layout.js?v=1.0"></script>
+    <script src="../../scripts/mining/referrals.js?v=1.0"></script>
+</body>
+</html>
+

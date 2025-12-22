@@ -20,13 +20,13 @@ router.use(authLimiter);
  */
 router.post('/register', async (req, res) => {
   try {
-    const { email, password, wallet_address, referral_code, referred_by } = req.body;
+    const { email, username, password, wallet_address, referral_code, referred_by } = req.body;
     
     // Validaciones básicas
-    if (!email || !password || !wallet_address) {
+    if (!email || !username || !password) {
       return res.status(400).json({
         success: false,
-        error: 'Email, contraseña y dirección de wallet son requeridos',
+        error: 'Email, nombre de usuario y contraseña son requeridos',
         code: 'MISSING_REQUIRED_FIELDS'
       });
     }
@@ -61,18 +61,54 @@ router.post('/register', async (req, res) => {
       });
     }
     
-    // Verificar si la wallet ya existe
-    const { rows: [existingWallet] } = await pool.query(
-      'SELECT id FROM users WHERE wallet_address = $1',
-      [wallet_address]
+    // Verificar si el username ya existe
+    const { rows: [existingUsername] } = await pool.query(
+      'SELECT id FROM users WHERE username = $1',
+      [username]
     );
     
-    if (existingWallet) {
+    if (existingUsername) {
       return res.status(409).json({
         success: false,
-        error: 'La dirección de wallet ya está registrada',
-        code: 'WALLET_ALREADY_EXISTS'
+        error: 'El nombre de usuario ya está en uso',
+        code: 'USERNAME_ALREADY_EXISTS'
       });
+    }
+    
+    // Verificar código de referido si se proporciona
+    let referrerId = null;
+    if (referral_code) {
+      const { rows: [referrer] } = await pool.query(
+        'SELECT id FROM users WHERE referral_code = $1',
+        [referral_code]
+      );
+      if (referrer) {
+        referrerId = referrer.id;
+      }
+    }
+    
+    // Generar código de referral único
+    const generateReferralCode = () => {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 8; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    };
+    
+    let userReferralCode = generateReferralCode();
+    let codeExists = true;
+    while (codeExists) {
+      const { rows: [existingCode] } = await pool.query(
+        'SELECT id FROM users WHERE referral_code = $1',
+        [userReferralCode]
+      );
+      if (!existingCode) {
+        codeExists = false;
+      } else {
+        userReferralCode = generateReferralCode();
+      }
     }
     
     // Hashear contraseña
@@ -80,16 +116,27 @@ router.post('/register', async (req, res) => {
     
     // Crear usuario
     const { rows: [newUser] } = await pool.query(
-      `INSERT INTO users (email, password_hash, wallet_address, referral_code, referred_by, status)
-       VALUES ($1, $2, $3, $4, $5, 'active')
-       RETURNING id, email, wallet_address, created_at`,
-      [email, passwordHash, wallet_address, referral_code || null, referred_by || null]
+      `INSERT INTO users (email, username, password_hash, wallet_address, referral_code, referred_by, status)
+       VALUES ($1, $2, $3, $4, $5, $6, 'active')
+       RETURNING id, email, username, wallet_address, referral_code, created_at`,
+      [email, username, passwordHash, wallet_address || null, userReferralCode, referrerId]
     );
+    
+    // Crear relación de referral si hay referrer
+    if (referrerId) {
+      await pool.query(
+        `INSERT INTO referrals (referrer_id, referred_id, referral_code, commission_rate, status)
+         VALUES ($1, $2, $3, 0.1, 'active')
+         ON CONFLICT (referrer_id, referred_id) DO NOTHING`,
+        [referrerId, newUser.id, referral_code]
+      );
+    }
     
     // Generar token JWT
     const token = signUserToken({
       id: newUser.id,
       email: newUser.email,
+      username: newUser.username,
       wallet_address: newUser.wallet_address
     });
     
@@ -409,7 +456,7 @@ router.get('/profile', async (req, res) => {
     
     const { rows: [userProfile] } = await pool.query(
       `SELECT 
-         id, email, wallet_address, referral_code, referred_by, 
+         id, email, username, balance, wallet_address, referral_code, referred_by, 
          mined_balance, last_mine, status, created_at
        FROM users 
        WHERE id = $1`,
@@ -427,7 +474,19 @@ router.get('/profile', async (req, res) => {
     res.json({
       success: true,
       data: {
-        user: userProfile
+        user: {
+          id: userProfile.id,
+          email: userProfile.email,
+          username: userProfile.username || userProfile.email?.split('@')[0] || 'Usuario',
+          balance: parseFloat(userProfile.balance || 0),
+          wallet_address: userProfile.wallet_address,
+          referral_code: userProfile.referral_code,
+          referred_by: userProfile.referred_by,
+          mined_balance: parseFloat(userProfile.mined_balance || 0),
+          last_mine: userProfile.last_mine,
+          status: userProfile.status,
+          created_at: userProfile.created_at
+        }
       }
     });
     

@@ -94,6 +94,32 @@ app.use('/mine', mineRoutes);
 app.use('/admin', adminRoutes);
 app.use('/public', publicRoutes);
 
+// Nuevas rutas de la plataforma de minería
+const miningPlatformRoutes = require('./routes/mining-platform');
+const { startMiningProcessor, stopMiningProcessor } = require('./services/mining-processor');
+const earningsRoutes = require('./routes/earnings');
+const transactionsRoutes = require('./routes/transactions');
+const analyticsRoutes = require('./routes/analytics');
+const poolsRoutes = require('./routes/pools');
+const referralsRoutes = require('./routes/referrals-platform');
+const settingsRoutes = require('./routes/settings');
+const apiKeysRoutes = require('./routes/api-keys');
+const webhooksRoutes = require('./routes/webhooks');
+const supportRoutes = require('./routes/support');
+const notificationsRoutes = require('./routes/notifications');
+
+app.use('/api/mining', miningPlatformRoutes);
+app.use('/api/earnings', earningsRoutes);
+app.use('/api/transactions', transactionsRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/pools', poolsRoutes);
+app.use('/api/referrals', referralsRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/api-keys', apiKeysRoutes);
+app.use('/api/webhooks', webhooksRoutes);
+app.use('/api/support', supportRoutes);
+app.use('/api/notifications', notificationsRoutes);
+
 // Ruta principal
 app.get('/', (req, res) => {
   res.json({
@@ -355,6 +381,9 @@ async function startServer() {
     
     console.log('✅ Conexión a la base de datos establecida');
     
+    // Iniciar procesador automático de minería
+    startMiningProcessor();
+    
     // Iniciar servidor
     const server = app.listen(config.app.port, () => {
       console.log('🚀 RSC Mining Backend iniciado exitosamente!');
@@ -405,6 +434,9 @@ async function startServer() {
 async function gracefulShutdown(server) {
   try {
     console.log('🔄 Cerrando conexiones...');
+    
+    // Detener procesador automático de minería
+    stopMiningProcessor();
     
     // Cerrar servidor HTTP
     server.close(() => {

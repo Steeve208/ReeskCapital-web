@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - RSC Mining Platform</title>
+    
+    <link rel="icon" type="image/svg+xml" href="../../assets/img/rsc-logo-quantum.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../../styles/global.css?v=4.0">
+    <link rel="stylesheet" href="../../styles/mining-layout.css?v=1.0">
+    <link rel="stylesheet" href="../../styles/mining-settings.css?v=1.0">
+</head>
+<body class="mining-platform-layout">
+    <!-- Sidebar -->
+    <aside class="mining-sidebar" id="miningSidebar">
+        <div class="sidebar-header">
+            <a href="../../index.html" class="sidebar-logo">
+                <div class="logo-icon"><img src="../../assets/img/rsc-logo-quantum.svg" alt="RSC Logo"></div>
+                <div class="logo-text"><span class="logo-main">RSC</span><span class="logo-sub">MINING</span></div>
+            </a>
+            <button class="sidebar-toggle-mobile" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-menu-list">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link" data-page="dashboard"><i class="fas fa-chart-line"></i><span>Dashboard</span></a></li>
+                <li class="nav-item"><a href="control.html" class="nav-link" data-page="control"><i class="fas fa-play-circle"></i><span>Mining Control</span></a></li>
+                <li class="nav-item"><a href="analytics.html" class="nav-link" data-page="analytics"><i class="fas fa-chart-bar"></i><span>Analytics</span></a></li>
+                <li class="nav-item"><a href="earnings.html" class="nav-link" data-page="earnings"><i class="fas fa-coins"></i><span>Earnings</span></a></li>
+                <li class="nav-item"><a href="transactions.html" class="nav-link" data-page="transactions"><i class="fas fa-exchange-alt"></i><span>Transactions</span></a></li>
+                <li class="nav-item"><a href="pools.html" class="nav-link" data-page="pools"><i class="fas fa-swimming-pool"></i><span>Pool Management</span></a></li>
+                <li class="nav-item"><a href="referrals.html" class="nav-link" data-page="referrals"><i class="fas fa-users"></i><span>Referrals</span></a></li>
+                <li class="nav-item"><a href="settings.html" class="nav-link active" data-page="settings"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+                <li class="nav-item"><a href="api.html" class="nav-link" data-page="api"><i class="fas fa-code"></i><span>API & Integrations</span></a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link" data-page="support"><i class="fas fa-life-ring"></i><span>Support</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile-mini">
+                <div class="user-avatar"><i class="fas fa-user"></i></div>
+                <div class="user-info">
+                    <span class="user-name" id="userName">Usuario</span>
+                    <span class="user-balance" id="userBalance">0.000000 RSC</span>
+                </div>
+            </div>
+            <a href="../../index.html" class="sidebar-home-link"><i class="fas fa-home"></i><span>Back to Home</span></a>
+        </div>
+    </aside>
+    
+    <div class="mining-main-wrapper">
+        <header class="mining-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggleDesktop"><i class="fas fa-bars"></i></button>
+                <nav class="breadcrumbs">
+                    <a href="dashboard.html">Dashboard</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Settings</span>
+                </nav>
+            </div>
+            <div class="topbar-center">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search... (Ctrl+K)" id="globalSearch">
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-actions">
+                    <div class="network-status-badge"><div class="status-dot"></div><span>Connected</span></div>
+                    <button class="notification-btn" id="notificationBtn"><i class="fas fa-bell"></i><span class="notification-badge">3</span></button>
+                    <div class="user-menu-dropdown">
+                        <button class="user-menu-btn" id="userMenuBtn">
+                            <div class="user-avatar-small"><i class="fas fa-user"></i></div>
+                            <span class="user-name-small" id="userNameSmall">Usuario</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-menu-dropdown-content" id="userMenuDropdown">
+                            <a href="settings.html"><i class="fas fa-user-cog"></i><span>Profile Settings</span></a>
+                            <a href="api.html"><i class="fas fa-key"></i><span>API Keys</span></a>
+                            <div class="menu-divider"></div>
+                            <a href="../../index.html"><i class="fas fa-home"></i><span>Back to Home</span></a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main class="mining-content">
+            <div class="page-container">
+                <div class="page-header">
+                    <div class="page-title-section">
+                        <h1 class="page-title">Settings</h1>
+                        <p class="page-subtitle">Configuración de tu cuenta y preferencias</p>
+                    </div>
+                </div>
+                
+                <!-- Settings Tabs -->
+                <div class="settings-tabs">
+                    <button class="settings-tab active" data-tab="general">
+                        <i class="fas fa-user"></i>
+                        <span>General</span>
+                    </button>
+                    <button class="settings-tab" data-tab="mining">
+                        <i class="fas fa-cog"></i>
+                        <span>Mining</span>
+                    </button>
+                    <button class="settings-tab" data-tab="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                    </button>
+                    <button class="settings-tab" data-tab="security">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security</span>
+                    </button>
+                    <button class="settings-tab" data-tab="advanced">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Advanced</span>
+                    </button>
+                </div>
+                
+                <!-- Settings Content -->
+                <div class="settings-content">
+                    <!-- General Settings -->
+                    <div class="settings-tab-content active" id="generalTab">
+                        <div class="settings-section">
+                            <h3 class="settings-section-title">Información del Perfil</h3>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="userEmail" class="form-input" value="usuario@example.com" readonly>
+                                    <small class="form-hint">El email no puede ser modificado</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nombre de Usuario</label>
+                                    <input type="text" id="username" class="form-input" value="usuario123">
+                                </div>
+                                <div class="form-group">
+                                    <label>Idioma</label>
+                                    <select id="language" class="form-select">
+                                        <option value="es" selected>Español</option>
+                                        <option value="en">English</option>
+                                        <option value="pt">Português</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tema</label>
+                                    <select id="theme" class="form-select">
+                                        <option value="dark" selected>Oscuro</option>
+                                        <option value="light">Claro</option>
+                                        <option value="auto">Automático</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary" id="saveGeneralBtn">
+                                    <i class="fas fa-save"></i>
+                                    <span>Guardar Cambios</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mining Settings -->
+                    <div class="settings-tab-content" id="miningTab">
+                        <div class="settings-section">
+                            <h3 class="settings-section-title">Configuración de Minería</h3>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Algoritmo por Defecto</label>
+                                    <select id="defaultAlgorithm" class="form-select">
+                                        <option value="auto" selected>Auto (Recomendado)</option>
+                                        <option value="randomx">RandomX</option>
+                                        <option value="kawpow">KawPow</option>
+                                        <option value="ethash">Ethash</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="autoStartMining" checked>
+                                        <span>Iniciar minería automáticamente al abrir la plataforma</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Intensidad por Defecto</label>
+                                    <select id="defaultIntensity" class="form-select">
+                                        <option value="low">Baja (20%)</option>
+                                        <option value="medium" selected>Media (50%)</option>
+                                        <option value="high">Alta (80%)</option>
+                                        <option value="max">Máxima (100%)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Threads por Defecto</label>
+                                    <input type="number" id="defaultThreads" class="form-input" min="1" max="16" value="4">
+                                </div>
+                                <button class="btn btn-primary" id="saveMiningBtn">
+                                    <i class="fas fa-save"></i>
+                                    <span>Guardar Configuración</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications Settings -->
+                    <div class="settings-tab-content" id="notificationsTab">
+                        <div class="settings-section">
+                            <h3 class="settings-section-title">Preferencias de Notificaciones</h3>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="emailNotifications" checked>
+                                        <span>Notificaciones por Email</span>
+                                    </label>
+                                    <small class="form-hint">Recibe notificaciones importantes por email</small>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="pushNotifications" checked>
+                                        <span>Notificaciones Push</span>
+                                    </label>
+                                    <small class="form-hint">Notificaciones en tiempo real en el navegador</small>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="miningAlerts" checked>
+                                        <span>Alertas de Minería</span>
+                                    </label>
+                                    <small class="form-hint">Notificaciones cuando la minería se detiene o hay errores</small>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="payoutAlerts" checked>
+                                        <span>Alertas de Pagos</span>
+                                    </label>
+                                    <small class="form-hint">Notificaciones cuando recibes pagos</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Umbral de Alerta de Hashrate</label>
+                                    <input type="number" id="hashrateThreshold" class="form-input" value="1000" step="0.01">
+                                    <small class="form-hint">Recibe alerta si el hashrate cae por debajo de este valor</small>
+                                </div>
+                                <button class="btn btn-primary" id="saveNotificationsBtn">
+                                    <i class="fas fa-save"></i>
+                                    <span>Guardar Preferencias</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Settings -->
+                    <div class="settings-tab-content" id="securityTab">
+                        <div class="settings-section">
+                            <h3 class="settings-section-title">Seguridad</h3>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Cambiar Contraseña</label>
+                                    <input type="password" id="currentPassword" class="form-input" placeholder="Contraseña actual">
+                                    <input type="password" id="newPassword" class="form-input" placeholder="Nueva contraseña">
+                                    <input type="password" id="confirmPassword" class="form-input" placeholder="Confirmar nueva contraseña">
+                                    <button class="btn btn-secondary" id="changePasswordBtn">
+                                        <i class="fas fa-key"></i>
+                                        <span>Cambiar Contraseña</span>
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="twoFactorAuth">
+                                        <span>Autenticación de Dos Factores (2FA)</span>
+                                    </label>
+                                    <small class="form-hint">Añade una capa extra de seguridad a tu cuenta</small>
+                                    <button class="btn btn-secondary" id="setup2FABtn" style="margin-top: 12px;">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <span>Configurar 2FA</span>
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Sesiones Activas</label>
+                                    <div class="sessions-list" id="sessionsList">
+                                        <div class="session-item">
+                                            <div class="session-info">
+                                                <div class="session-device">
+                                                    <i class="fas fa-desktop"></i>
+                                                    <span>Windows - Chrome</span>
+                                                </div>
+                                                <div class="session-location">IP: 192.168.1.1</div>
+                                                <div class="session-time">Última actividad: Hace 5 minutos</div>
+                                            </div>
+                                            <button class="btn btn-danger btn-sm" onclick="revokeSession('current')">
+                                                <i class="fas fa-times"></i>
+                                                <span>Cerrar Sesión</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Advanced Settings -->
+                    <div class="settings-tab-content" id="advancedTab">
+                        <div class="settings-section">
+                            <h3 class="settings-section-title">Configuración Avanzada</h3>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Pool por Defecto</label>
+                                    <input type="text" id="defaultPool" class="form-input" value="pool.rscchain.com:3333">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tiempo de Espera de Pool (segundos)</label>
+                                    <input type="number" id="poolTimeout" class="form-input" value="30" min="10" max="120">
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="poolFailover">
+                                        <span>Habilitar Failover de Pool</span>
+                                    </label>
+                                    <small class="form-hint">Cambia automáticamente a un pool de respaldo si el principal falla</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Pool de Respaldo</label>
+                                    <input type="text" id="backupPool" class="form-input" placeholder="backup.pool.rscchain.com:3333">
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="enableLogging">
+                                        <span>Habilitar Registro de Actividad</span>
+                                    </label>
+                                    <small class="form-hint">Guarda logs detallados de la actividad de minería</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nivel de Log</label>
+                                    <select id="logLevel" class="form-select">
+                                        <option value="error">Solo Errores</option>
+                                        <option value="warning" selected>Advertencias y Errores</option>
+                                        <option value="info">Información Completa</option>
+                                        <option value="debug">Debug (Muy Detallado)</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary" id="saveAdvancedBtn">
+                                    <i class="fas fa-save"></i>
+                                    <span>Guardar Configuración Avanzada</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-section danger-zone">
+                            <h3 class="settings-section-title danger">Zona de Peligro</h3>
+                            <div class="danger-actions">
+                                <div class="danger-action">
+                                    <div class="danger-info">
+                                        <h4>Eliminar Todos los Datos</h4>
+                                        <p>Elimina permanentemente todos tus datos de minería y configuración</p>
+                                    </div>
+                                    <button class="btn btn-danger" id="deleteAllDataBtn">
+                                        <i class="fas fa-trash"></i>
+                                        <span>Eliminar Datos</span>
+                                    </button>
+                                </div>
+                                <div class="danger-action">
+                                    <div class="danger-info">
+                                        <h4>Eliminar Cuenta</h4>
+                                        <p>Elimina permanentemente tu cuenta y todos los datos asociados</p>
+                                    </div>
+                                    <button class="btn btn-danger" id="deleteAccountBtn">
+                                        <i class="fas fa-user-times"></i>
+                                        <span>Eliminar Cuenta</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="mining-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 RSC Chain. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="support.html">Support</a>
+                    <a href="../../pages/docs.html">Documentation</a>
+                    <a href="../../pages/about.html">About</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-panel-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications" id="closeNotifications"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="notification-list" id="notificationList"></div>
+    </div>
+    
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- IMPORTANTE: El orden de carga es crítico -->
+    <script src="../../scripts/config/supabase-config.js?v=2.0"></script>
+    <script src="../../scripts/supabase-integration.js?v=2.0"></script>
+    <script src="../../scripts/mining/auth-guard.js?v=2.0"></script>
+    <script src="../../scripts/mining/supabase-adapter.js?v=1.0"></script>
+    <script src="../../scripts/mining/init-production.js?v=1.0"></script>
+    <script src="../../scripts/mining/notifications.js?v=1.0"></script>
+    <script src="../../scripts/mining/layout.js?v=1.0"></script>
+    <script src="../../scripts/mining/settings.js?v=1.0"></script>
+</body>
+</html>
+

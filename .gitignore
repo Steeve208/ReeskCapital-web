@@ -63,3 +63,6 @@ Thumbs.db
 
 # Test files
 test-*.html
+
+# Supabase configuration (contains sensitive keys)
+scripts/config/supabase-config.js
