@@ -349,64 +349,26 @@ class MobileAppEnhancements {
     const navbarToggle = document.getElementById('neurosearchMobileToggle');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+    const mobileOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
 
-    if (navbarToggle && mobileMenu) {
-      navbarToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // Toggle del menú
-        mobileMenu.classList.toggle('active');
-        navbarToggle.classList.toggle('active');
-        
-        // Toggle del overlay
+    // Función para abrir el menú
+    const openMenu = () => {
+      if (mobileMenu) {
+        mobileMenu.classList.add('active');
+        if (navbarToggle) {
+          navbarToggle.classList.add('active');
+        }
         if (mobileOverlay) {
-          mobileOverlay.classList.toggle('active');
+          mobileOverlay.classList.add('active');
         }
+        document.body.style.overflow = 'hidden';
+      }
+    };
 
-        // Prevenir scroll del body cuando el menú está abierto
-        if (mobileMenu.classList.contains('active')) {
-          document.body.style.overflow = 'hidden';
-        } else {
-          document.body.style.overflow = '';
-        }
-      });
-    }
-
-    // Cerrar menú al hacer clic en overlay
-    if (mobileOverlay) {
-      mobileOverlay.addEventListener('click', () => {
-        if (mobileMenu) {
-          mobileMenu.classList.remove('active');
-          if (navbarToggle) {
-            navbarToggle.classList.remove('active');
-          }
-          document.body.style.overflow = '';
-        }
-      });
-    }
-
-    // Cerrar menú al hacer clic en enlaces
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link, .mobile-menu-link');
-    mobileNavLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (mobileMenu) {
-          mobileMenu.classList.remove('active');
-          if (navbarToggle) {
-            navbarToggle.classList.remove('active');
-          }
-          if (mobileOverlay) {
-            mobileOverlay.classList.remove('active');
-          }
-          document.body.style.overflow = '';
-        }
-      });
-    });
-
-    // Cerrar con Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
+    // Función para cerrar el menú
+    const closeMenu = () => {
+      if (mobileMenu) {
         mobileMenu.classList.remove('active');
         if (navbarToggle) {
           navbarToggle.classList.remove('active');
@@ -416,7 +378,73 @@ class MobileAppEnhancements {
         }
         document.body.style.overflow = '';
       }
+    };
+
+    // Botón toggle del navbar
+    if (navbarToggle && mobileMenu) {
+      navbarToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (mobileMenu.classList.contains('active')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+    }
+
+    // Botón de cerrar
+    if (mobileMenuClose) {
+      mobileMenuClose.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMenu();
+      });
+    }
+
+    // Cerrar menú al hacer clic en overlay
+    if (mobileOverlay) {
+      mobileOverlay.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeMenu();
+      });
+    }
+
+    // Cerrar menú al hacer clic en enlaces
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link, .mobile-menu-link');
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMenu();
+      });
     });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
+        closeMenu();
+      }
+    });
+
+    // Cerrar al hacer swipe izquierda en el menú
+    if (mobileMenu) {
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      mobileMenu.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      mobileMenu.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const swipeDistance = touchStartX - touchEndX;
+        
+        // Si el swipe es hacia la izquierda y es significativo, cerrar
+        if (swipeDistance > 100) {
+          closeMenu();
+        }
+      }, { passive: true });
+    }
   }
 }
 
