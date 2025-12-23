@@ -59,6 +59,28 @@ body::before {
   --quantum-gray: #1a1a1a;
   --quantum-border: #333333;
 
+  /* Colores Institucionales - Fintech */
+  --institutional-primary: #0066ff;
+  --institutional-secondary: #00d4ff;
+  --institutional-accent: #00ff88;
+  --institutional-success: #00c853;
+  --institutional-warning: #ff9800;
+  --institutional-error: #f44336;
+  --institutional-blue: #0066ff;
+  --institutional-cyan: #00d4ff;
+  --institutional-green: #00ff88;
+  
+  /* Colores de fondo institucionales */
+  --institutional-bg-primary: #0a0a0a;
+  --institutional-bg-secondary: #1a1a1a;
+  --institutional-bg-card: rgba(26, 26, 26, 0.8);
+  --institutional-bg-overlay: rgba(10, 10, 10, 0.95);
+  
+  /* Bordes institucionales */
+  --institutional-border: rgba(255, 255, 255, 0.1);
+  --institutional-border-hover: rgba(0, 212, 255, 0.4);
+  --institutional-border-active: rgba(0, 255, 136, 0.4);
+
   /* Colores de fondo - Quantum */
   --bg-primary: #000000;
   --bg-secondary: #0a0a0a;

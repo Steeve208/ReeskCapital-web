@@ -18,6 +18,17 @@
   justify-content: flex-start;
 }
 
+/* ===== MOBILE - OCULTAR DIAGRAMA ===== */
+@media (max-width: 768px) {
+  .rsc-ecosystem-diagram {
+    display: none !important;
+  }
+  
+  .diagram-connections {
+    display: none !important;
+  }
+}
+
 .rsc-ecosystem-diagram .diagram-node {
   pointer-events: auto;
 }

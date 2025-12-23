@@ -18,16 +18,25 @@
 }
 
 .neurosearch-hero-title-left h1 {
-  font-size: 2rem;
-  font-weight: 500;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: #ffffff;
-  line-height: 1.3;
-  margin: 0;
-  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.02em;
 }
 
 .neurosearch-hero-title-left h1 span {
   display: block;
+}
+
+.hero-subtitle {
+  font-size: 1.125rem;
+  color: #b3b3b3;
+  line-height: 1.7;
+  margin: 0 0 24px 0;
+  max-width: 600px;
+  font-weight: 400;
 }
 
 .neurosearch-hero-meta {
@@ -479,37 +488,72 @@
   }
 }
 
+/* ===== MOBILE OVERRIDES - Asegurar orden correcto ===== */
+@media (max-width: 768px) {
+  .neurosearch-hero {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: auto !important;
+    padding-top: 80px !important;
+    padding-bottom: 40px !important;
+  }
+
+  .neurosearch-hero-title-left {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    order: 1 !important;
+  }
+
+  .rsc-ecosystem-diagram {
+    display: none !important;
+  }
+
+  .neurosearch-stats-cards {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    order: 2 !important;
+  }
+
+  .neurosearch-hero-right {
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    order: 3 !important;
+  }
+}
+
 @media (max-width: 600px) {
   .neurosearch-hero {
-    padding-top: 80px;
-    padding-bottom: 30px;
+    padding-top: 70px;
+    padding-bottom: 32px;
   }
   
   .neurosearch-hero-title-left {
-    padding: 0 20px;
-    margin-bottom: 25px;
+    padding: 0 12px;
+    margin-bottom: 24px;
   }
   
   .neurosearch-hero-title-left h1 {
-    font-size: 1.3rem;
-    line-height: 1.3;
+    font-size: 1.375rem;
+    line-height: 1.25;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.8125rem;
+    margin-bottom: 16px;
   }
   
   .neurosearch-hero-meta {
     margin-top: 16px;
-  }
-  
-  .neurosearch-3d-head-container {
-    max-width: 100%;
-    margin: 0 auto 25px;
-    padding: 0 20px;
+    font-size: 0.6875rem;
   }
   
   .neurosearch-stats-cards {
-    flex-direction: column;
-    align-items: stretch;
-    margin: 25px 20px 0;
+    margin: 0 auto 24px auto;
     gap: 12px;
+    padding: 0;
   }
   
   .neurosearch-stat-card {
@@ -523,17 +567,17 @@
   }
   
   .neurosearch-hero-right {
-    padding: 0 20px;
-    margin-top: 25px;
+    padding: 0 12px;
+    margin-top: 0;
   }
   
   .neurosearch-hero-right h2 {
-    font-size: 1.2rem;
+    font-size: 1.125rem;
     line-height: 1.3;
   }
   
   .neurosearch-hero-right p {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     margin-top: 12px;
   }
 }
