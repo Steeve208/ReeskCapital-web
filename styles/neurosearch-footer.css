@@ -355,6 +355,30 @@
   color: #ffffff;
 }
 
+/* Admin Link - Minimal and Discrete */
+.neurosearch-footer-legal-links .admin-link {
+  opacity: 0.4;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.neurosearch-footer-legal-links .admin-link:hover {
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.neurosearch-footer-legal-links .admin-link i {
+  font-size: 0.75rem;
+}
+
 /* Back to Top Button */
 .neurosearch-footer-back-to-top {
   display: flex;

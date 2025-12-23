@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSC Chain - Corporate Platform</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- Date Range Picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+  <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/institutional-admin.css">
+  <link rel="stylesheet" href="css/modules.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/img/rsc-logo-quantum.svg">
+</head>
+<body>
+  <!-- Admin Panel Container -->
+  <div class="institutional-admin-panel" id="adminPanel">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <div class="admin-logo">
+          <img src="../assets/img/rsc-logo-quantum.svg" alt="RSC Chain">
+          <div class="logo-text">
+            <span class="logo-title">RSC Chain</span>
+            <span class="logo-subtitle">Corporate Platform</span>
+          </div>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- User Info -->
+      <div class="sidebar-user-info">
+        <div class="user-avatar">
+          <img src="" alt="User" id="userAvatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="avatar-placeholder" style="display:none;">
+            <i class="fas fa-user"></i>
+          </div>
+        </div>
+        <div class="user-details">
+          <div class="user-name" id="currentUserName">Loading...</div>
+          <div class="user-role" id="currentUserRole">Loading...</div>
+        </div>
+        <div class="user-status" id="userStatus">
+          <span class="status-dot"></span>
+          <span>Online</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav" id="sidebarNav">
+        <!-- Overview & Executive -->
+        <div class="nav-section">
+          <div class="nav-section-title">Overview</div>
+          <a href="#" class="nav-item active" data-module="dashboard" data-permission="dashboard.view">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+            <span class="nav-badge" id="dashboardBadge" style="display:none;">0</span>
+          </a>
+          <a href="#" class="nav-item" data-module="executive" data-permission="executive.view">
+            <i class="fas fa-briefcase"></i>
+            <span>Executive View</span>
+          </a>
+          <a href="#" class="nav-item" data-module="analytics" data-permission="analytics.view">
+            <i class="fas fa-chart-pie"></i>
+            <span>Analytics</span>
+          </a>
+        </div>
+
+        <!-- Projects & Tasks -->
+        <div class="nav-section" data-permission-group="projects">
+          <div class="nav-section-title">Projects & Tasks</div>
+          <a href="#" class="nav-item" data-module="projects" data-permission="projects.view">
+            <i class="fas fa-project-diagram"></i>
+            <span>Projects</span>
+            <span class="nav-badge" id="projectsBadge" style="display:none;">0</span>
+          </a>
+          <a href="#" class="nav-item" data-module="tasks" data-permission="tasks.view">
+            <i class="fas fa-tasks"></i>
+            <span>My Tasks</span>
+            <span class="nav-badge" id="tasksBadge" style="display:none;">0</span>
+          </a>
+          <a href="#" class="nav-item" data-module="kanban" data-permission="kanban.view">
+            <i class="fas fa-columns"></i>
+            <span>Kanban Board</span>
+          </a>
+          <a href="#" class="nav-item" data-module="calendar" data-permission="calendar.view">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Calendar</span>
+          </a>
+          <a href="#" class="nav-item" data-module="time-tracking" data-permission="time.view">
+            <i class="fas fa-clock"></i>
+            <span>Time Tracking</span>
+          </a>
+        </div>
+
+        <!-- Team & Communication -->
+        <div class="nav-section" data-permission-group="team">
+          <div class="nav-section-title">Team & Communication</div>
+          <a href="#" class="nav-item" data-module="employees" data-permission="employees.view">
+            <i class="fas fa-users"></i>
+            <span>Employee Directory</span>
+          </a>
+          <a href="#" class="nav-item" data-module="messages" data-permission="messages.view">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+            <span class="nav-badge" id="messagesBadge" style="display:none;">0</span>
+          </a>
+          <a href="#" class="nav-item" data-module="channels" data-permission="channels.view">
+            <i class="fas fa-hashtag"></i>
+            <span>Channels</span>
+          </a>
+          <a href="#" class="nav-item" data-module="meetings" data-permission="meetings.view">
+            <i class="fas fa-video"></i>
+            <span>Meetings</span>
+          </a>
+          <a href="#" class="nav-item" data-module="announcements" data-permission="announcements.view">
+            <i class="fas fa-bullhorn"></i>
+            <span>Announcements</span>
+          </a>
+        </div>
+
+        <!-- Marketing & Community -->
+        <div class="nav-section" data-permission-group="marketing">
+          <div class="nav-section-title">Marketing & Community</div>
+          <a href="#" class="nav-item" data-module="campaigns" data-permission="campaigns.view">
+            <i class="fas fa-bullhorn"></i>
+            <span>Campaigns</span>
+          </a>
+          <a href="#" class="nav-item" data-module="social-media" data-permission="social.view">
+            <i class="fas fa-share-alt"></i>
+            <span>Social Media</span>
+          </a>
+          <a href="#" class="nav-item" data-module="community" data-permission="community.view">
+            <i class="fas fa-users-cog"></i>
+            <span>Community Management</span>
+          </a>
+          <a href="#" class="nav-item" data-module="content" data-permission="content.view">
+            <i class="fas fa-file-alt"></i>
+            <span>Content Library</span>
+          </a>
+          <a href="#" class="nav-item" data-module="influencers" data-permission="influencers.view">
+            <i class="fas fa-star"></i>
+            <span>Influencers</span>
+          </a>
+        </div>
+
+        <!-- Design & Creative -->
+        <div class="nav-section" data-permission-group="design">
+          <div class="nav-section-title">Design & Creative</div>
+          <a href="#" class="nav-item" data-module="design-assets" data-permission="design.view">
+            <i class="fas fa-palette"></i>
+            <span>Design Assets</span>
+          </a>
+          <a href="#" class="nav-item" data-module="brand-guidelines" data-permission="brand.view">
+            <i class="fas fa-book"></i>
+            <span>Brand Guidelines</span>
+          </a>
+          <a href="#" class="nav-item" data-module="media-library" data-permission="media.view">
+            <i class="fas fa-images"></i>
+            <span>Media Library</span>
+          </a>
+          <a href="#" class="nav-item" data-module="templates" data-permission="templates.view">
+            <i class="fas fa-layer-group"></i>
+            <span>Templates</span>
+          </a>
+        </div>
+
+        <!-- Financial & Operations -->
+        <div class="nav-section" data-permission-group="financial">
+          <div class="nav-section-title">Financial & Operations</div>
+          <a href="#" class="nav-item" data-module="transactions" data-permission="transactions.view">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Transactions</span>
+          </a>
+          <a href="#" class="nav-item" data-module="treasury" data-permission="treasury.view">
+            <i class="fas fa-vault"></i>
+            <span>Treasury</span>
+          </a>
+          <a href="#" class="nav-item" data-module="payments" data-permission="payments.view">
+            <i class="fas fa-credit-card"></i>
+            <span>Payments</span>
+          </a>
+          <a href="#" class="nav-item" data-module="invoices" data-permission="invoices.view">
+            <i class="fas fa-file-invoice"></i>
+            <span>Invoices</span>
+            <span class="nav-badge" id="invoicesBadge" style="display:none;">0</span>
+          </a>
+          <a href="#" class="nav-item" data-module="expenses" data-permission="expenses.view">
+            <i class="fas fa-receipt"></i>
+            <span>Expenses</span>
+          </a>
+          <a href="#" class="nav-item" data-module="budgets" data-permission="budgets.view">
+            <i class="fas fa-wallet"></i>
+            <span>Budgets</span>
+          </a>
+        </div>
+
+        <!-- Human Resources -->
+        <div class="nav-section" data-permission-group="hr">
+          <div class="nav-section-title">Human Resources</div>
+          <a href="#" class="nav-item" data-module="hr-dashboard" data-permission="hr.view">
+            <i class="fas fa-user-tie"></i>
+            <span>HR Dashboard</span>
+          </a>
+          <a href="#" class="nav-item" data-module="departments" data-permission="departments.view">
+            <i class="fas fa-building"></i>
+            <span>Departments</span>
+          </a>
+          <a href="#" class="nav-item" data-module="roles" data-permission="roles.view">
+            <i class="fas fa-user-shield"></i>
+            <span>Roles & Permissions</span>
+          </a>
+          <a href="#" class="nav-item" data-module="attendance" data-permission="attendance.view">
+            <i class="fas fa-calendar-check"></i>
+            <span>Attendance</span>
+          </a>
+          <a href="#" class="nav-item" data-module="leave" data-permission="leave.view">
+            <i class="fas fa-calendar-times"></i>
+            <span>Leave Management</span>
+          </a>
+          <a href="#" class="nav-item" data-module="performance" data-permission="performance.view">
+            <i class="fas fa-chart-line"></i>
+            <span>Performance Reviews</span>
+          </a>
+          <a href="#" class="nav-item" data-module="recruitment" data-permission="recruitment.view">
+            <i class="fas fa-user-plus"></i>
+            <span>Recruitment</span>
+          </a>
+        </div>
+
+        <!-- Approvals & Workflows -->
+        <div class="nav-section" data-permission-group="approvals">
+          <div class="nav-section-title">Approvals & Workflows</div>
+          <a href="#" class="nav-item" data-module="approvals" data-permission="approvals.view">
+            <i class="fas fa-check-circle"></i>
+            <span>Pending Approvals</span>
+            <span class="nav-badge" id="approvalsBadge" style="display:none;">0</span>
+          </a>
+          <a href="#" class="nav-item" data-module="workflows" data-permission="workflows.view">
+            <i class="fas fa-sitemap"></i>
+            <span>Workflows</span>
+          </a>
+          <a href="#" class="nav-item" data-module="requests" data-permission="requests.view">
+            <i class="fas fa-hand-paper"></i>
+            <span>Requests</span>
+            <span class="nav-badge" id="requestsBadge" style="display:none;">0</span>
+          </a>
+        </div>
+
+        <!-- Compliance & Legal -->
+        <div class="nav-section" data-permission-group="compliance">
+          <div class="nav-section-title">Compliance & Legal</div>
+          <a href="#" class="nav-item" data-module="compliance" data-permission="compliance.view">
+            <i class="fas fa-shield-alt"></i>
+            <span>Compliance Center</span>
+            <span class="nav-badge warning" id="complianceBadge" style="display:none;">!</span>
+          </a>
+          <a href="#" class="nav-item" data-module="audit" data-permission="audit.view">
+            <i class="fas fa-history"></i>
+            <span>Audit Log</span>
+          </a>
+          <a href="#" class="nav-item" data-module="risk" data-permission="risk.view">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Risk Management</span>
+            <span class="nav-badge danger" id="riskBadge" style="display:none;">0</span>
+          </a>
+          <a href="#" class="nav-item" data-module="legal" data-permission="legal.view">
+            <i class="fas fa-gavel"></i>
+            <span>Legal Documents</span>
+          </a>
+        </div>
+
+        <!-- Reports & Documents -->
+        <div class="nav-section" data-permission-group="reports">
+          <div class="nav-section-title">Reports & Documents</div>
+          <a href="#" class="nav-item" data-module="reports" data-permission="reports.view">
+            <i class="fas fa-file-chart-line"></i>
+            <span>Reports</span>
+          </a>
+          <a href="#" class="nav-item" data-module="documents" data-permission="documents.view">
+            <i class="fas fa-folder"></i>
+            <span>Documents</span>
+          </a>
+          <a href="#" class="nav-item" data-module="knowledge-base" data-permission="knowledge.view">
+            <i class="fas fa-book-open"></i>
+            <span>Knowledge Base</span>
+          </a>
+        </div>
+
+        <!-- System & Settings -->
+        <div class="nav-section" data-permission-group="system">
+          <div class="nav-section-title">System & Settings</div>
+          <a href="#" class="nav-item" data-module="settings" data-permission="settings.view">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+          <a href="#" class="nav-item" data-module="security" data-permission="security.view">
+            <i class="fas fa-lock"></i>
+            <span>Security</span>
+          </a>
+          <a href="#" class="nav-item" data-module="integrations" data-permission="integrations.view">
+            <i class="fas fa-plug"></i>
+            <span>Integrations</span>
+          </a>
+          <a href="#" class="nav-item" data-module="automation" data-permission="automation.view">
+            <i class="fas fa-robot"></i>
+            <span>Automation</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="handleLogout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+        <div class="sidebar-version">
+          <span>v2.0.0</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Top Header -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="btn-menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="breadcrumb" id="breadcrumb">
+            <span class="breadcrumb-item active">Dashboard</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <!-- Quick Actions -->
+          <div class="quick-actions">
+            <button class="btn-quick-action" data-action="new-project" data-permission="projects.create" title="New Project">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button class="btn-quick-action" data-action="new-task" data-permission="tasks.create" title="New Task">
+              <i class="fas fa-tasks"></i>
+            </button>
+            <button class="btn-quick-action" data-action="new-message" data-permission="messages.create" title="New Message">
+              <i class="fas fa-comment"></i>
+            </button>
+            <button class="btn-quick-action" data-action="search" title="Global Search">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+
+          <!-- Notifications -->
+          <div class="notifications-dropdown">
+            <button class="btn-notifications" id="notificationsBtn" title="Notifications">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge" id="notificationCount">0</span>
+            </button>
+            <div class="notifications-panel" id="notificationsPanel">
+              <div class="notifications-header">
+                <h3>Notifications</h3>
+                <button class="btn-mark-all-read" id="markAllRead">Mark all as read</button>
+              </div>
+              <div class="notifications-list" id="notificationsList">
+                <div class="notification-empty">No notifications</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Menu -->
+          <div class="user-menu-dropdown">
+            <button class="btn-user-menu" id="userMenuBtn">
+              <div class="user-menu-avatar">
+                <img src="" alt="User" id="headerUserAvatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="avatar-placeholder" style="display:none;">
+                  <i class="fas fa-user"></i>
+                </div>
+              </div>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="user-menu-panel" id="userMenuPanel">
+              <div class="user-menu-header">
+                <div class="user-menu-info">
+                  <div class="user-menu-name" id="userMenuName">Loading...</div>
+                  <div class="user-menu-role" id="userMenuRole">Loading...</div>
+                </div>
+              </div>
+              <div class="user-menu-links">
+                <a href="#" class="user-menu-link" data-action="profile">
+                  <i class="fas fa-user"></i>
+                  <span>My Profile</span>
+                </a>
+                <a href="#" class="user-menu-link" data-action="settings">
+                  <i class="fas fa-cog"></i>
+                  <span>Account Settings</span>
+                </a>
+                <a href="#" class="user-menu-link" data-action="security">
+                  <i class="fas fa-shield-alt"></i>
+                  <span>Security</span>
+                </a>
+                <div class="user-menu-divider"></div>
+                <a href="#" class="user-menu-link" data-action="help">
+                  <i class="fas fa-question-circle"></i>
+                  <span>Help & Support</span>
+                </a>
+                <a href="#" class="user-menu-link danger" data-action="logout">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="admin-content" id="adminContent">
+        <!-- Module content will be loaded here -->
+        <div class="content-loading" id="contentLoading">
+          <div class="loading-spinner"></div>
+          <p>Loading module...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Global Modals -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal-container" id="modalContainer"></div>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner-large"></div>
+    <p>Processing...</p>
+  </div>
+
+  <!-- Supabase Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Admin Panel Scripts -->
+  <!-- IMPORTANTE: auth.js debe cargarse ANTES de institutional-admin.js -->
+  <script src="js/config.js"></script>
+  <script src="js/modules/auth.js"></script>
+  <script src="js/institutional-admin.js"></script>
+  <script>
+    // Asegurar que las funciones globales estén disponibles INMEDIATAMENTE
+    if (typeof AdminState !== 'undefined') {
+      window.AdminState = AdminState;
+    }
+    if (typeof showToast !== 'undefined') {
+      window.showToast = showToast;
+    }
+    if (typeof loadModule !== 'undefined') {
+      window.loadModule = loadModule;
+    }
+    console.log('✅ Funciones globales verificadas:', {
+      AdminState: !!window.AdminState,
+      showToast: !!window.showToast,
+      loadModule: !!window.loadModule
+    });
+  </script>
+  <script src="js/modules/permissions.js"></script>
+  <script src="js/modules/dashboard.js"></script>
+  <script src="js/modules/executive.js"></script>
+  <script src="js/modules/projects.js"></script>
+  <script src="js/modules/tasks.js"></script>
+  <script src="js/modules/messages.js"></script>
+  <script src="js/modules/campaigns.js"></script>
+  <script src="js/modules/design-assets.js"></script>
+  <script src="js/modules/employees.js"></script>
+  <script src="js/modules/transactions.js"></script>
+  <script src="js/modules/compliance.js"></script>
+  <script src="js/modules/approvals.js"></script>
+  <script src="js/modules/notifications.js"></script>
+
+  <script>
+    // Verificar sesión ANTES de inicializar (evita redirecciones innecesarias)
+    console.log('🔍 Verificación previa de sesión...');
+    const preCheckSession = localStorage.getItem('adminSession') || localStorage.getItem('admin_session');
+    if (!preCheckSession) {
+      console.warn('⚠️ NO hay sesión en localStorage - redirigiendo a login');
+      window.location.href = 'login.html';
+    } else {
+      console.log('✅ Sesión encontrada en localStorage antes de inicializar');
+      try {
+        const parsed = JSON.parse(preCheckSession);
+        const session = parsed.user || parsed;
+        if (session && session.id) {
+          console.log('✅ Sesión válida encontrada:', session.email || session.name);
+        } else {
+          console.warn('⚠️ Sesión sin ID válido, pero continuando...');
+        }
+      } catch (e) {
+        console.error('❌ Error parseando sesión previa:', e);
+      }
+    }
+    
+    // Initialize institutional admin panel
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🚀 DOM Content Loaded, inicializando panel...');
+      if (typeof initInstitutionalAdmin === 'function') {
+        initInstitutionalAdmin();
+      } else {
+        console.error('❌ initInstitutionalAdmin no está disponible');
+      }
+    });
+  </script>
+</body>
+</html>
+

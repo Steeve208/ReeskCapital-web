@@ -68,10 +68,11 @@ body {
 
 .login-container {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   width: 100%;
   max-width: 450px;
   padding: 2rem;
+  pointer-events: auto;
 }
 
 .login-box {
@@ -136,6 +137,11 @@ body {
   color: var(--text-primary);
   font-size: 0.95rem;
   transition: var(--transition);
+  pointer-events: auto !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
 }
 
 .form-group input:focus {
@@ -298,6 +304,7 @@ body {
   height: 100%;
   z-index: 1;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .bg-grid {

@@ -8,11 +8,12 @@
 
 const ADMIN_CONFIG = {
   // ===== SUPABASE =====
+  // Base de datos específica para el panel de administración
   supabase: {
-    url: 'YOUR_SUPABASE_PROJECT_URL',
-    anonKey: 'YOUR_SUPABASE_ANON_KEY',
-    // Opcional: Service Role Key (solo backend)
-    serviceKey: 'YOUR_SUPABASE_SERVICE_ROLE_KEY'
+    url: 'https://hphrsidciuyiejazzonl.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwaHJzaWRjaXV5aWVqYXp6b25sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2NTg2MjIsImV4cCI6MjA4MTIzNDYyMn0.n18XN0x383ZbLo8DoxPAJDNAQ-V8Hxpa1Eg6R4I60mQ',
+    // Service Role Key (solo para operaciones administrativas del servidor)
+    serviceKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwaHJzaWRjaXV5aWVqYXp6b25sIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTY1ODYyMiwiZXhwIjoyMDgxMjM0NjIyfQ.zIq2r7RKcpkXQZZo0hDUKGXXBrHo6lnpC8oFPVq_Q64'
   },
 
   // ===== AUTHENTICATION =====
