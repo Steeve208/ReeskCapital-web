@@ -1108,13 +1108,15 @@ function initializeChristmasEvent() {
     }
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeChristmasEvent);
-} else {
-    initializeChristmasEvent();
-}
+// Auto-inicialización deshabilitada - Solo se inicializará cuando se cargue explícitamente desde una página de eventos
+// if (document.readyState === 'loading') {
+//     document.addEventListener('DOMContentLoaded', initializeChristmasEvent);
+// } else {
+//     initializeChristmasEvent();
+// }
 
-// Exportar para uso global
+// Función para inicializar manualmente desde una página de eventos
+window.initializeChristmasEvent = initializeChristmasEvent;
 window.ChristmasEvent = ChristmasEvent;
 
 

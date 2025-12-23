@@ -717,12 +717,15 @@ function initializeWelcomeBonusEvent() {
     }
 }
 
-// Inicializar cuando DOM esté listo
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeWelcomeBonusEvent);
-} else {
-    initializeWelcomeBonusEvent();
-}
+// Auto-inicialización deshabilitada - Solo se inicializará cuando se cargue explícitamente desde una página de eventos
+// if (document.readyState === 'loading') {
+//     document.addEventListener('DOMContentLoaded', initializeWelcomeBonusEvent);
+// } else {
+//     initializeWelcomeBonusEvent();
+// }
+
+// Función para inicializar manualmente desde una página de eventos
+window.initializeWelcomeBonusEvent = initializeWelcomeBonusEvent;
 
 // Exportar para uso global y debugging
 window.WelcomeBonusEvent = WelcomeBonusEvent;

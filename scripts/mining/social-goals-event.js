@@ -434,11 +434,19 @@ class SocialGoalsEvent {
     }
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    window.socialGoalsEvent = new SocialGoalsEvent();
-    window.socialGoalsEvent.initialize();
-});
+// Auto-inicialización deshabilitada - Solo se inicializará cuando se cargue explícitamente desde una página de eventos
+// document.addEventListener('DOMContentLoaded', () => {
+//     window.socialGoalsEvent = new SocialGoalsEvent();
+//     window.socialGoalsEvent.initialize();
+// });
+
+// Función para inicializar manualmente desde una página de eventos
+window.initializeSocialGoalsEvent = function() {
+    if (!window.socialGoalsEvent) {
+        window.socialGoalsEvent = new SocialGoalsEvent();
+        window.socialGoalsEvent.initialize();
+    }
+};
 
 // Export for module usage
 if (typeof module !== 'undefined' && module.exports) {

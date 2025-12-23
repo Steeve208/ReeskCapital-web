@@ -233,6 +233,7 @@
             'transactions': 'Transactions',
             'pools': 'Pool Management',
             'referrals': 'Referrals',
+            'events': 'Events',
             'settings': 'Settings',
             'api': 'API & Integrations',
             'support': 'Support'

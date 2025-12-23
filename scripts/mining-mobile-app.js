@@ -64,6 +64,7 @@ class MiningMobileApp {
         if (path.includes('transactions')) return 'transactions';
         if (path.includes('pools')) return 'pools';
         if (path.includes('referrals')) return 'referrals';
+        if (path.includes('events')) return 'events';
         if (path.includes('settings')) return 'settings';
         if (path.includes('api')) return 'api';
         if (path.includes('support')) return 'support';
@@ -233,6 +234,10 @@ class MiningMobileApp {
                 <a href="referrals.html" class="mobile-sidebar-nav-item ${this.currentPage === 'referrals' ? 'active' : ''}" data-page="referrals">
                     <i class="fas fa-users"></i>
                     <span>Referrals</span>
+                </a>
+                <a href="events.html" class="mobile-sidebar-nav-item ${this.currentPage === 'events' ? 'active' : ''}" data-page="events">
+                    <i class="fas fa-calendar-star"></i>
+                    <span>Events</span>
                 </a>
                 <a href="settings.html" class="mobile-sidebar-nav-item ${this.currentPage === 'settings' ? 'active' : ''}" data-page="settings">
                     <i class="fas fa-cog"></i>

@@ -56,6 +56,13 @@ class SnowMiningEvent {
         console.log('❄️ Inicializando Snow Mining Event...');
 
         try {
+            // Verificar si el evento está dentro de las fechas activas
+            if (!this.isEventActive()) {
+                console.log('⏸️ Snow Mining Event no está activo (fuera de fechas)');
+                this.isActive = false;
+                return;
+            }
+
             await this.waitForDOM();
             this.setupCanvas();
             this.setupEvents();
@@ -74,6 +81,13 @@ class SnowMiningEvent {
         } catch (error) {
             console.error('❌ Error initializing Snow Mining Event:', error);
         }
+    }
+    
+    isEventActive() {
+        const now = new Date();
+        const start = this.config.startDate;
+        const end = this.config.endDate;
+        return now >= start && now <= end;
     }
 
     checkMiningStatus() {
@@ -741,10 +755,13 @@ function initializeSnowMiningEvent() {
     }
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeSnowMiningEvent);
-} else {
-    initializeSnowMiningEvent();
-}
+// Auto-inicialización deshabilitada - Solo se inicializará cuando se cargue explícitamente desde una página de eventos
+// if (document.readyState === 'loading') {
+//     document.addEventListener('DOMContentLoaded', initializeSnowMiningEvent);
+// } else {
+//     initializeSnowMiningEvent();
+// }
 
+// Función para inicializar manualmente desde una página de eventos
+window.initializeSnowMiningEvent = initializeSnowMiningEvent;
 window.SnowMiningEvent = SnowMiningEvent;
