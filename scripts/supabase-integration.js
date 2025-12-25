@@ -1,6 +1,6 @@
-/* ================================
-   SUPABASE INTEGRATION - SIMPLE
-================================ */
+// ================================
+//   SUPABASE INTEGRATION - SIMPLE
+// ================================
 
 /**
  * 🔗 SIMPLE SUPABASE INTEGRATION
@@ -716,17 +716,32 @@ class SupabaseIntegration {
                 this.miningSession.tokensMined += finalTokensToAdd;
                 
                 // Actualizar balance del usuario
-                const oldBalance = this.user.balance;
-                this.user.balance += finalTokensToAdd;
+                const oldBalance = parseFloat(this.user.balance) || 0;
+                const newBalance = oldBalance + finalTokensToAdd;
+                
+                // 🔧 PROTECCIÓN CRÍTICA: Verificar que el nuevo balance sea mayor que el anterior
+                if (newBalance <= oldBalance) {
+                    console.error('⚠️ ERROR: El nuevo balance no es mayor que el anterior!');
+                    console.error(`   Balance anterior: ${oldBalance.toFixed(6)}`);
+                    console.error(`   Tokens a agregar: ${finalTokensToAdd.toFixed(6)}`);
+                    console.error(`   Balance nuevo: ${newBalance.toFixed(6)}`);
+                    // No actualizar si hay un problema
+                    return;
+                }
+                
+                this.user.balance = newBalance;
                 this.saveUserToStorage();
                 
                 // 🔧 FORZAR ACTUALIZACIÓN DE UI INMEDIATAMENTE
                 this.forceUIUpdate();
                 
                 // 🔧 SINCRONIZAR CON BASE DE DATOS CON MANEJO DE ERRORES VISIBLE
+                // Usar syncBalanceToBackend que solo incrementa, nunca decrementa
                 this.syncBalanceToBackend().catch(error => {
                     console.error('❌ Error sincronizando balance:', error);
-                    this.handleSyncError(error, 'balance');
+                    // NO revertir el balance local si falla la sincronización
+                    // El balance local es la fuente de verdad durante la minería
+                    console.log('⚠️ Manteniendo balance local aunque falle la sincronización');
                 });
                 
                 // Actualizar sistemas avanzados
@@ -891,10 +906,10 @@ class SupabaseIntegration {
                 const users = await response.json();
                 if (users.length > 0) {
                     const dbBalance = parseFloat(users[0].balance) || 0;
-                    const localBalance = this.user.balance || 0;
+                    const localBalance = parseFloat(this.user.balance) || 0;
                     
                     // 🔧 CORRECCIÓN CRÍTICA: Durante minería activa, el balance local es la fuente de verdad
-                    // NO reducir el balance local nunca durante la minería
+                    // NUNCA reducir el balance local durante la minería activa
                     if (this.miningSession.isActive) {
                         // Durante minería, SIEMPRE mantener el balance local (nunca reducirlo)
                         // Solo actualizar si la DB tiene un balance MAYOR (por ejemplo, de otra sesión)
@@ -904,12 +919,28 @@ class SupabaseIntegration {
                             this.user.balance = dbBalance;
                             this.saveUserToStorage();
                         } else {
-                            // El balance local es mayor o igual, mantenerlo (nunca reducirlo)
-                            console.log(`💰 getUserBalance durante minería - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Manteniendo local: ${this.user.balance.toFixed(6)}`);
+                            // El balance local es mayor o igual, mantenerlo (NUNCA reducirlo)
+                            // Esta es la protección principal: nunca bajar el balance durante minería
+                            if (localBalance > dbBalance) {
+                                console.log(`💰 PROTECCIÓN: Balance local (${localBalance.toFixed(6)}) > DB (${dbBalance.toFixed(6)}) durante minería - MANTENIENDO LOCAL`);
+                                // Sincronizar la diferencia al backend en background
+                                const difference = localBalance - dbBalance;
+                                if (difference > 0.000001) { // Solo si hay diferencia significativa
+                                    this.syncBalanceToBackend().catch(err => {
+                                        console.error('❌ Error sincronizando diferencia:', err);
+                                    });
+                                }
+                            } else {
+                                console.log(`💰 Balance igual durante minería - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Manteniendo: ${this.user.balance.toFixed(6)}`);
+                            }
                         }
                     } else {
                         // Sin minería activa, usar el mayor para evitar pérdidas
-                        this.user.balance = Math.max(dbBalance, localBalance);
+                        const maxBalance = Math.max(dbBalance, localBalance);
+                        if (maxBalance > this.user.balance) {
+                            this.user.balance = maxBalance;
+                            this.saveUserToStorage();
+                        }
                         console.log(`💰 getUserBalance sin minería - DB: ${dbBalance.toFixed(6)}, Local: ${localBalance.toFixed(6)}, Usado: ${this.user.balance.toFixed(6)}`);
                     }
                     
@@ -920,7 +951,8 @@ class SupabaseIntegration {
             return this.user.balance;
         } catch (error) {
             console.error('❌ Error obteniendo balance:', error);
-            return this.user.balance;
+            // En caso de error, mantener el balance local (nunca reducirlo)
+            return this.user.balance || 0;
         }
     }
 
@@ -940,27 +972,60 @@ class SupabaseIntegration {
             }
 
             // Para usuarios autenticados, actualizar el balance real
-            const oldBalance = this.user.balance;
-            this.user.balance += amount;
+            const oldBalance = parseFloat(this.user.balance) || 0;
+            const newBalance = oldBalance + amount;
+            
+            // 🔧 PROTECCIÓN: Verificar que el nuevo balance sea mayor
+            if (newBalance <= oldBalance && amount > 0) {
+                console.error('⚠️ ERROR: El nuevo balance no es mayor que el anterior!');
+                console.error(`   Balance anterior: ${oldBalance.toFixed(6)}`);
+                console.error(`   Cantidad a agregar: ${amount.toFixed(6)}`);
+                console.error(`   Balance nuevo: ${newBalance.toFixed(6)}`);
+                return false;
+            }
+            
+            this.user.balance = newBalance;
             
             // Guardar en localStorage
             this.saveUserToStorage();
             
-            // Sincronizar con la base de datos
-            const syncSuccess = await this.syncBalanceToDatabase();
-            
-            if (syncSuccess) {
-                console.log(`✅ Balance actualizado: ${oldBalance.toFixed(6)} → ${this.user.balance.toFixed(6)} RSC`);
+            // Sincronizar con la base de datos (usar syncBalanceToBackend que solo incrementa)
+            try {
+                const syncSuccess = await this.syncBalanceToBackend();
                 
-                // Actualizar UI
-                this.updateBalanceDisplay();
-                
-                return true;
-            } else {
-                // Si falla la sincronización, revertir el cambio
+                if (syncSuccess) {
+                    console.log(`✅ Balance actualizado: ${oldBalance.toFixed(6)} → ${this.user.balance.toFixed(6)} RSC`);
+                    
+                    // Actualizar UI
+                    this.updateBalanceDisplay();
+                    
+                    return true;
+                } else {
+                    // Si falla la sincronización, NO revertir el cambio durante minería activa
+                    // El balance local es la fuente de verdad
+                    if (this.miningSession.isActive) {
+                        console.warn('⚠️ Error sincronizando balance durante minería - Manteniendo balance local');
+                        this.updateBalanceDisplay();
+                        return true; // Considerar éxito porque el balance local está actualizado
+                    } else {
+                        // Solo revertir si no hay minería activa
+                        this.user.balance = oldBalance;
+                        this.saveUserToStorage();
+                        console.error('❌ Error sincronizando balance, cambio revertido');
+                        return false;
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error en sincronización:', error);
+                // Durante minería activa, mantener el balance local aunque falle la sincronización
+                if (this.miningSession.isActive) {
+                    console.warn('⚠️ Manteniendo balance local aunque falle la sincronización');
+                    this.updateBalanceDisplay();
+                    return true;
+                }
+                // Revertir solo si no hay minería activa
                 this.user.balance = oldBalance;
                 this.saveUserToStorage();
-                console.error('❌ Error sincronizando balance, cambio revertido');
                 return false;
             }
             
@@ -1078,9 +1143,23 @@ class SupabaseIntegration {
             }
 
             // tokensToAdd === 0 -> nada que subir, mantener mayor referencia
-            this.user.balance = Math.max(localBalance, dbBalance);
+            // 🔧 PROTECCIÓN: Durante minería activa, NUNCA reducir el balance local
+            if (this.miningSession.isActive) {
+                // Durante minería, mantener el balance local (nunca reducirlo)
+                if (localBalance >= dbBalance) {
+                    this.user.balance = localBalance;
+                    console.log(`✅ Balance sincronizado durante minería - Manteniendo local: ${localBalance.toFixed(6)} RSC`);
+                } else {
+                    // Si la DB tiene más, actualizar (pero esto no debería pasar durante minería activa)
+                    this.user.balance = dbBalance;
+                    console.log(`✅ Balance sincronizado durante minería - DB mayor: ${dbBalance.toFixed(6)} RSC`);
+                }
+            } else {
+                // Sin minería activa, usar el mayor
+                this.user.balance = Math.max(localBalance, dbBalance);
+                console.log(`✅ Balance sincronizado sin minería - Usando mayor: ${this.user.balance.toFixed(6)} RSC`);
+            }
             this.saveUserToStorage();
-            console.log('✅ Balance sincronizado (sin cambios, se mantiene el mayor valor)');
             return true;
         } catch (error) {
             console.error('❌ Error en syncBalanceToBackend:', error);
@@ -1097,7 +1176,7 @@ class SupabaseIntegration {
         this.syncInterval = setInterval(async () => {
             if (this.user.isAuthenticated && this.miningSession.isActive) {
                 try {
-                    // 🔧 PROTECCIÓN: Solo sincronizar si el balance local es mayor que el de la DB
+                    // 🔧 PROTECCIÓN CRÍTICA: Solo sincronizar si el balance local es mayor que el de la DB
                     // Esto evita que se reduzca el balance durante la minería
                     const dbBalanceResponse = await this.makeRequest('GET', `/rest/v1/users?id=eq.${this.user.id}&select=balance`);
                     if (dbBalanceResponse.ok) {
@@ -1106,16 +1185,29 @@ class SupabaseIntegration {
                             const dbBalance = parseFloat(dbUsers[0].balance) || 0;
                             const localBalance = parseFloat(this.user.balance) || 0;
                             
+                            // 🔧 PROTECCIÓN: Verificar que el balance local no haya disminuido
+                            if (localBalance < dbBalance) {
+                                console.error(`⚠️ ALERTA: Balance local (${localBalance.toFixed(6)}) < DB (${dbBalance.toFixed(6)}) durante minería!`);
+                                console.error(`   Esto NO debería pasar. Restaurando balance local desde DB...`);
+                                // Restaurar desde DB solo si es mayor
+                                this.user.balance = dbBalance;
+                                this.saveUserToStorage();
+                                return;
+                            }
+                            
                             // Solo sincronizar si hay tokens para agregar (balance local > DB)
                             if (localBalance > dbBalance) {
+                                const difference = localBalance - dbBalance;
+                                console.log(`🔄 Sincronizando diferencia: +${difference.toFixed(6)} RSC`);
                                 await this.syncBalanceToBackend();
                             } else {
-                                console.log(`🔄 Sincronización omitida: Balance local (${localBalance.toFixed(6)}) <= DB (${dbBalance.toFixed(6)})`);
+                                console.log(`🔄 Sincronización omitida: Balance local (${localBalance.toFixed(6)}) == DB (${dbBalance.toFixed(6)}) - Ya sincronizado`);
                             }
                         }
                     }
                 } catch (error) {
                     console.error('❌ Error en sincronización automática:', error);
+                    // NO modificar el balance local en caso de error
                 }
             }
         }, 20000); // 20 segundos
@@ -1706,7 +1798,139 @@ class SupabaseIntegration {
     }
 }
 
-// Crear instancia global
-window.supabaseIntegration = new SupabaseIntegration();
+// Función global de utilidad para esperar a que supabaseIntegration esté disponible
+window.waitForSupabaseIntegration = function() {
+    return new Promise((resolve) => {
+        // Si ya está disponible, resolver inmediatamente
+        if (window.supabaseIntegration && window.supabaseIntegration.user !== undefined) {
+            resolve(window.supabaseIntegration);
+            return;
+        }
+        
+        console.log('⏳ Esperando a que supabaseIntegration esté disponible...');
+        
+        // Escuchar el evento de inicialización
+        const onReady = () => {
+            if (window.supabaseIntegration) {
+                window.removeEventListener('supabaseIntegrationReady', onReady);
+                resolve(window.supabaseIntegration);
+            }
+        };
+        window.addEventListener('supabaseIntegrationReady', onReady);
+        
+        // También verificar periódicamente (fallback)
+        let attempts = 0;
+        const maxAttempts = 100; // 10 segundos máximo
+        const checkInterval = setInterval(() => {
+            attempts++;
+            if (window.supabaseIntegration && window.supabaseIntegration.user !== undefined) {
+                clearInterval(checkInterval);
+                window.removeEventListener('supabaseIntegrationReady', onReady);
+                resolve(window.supabaseIntegration);
+            } else if (attempts >= maxAttempts) {
+                clearInterval(checkInterval);
+                window.removeEventListener('supabaseIntegrationReady', onReady);
+                console.error('❌ Supabase Integration no disponible después de esperar');
+                // Crear un objeto fallback para evitar errores
+                if (!window.supabaseIntegration) {
+                    window.supabaseIntegration = {
+                        user: { isAuthenticated: false, balance: 0 },
+                        miningSession: { isActive: false },
+                        isUserAuthenticated: () => false,
+                        getCurrentUser: () => ({ balance: 0 }),
+                        getMiningSession: () => ({ isActive: false }),
+                        addBalance: async () => { console.warn('⚠️ Supabase no disponible'); return false; },
+                        startMiningSession: async () => { throw new Error('Supabase no disponible'); },
+                        stopMiningSession: async () => { console.warn('⚠️ Supabase no disponible'); return false; }
+                    };
+                }
+                resolve(window.supabaseIntegration);
+            }
+        }, 100);
+    });
+};
 
-console.log('🔗 Supabase Integration cargado');
+// Crear instancia global de manera segura
+(function() {
+    'use strict';
+    
+    // Verificar que la clase SupabaseIntegration esté definida
+    if (typeof SupabaseIntegration === 'undefined') {
+        console.error('❌ ERROR CRÍTICO: La clase SupabaseIntegration no está definida');
+        console.error('   Verifica que el script se haya cargado correctamente');
+        console.error('   Asegúrate de que el archivo supabase-integration.js se cargue ANTES de otros scripts');
+        
+        // Crear un objeto fallback para evitar errores
+        window.supabaseIntegration = {
+            user: { isAuthenticated: false, balance: 0 },
+            miningSession: { isActive: false },
+            isUserAuthenticated: () => false,
+            getCurrentUser: () => ({ balance: 0 }),
+            getMiningSession: () => ({ isActive: false }),
+            addBalance: async () => { console.warn('⚠️ Supabase Integration no disponible'); return false; },
+            startMiningSession: async () => { throw new Error('Supabase Integration no disponible'); },
+            stopMiningSession: async () => { console.warn('⚠️ Supabase Integration no disponible'); return false; }
+        };
+        
+        console.warn('⚠️ Se creó un objeto fallback para Supabase Integration');
+        return;
+    }
+    
+    // Esperar a que el DOM esté listo
+    function initializeSupabase() {
+        try {
+            if (!window.supabaseIntegration) {
+                console.log('🔗 Inicializando Supabase Integration...');
+                window.supabaseIntegration = new SupabaseIntegration();
+                console.log('✅ Supabase Integration inicializado correctamente');
+                
+                // Disparar evento para que otros scripts sepan que está listo
+                if (typeof window.dispatchEvent === 'function') {
+                    window.dispatchEvent(new CustomEvent('supabaseIntegrationReady', {
+                        detail: { integration: window.supabaseIntegration }
+                    }));
+                }
+            } else {
+                console.log('ℹ️ Supabase Integration ya existe');
+            }
+        } catch (error) {
+            console.error('❌ Error inicializando Supabase Integration:', error);
+            console.error('   Stack trace:', error.stack);
+            
+            // Crear un objeto fallback para evitar errores
+            window.supabaseIntegration = {
+                user: { isAuthenticated: false, balance: 0 },
+                miningSession: { isActive: false },
+                isUserAuthenticated: () => false,
+                getCurrentUser: () => ({ balance: 0 }),
+                getMiningSession: () => ({ isActive: false }),
+                addBalance: async () => false,
+                startMiningSession: async () => { throw new Error('Supabase Integration no disponible'); },
+                stopMiningSession: async () => false
+            };
+            
+            console.warn('⚠️ Se creó un objeto fallback para Supabase Integration');
+        }
+    }
+    
+    // Inicializar inmediatamente si el DOM ya está listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeSupabase);
+    } else {
+        // DOM ya está listo, inicializar inmediatamente
+        initializeSupabase();
+    }
+    
+    // También intentar inicializar después de un pequeño delay por si acaso
+    setTimeout(initializeSupabase, 100);
+    
+    // Exponer función de verificación de estado
+    window.checkSupabaseIntegration = function() {
+        return {
+            classDefined: typeof SupabaseIntegration !== 'undefined',
+            instanceExists: !!window.supabaseIntegration,
+            isInitialized: !!window.supabaseIntegration && window.supabaseIntegration.user !== undefined,
+            configExists: !!window.SUPABASE_CONFIG
+        };
+    };
+})();

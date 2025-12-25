@@ -11,6 +11,38 @@
     let currentSessionId = null;
     let currentSession = null;
     
+    // Función auxiliar para esperar a que supabaseIntegration esté disponible
+    async function waitForSupabaseIntegration() {
+        // Usar la función global si está disponible, sino usar la local
+        if (typeof window.waitForSupabaseIntegration === 'function') {
+            return await window.waitForSupabaseIntegration();
+        }
+        
+        // Fallback local
+        return new Promise((resolve) => {
+            if (window.supabaseIntegration && window.supabaseIntegration.user !== undefined) {
+                resolve(window.supabaseIntegration);
+                return;
+            }
+            
+            console.log('⏳ Esperando a que supabaseIntegration esté disponible...');
+            
+            let attempts = 0;
+            const maxAttempts = 100;
+            const checkInterval = setInterval(() => {
+                attempts++;
+                if (window.supabaseIntegration && window.supabaseIntegration.user !== undefined) {
+                    clearInterval(checkInterval);
+                    resolve(window.supabaseIntegration);
+                } else if (attempts >= maxAttempts) {
+                    clearInterval(checkInterval);
+                    console.error('❌ supabaseIntegration no disponible');
+                    resolve(window.supabaseIntegration || {});
+                }
+            }, 100);
+        });
+    }
+    
     document.addEventListener('DOMContentLoaded', function() {
         initializeControl();
         setupEventListeners();
@@ -23,24 +55,10 @@
         console.log('⚡ Initializing Mining Control...');
         
         // Esperar a que supabaseIntegration esté disponible
-        if (!window.supabaseIntegration) {
-            console.log('⏳ Esperando a que supabaseIntegration esté disponible...');
-            let attempts = 0;
-            const maxAttempts = 50;
-            const checkInterval = setInterval(() => {
-                attempts++;
-                if (window.supabaseIntegration) {
-                    clearInterval(checkInterval);
-                    checkMiningStatus();
-                } else if (attempts >= maxAttempts) {
-                    clearInterval(checkInterval);
-                    console.warn('⚠️ supabaseIntegration no disponible después de esperar');
-                }
-            }, 100);
-        } else {
-            // Check if mining is already active
-            await checkMiningStatus();
-        }
+        await waitForSupabaseIntegration();
+        
+        // Check if mining is already active
+        await checkMiningStatus();
         
         // Update thread count display
         const threadSlider = document.getElementById('threadCount');

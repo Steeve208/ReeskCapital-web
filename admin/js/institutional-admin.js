@@ -950,61 +950,85 @@ async function loadModule(moduleName) {
     }, 10000); // 10 segundos timeout
     
     try {
-      // Construir ruta del módulo - usar ruta absoluta desde la raíz del admin
-      const modulePath = `./modules/${moduleName}.js`;
-      console.log(`📦 Importando módulo: ${modulePath}`);
-      console.log(`📂 Ruta completa: ${window.location.origin}${window.location.pathname.replace(/\/[^/]*$/, '/')}${modulePath}`);
+      let module = null;
       
-      // Importar módulo
-      let module;
-      try {
-        module = await import(modulePath);
-      } catch (importError) {
-        // Si falla con ruta relativa, intentar con ruta absoluta
-        console.warn('⚠️ Error con ruta relativa, intentando ruta absoluta...', importError);
-        const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
-        const absolutePath = `${basePath}/modules/${moduleName}.js`;
-        console.log(`📦 Intentando ruta absoluta: ${absolutePath}`);
-        module = await import(absolutePath);
+      // Para dashboard, intentar primero con versión simple
+      if (moduleName === 'dashboard') {
+        try {
+          console.log(`📦 Intentando dashboard-simple primero...`);
+          module = await import(`./modules/dashboard-simple.js`);
+          console.log(`✅ Dashboard simple cargado`);
+        } catch (simpleError) {
+          console.log(`⚠️ Dashboard simple no disponible, usando normal`);
+        }
+      }
+      
+      // Si no se cargó, intentar módulo normal
+      if (!module) {
+        console.log(`📦 Importando módulo normal: ${moduleName}`);
+        
+        // Intentar múltiples rutas
+        const paths = [
+          `./modules/${moduleName}.js`,
+          `js/modules/${moduleName}.js`,
+          `/admin/js/modules/${moduleName}.js`
+        ];
+        
+        let imported = false;
+        for (const path of paths) {
+          try {
+            console.log(`🔄 Intentando: ${path}`);
+            module = await import(path);
+            console.log(`✅ Import exitoso desde: ${path}`);
+            imported = true;
+            break;
+          } catch (err) {
+            console.warn(`⚠️ Falló: ${path} - ${err.message}`);
+          }
+        }
+        
+        if (!imported) {
+          throw new Error(`No se pudo importar ${moduleName} desde ninguna ruta`);
+        }
       }
       
       clearTimeout(loadTimeout);
       
       console.log(`✅ Módulo importado. Exports:`, Object.keys(module));
+      console.log(`📋 Tipo de module:`, typeof module);
+      console.log(`📋 module.render:`, typeof module.render);
       
-      if (!module || typeof module.render !== 'function') {
+      if (!module) {
+        throw new Error('Module is null or undefined');
+      }
+      
+      if (typeof module.render !== 'function') {
+        console.error(`❌ module.render no es una función. Tipo:`, typeof module.render);
+        console.error(`📋 Exports disponibles:`, Object.keys(module));
         throw new Error(`Module render function not found. Available exports: ${Object.keys(module || {}).join(', ')}`);
       }
       
       console.log(`🎨 Renderizando módulo ${moduleName}...`);
       
-      // Renderizar módulo con manejo de errores
-      let html;
-      try {
-        html = await module.render();
-        console.log(`✅ Render completado`);
-      } catch (renderError) {
-        console.error(`❌ Error en render():`, renderError);
-        console.error('Render error stack:', renderError.stack);
-        throw new Error(`Render failed: ${renderError.message}`);
+      // Asegurar AdminState
+      if (!window.AdminState) {
+        window.AdminState = AdminState;
       }
       
+      // Renderizar - SIMPLIFICADO
+      console.log(`🔄 Llamando module.render()...`);
+      const html = await module.render();
+      console.log(`✅ Render completado, tipo:`, typeof html, `longitud:`, html?.length);
+      
+      // Validar rápidamente
       if (!html || typeof html !== 'string' || html.trim().length === 0) {
-        console.error(`❌ HTML inválido:`, { type: typeof html, length: html?.length });
-        throw new Error('Module render returned empty or invalid HTML');
+        throw new Error(`HTML inválido: tipo=${typeof html}, length=${html?.length}`);
       }
       
-      console.log(`✅ HTML generado (${html.length} caracteres)`);
-      console.log(`📄 Primeros 200 caracteres:`, html.substring(0, 200));
-      
-      // Insertar HTML
-      try {
-        content.innerHTML = html;
-        console.log(`✅ Contenido insertado en DOM`);
-      } catch (domError) {
-        console.error(`❌ Error insertando HTML en DOM:`, domError);
-        throw new Error(`DOM insertion failed: ${domError.message}`);
-      }
+      // Insertar directamente
+      console.log(`🔄 Insertando HTML en DOM...`);
+      content.innerHTML = html;
+      console.log(`✅✅✅ CONTENIDO INSERTADO EXITOSAMENTE`);
       
       // Inicializar módulo si tiene función init (NO BLOQUEAR si falla)
       if (typeof module.init === 'function') {
