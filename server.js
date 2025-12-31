@@ -12,58 +12,49 @@ const miningRoutes = require('./backend/routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ===== RUTA APK - PRIMERO, ANTES DE CUALQUIER MIDDLEWARE =====
-// Esta ruta maneja la descarga del APK de forma binaria pura
-app.get('/downloads/rsc-mining.apk', (req, res) => {
-    const apkPath = path.join(__dirname, 'public', 'downloads', 'rsc-mining.apk');
+// ===== RUTA DIRECTA PARA EL APK EN LA RAÍZ - PRIMERO, ANTES DE MIDDLEWARES =====
+app.get('/rsc-mining.apk', (req, res) => {
+    const apkPath = path.join(__dirname, 'rsc-mining.apk');
+    
+    console.log('📦 [APK] Petición recibida');
     
     // Verificar existencia
     if (!fs.existsSync(apkPath)) {
-        console.error('❌ APK no encontrado:', apkPath);
+        console.error('❌ [APK] Archivo no encontrado:', apkPath);
         return res.status(404).send('APK no encontrado');
     }
     
-    // Leer archivo completo como buffer binario
-    fs.readFile(apkPath, (err, data) => {
+    const stats = fs.statSync(apkPath);
+    console.log('📊 [APK] Tamaño:', (stats.size / 1024 / 1024).toFixed(2), 'MB');
+    
+    // Headers para Android
+    res.setHeader('Content-Type', 'application/vnd.android.package-archive');
+    res.setHeader('Content-Disposition', 'attachment; filename="rsc-mining.apk"');
+    res.setHeader('Content-Length', stats.size);
+    res.setHeader('Accept-Ranges', 'bytes');
+    res.setHeader('Cache-Control', 'no-cache');
+    
+    // Usar sendFile - Express maneja archivos binarios correctamente
+    res.sendFile(apkPath, (err) => {
         if (err) {
-            console.error('❌ Error leyendo APK:', err);
-            return res.status(500).send('Error al leer el archivo');
+            console.error('❌ [APK] Error:', err.message);
+            if (!res.headersSent) {
+                res.status(500).send('Error al enviar el archivo');
+            }
+        } else {
+            console.log('✅ [APK] Enviado exitosamente');
         }
-        
-        // Establecer headers
-        res.setHeader('Content-Type', 'application/vnd.android.package-archive');
-        res.setHeader('Content-Disposition', 'attachment; filename="rsc-mining.apk"');
-        res.setHeader('Content-Length', data.length);
-        res.setHeader('Cache-Control', 'no-cache');
-        
-        // Enviar buffer binario directamente
-        res.send(data);
-        
-        console.log('✅ APK enviado:', data.length, 'bytes');
     });
 });
 
-// Middleware - EXCLUIR /downloads/ del procesamiento JSON
+// Middleware CORS
 app.use(cors());
-app.use((req, res, next) => {
-    // No procesar JSON para rutas de descarga
-    if (req.path.startsWith('/downloads/')) {
-        return next();
-    }
-    express.json()(req, res, next);
-});
 
-// Middleware estático - EXCLUIR /downloads/ explícitamente
-app.use((req, res, next) => {
-    if (req.path.startsWith('/downloads/')) {
-        return next(); // Ya manejado por la ruta específica arriba
-    }
-    express.static(path.join(__dirname), {
-        setHeaders: (res, filePath, stat) => {
-            // No hacer nada especial, dejar que Express maneje los tipos MIME
-        }
-    })(req, res, next);
-});
+// Middleware JSON
+app.use(express.json());
+
+// Middleware estático para el resto de archivos
+app.use(express.static(path.join(__dirname)));
 
 // Inicializar base de datos
 let db = null;
