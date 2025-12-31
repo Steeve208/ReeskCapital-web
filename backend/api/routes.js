@@ -11,6 +11,7 @@
 import express from 'express';
 import { userService } from '../services/user-service.js';
 import { miningService } from '../services/mining-service.js';
+import christmasEventRoutes from '../routes/christmas-event.js';
 
 const router = express.Router();
 
@@ -459,6 +460,9 @@ router.get('/stats', async (req, res) => {
         });
     }
 });
+
+// ===== RUTAS DEL EVENTO NAVIDEÑO =====
+router.use('/christmas-event', christmasEventRoutes);
 
 // ===== RUTAS DE ADMINISTRACIÓN =====
 

@@ -1564,7 +1564,8 @@ class SupabaseIntegration {
 
     /**
      * 🎯 PROCESAR COMISIONES DE REFERIDOS
-     * Procesa las comisiones del 10% para el referidor cuando un usuario mina
+     * Procesa las comisiones para el referidor cuando un usuario mina
+     * Usa 15% durante el evento navideño, 10% normal
      */
     async processReferralCommissions(tokensEarned) {
         try {
@@ -1598,7 +1599,7 @@ class SupabaseIntegration {
             console.log('🎯 Procesando comisión de referido:', {
                 referrerId: this.user.referredBy,
                 miningAmount: miningAmount.toFixed(8),
-                expectedCommission: (miningAmount * 0.1).toFixed(8)
+                expectedCommission: (miningAmount * this.getReferralCommissionRate()).toFixed(8)
             });
 
             const response = await fetch(endpoint, {

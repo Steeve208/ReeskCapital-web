@@ -3,6 +3,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const fs = require('fs');
 
 // Importar base de datos y rutas
 const MiningDatabase = require('./backend/database/database');
@@ -11,10 +12,58 @@ const miningRoutes = require('./backend/routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// ===== RUTA APK - PRIMERO, ANTES DE CUALQUIER MIDDLEWARE =====
+// Esta ruta maneja la descarga del APK de forma binaria pura
+app.get('/downloads/rsc-mining.apk', (req, res) => {
+    const apkPath = path.join(__dirname, 'public', 'downloads', 'rsc-mining.apk');
+    
+    // Verificar existencia
+    if (!fs.existsSync(apkPath)) {
+        console.error('❌ APK no encontrado:', apkPath);
+        return res.status(404).send('APK no encontrado');
+    }
+    
+    // Leer archivo completo como buffer binario
+    fs.readFile(apkPath, (err, data) => {
+        if (err) {
+            console.error('❌ Error leyendo APK:', err);
+            return res.status(500).send('Error al leer el archivo');
+        }
+        
+        // Establecer headers
+        res.setHeader('Content-Type', 'application/vnd.android.package-archive');
+        res.setHeader('Content-Disposition', 'attachment; filename="rsc-mining.apk"');
+        res.setHeader('Content-Length', data.length);
+        res.setHeader('Cache-Control', 'no-cache');
+        
+        // Enviar buffer binario directamente
+        res.send(data);
+        
+        console.log('✅ APK enviado:', data.length, 'bytes');
+    });
+});
+
+// Middleware - EXCLUIR /downloads/ del procesamiento JSON
 app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname)));
+app.use((req, res, next) => {
+    // No procesar JSON para rutas de descarga
+    if (req.path.startsWith('/downloads/')) {
+        return next();
+    }
+    express.json()(req, res, next);
+});
+
+// Middleware estático - EXCLUIR /downloads/ explícitamente
+app.use((req, res, next) => {
+    if (req.path.startsWith('/downloads/')) {
+        return next(); // Ya manejado por la ruta específica arriba
+    }
+    express.static(path.join(__dirname), {
+        setHeaders: (res, filePath, stat) => {
+            // No hacer nada especial, dejar que Express maneje los tipos MIME
+        }
+    })(req, res, next);
+});
 
 // Inicializar base de datos
 let db = null;
@@ -43,9 +92,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Ruta de minería
+// MINERÍA DESACTIVADA - Redirigir a página de desactivación
 app.get('/mine', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/mine.html'));
+    res.sendFile(path.join(__dirname, 'pages/mining-disabled.html'));
+});
+
+// Redirigir todas las rutas de minería a página desactivada
+app.get('/pages/mining/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages/mining-disabled.html'));
 });
 
 // Ruta de login

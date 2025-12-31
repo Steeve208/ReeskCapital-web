@@ -1,9 +1,18 @@
 // ===== AUTHENTICATION GUARD FOR MINING PAGES =====
-// Verifica que el usuario esté autenticado antes de mostrar las páginas
-// Este script DEBE cargarse ANTES que cualquier otro script de la página
+// MINERÍA DESACTIVADA - Redirigir a página de desactivación
 
 (function() {
     'use strict';
+    
+    // MINERÍA DESACTIVADA - Redirigir todas las páginas de minería a página de desactivación
+    if (window.location.pathname.includes('/mining/') || window.location.pathname.includes('/mine')) {
+        console.log('🚫 Minería desactivada - Redirigiendo a página de desactivación');
+        const disabledPage = window.location.pathname.includes('/pages/') 
+            ? '../mining-disabled.html' 
+            : 'pages/mining-disabled.html';
+        window.location.replace(disabledPage);
+        return;
+    }
     
     // No ejecutar en la página de login
     if (window.location.pathname.includes('login.html')) {

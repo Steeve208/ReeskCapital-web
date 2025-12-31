@@ -31,6 +31,16 @@
             color: '#ff6b6b'
         },
         {
+            id: 'christmas-competition',
+            name: '🎄 Evento Navideño Competitivo 2024',
+            description: '¡Compite por el airdrop más grande del año! Sistema de puntos competitivo con leaderboard global, desafíos diarios, milestones comunitarios y airdrop escalonado de hasta 10,000 RSC para los top 100.',
+            icon: 'fas fa-trophy',
+            startDate: new Date('2024-12-25T00:00:00'),
+            endDate: new Date('2026-01-02T23:59:59'),
+            page: '../../pages/christmas-event.html',
+            color: '#dc2626'
+        },
+        {
             id: 'social-goals',
             name: '🎯 Social Goals Event',
             description: 'Completa objetivos sociales y gana recompensas. Sigue nuestras redes sociales y participa en la comunidad.',
@@ -222,8 +232,14 @@
             console.error('Event not found:', eventId);
             return;
         }
-        
+
         console.log('🎉 Activating event:', event.name);
+
+        // Si el evento tiene una página dedicada, redirigir
+        if (event.page) {
+            window.location.href = event.page;
+            return;
+        }
         
         // Ocultar secciones de eventos
         const sections = document.querySelectorAll('.events-section');
