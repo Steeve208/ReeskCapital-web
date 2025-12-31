@@ -1,0 +1,29 @@
+/* ===== OCULTAR SECCIONES DE EQUIPO ===== */
+/* Desactiva temporalmente las secciones de equipo hasta que se hagan públicas */
+
+/* Ocultar sección completa de equipo en about.html */
+.team-section {
+  display: none !important;
+}
+
+/* Ocultar cualquier referencia a equipo en tokenomics */
+.team-advisors-section,
+.team-members,
+.member-info,
+.team-grid {
+  display: none !important;
+}
+
+/* Ocultar referencias en tablas y listas */
+tr:has(td:contains("Team & Advisors")),
+tr:has(td:contains("Team")),
+.legend-item:has(.legend-label:contains("Team")) {
+  display: none !important;
+}
+
+/* Ocultar cards de vesting de equipo */
+.vesting-card:has(h4:contains("Team")),
+.vesting-card:has(h4:contains("Advisors")) {
+  display: none !important;
+}
+

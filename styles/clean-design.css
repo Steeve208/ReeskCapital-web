@@ -1,0 +1,117 @@
+/* ===== DISEÑO LIMPIO Y SIMPLIFICADO ===== */
+/* Reduce efectos excesivos y mejora la legibilidad */
+
+/* Reducir animaciones excesivas */
+* {
+  animation-duration: 0.3s !important;
+  transition-duration: 0.3s !important;
+}
+
+/* Simplificar efectos hover en cards */
+.neurosearch-stat-card,
+.tech-card,
+.ecosystem-card,
+.performance-card {
+  transition: all 0.2s ease !important;
+}
+
+.neurosearch-stat-card:hover,
+.tech-card:hover,
+.ecosystem-card:hover,
+.performance-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Simplificar efectos de fondo */
+.neurosearch-hero::before,
+.neurosearch-hero::after {
+  opacity: 0.3 !important;
+}
+
+/* Reducir brillos y glows excesivos */
+.glow,
+.glow-pulse,
+.app-glow,
+.event-glow {
+  filter: brightness(1.1) !important;
+  animation: none !important;
+}
+
+/* Simplificar animaciones de partículas */
+.hero-particles,
+.particles {
+  opacity: 0.2 !important;
+  animation-duration: 30s !important;
+}
+
+/* Mejorar contraste y legibilidad */
+.neurosearch-hero-title-left h1,
+.neurosearch-hero-right h2 {
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+/* Simplificar botones */
+.btn,
+.quantum-btn,
+.neurosearch-nav-btn {
+  transition: all 0.2s ease !important;
+}
+
+.btn:hover,
+.quantum-btn:hover {
+  transform: translateY(-1px) !important;
+}
+
+/* Reducir efectos 3D excesivos */
+.neurosearch-3d-head-container {
+  filter: none !important;
+}
+
+/* Simplificar efectos de glassmorphism */
+.glass,
+.glass-card {
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Mejorar espaciado y limpieza */
+section {
+  padding: 4rem 2rem !important;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 3rem 1.5rem !important;
+  }
+}
+
+/* Simplificar efectos de hover en iconos */
+.neurosearch-footer-social-btn:hover,
+.neurosearch-icon-btn:hover {
+  transform: translateY(-2px) !important;
+  background: rgba(40, 40, 45, 0.95) !important;
+}
+
+/* Reducir animaciones de texto */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Desactivar animaciones complejas en móviles */
+@media (max-width: 768px) {
+  * {
+    animation: none !important;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+  }
+  
+  .hero-particles,
+  .particles,
+  .glow,
+  .glow-pulse {
+    display: none !important;
+  }
+}
+

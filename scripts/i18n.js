@@ -2,7 +2,7 @@
 
 class I18nManager {
     constructor() {
-        this.currentLanguage = 'en';
+        this.currentLanguage = 'en'; // Default language is English
         this.translations = {
             en: {
                 // Navigation

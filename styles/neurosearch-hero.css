@@ -6,6 +6,8 @@
   background: #000000;
   overflow: hidden;
   padding-top: 80px;
+  padding-bottom: 2rem;
+  margin-bottom: 0;
 }
 
 /* ===== TÍTULO IZQUIERDO ===== */
@@ -505,7 +507,8 @@
   .neurosearch-hero {
     min-height: auto;
     padding-top: 100px;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
+    margin-bottom: 0;
   }
   
   .neurosearch-hero-title-left {

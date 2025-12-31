@@ -1,0 +1,240 @@
+/* ===== CTA PARA DESCARGAR APP ===== */
+.app-download-cta {
+  background: linear-gradient(135deg, #0F0F0F 0%, #1A1A1A 100%);
+  padding: 3rem 2rem;
+  margin: 0;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-top: 1px solid rgba(167, 139, 250, 0.1);
+  border-bottom: 1px solid rgba(167, 139, 250, 0.1);
+  position: relative;
+  overflow: hidden;
+  clear: both;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+/* Asegurar que el hero tenga espacio suficiente */
+.neurosearch-hero + .app-download-cta {
+  margin-top: 3rem;
+}
+
+.app-download-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.app-download-cta-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.app-download-cta-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  background: rgba(167, 139, 250, 0.03);
+  border: 1px solid rgba(167, 139, 250, 0.15);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.app-download-cta-icon {
+  font-size: 3rem;
+  color: #A78BFA;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  min-width: 70px;
+  background: rgba(167, 139, 250, 0.1);
+  border-radius: 16px;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+.app-download-cta-text {
+  flex: 1;
+}
+
+.app-download-cta-text h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, #A78BFA 0%, #F472B6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.app-download-cta-text p {
+  font-size: 1rem;
+  color: #8E8E93;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.app-download-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.app-download-btn-primary,
+.app-download-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.app-download-btn-primary {
+  background: linear-gradient(135deg, #A78BFA 0%, #F472B6 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(167, 139, 250, 0.3);
+}
+
+.app-download-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(167, 139, 250, 0.4);
+}
+
+.app-download-btn-secondary {
+  background: rgba(30, 30, 35, 0.9);
+  color: #ffffff;
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.app-download-btn-secondary:hover {
+  background: rgba(40, 40, 45, 0.95);
+  border-color: rgba(167, 139, 250, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(167, 139, 250, 0.2);
+}
+
+/* Botón deshabilitado solo si el href es # o está vacío */
+.app-download-btn-secondary[href="#"]:not([href*="play.google.com"]),
+.app-download-btn-secondary[href=""] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Cuando tenga un link válido, activar el botón */
+.app-download-btn-secondary[href*="play.google.com"],
+.app-download-btn-secondary[href*="playstore"] {
+  opacity: 1 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+.app-download-btn-primary i,
+.app-download-btn-secondary i {
+  font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .app-download-cta {
+    padding: 2.5rem 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .app-download-cta-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+  
+  .app-download-cta-icon {
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+  }
+  
+  .app-download-cta-text h2 {
+    font-size: 1.5rem;
+  }
+  
+  .app-download-cta-text p {
+    font-size: 0.95rem;
+  }
+  
+  .app-download-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  
+  .app-download-btn-primary,
+  .app-download-btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-download-cta {
+    padding: 2rem 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .app-download-cta-content {
+    padding: 1.5rem;
+    gap: 1.25rem;
+  }
+  
+  .app-download-cta-text h2 {
+    font-size: 1.25rem;
+  }
+  
+  .app-download-cta-text p {
+    font-size: 0.875rem;
+  }
+  
+  .app-download-cta-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+  }
+  
+  .app-download-btn-primary,
+  .app-download-btn-secondary {
+    font-size: 0.95rem;
+    padding: 0.875rem 1.25rem;
+  }
+}
+

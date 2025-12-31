@@ -872,7 +872,7 @@
     };
     
     // Idioma actual
-    let currentLanguage = 'es';
+    let currentLanguage = 'en';
     
     // Obtener idioma guardado o detectar del navegador
     function getStoredLanguage() {

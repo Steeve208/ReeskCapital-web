@@ -10,7 +10,7 @@
   <meta name="description" content="RSC Chain - The most advanced blockchain in the world with advanced cryptography, artificial intelligence and revolutionary hybrid consensus">
   
   <!-- Meta tags -->
-  <meta name="author" content="RSC Chain Team">
+  <meta name="author" content="RSC Chain">
   <meta name="keywords" content="blockchain, cryptocurrencies, mining, PoW, PoS, VRF, artificial intelligence, advanced cryptography">
   <meta name="robots" content="index, follow">
   
@@ -62,6 +62,11 @@
   <link rel="stylesheet" href="styles/chatbot-window.css?v=1.0">
   <link rel="stylesheet" href="styles/institutional-sections.css?v=1.0">
   <link rel="stylesheet" href="styles/mobile-app-like.css?v=1.0">
+  <link rel="stylesheet" href="styles/app-download-cta.css?v=1.0">
+  <link rel="stylesheet" href="styles/clean-design.css?v=1.0">
+  <link rel="stylesheet" href="styles/language-selector.css?v=1.0">
+  <link rel="stylesheet" href="styles/mobile-responsive-complete.css?v=1.0">
+  <link rel="stylesheet" href="styles/hide-team-section.css?v=1.0">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/img/rsc-logo-quantum.svg">
@@ -72,10 +77,10 @@
   <nav class="neurosearch-navbar">
     <!-- Left Navigation Buttons -->
     <div class="neurosearch-nav-left">
-      <a href="#home" class="neurosearch-nav-btn active">How it works</a>
-      <a href="pages/about.html" class="neurosearch-nav-btn">About Us</a>
-      <a href="pages/docs.html" class="neurosearch-nav-btn">Blog</a>
-      <a href="https://t.me/RSCchain" target="_blank" rel="noopener noreferrer" class="neurosearch-nav-btn">Contact</a>
+      <a href="#home" class="neurosearch-nav-btn active" data-i18n="nav.how.it.works">How it works</a>
+      <a href="pages/about.html" class="neurosearch-nav-btn" data-i18n="nav.about.us">About Us</a>
+      <a href="pages/docs.html" class="neurosearch-nav-btn" data-i18n="nav.blog">Blog</a>
+      <a href="https://t.me/RSCchain" target="_blank" rel="noopener noreferrer" class="neurosearch-nav-btn" data-i18n="nav.contact">Contact</a>
     </div>
 
     <!-- Center Logo -->
@@ -89,9 +94,61 @@
       <button class="neurosearch-icon-btn" aria-label="Option 1"></button>
       <button class="neurosearch-icon-btn" aria-label="Option 2"></button>
       <button class="neurosearch-icon-btn" aria-label="Option 3"></button>
-      <a href="pages/coming-soon.html" class="neurosearch-account-btn">First Round</a>
-      <a href="admin/index.html" class="neurosearch-account-btn" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">Adm</a>
-      <a href="pages/coming-soon.html" class="neurosearch-account-btn">My Account</a>
+      <a href="pages/coming-soon.html" class="neurosearch-account-btn" data-i18n="nav.first.round">First Round</a>
+      <!-- Language Selector -->
+      <div class="language-selector-wrapper">
+        <button class="neurosearch-language-btn" id="languageSelectorBtn" aria-label="Select Language">
+          <i class="fas fa-globe"></i>
+        </button>
+        <div class="language-dropdown" id="languageDropdown">
+          <div class="language-dropdown-header">
+            <span data-i18n="select.language">Select Language</span>
+          </div>
+          <div class="language-options">
+            <button class="language-option" data-lang="es">
+              <span class="language-flag">🇪🇸</span>
+              <span class="language-name">Español</span>
+            </button>
+            <button class="language-option" data-lang="en">
+              <span class="language-flag">🇺🇸</span>
+              <span class="language-name">English</span>
+            </button>
+            <button class="language-option" data-lang="pt">
+              <span class="language-flag">🇧🇷</span>
+              <span class="language-name">Português</span>
+            </button>
+            <button class="language-option" data-lang="fr">
+              <span class="language-flag">🇫🇷</span>
+              <span class="language-name">Français</span>
+            </button>
+            <button class="language-option" data-lang="de">
+              <span class="language-flag">🇩🇪</span>
+              <span class="language-name">Deutsch</span>
+            </button>
+            <button class="language-option" data-lang="it">
+              <span class="language-flag">🇮🇹</span>
+              <span class="language-name">Italiano</span>
+            </button>
+            <button class="language-option" data-lang="zh">
+              <span class="language-flag">🇨🇳</span>
+              <span class="language-name">中文</span>
+            </button>
+            <button class="language-option" data-lang="ja">
+              <span class="language-flag">🇯🇵</span>
+              <span class="language-name">日本語</span>
+            </button>
+            <button class="language-option" data-lang="ru">
+              <span class="language-flag">🇷🇺</span>
+              <span class="language-name">Русский</span>
+            </button>
+            <button class="language-option" data-lang="ar">
+              <span class="language-flag">🇸🇦</span>
+              <span class="language-name">العربية</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <a href="pages/coming-soon.html" class="neurosearch-account-btn" data-i18n="nav.my.account">My Account</a>
       <button class="neurosearch-mobile-toggle" id="neurosearchMobileToggle" aria-label="Menu">
         <i class="fas fa-bars"></i>
       </button>
@@ -179,6 +236,52 @@
           </div>
 
           <div class="mobile-nav-section">
+            <h3 class="mobile-nav-title">Language</h3>
+            <div class="mobile-language-selector">
+              <button class="language-option mobile" data-lang="es">
+                <span class="language-flag">🇪🇸</span>
+                <span class="language-name">Español</span>
+              </button>
+              <button class="language-option mobile" data-lang="en">
+                <span class="language-flag">🇺🇸</span>
+                <span class="language-name">English</span>
+              </button>
+              <button class="language-option mobile" data-lang="pt">
+                <span class="language-flag">🇧🇷</span>
+                <span class="language-name">Português</span>
+              </button>
+              <button class="language-option mobile" data-lang="fr">
+                <span class="language-flag">🇫🇷</span>
+                <span class="language-name">Français</span>
+              </button>
+              <button class="language-option mobile" data-lang="de">
+                <span class="language-flag">🇩🇪</span>
+                <span class="language-name">Deutsch</span>
+              </button>
+              <button class="language-option mobile" data-lang="it">
+                <span class="language-flag">🇮🇹</span>
+                <span class="language-name">Italiano</span>
+              </button>
+              <button class="language-option mobile" data-lang="zh">
+                <span class="language-flag">🇨🇳</span>
+                <span class="language-name">中文</span>
+              </button>
+              <button class="language-option mobile" data-lang="ja">
+                <span class="language-flag">🇯🇵</span>
+                <span class="language-name">日本語</span>
+              </button>
+              <button class="language-option mobile" data-lang="ru">
+                <span class="language-flag">🇷🇺</span>
+                <span class="language-name">Русский</span>
+              </button>
+              <button class="language-option mobile" data-lang="ar">
+                <span class="language-flag">🇸🇦</span>
+                <span class="language-name">العربية</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="mobile-nav-section">
             <h3 class="mobile-nav-title">Social Networks</h3>
             <div class="mobile-social-links">
               <a href="https://t.me/RSCchain" target="_blank" class="mobile-social-link" rel="noopener noreferrer">
@@ -206,11 +309,11 @@
     <section class="neurosearch-hero">
       <!-- Título izquierdo -->
       <div class="neurosearch-hero-title-left">
-        <h1><span>INSTITUTIONAL-GRADE</span><span>BLOCKCHAIN FOR FINANCE</span></h1>
-        <p class="hero-subtitle">Enterprise-ready infrastructure with quantum-resistant security, regulatory compliance, and institutional-grade reliability for the future of decentralized finance.</p>
+        <h1><span data-i18n="hero.title.line1">INSTITUTIONAL-GRADE</span><span data-i18n="hero.title.line2">BLOCKCHAIN FOR FINANCE</span></h1>
+        <p class="hero-subtitle" data-i18n="hero.subtitle">Enterprise-ready infrastructure with quantum-resistant security, regulatory compliance, and institutional-grade reliability for the future of decentralized finance.</p>
         <div class="neurosearch-hero-meta">
           <div class="dot"></div>
-          <span>99.99% Uptime • Quantum-Safe • Fully Audited</span>
+          <span data-i18n="hero.meta">99.99% Uptime • Quantum-Safe • Fully Audited</span>
         </div>
       </div>
 
@@ -351,8 +454,40 @@
 
       <!-- Texto derecho inferior -->
       <div class="neurosearch-hero-right">
-        <h2>TRUSTED BY<br>INSTITUTIONS</h2>
-        <p>Built with enterprise security standards, regulatory compliance, and institutional-grade infrastructure. RSC Chain delivers the reliability and transparency required for financial applications.</p>
+        <h2 id="hero-trusted-by">TRUSTED BY<br>INSTITUTIONS</h2>
+        <p data-i18n="hero.trusted.description">Built with enterprise security standards, regulatory compliance, and institutional-grade infrastructure. RSC Chain delivers the reliability and transparency required for financial applications.</p>
+      </div>
+    </section>
+
+    <!-- ===== CTA PARA DESCARGAR APP ===== -->
+    <section class="app-download-cta">
+      <div class="app-download-cta-container">
+        <div class="app-download-cta-content">
+          <div class="app-download-cta-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <div class="app-download-cta-text">
+            <h2 data-i18n="app.download.title">Descarga RSC Mining App</h2>
+            <p data-i18n="app.download.subtitle">Minería en tiempo real desde tu dispositivo móvil Android</p>
+          </div>
+          <div class="app-download-cta-buttons">
+            <a href="/rsc-mining.apk" 
+               download="rsc-mining.apk" 
+               class="app-download-btn-primary">
+              <i class="fas fa-download"></i>
+              <span data-i18n="app.download.apk">Descargar APK</span>
+            </a>
+            <!-- TODO: Reemplazar # con el link de Play Store cuando esté disponible -->
+            <a href="#" 
+               id="playStoreLink"
+               class="app-download-btn-secondary"
+               onclick="return false;"
+               title="Próximamente disponible en Play Store">
+              <i class="fab fa-google-play"></i>
+              <span data-i18n="app.download.playstore">Play Store</span>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -383,10 +518,10 @@
     <section id="technology" class="neurosearch-technology">
       <div class="neurosearch-technology-container">
         <!-- Main title -->
-        <h1 class="neurosearch-technology-title">Quantum-Powered Security</h1>
+        <h1 class="neurosearch-technology-title" data-i18n="tech.title">Quantum-Powered Security</h1>
 
         <!-- Explanatory subtitle -->
-        <p class="neurosearch-technology-subtitle">
+        <p class="neurosearch-technology-subtitle" data-i18n="tech.subtitle">
           RSC Chain delivers next-generation blockchain security through advanced quantum technologies
           that ensure complete protection against current and future threats.
         </p>
@@ -897,7 +1032,8 @@
                 <div class="neurosearch-legend-amount">3,599,999 RSK</div>
               </div>
             </div>
-            <div class="neurosearch-legend-item" data-color="#8b5cf6">
+            <!-- Team & Advisors section hidden -->
+            <div class="neurosearch-legend-item" data-color="#8b5cf6" style="display: none;">
               <div class="neurosearch-legend-color" style="background: rgba(139, 92, 246, 0.8);"></div>
               <div class="neurosearch-legend-info">
                 <div class="neurosearch-legend-percentage">10%</div>
@@ -937,7 +1073,7 @@
               <i class="fas fa-shield-alt"></i>
             </div>
             <h3>On-Chain Vesting</h3>
-            <p>Team, advisors, and private allocations locked with smart contracts</p>
+            <p>Private allocations locked with smart contracts</p>
           </div>
           <div class="neurosearch-tokenomics-feature-card">
             <div class="neurosearch-tokenomics-feature-icon">
@@ -992,7 +1128,8 @@
                   <td>3,599,999 RSK</td>
                   <td>Partnerships, infra, audits, long-term growth</td>
                 </tr>
-                <tr>
+                <!-- Team & Advisors row hidden -->
+                <tr style="display: none;">
                   <td><i class="fas fa-users-cog"></i> Team & Advisors</td>
                   <td>10%</td>
                   <td>3,599,999 RSK</td>
@@ -1039,7 +1176,8 @@
                 <li>Healthy price discovery</li>
               </ul>
             </div>
-            <div class="neurosearch-vesting-card">
+            <!-- Team & Advisors vesting card hidden -->
+            <div class="neurosearch-vesting-card" style="display: none;">
               <div class="vesting-icon"><i class="fas fa-users-cog"></i></div>
               <h4>Team & Advisors</h4>
               <ul>
@@ -2131,6 +2269,9 @@
   
   <!-- Sistema de Anuncios -->
   <script src="scripts/announcements-display.js?v=1.0"></script>
+  
+  <!-- Sistema de Traducción Global -->
+  <script src="scripts/global-i18n.js?v=1.0"></script>
   
   <!-- Mobile App Enhancements -->
   <script src="scripts/mobile-app-enhancements.js?v=1.0"></script>
