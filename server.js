@@ -13,8 +13,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ===== RUTA DIRECTA PARA EL APK EN LA RAÍZ - PRIMERO, ANTES DE MIDDLEWARES =====
-app.get('/rsc-mining.apk', (req, res) => {
-    const apkPath = path.join(__dirname, 'rsc-mining.apk');
+app.get('/rsc-mining-app.apk', (req, res) => {
+    const apkPath = path.join(__dirname, 'rsc-mining-app.apk');
     
     console.log('📦 [APK] Petición recibida');
     
@@ -29,7 +29,7 @@ app.get('/rsc-mining.apk', (req, res) => {
     
     // Headers para Android
     res.setHeader('Content-Type', 'application/vnd.android.package-archive');
-    res.setHeader('Content-Disposition', 'attachment; filename="rsc-mining.apk"');
+    res.setHeader('Content-Disposition', 'attachment; filename="rsc-mining-app.apk"');
     res.setHeader('Content-Length', stats.size);
     res.setHeader('Accept-Ranges', 'bytes');
     res.setHeader('Cache-Control', 'no-cache');
