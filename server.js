@@ -12,9 +12,9 @@ const miningRoutes = require('./backend/routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ===== RUTA DIRECTA PARA EL APK EN LA RAÍZ - PRIMERO, ANTES DE MIDDLEWARES =====
-app.get('/rsc-mining-app.apk', (req, res) => {
-    const apkPath = path.join(__dirname, 'rsc-mining-app.apk');
+// ===== RUTA DIRECTA PARA EL APK (actualizado 01/02/2026 15:40) =====
+app.get('/rsc-mining.apk', (req, res) => {
+    const apkPath = path.join(__dirname, 'public', 'rsc-mining.apk');
     
     console.log('📦 [APK] Petición recibida');
     
@@ -29,10 +29,12 @@ app.get('/rsc-mining-app.apk', (req, res) => {
     
     // Headers para Android
     res.setHeader('Content-Type', 'application/vnd.android.package-archive');
-    res.setHeader('Content-Disposition', 'attachment; filename="rsc-mining-app.apk"');
+    res.setHeader('Content-Disposition', 'attachment; filename="rsc-mining.apk"');
     res.setHeader('Content-Length', stats.size);
     res.setHeader('Accept-Ranges', 'bytes');
-    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     
     // Usar sendFile - Express maneja archivos binarios correctamente
     res.sendFile(apkPath, (err) => {
@@ -63,7 +65,7 @@ async function initializeDatabase() {
     try {
         console.log('🗄️ Inicializando base de datos...');
         db = new MiningDatabase();
-        await db.initialize();
+        await db.init();
         console.log('✅ Base de datos inicializada correctamente');
         
         // Hacer la base de datos disponible globalmente

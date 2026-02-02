@@ -3,6 +3,20 @@
 // Professional Financial Institution Admin System
 // =====================================================
 
+// TEST: Desactivar login para desarrollo/pruebas. Poner a false en producción.
+const ADMIN_SKIP_LOGIN_FOR_TEST = true;
+window.ADMIN_SKIP_LOGIN_FOR_TEST = ADMIN_SKIP_LOGIN_FOR_TEST;
+
+// Usuario ficticio cuando el login está desactivado para test
+function getTestAdminUser() {
+  return {
+    id: 'test-admin',
+    email: 'admin@test.local',
+    name: 'Admin (Test)',
+    avatar: null
+  };
+}
+
 // Global State
 const AdminState = {
   currentUser: null,
@@ -478,45 +492,53 @@ async function initInstitutionalAdmin() {
   
   // Verificar que AdminState tenga usuario antes de continuar
   if (!AdminState.currentUser || !AdminState.currentUser.id) {
-    console.error('❌ AdminState.currentUser no está definido después de checkAuthentication');
-    console.error('📋 AdminState completo:', AdminState);
-    
-    // Última verificación: buscar en localStorage directamente
-    console.log('🔍 Última verificación en localStorage...');
-    const lastCheck = localStorage.getItem('adminSession') || localStorage.getItem('admin_session');
-    if (lastCheck) {
-      try {
-        const parsed = JSON.parse(lastCheck);
-        const session = parsed.user || parsed;
-        if (session && session.id) {
-          console.log('✅ Sesión encontrada en última verificación, configurando AdminState...');
-          AdminState.currentUser = {
-            id: session.id,
-            email: session.email,
-            name: session.name || session.display_name || session.email?.split('@')[0] || 'Admin',
-            avatar: session.avatar || session.avatar_url
-          };
-          AdminState.currentRole = {
-            id: session.role_id || session.role || 'viewer',
-            name: typeof session.role === 'string' ? session.role : (session.role?.name || 'viewer')
-          };
-          AdminState.authenticated = true;
-          updateUserInfo();
-          loadPermissions();
-          console.log('✅ AdminState configurado correctamente');
-        } else {
-          throw new Error('Sesión sin ID válido');
+    if (window.ADMIN_SKIP_LOGIN_FOR_TEST) {
+      AdminState.currentUser = getTestAdminUser();
+      AdminState.currentRole = { id: 'super_admin', name: 'Super Administrator' };
+      AdminState.authenticated = true;
+      updateUserInfo();
+      loadPermissions();
+      console.log('✅ Modo test: usuario de prueba asignado');
+    } else {
+      console.error('❌ AdminState.currentUser no está definido después de checkAuthentication');
+      console.error('📋 AdminState completo:', AdminState);
+      // Última verificación: buscar en localStorage directamente
+      console.log('🔍 Última verificación en localStorage...');
+      const lastCheck = localStorage.getItem('adminSession') || localStorage.getItem('admin_session');
+      if (lastCheck) {
+        try {
+          const parsed = JSON.parse(lastCheck);
+          const session = parsed.user || parsed;
+          if (session && session.id) {
+            console.log('✅ Sesión encontrada en última verificación, configurando AdminState...');
+            AdminState.currentUser = {
+              id: session.id,
+              email: session.email,
+              name: session.name || session.display_name || session.email?.split('@')[0] || 'Admin',
+              avatar: session.avatar || session.avatar_url
+            };
+            AdminState.currentRole = {
+              id: session.role_id || session.role || 'viewer',
+              name: typeof session.role === 'string' ? session.role : (session.role?.name || 'viewer')
+            };
+            AdminState.authenticated = true;
+            updateUserInfo();
+            loadPermissions();
+            console.log('✅ AdminState configurado correctamente');
+          } else {
+            throw new Error('Sesión sin ID válido');
+          }
+        } catch (e) {
+          console.error('❌ Error en última verificación:', e);
+          console.error('🔄 Redirigiendo a login por seguridad...');
+          window.location.href = 'login.html';
+          return;
         }
-      } catch (e) {
-        console.error('❌ Error en última verificación:', e);
-        console.error('🔄 Redirigiendo a login por seguridad...');
+      } else {
+        console.error('🔄 No hay sesión en localStorage, redirigiendo a login...');
         window.location.href = 'login.html';
         return;
       }
-    } else {
-      console.error('🔄 No hay sesión en localStorage, redirigiendo a login...');
-      window.location.href = 'login.html';
-      return;
     }
   }
   
@@ -565,6 +587,18 @@ async function initInstitutionalAdmin() {
 
 // Check Authentication - Connected to Supabase API
 async function checkAuthentication() {
+  // TEST: Si el login está desactivado, usar usuario de prueba y no redirigir
+  if (window.ADMIN_SKIP_LOGIN_FOR_TEST) {
+    console.warn('⚠️ ADMIN_SKIP_LOGIN_FOR_TEST activo - usando usuario de prueba (sin login)');
+    const testUser = getTestAdminUser();
+    AdminState.currentUser = testUser;
+    AdminState.currentRole = { id: 'super_admin', name: 'Super Administrator' };
+    AdminState.authenticated = true;
+    updateUserInfo();
+    loadPermissions();
+    return;
+  }
+
   // Si ya está autenticado, no verificar de nuevo
   if (AdminState.authenticated && AdminState.currentUser && AdminState.currentUser.id) {
     console.log('✅ Ya autenticado, saltando verificación');
@@ -695,7 +729,16 @@ async function checkAuthentication() {
     console.error('Error leyendo localStorage para debug:', e);
   }
   
-  // SOLO redirigir si realmente no hay NADA en localStorage
+  // SOLO redirigir si realmente no hay NADA en localStorage (y no estamos en modo test)
+  if (window.ADMIN_SKIP_LOGIN_FOR_TEST) {
+    const testUser = getTestAdminUser();
+    AdminState.currentUser = testUser;
+    AdminState.currentRole = { id: 'super_admin', name: 'Super Administrator' };
+    AdminState.authenticated = true;
+    updateUserInfo();
+    loadPermissions();
+    return;
+  }
   console.log('🔄 Redirigiendo a login (no hay sesión válida)...');
   window.location.href = 'login.html';
 }

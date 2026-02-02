@@ -1,7 +1,21 @@
 // =====================================================
 // MESSAGES MODULE
-// Internal communication and messaging system
+// Internal communication and messaging system (Supabase + Realtime)
 // =====================================================
+import {
+  loadChannels,
+  createChannel,
+  loadMessages,
+  sendMessage as sendChatMessage,
+  subscribeToChannel
+} from './chat-store.js';
+
+const ChatState = {
+  channels: [],
+  activeChannelId: null,
+  unsubscribe: null,
+  searchTerm: ''
+};
 
 export async function render() {
   return `
@@ -10,17 +24,17 @@ export async function render() {
         <!-- Conversations Sidebar -->
         <aside class="conversations-sidebar">
           <div class="conversations-header">
-            <h2>Messages</h2>
+            <h2>Team Chat</h2>
             <button class="btn-new-conversation" id="newConversationBtn" ${!hasPermission('messages.create') ? 'style="display:none;"' : ''}>
               <i class="fas fa-plus"></i>
             </button>
           </div>
           <div class="conversations-search">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search conversations..." id="conversationSearch">
+            <input type="text" placeholder="Search channels..." id="conversationSearch">
           </div>
           <div class="conversations-list" id="conversationsList">
-            <!-- Conversations will be loaded here -->
+            <!-- Channels will be loaded here -->
           </div>
         </aside>
 
@@ -28,8 +42,8 @@ export async function render() {
         <main class="chat-area">
           <div class="chat-empty" id="chatEmpty">
             <i class="fas fa-comments"></i>
-            <h3>Select a conversation</h3>
-            <p>Choose a conversation from the sidebar to start messaging</p>
+            <h3>Select a channel</h3>
+            <p>Choose a channel from the sidebar to start chatting</p>
           </div>
 
           <div class="chat-active" id="chatActive" style="display:none;">
@@ -37,21 +51,21 @@ export async function render() {
             <div class="chat-header">
               <div class="chat-header-left">
                 <div class="chat-avatar">
-                  <i class="fas fa-user"></i>
+                  <i class="fas fa-hashtag"></i>
                 </div>
                 <div class="chat-info">
-                  <h3 class="chat-title" id="chatTitle">Conversation</h3>
-                  <span class="chat-status" id="chatStatus">Online</span>
+                  <h3 class="chat-title" id="chatTitle">Channel</h3>
+                  <span class="chat-status" id="chatStatus">Active</span>
                 </div>
               </div>
               <div class="chat-header-right">
-                <button class="chat-action-btn" title="Video Call">
+                <button class="chat-action-btn" id="startVideoCallBtn" title="Video Call">
                   <i class="fas fa-video"></i>
                 </button>
-                <button class="chat-action-btn" title="Voice Call">
+                <button class="chat-action-btn" id="startVoiceCallBtn" title="Voice Call (coming soon)">
                   <i class="fas fa-phone"></i>
                 </button>
-                <button class="chat-action-btn" title="More">
+                <button class="chat-action-btn" id="moreChatActionsBtn" title="More">
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
               </div>
@@ -67,10 +81,10 @@ export async function render() {
             <!-- Message Input -->
             <div class="message-input-area">
               <div class="input-actions">
-                <button class="input-action-btn" title="Attach File">
+                <button class="input-action-btn" title="Attach File (coming soon)">
                   <i class="fas fa-paperclip"></i>
                 </button>
-                <button class="input-action-btn" title="Emoji">
+                <button class="input-action-btn" title="Emoji (coming soon)">
                   <i class="fas fa-smile"></i>
                 </button>
               </div>
@@ -93,146 +107,108 @@ export async function render() {
 
 export async function init() {
   console.log('💬 Initializing Messages module...');
-  
-  // Load conversations
-  await loadConversations();
-  
-  // Setup event listeners
+  await refreshChannels();
   setupMessagesEvents();
-  
   console.log('✅ Messages module initialized');
 }
 
-// Load Conversations
-async function loadConversations() {
+async function refreshChannels() {
   try {
-    // TODO: Load from API
-    const conversations = [
-      {
-        id: 1,
-        name: 'Marketing Team',
-        type: 'group',
-        lastMessage: 'Let\'s schedule a meeting for tomorrow',
-        lastMessageTime: '2 hours ago',
-        unread: 3,
-        avatar: null
-      },
-      {
-        id: 2,
-        name: 'John Doe',
-        type: 'direct',
-        lastMessage: 'The design looks great!',
-        lastMessageTime: '5 hours ago',
-        unread: 0,
-        avatar: null
-      },
-      {
-        id: 3,
-        name: 'Design Team',
-        type: 'group',
-        lastMessage: 'Brand guidelines updated',
-        lastMessageTime: '1 day ago',
-        unread: 1,
-        avatar: null
-      }
-    ];
-    
-    renderConversations(conversations);
+    ChatState.channels = await loadChannels();
+    renderConversations(ChatState.channels);
+
+    const savedChannel = localStorage.getItem('adminActiveChannel');
+    const channelToOpen = savedChannel || (ChatState.channels[0] && ChatState.channels[0].id);
+    if (channelToOpen) {
+      await openConversation(channelToOpen);
+    }
   } catch (error) {
-    console.error('Error loading conversations:', error);
-    showToast('Error loading conversations', 'error');
+    console.error('Error loading channels:', error);
+    showToast('Error loading chat channels', 'error');
   }
 }
 
-// Render Conversations
-function renderConversations(conversations) {
+function renderConversations(channels) {
   const container = document.getElementById('conversationsList');
   if (!container) return;
-  
+
   container.innerHTML = '';
-  
-  conversations.forEach(conv => {
-    const item = createConversationItem(conv);
-    container.appendChild(item);
-  });
+
+  if (!channels.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-comments"></i>
+        <h3>No channels yet</h3>
+        <p>Create the first channel to start chatting.</p>
+      </div>
+    `;
+    return;
+  }
+
+  channels
+    .filter((channel) => channel.name.toLowerCase().includes(ChatState.searchTerm.toLowerCase()))
+    .forEach((channel) => {
+      const item = createConversationItem(channel);
+      container.appendChild(item);
+    });
 }
 
-// Create Conversation Item
-function createConversationItem(conversation) {
+function createConversationItem(channel) {
   const item = document.createElement('div');
   item.className = 'conversation-item';
-  item.setAttribute('data-conversation-id', conversation.id);
-  
+  item.setAttribute('data-conversation-id', channel.id);
   item.innerHTML = `
     <div class="conversation-avatar">
-      ${conversation.type === 'group' ? '<i class="fas fa-users"></i>' : '<i class="fas fa-user"></i>'}
+      <i class="fas fa-hashtag"></i>
     </div>
     <div class="conversation-content">
       <div class="conversation-header">
-        <h4 class="conversation-name">${conversation.name}</h4>
-        <span class="conversation-time">${conversation.lastMessageTime}</span>
+        <h4 class="conversation-name">${channel.name}</h4>
+        <span class="conversation-time"></span>
       </div>
       <div class="conversation-footer">
-        <p class="conversation-preview">${conversation.lastMessage}</p>
-        ${conversation.unread > 0 ? `<span class="conversation-unread">${conversation.unread}</span>` : ''}
+        <p class="conversation-preview">${channel.description || 'Sin descripción'}</p>
       </div>
     </div>
   `;
-  
+
   item.addEventListener('click', () => {
-    openConversation(conversation.id);
+    openConversation(channel.id);
   });
-  
+
   return item;
 }
 
-// Open Conversation
-async function openConversation(conversationId) {
-  // Update active state
-  document.querySelectorAll('.conversation-item').forEach(item => {
+async function openConversation(channelId) {
+  ChatState.activeChannelId = channelId;
+  localStorage.setItem('adminActiveChannel', channelId);
+
+  document.querySelectorAll('.conversation-item').forEach((item) => {
     item.classList.remove('active');
   });
-  document.querySelector(`[data-conversation-id="${conversationId}"]`)?.classList.add('active');
-  
-  // Show chat area
+  document.querySelector(`[data-conversation-id="${channelId}"]`)?.classList.add('active');
+
   document.getElementById('chatEmpty')?.style.setProperty('display', 'none');
   document.getElementById('chatActive')?.style.setProperty('display', 'flex');
-  
-  // Load messages
-  await loadMessages(conversationId);
+
+  const channel = ChatState.channels.find((ch) => ch.id === channelId);
+  if (channel) {
+    document.getElementById('chatTitle').textContent = `# ${channel.name}`;
+  }
+
+  await loadMessagesForChannel(channelId);
+
+  if (ChatState.unsubscribe) {
+    ChatState.unsubscribe();
+  }
+  ChatState.unsubscribe = subscribeToChannel(channelId, (message) => {
+    appendMessage(message);
+  });
 }
 
-// Load Messages
-async function loadMessages(conversationId) {
+async function loadMessagesForChannel(channelId) {
   try {
-    // TODO: Load from API
-    const messages = [
-      {
-        id: 1,
-        sender: 'John Doe',
-        senderId: 2,
-        content: 'Hey team, let\'s discuss the new campaign',
-        timestamp: '2024-03-10T10:30:00',
-        isOwn: false
-      },
-      {
-        id: 2,
-        sender: 'You',
-        senderId: 1,
-        content: 'Sounds good! When are you available?',
-        timestamp: '2024-03-10T10:32:00',
-        isOwn: true
-      },
-      {
-        id: 3,
-        sender: 'John Doe',
-        senderId: 2,
-        content: 'Let\'s schedule a meeting for tomorrow',
-        timestamp: '2024-03-10T10:35:00',
-        isOwn: false
-      }
-    ];
-    
+    const messages = await loadMessages(channelId);
     renderMessages(messages);
   } catch (error) {
     console.error('Error loading messages:', error);
@@ -240,137 +216,169 @@ async function loadMessages(conversationId) {
   }
 }
 
-// Render Messages
 function renderMessages(messages) {
   const container = document.getElementById('messagesList');
   if (!container) return;
-  
   container.innerHTML = '';
-  
-  messages.forEach(message => {
+  messages.forEach((message) => {
     const messageEl = createMessageElement(message);
     container.appendChild(messageEl);
   });
-  
-  // Scroll to bottom
   container.scrollTop = container.scrollHeight;
 }
 
-// Create Message Element
+function appendMessage(message) {
+  const container = document.getElementById('messagesList');
+  if (!container) return;
+
+  if (message.id && container.querySelector(`[data-message-id="${message.id}"]`)) {
+    return;
+  }
+
+  const messageEl = createMessageElement(message);
+  container.appendChild(messageEl);
+  container.scrollTop = container.scrollHeight;
+}
+
 function createMessageElement(message) {
+  const isOwn = String(message.sender_id) === String(AdminState.currentUser?.id) ||
+    message.sender_name === AdminState.currentUser?.name;
   const messageEl = document.createElement('div');
-  messageEl.className = `message ${message.isOwn ? 'message-own' : 'message-other'}`;
-  
+  messageEl.className = `message ${isOwn ? 'message-own' : 'message-other'}`;
+  if (message.id) messageEl.dataset.messageId = message.id;
+
   messageEl.innerHTML = `
     <div class="message-avatar">
       <i class="fas fa-user"></i>
     </div>
     <div class="message-content">
-      ${!message.isOwn ? `<div class="message-sender">${message.sender}</div>` : ''}
+      ${!isOwn ? `<div class="message-sender">${message.sender_name || 'Admin'}</div>` : ''}
       <div class="message-bubble">
-        <p>${message.content}</p>
-        <span class="message-time">${formatMessageTime(message.timestamp)}</span>
+        <p>${escapeHtml(message.content)}</p>
+        <span class="message-time">${formatMessageTime(message.created_at)}</span>
       </div>
     </div>
   `;
-  
+
   return messageEl;
 }
 
-// Format Message Time
-function formatMessageTime(timestamp) {
-  const date = new Date(timestamp);
-  const now = new Date();
-  const diff = now - date;
-  
-  if (diff < 60000) return 'Just now';
-  if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
-  if (diff < 86400000) return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
-
-// Setup Messages Events
 function setupMessagesEvents() {
-  // New conversation button
   const newConvBtn = document.getElementById('newConversationBtn');
   if (newConvBtn) {
     newConvBtn.addEventListener('click', () => {
       showNewConversationModal();
     });
   }
-  
-  // Send message
+
   const sendBtn = document.getElementById('sendMessageBtn');
   const messageInput = document.getElementById('messageInput');
-  
   if (sendBtn && messageInput) {
     sendBtn.addEventListener('click', () => {
-      sendMessage();
+      handleSendMessage();
     });
-    
     messageInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
-        sendMessage();
+        handleSendMessage();
       }
     });
-    
-    // Auto-resize textarea
     messageInput.addEventListener('input', () => {
       messageInput.style.height = 'auto';
       messageInput.style.height = Math.min(messageInput.scrollHeight, 120) + 'px';
     });
   }
-  
-  // Search conversations
+
   const searchInput = document.getElementById('conversationSearch');
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-      filterConversations(e.target.value);
+      ChatState.searchTerm = e.target.value || '';
+      renderConversations(ChatState.channels);
+    });
+  }
+
+  const videoBtn = document.getElementById('startVideoCallBtn');
+  if (videoBtn) {
+    videoBtn.addEventListener('click', () => {
+      startVideoCall();
+    });
+  }
+  const voiceBtn = document.getElementById('startVoiceCallBtn');
+  if (voiceBtn) {
+    voiceBtn.addEventListener('click', () => {
+      showToast('Voice calls coming soon', 'info');
     });
   }
 }
 
-// Send Message
-function sendMessage() {
+async function handleSendMessage() {
   const input = document.getElementById('messageInput');
   if (!input || !input.value.trim()) return;
-  
-  const content = input.value.trim();
-  
-  // TODO: Send via API
-  console.log('Sending message:', content);
-  
-  // Add to UI temporarily
-  const messagesList = document.getElementById('messagesList');
-  if (messagesList) {
-    const messageEl = createMessageElement({
-      id: Date.now(),
-      sender: 'You',
-      senderId: AdminState.currentUser?.id,
-      content: content,
-      timestamp: new Date().toISOString(),
-      isOwn: true
-    });
-    messagesList.appendChild(messageEl);
-    messagesList.scrollTop = messagesList.scrollHeight;
+  if (!ChatState.activeChannelId) {
+    showToast('Select a channel first', 'warning');
+    return;
   }
-  
+
+  const content = input.value.trim();
   input.value = '';
   input.style.height = 'auto';
-  
-  showToast('Message sent', 'success');
+
+  try {
+    const message = await sendChatMessage({
+      channelId: ChatState.activeChannelId,
+      content,
+      sender: AdminState.currentUser
+    });
+    appendMessage(message);
+  } catch (error) {
+    console.error('Error sending message:', error);
+    showToast('Error sending message', 'error');
+  }
 }
 
-// Filter Conversations
-function filterConversations(searchTerm) {
-  // TODO: Filter conversations
-  console.log('Search:', searchTerm);
+async function showNewConversationModal() {
+  const name = window.prompt('Nombre del nuevo canal');
+  if (!name || !name.trim()) return;
+  const description = window.prompt('Descripción (opcional)') || '';
+
+  try {
+    const channel = await createChannel({
+      name: name.trim(),
+      description: description.trim(),
+      created_by: AdminState.currentUser?.id || null
+    });
+    ChatState.channels.push(channel);
+    renderConversations(ChatState.channels);
+    await openConversation(channel.id);
+    showToast('Canal creado', 'success');
+  } catch (error) {
+    console.error('Error creating channel:', error);
+    showToast('Error creating channel', 'error');
+  }
 }
 
-// Show New Conversation Modal
-function showNewConversationModal() {
-  showToast('New conversation - Coming soon', 'info');
-  // TODO: Open modal to start new conversation
+function startVideoCall() {
+  if (!ChatState.activeChannelId) {
+    showToast('Select a channel first', 'warning');
+    return;
+  }
+  const roomName = `rsc-${ChatState.activeChannelId}`;
+  const url = `https://meet.jit.si/${encodeURIComponent(roomName)}`;
+  window.open(url, '_blank', 'noopener');
 }
 
+function formatMessageTime(timestamp) {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diff = now - date;
+  if (diff < 60000) return 'Just now';
+  if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+  if (diff < 86400000) return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text || '';
+  return div.innerHTML;
+}

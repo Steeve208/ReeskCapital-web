@@ -483,23 +483,28 @@
 
   <script>
     // Verificar sesión ANTES de inicializar (evita redirecciones innecesarias)
+    // Si ADMIN_SKIP_LOGIN_FOR_TEST está activo (definido en institutional-admin.js), no redirigir a login
     console.log('🔍 Verificación previa de sesión...');
+    const skipLoginForTest = window.ADMIN_SKIP_LOGIN_FOR_TEST === true;
     const preCheckSession = localStorage.getItem('adminSession') || localStorage.getItem('admin_session');
-    if (!preCheckSession) {
+    if (!skipLoginForTest && !preCheckSession) {
       console.warn('⚠️ NO hay sesión en localStorage - redirigiendo a login');
       window.location.href = 'login.html';
     } else {
-      console.log('✅ Sesión encontrada en localStorage antes de inicializar');
-      try {
-        const parsed = JSON.parse(preCheckSession);
-        const session = parsed.user || parsed;
-        if (session && session.id) {
-          console.log('✅ Sesión válida encontrada:', session.email || session.name);
-        } else {
-          console.warn('⚠️ Sesión sin ID válido, pero continuando...');
+      if (skipLoginForTest) console.warn('⚠️ Modo test: login desactivado');
+      else console.log('✅ Sesión encontrada en localStorage antes de inicializar');
+      if (preCheckSession) {
+        try {
+          const parsed = JSON.parse(preCheckSession);
+          const session = parsed.user || parsed;
+          if (session && session.id) {
+            console.log('✅ Sesión válida encontrada:', session.email || session.name);
+          } else {
+            console.warn('⚠️ Sesión sin ID válido, pero continuando...');
+          }
+        } catch (e) {
+          console.error('❌ Error parseando sesión previa:', e);
         }
-      } catch (e) {
-        console.error('❌ Error parseando sesión previa:', e);
       }
     }
     
