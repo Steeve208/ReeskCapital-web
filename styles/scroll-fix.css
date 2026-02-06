@@ -1,0 +1,46 @@
+/* ===== SCROLL FIX - MANTENIMIENTO EXTREMO ===== */
+/* Evita que las secciones con overflow:hidden capturen rueda y touch.
+   overflow-y: clip recorta el contenido pero NO crea contenedor de scroll,
+   así el scroll va siempre al documento (desktop y móvil). */
+
+/* Secciones de página que no deben atrapar scroll (rueda ni touch) */
+.hero,
+.neurosearch-hero,
+.neurosearch-tokenomics,
+.neurosearch-technology,
+.neurosearch-cta,
+.neurosearch-community,
+.neurosearch-ecosystem,
+.neurosearch-performance,
+.neurosearch-roadmap,
+.neurosearch-footer,
+.app-download-cta,
+.institutional-trust-section,
+.institutional-compliance-section,
+.institutional-partners-section,
+.neurosearch-first-round,
+.first-round-main {
+  overflow-x: hidden !important;
+  overflow-y: clip !important;
+}
+
+/* Navegadores sin overflow: clip (fallback; scroll-fix.js hace el scroll) */
+@supports not (overflow: clip) {
+  .hero,
+  .neurosearch-hero,
+  .neurosearch-tokenomics,
+  .neurosearch-technology,
+  .neurosearch-cta,
+  .neurosearch-community,
+  .neurosearch-ecosystem,
+  .neurosearch-performance,
+  .neurosearch-roadmap,
+  .neurosearch-footer,
+  .app-download-cta,
+  .institutional-trust-section,
+  .institutional-compliance-section,
+  .institutional-partners-section {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+  }
+}

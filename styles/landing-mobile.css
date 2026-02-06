@@ -1,0 +1,24 @@
+/* ===== LANDING MOBILE - Breakpoint 1024px ===== */
+@media (max-width: 1024px) {
+  .neurosearch-nav-left { display: none; }
+  .neurosearch-mobile-toggle { display: flex; }
+  .neurosearch-footer-main { grid-template-columns: 1fr; }
+  .neurosearch-footer-links-wrapper { grid-template-columns: repeat(2, 1fr); }
+  .neurosearch-footer-newsletter { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 768px) {
+  .neurosearch-navbar { padding: 12px 20px; }
+  .neurosearch-nav-center .neurosearch-logo-text { font-size: 0.85rem; }
+  .neurosearch-footer-links-wrapper { grid-template-columns: 1fr; gap: 24px; }
+  .neurosearch-cta-container { grid-template-columns: 1fr; }
+  .neurosearch-comm-social-grid { grid-template-columns: repeat(2, 1fr); }
+  .neurosearch-cta-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .neurosearch-comm-social-grid { grid-template-columns: 1fr; }
+  .neurosearch-roadmap-timeline { grid-template-columns: 1fr; }
+  .neurosearch-perf-stats-grid { grid-template-columns: 1fr; }
+  .neurosearch-ecosystem-content-wrapper { grid-template-columns: 1fr; }
+}

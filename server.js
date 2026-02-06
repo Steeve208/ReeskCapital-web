@@ -12,13 +12,12 @@ const miningRoutes = require('./backend/routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ===== RUTA DIRECTA PARA EL APK (actualizado 01/02/2026 15:40) =====
+// ===== RUTA APK: public/downloads/rsc-mining.apk (build 02/02/26 21:44) =====
 app.get('/rsc-mining.apk', (req, res) => {
-    const apkPath = path.join(__dirname, 'public', 'rsc-mining.apk');
+    const apkPath = path.join(__dirname, 'public', 'downloads', 'rsc-mining.apk');
     
     console.log('📦 [APK] Petición recibida');
     
-    // Verificar existencia
     if (!fs.existsSync(apkPath)) {
         console.error('❌ [APK] Archivo no encontrado:', apkPath);
         return res.status(404).send('APK no encontrado');
@@ -27,7 +26,7 @@ app.get('/rsc-mining.apk', (req, res) => {
     const stats = fs.statSync(apkPath);
     console.log('📊 [APK] Tamaño:', (stats.size / 1024 / 1024).toFixed(2), 'MB');
     
-    // Headers para Android
+    // Headers: forzar descarga fresca (no caché)
     res.setHeader('Content-Type', 'application/vnd.android.package-archive');
     res.setHeader('Content-Disposition', 'attachment; filename="rsc-mining.apk"');
     res.setHeader('Content-Length', stats.size);
@@ -35,6 +34,7 @@ app.get('/rsc-mining.apk', (req, res) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
+    res.setHeader('X-APK-Build', '202602022144');
     
     // Usar sendFile - Express maneja archivos binarios correctamente
     res.sendFile(apkPath, (err) => {

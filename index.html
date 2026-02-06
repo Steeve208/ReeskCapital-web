@@ -24,49 +24,15 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles/global.css?v=4.0">
-  <link rel="stylesheet" href="styles/neurosearch-navbar.css?v=1.0">
-  <link rel="stylesheet" href="styles/neurosearch-hero.css?v=2.0">
-  <link rel="stylesheet" href="styles/ecosystem-flow-3d.css?v=20.0">
-  <link rel="stylesheet" href="styles/neurosearch-technology.css?v=1.0">
-  <link rel="stylesheet" href="styles/neurosearch-roadmap.css?v=1.0">
-  <link rel="stylesheet" href="styles/neurosearch-tokenomics.css?v=1.0">
-  <link rel="stylesheet" href="styles/neurosearch-performance.css?v=1.0">
-  <link rel="stylesheet" href="styles/neurosearch-ecosystem.css?v=1.0">
-  <link rel="stylesheet" href="styles/neurosearch-community.css?v=1.0">
-  <link rel="stylesheet" href="styles/neurosearch-cta.css?v=1.0">
-  <link rel="stylesheet" href="styles/neurosearch-footer.css?v=1.0">
-  <link rel="stylesheet" href="styles/animations.css?v=4.0">
-  <link rel="stylesheet" href="styles/glassmorphism-effects.css?v=4.0">
-  <link rel="stylesheet" href="styles/app.css?v=4.0">
-  <link rel="stylesheet" href="styles/mobile-navbar.css?v=4.0">
-  <link rel="stylesheet" href="styles/roadmap-tokenomics.css?v=4.0">
-  <link rel="stylesheet" href="styles/roadmap-modern.css">
-  <link rel="stylesheet" href="styles/quantum-override.css?v=4.0">
-  <link rel="stylesheet" href="styles/quantum-hero.css?v=4.0">
-  <link rel="stylesheet" href="styles/hero-top.css">
-  <link rel="stylesheet" href="styles/quantum-technology.css?v=4.0">
-  <link rel="stylesheet" href="styles/quantum-footer.css?v=4.0">
-  <link rel="stylesheet" href="styles/mobile-fixes.css?v=1.0">
-  <link rel="stylesheet" href="styles/mobile-responsive-fixes.css?v=1.0">
-  <link rel="stylesheet" href="styles/mobile-viewport-fixes.css?v=1.0">
-  <link rel="stylesheet" href="styles/disable-text-hover-effects.css?v=1.0">
-  <link rel="stylesheet" href="styles/simple-mobile-menu.css?v=1.0">
-  <link rel="stylesheet" href="styles/chatbot-button.css?v=1.0">
-  <link rel="stylesheet" href="styles/chatbot-window.css?v=1.0">
-  <link rel="stylesheet" href="styles/institutional-sections.css?v=1.0">
-  <link rel="stylesheet" href="styles/mobile-app-like.css?v=1.0">
-  <link rel="stylesheet" href="styles/app-download-cta.css?v=1.0">
-  <link rel="stylesheet" href="styles/clean-design.css?v=1.0">
-  <link rel="stylesheet" href="styles/language-selector.css?v=1.0">
-  <link rel="stylesheet" href="styles/mobile-responsive-complete.css?v=1.0">
-  <link rel="stylesheet" href="styles/hide-team-section.css?v=1.0">
+  <!-- Landing styles (consolidated) -->
+  <link rel="stylesheet" href="styles/landing-base.css?v=1.0">
+  <link rel="stylesheet" href="styles/landing-sections.css?v=1.0">
+  <link rel="stylesheet" href="styles/landing-mobile.css?v=1.0">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/img/rsc-logo-quantum.svg">
@@ -305,163 +271,35 @@
 
   <!-- Main Content -->
   <main>
-    <!-- ===== HERO SECTION - ESTILO NEUROSEARCH ===== -->
-    <section class="neurosearch-hero">
-      <!-- Título izquierdo -->
-      <div class="neurosearch-hero-title-left">
-        <h1><span data-i18n="hero.title.line1">INSTITUTIONAL-GRADE</span><span data-i18n="hero.title.line2">BLOCKCHAIN FOR FINANCE</span></h1>
-        <p class="hero-subtitle" data-i18n="hero.subtitle">Enterprise-ready infrastructure with quantum-resistant security, regulatory compliance, and institutional-grade reliability for the future of decentralized finance.</p>
-        <div class="neurosearch-hero-meta">
-          <div class="dot"></div>
-          <span data-i18n="hero.meta">99.99% Uptime • Quantum-Safe • Fully Audited</span>
-        </div>
-      </div>
-
-      <!-- RSC Ecosystem Diagram - Flexbox/Grid Layout -->
-      <div class="rsc-ecosystem-diagram">
-        <!-- Líneas de conexión -->
-        <div class="diagram-connections">
-          <!-- HQ -> Chain, Token, Identity -->
-          <div class="conn-line conn-hq-chain"></div>
-          <div class="conn-line conn-hq-token"></div>
-          <div class="conn-line conn-hq-id"></div>
-          <!-- Chain, Token, Identity -> Wallet -->
-          <div class="conn-line conn-chain-wallet"></div>
-          <div class="conn-line conn-token-wallet"></div>
-          <div class="conn-line conn-id-wallet"></div>
-          <!-- Wallet -> Bank, P2P, Marketplace -->
-          <div class="conn-line conn-wallet-bank"></div>
-          <div class="conn-line conn-wallet-p2p"></div>
-          <div class="conn-line conn-wallet-market"></div>
-        </div>
-
-        <!-- NIVEL 1: RSC CORPORATION (TOP) -->
-        <div class="diagram-row">
-          <div class="diagram-node node-hq">
-            <div class="node-icon"><i class="fas fa-building"></i></div>
-            <div class="node-text">
-              <div class="node-title">RSC CORPORATION</div>
-              <div class="node-subtitle">(Marca matriz / HQ)</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- NIVEL 2: Chain, Token, Identity (MIDDLE ROW) -->
-        <div class="diagram-row-middle">
-          <div class="diagram-node node-chain">
-            <div class="node-icon"><i class="fas fa-link"></i></div>
-            <div class="node-text">
-              <div class="node-title">RSC Chain</div>
-              <div class="node-subtitle">(Blockchain)</div>
-            </div>
-          </div>
-
-          <div class="diagram-node node-token">
-            <div class="node-icon"><i class="fas fa-coins"></i></div>
-            <div class="node-text">
-              <div class="node-title">RSK Token</div>
-              <div class="node-subtitle">(Activo nativo)</div>
-            </div>
-          </div>
-
-          <div class="diagram-node node-id">
-            <div class="node-icon"><i class="fas fa-fingerprint"></i></div>
-            <div class="node-text">
-              <div class="node-title">RSC Identity</div>
-              <div class="node-subtitle">(User/Brand)</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- NIVEL 3: RSC WALLET (CENTER) -->
-        <div class="diagram-row">
-          <div class="diagram-node node-wallet">
-            <div class="node-icon"><i class="fas fa-wallet"></i></div>
-            <div class="node-text">
-              <div class="node-title">RSC WALLET</div>
-              <div class="node-subtitle">(Access / Custody / Signing)</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- NIVEL 4: Bank, P2P, Marketplace (BOTTOM ROW) -->
-        <div class="diagram-row-bottom">
-          <div class="diagram-node node-bank">
-            <div class="node-icon"><i class="fas fa-university"></i></div>
-            <div class="node-text">
-              <div class="node-title">RSC BANK</div>
-              <div class="node-subtitle">(Pagos / QR / FX)</div>
-            </div>
-          </div>
-
-          <div class="diagram-node node-p2p">
-            <div class="node-icon"><i class="fas fa-exchange-alt"></i></div>
-            <div class="node-text">
-              <div class="node-title">RSC P2P MARKET</div>
-              <div class="node-subtitle">(Trader to Trader)</div>
-            </div>
-          </div>
-
-          <div class="diagram-node node-market">
-            <div class="node-icon"><i class="fas fa-store"></i></div>
-            <div class="node-text">
-              <div class="node-title">RSC MARKETPLACE</div>
-              <div class="node-subtitle">(E-commerce cripto)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tarjetas inferiores izquierda -->
-      <div class="neurosearch-stats-cards">
-        <!-- Tarjeta de Descarga de App -->
-        <div class="neurosearch-stat-card app-download-card">
-          <div class="neurosearch-stat-value">📱</div>
-          <div class="neurosearch-stat-label">Descarga<br>la App</div>
-          <div class="neurosearch-stat-icons">
-            <div class="neurosearch-stat-icon">
-              <i class="fas fa-mobile-alt"></i>
-            </div>
-            <div class="neurosearch-stat-icon">
-              <i class="fab fa-android"></i>
-            </div>
-          </div>
-          <a href="/rsc-mining.apk?v=202602011540" 
-             download="rsc-mining.apk" 
-             class="app-download-btn"
-             style="text-decoration: none; display: inline-block; cursor: pointer;">
-            <span>Descargar App</span>
-            <i class="fas fa-arrow-down"></i>
+    <!-- ===== HERO ===== -->
+    <section class="hero lp-section" id="home">
+      <div class="hero__inner lp-container">
+        <header class="hero__header">
+          <p class="hero__badge" data-i18n="hero.badge">Institutional-Grade Blockchain</p>
+          <h1 class="hero__title">
+            <span data-i18n="hero.title.line1">INSTITUTIONAL-GRADE</span>
+            <span data-i18n="hero.title.line2">BLOCKCHAIN FOR FINANCE</span>
+          </h1>
+          <p class="hero__subtitle" data-i18n="hero.subtitle">Enterprise-ready infrastructure with quantum-resistant security, regulatory compliance, and institutional-grade reliability for the future of decentralized finance.</p>
+          <ul class="hero__meta" aria-hidden="true">
+            <li><i class="fas fa-shield-alt" aria-hidden="true"></i> <span data-i18n="hero.meta.uptime">99.99% Uptime</span></li>
+            <li><i class="fas fa-lock" aria-hidden="true"></i> <span data-i18n="hero.meta.quantum">Quantum-Safe</span></li>
+            <li><i class="fas fa-certificate" aria-hidden="true"></i> <span data-i18n="hero.meta.audited">Fully Audited</span></li>
+          </ul>
+        </header>
+        <div class="hero__cta">
+          <a href="/public/downloads/rsc-mining.apk" class="hero__btn" download title="Descargar RSC Mining App (APK)">
+            <i class="fas fa-download" aria-hidden="true"></i>
+            <span data-i18n="hero.cta">Descargar App</span>
           </a>
+          <p class="hero__cta-hint"><i class="fab fa-android" aria-hidden="true"></i> Android APK</p>
         </div>
-
-        <div class="neurosearch-stat-card event-card">
-          <div class="event-badge">
-            <i class="fas fa-fire"></i>
-            <span>ACTIVE EVENT</span>
-          </div>
-          <div class="neurosearch-stat-value event-value">50 RSK</div>
-          <div class="neurosearch-stat-label">Welcome Bonus<br>Event</div>
-          <div class="event-animation">
-            <div class="event-pulse"></div>
-          </div>
-          <div class="event-timer">
-            <i class="fas fa-clock"></i>
-            <span id="eventTimer">Limited Time</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Texto derecho inferior -->
-      <div class="neurosearch-hero-right">
-        <h2 id="hero-trusted-by">TRUSTED BY<br>INSTITUTIONS</h2>
-        <p data-i18n="hero.trusted.description">Built with enterprise security standards, regulatory compliance, and institutional-grade infrastructure. RSC Chain delivers the reliability and transparency required for financial applications.</p>
       </div>
     </section>
 
     <!-- ===== CTA PARA DESCARGAR APP ===== -->
-    <section class="app-download-cta">
-      <div class="app-download-cta-container">
+    <section class="app-download-cta lp-section">
+      <div class="app-download-cta-container lp-container">
         <div class="app-download-cta-content">
           <div class="app-download-cta-icon">
             <i class="fas fa-mobile-alt"></i>
@@ -471,9 +309,10 @@
             <p data-i18n="app.download.subtitle">Minería en tiempo real desde tu dispositivo móvil Android</p>
           </div>
           <div class="app-download-cta-buttons">
-            <a href="/rsc-mining.apk?v=202602011540" 
-               download="rsc-mining.apk" 
-               class="app-download-btn-primary">
+            <a href="/public/downloads/rsc-mining.apk" 
+               class="app-download-btn-primary"
+               download
+               title="Descargar RSC Mining App (APK)">
               <i class="fas fa-download"></i>
               <span data-i18n="app.download.apk">Descargar APK</span>
             </a>
@@ -497,7 +336,7 @@
     </div>
 
     <!-- ===== A-ADS BANNER ===== -->
-    <section class="ad-banner-section" style="display: block !important; background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important; color: white !important; padding: 20px !important; text-align: center !important; box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4) !important; border: 2px solid #00ff88 !important;">
+    <section class="ad-banner-section lp-section" style="display: block !important; background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important; color: white !important; padding: 20px !important; text-align: center !important; box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4) !important; border: 2px solid #00ff88 !important;">
       <div class="ad-banner-container">
         <!-- A-Ads Banner Content -->
         <div class="a-ads-banner-content">
@@ -514,9 +353,9 @@
       </div>
     </section>
 
-    <!-- ===== QUANTUM TECHNOLOGY SECTION - NEUROSEARCH STYLE ===== -->
-    <section id="technology" class="neurosearch-technology">
-      <div class="neurosearch-technology-container">
+    <!-- ===== TECHNOLOGY ===== -->
+    <section id="technology" class="neurosearch-technology lp-section">
+      <div class="neurosearch-technology-container lp-container">
         <!-- Main title -->
         <h1 class="neurosearch-technology-title" data-i18n="tech.title">Quantum-Powered Security</h1>
 
@@ -571,9 +410,9 @@
       </div>
     </section>
 
-    <!-- ===== TRUST & SECURITY SECTION - INSTITUCIONAL ===== -->
-    <section id="trust" class="institutional-trust-section">
-      <div class="institutional-trust-container">
+    <!-- ===== TRUST & SECURITY ===== -->
+    <section id="trust" class="institutional-trust-section lp-section">
+      <div class="institutional-trust-container lp-container">
         <div class="institutional-trust-header">
           <div class="institutional-tag">
             <i class="fas fa-shield-check"></i>
@@ -692,9 +531,9 @@
       </div>
     </section>
 
-    <!-- ===== COMPLIANCE & REGULATION SECTION ===== -->
-    <section id="compliance" class="institutional-compliance-section">
-      <div class="institutional-compliance-container">
+    <!-- ===== COMPLIANCE & REGULATION ===== -->
+    <section id="compliance" class="institutional-compliance-section lp-section">
+      <div class="institutional-compliance-container lp-container">
         <div class="institutional-compliance-header">
           <div class="institutional-tag">
             <i class="fas fa-gavel"></i>
@@ -794,9 +633,9 @@
       </div>
     </section>
 
-    <!-- ===== ROADMAP SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
-    <section id="roadmap" class="neurosearch-roadmap">
-      <div class="neurosearch-roadmap-container">
+    <!-- ===== ROADMAP ===== -->
+    <section id="roadmap" class="neurosearch-roadmap lp-section">
+      <div class="neurosearch-roadmap-container lp-container">
         <!-- Header -->
         <div class="neurosearch-roadmap-header">
           <div class="neurosearch-roadmap-tag">
@@ -842,7 +681,6 @@
                   In Progress
                 </div>
                 <h3 class="neurosearch-phase-title">Fair Distribution</h3>
-                <p class="neurosearch-phase-period">2025</p>
                 <p class="neurosearch-phase-description">
                   Web Mining initial distribution without ICO.
                 </p>
@@ -863,7 +701,6 @@
                   Upcoming
                 </div>
                 <h3 class="neurosearch-phase-title">Ecosystem Infrastructure</h3>
-                <p class="neurosearch-phase-period">Q4 2025 – Q1 2026</p>
                 <p class="neurosearch-phase-description">
                   Complete Wallet - crypto bank in your pocket.
                 </p>
@@ -885,7 +722,6 @@
                   Upcoming
                 </div>
                 <h3 class="neurosearch-phase-title">Multichain Innovation</h3>
-                <p class="neurosearch-phase-period">2026</p>
                 <p class="neurosearch-phase-description">
                   Multiple bridges and native DEX with 10M TPS.
                 </p>
@@ -907,7 +743,6 @@
                   Upcoming
                 </div>
                 <h3 class="neurosearch-phase-title">Mass Adoption</h3>
-                <p class="neurosearch-phase-period">2026–2027</p>
                 <p class="neurosearch-phase-description">
                   Global RSC Bank - payments without banks, without KYC.
                 </p>
@@ -929,7 +764,6 @@
                   Upcoming
                 </div>
                 <h3 class="neurosearch-phase-title">Global Infrastructure</h3>
-                <p class="neurosearch-phase-period">2027–2028</p>
                 <p class="neurosearch-phase-description">
                   RSC as the backbone of global decentralized commerce.
                 </p>
@@ -946,9 +780,9 @@
       </div>
     </section>
 
-    <!-- ===== TOKENOMICS SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
-    <section id="tokenomics" class="neurosearch-tokenomics">
-      <div class="neurosearch-tokenomics-container">
+    <!-- ===== TOKENOMICS ===== -->
+    <section id="tokenomics" class="neurosearch-tokenomics lp-section lp-hidden">
+      <div class="neurosearch-tokenomics-container lp-container">
         <!-- Header Section -->
         <div class="neurosearch-tokenomics-header">
           <div class="neurosearch-tokenomics-tag">TOKENOMICS</div>
@@ -1200,9 +1034,9 @@
       </div>
     </section>
 
-    <!-- ===== LIVE METRICS SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
-    <section class="neurosearch-performance">
-      <div class="neurosearch-performance-container">
+    <!-- ===== LIVE METRICS ===== -->
+    <section class="neurosearch-performance lp-section">
+      <div class="neurosearch-performance-container lp-container">
         <!-- Header -->
         <div class="neurosearch-performance-header">
           <div class="neurosearch-perf-tag">
@@ -1339,9 +1173,9 @@
       </div>
     </section>
 
-    <!-- ===== ECOSYSTEM SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
-    <section id="ecosystem" class="neurosearch-ecosystem">
-      <div class="neurosearch-ecosystem-container">
+    <!-- ===== ECOSYSTEM ===== -->
+    <section id="ecosystem" class="neurosearch-ecosystem lp-section">
+      <div class="neurosearch-ecosystem-container lp-container">
         <!-- Content Split Layout -->
         <div class="neurosearch-ecosystem-content-wrapper">
           <!-- Left Side - Text Content -->
@@ -1389,9 +1223,9 @@
       </div>
     </section>
 
-    <!-- ===== INSTITUTIONAL PARTNERS SECTION ===== -->
-    <section id="partners" class="institutional-partners-section">
-      <div class="institutional-partners-container">
+    <!-- ===== INSTITUTIONAL PARTNERS ===== -->
+    <section id="partners" class="institutional-partners-section lp-section">
+      <div class="institutional-partners-container lp-container">
         <div class="institutional-partners-header">
           <div class="institutional-tag">
             <i class="fas fa-handshake"></i>
@@ -1507,9 +1341,9 @@
       </div>
     </section>
 
-    <!-- ===== COMMUNITY SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
-    <section id="community" class="neurosearch-community">
-      <div class="neurosearch-community-container">
+    <!-- ===== COMMUNITY ===== -->
+    <section id="community" class="neurosearch-community lp-section">
+      <div class="neurosearch-community-container lp-container">
         <!-- Header -->
         <div class="neurosearch-community-header">
           <div class="neurosearch-comm-tag">
@@ -1688,9 +1522,9 @@
       </div>
     </section>
 
-    <!-- ===== CTA SECTION - FUTURISTA NEUROSEARCH STYLE ===== -->
-    <section class="neurosearch-cta">
-      <div class="neurosearch-cta-container">
+    <!-- ===== CTA SECTION ===== -->
+    <section class="neurosearch-cta lp-section">
+      <div class="neurosearch-cta-container lp-container">
         <!-- Main Content -->
         <div class="neurosearch-cta-main-content">
           <div class="neurosearch-cta-badge">
@@ -1831,9 +1665,9 @@
     </section>
   </main>
 
-  <!-- ===== FOOTER - FUTURISTA NEUROSEARCH STYLE ===== -->
-  <footer class="neurosearch-footer">
-    <div class="neurosearch-footer-container">
+  <!-- ===== FOOTER ===== -->
+  <footer class="neurosearch-footer lp-section">
+    <div class="neurosearch-footer-container lp-container">
       <!-- Main Footer Content -->
       <div class="neurosearch-footer-main">
         <!-- Brand Column -->
@@ -2082,198 +1916,11 @@
     // Make globally available for administration
     window.RSCAdBanner = RSCAdBanner;
   </script>
-  <!-- RSC Loader - Sistema de carga unificado -->
-  <script src="scripts/rsc-loader.js?v=4.0"></script>
-  
-  <!-- Advanced Animations System -->
-  <script src="scripts/advanced-animations.js?v=4.0"></script>
-  <script src="scripts/animations.js?v=4.0"></script>
-  
-  <!-- Glassmorphism System -->
-  <script src="scripts/glassmorphism-system.js?v=4.0"></script>
-  
-  <!-- Quantum Hero System -->
-  <script src="scripts/quantum-hero.js?v=4.0"></script>
-  
-  <!-- Quantum Technology System -->
-  <script src="scripts/quantum-technology.js?v=4.0"></script>
-  
-  <!-- Quantum Footer System -->
-  <script src="scripts/quantum-footer.js?v=4.0"></script>
-  <script src="scripts/mobile-menu-fix.js?v=1.0"></script>
-  
-  <!-- Mobile Responsive System -->
-  <script src="scripts/mobile-responsive.js?v=1.0"></script>
-  
-  <!-- Simple Mobile Menu System -->
-  <script src="scripts/simple-mobile-menu.js?v=1.0"></script>
-  
-  <!-- Basic script for essential functionality -->
-  <script>
-    // Basic functionality without interfering with changes
-    document.addEventListener('DOMContentLoaded', function() {
-      // Basic mobile menu
-      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
-      const mobileClose = document.getElementById('mobileClose');
-      const mobileOverlay = document.getElementById('mobileMenuOverlay');
-      
-      if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-          mobileMenu.classList.toggle('active');
-          mobileOverlay.classList.toggle('active');
-        });
-      }
-      
-      if (mobileClose) {
-        mobileClose.addEventListener('click', () => {
-          mobileMenu.classList.remove('active');
-          mobileOverlay.classList.remove('active');
-        });
-      }
-      
-      if (mobileOverlay) {
-        mobileOverlay.addEventListener('click', () => {
-          mobileMenu.classList.remove('active');
-          mobileOverlay.classList.remove('active');
-        });
-      }
-      
-      // Basic smooth scrolling
-      const navLinks = document.querySelectorAll('a[href^="#"]');
-      navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href');
-          const targetSection = document.querySelector(targetId);
-          
-          if (targetSection) {
-            const headerHeight = document.querySelector('.header').offsetHeight;
-            const targetPosition = targetSection.offsetTop - headerHeight;
-            
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-          }
-        });
-      });
-      
-      // Counter animation in hero stats
-      const statValues = document.querySelectorAll('.stat-value');
-      const observerOptions = {
-        threshold: 0.5,
-        rootMargin: '0px 0px -50px 0px'
-      };
-      
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const target = parseInt(entry.target.getAttribute('data-target'));
-            animateCounter(entry.target, target);
-            observer.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
-      
-      statValues.forEach(stat => observer.observe(stat));
-      
-      function animateCounter(element, target) {
-        let current = 0;
-        const increment = target / 100;
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          element.textContent = Math.floor(current).toLocaleString();
-        }, 20);
-      }
-    });
-  </script>
-  
-  <!-- Tokenomics Chart -->
-  <script src="scripts/tokenomics-chart.js"></script>
-  
-  <!-- Ecosystem Planet -->
-  <script src="scripts/ecosystem-planet.js"></script>
-  
-  <!-- Performance Counters -->
-  <script src="scripts/performance-counters.js"></script>
-  
-  <!-- Footer -->
-  <script src="scripts/footer.js"></script>
-  
-  <!-- Hero Particles -->
-  <script src="scripts/hero-particles.js"></script>
-  
-  <!-- Bot de Atención Flotante -->
-  <div class="chatbot-floating-button" id="chatbotButton" aria-label="Abrir chat de atención">
-    <i class="fas fa-comments"></i>
-  </div>
-  
-  <!-- Ventana de Chat -->
-  <div class="chatbot-window" id="chatbotWindow">
-    <!-- Header -->
-    <div class="chatbot-header">
-      <div class="chatbot-header-info">
-        <div class="chatbot-avatar">
-          <i class="fas fa-robot"></i>
-        </div>
-        <div class="chatbot-header-text">
-          <h3 class="chatbot-title">Soporte RSC</h3>
-          <div class="chatbot-status">
-            <span class="chatbot-status-dot"></span>
-            <span>En línea</span>
-          </div>
-        </div>
-      </div>
-      <button class="chatbot-close" id="chatbotClose" aria-label="Cerrar chat">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    
-    <!-- Área de Mensajes -->
-    <div class="chatbot-messages" id="chatbotMessages">
-      <!-- Mensaje de bienvenida -->
-      <div class="chatbot-welcome" id="chatbotWelcome">
-        <div class="chatbot-welcome-icon">
-          <i class="fas fa-comments"></i>
-        </div>
-        <h3 class="chatbot-welcome-title">¡Hola! 👋</h3>
-        <p class="chatbot-welcome-text">
-          Soy el asistente de atención de RSC Chain. ¿En qué puedo ayudarte hoy?
-        </p>
-      </div>
-    </div>
-    
-    <!-- Área de Entrada -->
-    <div class="chatbot-input-area">
-      <div class="chatbot-input-wrapper">
-        <textarea 
-          class="chatbot-input" 
-          id="chatbotInput" 
-          placeholder="Escribe tu mensaje..."
-          rows="1"
-        ></textarea>
-        <button class="chatbot-send" id="chatbotSend" aria-label="Enviar mensaje">
-          <i class="fas fa-paper-plane"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Script del Chatbot -->
-  <script src="scripts/chatbot.js?v=1.0"></script>
-  
+  <!-- Landing (menu, smooth scroll, back to top, language) -->
+  <script src="scripts/landing.js?v=1.0"></script>
   <!-- Sistema de Anuncios -->
   <script src="scripts/announcements-display.js?v=1.0"></script>
-  
   <!-- Sistema de Traducción Global -->
   <script src="scripts/global-i18n.js?v=1.0"></script>
-  
-  <!-- Mobile App Enhancements -->
-  <script src="scripts/mobile-app-enhancements.js?v=1.0"></script>
 </body>
 </html>

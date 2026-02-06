@@ -1,0 +1,39 @@
+/* ===== SIN EFECTOS: página ordenada, sin animaciones ni transiciones ===== */
+/* Todo desactivado para evitar temblores y movimiento. */
+
+*,
+*::before,
+*::after {
+  animation: none !important;
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition: none !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+/* Botones y enlaces: sin transición, sin transform en hover */
+.app-download-btn,
+.app-download-btn-primary,
+.app-download-btn-secondary,
+.neurosearch-nav-btn,
+.neurosearch-icon-btn,
+.neurosearch-account-btn,
+.neurosearch-language-btn,
+.neurosearch-stat-card,
+.diagram-node,
+button,
+a[href] {
+  transition: none !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+/* Evitar transform/hover que muevan elementos */
+.neurosearch-stat-card:hover,
+.diagram-node:hover,
+.app-download-btn:hover,
+button:hover,
+a:hover {
+  transform: none !important;
+}

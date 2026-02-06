@@ -19,10 +19,15 @@ class GlobalI18nManager {
                 'nav.my.account': 'Mi Cuenta',
                 
                 // Hero
+                'hero.badge': 'Blockchain institucional',
                 'hero.title.line1': 'INSTITUTIONAL-GRADE',
                 'hero.title.line2': 'BLOCKCHAIN FOR FINANCE',
                 'hero.subtitle': 'Infraestructura lista para empresas con seguridad resistente a la cuántica, cumplimiento regulatorio y confiabilidad de nivel institucional para el futuro de las finanzas descentralizadas.',
                 'hero.meta': '99.99% Uptime • Quantum-Safe • Fully Audited',
+                'hero.meta.uptime': '99.99% Uptime',
+                'hero.meta.quantum': 'Quantum-Safe',
+                'hero.meta.audited': 'Fully Audited',
+                'hero.cta': 'Descargar App',
                 'hero.trusted.by': 'CONFIADO POR',
                 'hero.institutions': 'INSTITUCIONES',
                 'hero.trusted.description': 'Construido con estándares de seguridad empresarial, cumplimiento regulatorio e infraestructura de nivel institucional. RSC Chain ofrece la confiabilidad y transparencia requeridas para aplicaciones financieras.',
@@ -50,10 +55,15 @@ class GlobalI18nManager {
                 'nav.my.account': 'My Account',
                 
                 // Hero
+                'hero.badge': 'Institutional-Grade Blockchain',
                 'hero.title.line1': 'INSTITUTIONAL-GRADE',
                 'hero.title.line2': 'BLOCKCHAIN FOR FINANCE',
                 'hero.subtitle': 'Enterprise-ready infrastructure with quantum-resistant security, regulatory compliance, and institutional-grade reliability for the future of decentralized finance.',
                 'hero.meta': '99.99% Uptime • Quantum-Safe • Fully Audited',
+                'hero.meta.uptime': '99.99% Uptime',
+                'hero.meta.quantum': 'Quantum-Safe',
+                'hero.meta.audited': 'Fully Audited',
+                'hero.cta': 'Download App',
                 'hero.trusted.by': 'TRUSTED BY',
                 'hero.institutions': 'INSTITUTIONS',
                 'hero.trusted.description': 'Built with enterprise security standards, regulatory compliance, and institutional-grade infrastructure. RSC Chain delivers the reliability and transparency required for financial applications.',
