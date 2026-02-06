@@ -1,19 +1,78 @@
-/* ===== LANDING MOBILE - Breakpoint 1024px ===== */
+/* ===== LANDING MOBILE - Navbar y layout ===== */
+
+/* Tablet / móvil grande: ocultar menú lateral, mostrar hamburguesa y simplificar derecha */
 @media (max-width: 1024px) {
   .neurosearch-nav-left { display: none; }
-  .neurosearch-mobile-toggle { display: flex; }
+  .neurosearch-mobile-toggle { display: flex !important; }
+  /* En móvil solo mostrar: idioma + menú hamburguesa (ocultar iconos y botones de cuenta) */
+  .neurosearch-nav-right .neurosearch-icon-btn,
+  .neurosearch-nav-right .neurosearch-account-btn { display: none !important; }
+  .neurosearch-nav-right {
+    gap: 8px;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+  .neurosearch-navbar {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: max(12px, env(safe-area-inset-top));
+    min-height: 56px;
+    flex-wrap: nowrap;
+  }
+  .neurosearch-nav-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-shrink: 0;
+  }
   .neurosearch-footer-main { grid-template-columns: 1fr; }
   .neurosearch-footer-links-wrapper { grid-template-columns: repeat(2, 1fr); }
   .neurosearch-footer-newsletter { flex-direction: column; align-items: flex-start; }
 }
 
 @media (max-width: 768px) {
-  .neurosearch-navbar { padding: 12px 20px; }
+  .neurosearch-navbar {
+    padding: max(10px, env(safe-area-inset-top)) 14px 10px 14px;
+    min-height: 52px;
+  }
   .neurosearch-nav-center .neurosearch-logo-text { font-size: 0.85rem; }
+  .neurosearch-nav-center { gap: 8px; }
+  .neurosearch-logo-icon { width: 22px; height: 22px; }
+  .neurosearch-nav-right { gap: 6px; }
+  .neurosearch-language-btn,
+  .neurosearch-mobile-toggle {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  .neurosearch-mobile-toggle { font-size: 1rem; }
+  .language-dropdown {
+    right: 0;
+    left: auto;
+    min-width: 200px;
+  }
   .neurosearch-footer-links-wrapper { grid-template-columns: 1fr; gap: 24px; }
   .neurosearch-cta-container { grid-template-columns: 1fr; }
   .neurosearch-comm-social-grid { grid-template-columns: repeat(2, 1fr); }
   .neurosearch-cta-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .neurosearch-navbar {
+    padding: max(8px, env(safe-area-inset-top)) 12px 8px 12px;
+    min-height: 48px;
+  }
+  .neurosearch-nav-center .neurosearch-logo-text { font-size: 0.8rem; }
+  .neurosearch-nav-center { gap: 6px; }
+  .neurosearch-logo-icon { width: 20px; height: 20px; }
+  .neurosearch-language-btn,
+  .neurosearch-mobile-toggle {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+  }
 }
 
 @media (max-width: 600px) {

@@ -119,7 +119,10 @@ img { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   gap: 10px;
+  text-decoration: none;
+  color: inherit;
 }
+.neurosearch-nav-center:hover { color: inherit; opacity: 0.9; }
 
 .neurosearch-logo-icon {
   width: 24px;
@@ -297,6 +300,9 @@ img { max-width: 100%; height: auto; }
   width: 300px;
   max-width: 85vw;
   height: 100vh;
+  height: 100dvh;
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
   z-index: 10002;
   background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
   border-left: 1px solid var(--lp-border);
