@@ -12,7 +12,7 @@ const miningRoutes = require('./backend/routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ===== RUTA APK: public/downloads/rsc-mining.apk (build 02/02/26 21:44) =====
+// ===== RUTA APK: public/downloads/rsc-mining.apk (versión 10/02/26) =====
 app.get('/rsc-mining.apk', (req, res) => {
     const apkPath = path.join(__dirname, 'public', 'downloads', 'rsc-mining.apk');
     
@@ -34,7 +34,7 @@ app.get('/rsc-mining.apk', (req, res) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
-    res.setHeader('X-APK-Build', '202602022144');
+    res.setHeader('X-APK-Build', '20260210');
     
     // Usar sendFile - Express maneja archivos binarios correctamente
     res.sendFile(apkPath, (err) => {
